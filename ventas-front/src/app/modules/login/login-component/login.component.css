@@ -1,0 +1,52 @@
+.pnl-main {
+  padding-top: 50px;
+  padding-bottom: 15px;
+  background-color: #ebeef1;
+}
+
+.color-header {
+  background-color: #3f51b5;
+}
+
+.title {
+  margin-top: 15px;
+  color: #c5cae9;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.sub-title {
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.msj-error {
+  font-size: 14px;
+  margin-bottom: 0px;
+}
+
+.width-card {
+  width: 27rem;
+  height: 26rem;
+  box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19) !important;
+}
+
+.btn-login {
+  background-color: #3f51b5;
+  font-size: 1em !important;
+}
+
+.btn-login:hover {
+  background-color: #344397;
+}
+
+.panel-form {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.label-login {
+  color: #3f51b5;
+  margin-bottom: .2rem;
+}

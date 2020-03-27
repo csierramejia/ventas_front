@@ -1,0 +1,15 @@
+:host {
+  display: flex;
+  background-color: #f4f4f4;
+  flex-grow: 1;
+  min-height: 0px !important;
+}
+
+.body-style {
+  flex-grow: 1;
+  overflow: auto !important;
+}
+
+.contenido {
+  padding: 10px;
+}

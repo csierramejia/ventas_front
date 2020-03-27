@@ -1,0 +1,18 @@
+<!-- Logo del user para dispositivos resolucion grande -->
+<a class="logo-container" *ngIf="shellState.screen.isBigScreen()">
+  <span class="font-new-roman font-size-16"><img class="logo" src="assets/avatar.png" alt="user"> 
+    {{shellState.userAccount.auth?.usuario?.primerNombre}} {{shellState.userAccount.auth?.usuario?.segundoNombre}} 
+    {{shellState.userAccount.auth?.usuario?.primerApellido}} {{shellState.userAccount.auth?.usuario?.segundoApellido}}
+  </span>
+</a>
+
+<!-- Logo del user para dispositivos resolucion pequenio -->
+<a class="logo-container-small" *ngIf="!shellState.screen.isBigScreen()">
+  <img class="logo-small" src="assets/avatar.png" alt="user">
+</a>
+
+<!-- Icono para el menu de user-settings -->
+<a>
+  <i class="fa fa-ellipsis-v pnl-user" (click)="menuUserSettings.toggle($event)"></i>
+  <p-menu #menuUserSettings id="menuUserSettings" [popup]="true" [model]="items"></p-menu>
+</a>

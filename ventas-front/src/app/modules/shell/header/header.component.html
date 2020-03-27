@@ -1,0 +1,24 @@
+<!-- header para resoluciones grandes -->
+<div class="header" *ngIf="shellState.screen.isBigScreen()">
+  <a class="logo-container">
+    <img class="logo" src="assets/harmony-logo.png" alt="logo">
+    <span class="title">HARMONY</span>
+  </a>
+  <a class="hambu" (click)="shellState.menu.toggleMenu()">
+    <i class="fa fa-bars"></i>
+  </a>
+  <div class="menu-area">
+    <app-user-account></app-user-account>
+  </div>
+</div>
+
+<!-- header para resoluciones pequenia -->
+<div class="header" *ngIf="!shellState.screen.isBigScreen()">
+  <a class="hambu" (click)="shellState.menu.toggleMenu()"><i class="fa fa-bars"></i></a>
+  <a class="logo-container-small">
+    <img class="logo" src="assets/harmony-logo.png" alt="logo">
+  </a>
+  <div class="menu-area">
+    <app-user-account></app-user-account>
+  </div>
+</div>

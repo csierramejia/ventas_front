@@ -1,0 +1,86 @@
+<div class="container-fluid ">
+
+  <!-- panel principal -->
+  <div class="row pnl-main justify-content-center">
+
+    <!-- card del login -->
+    <div class="card width-card">
+
+      <!-- header - card -->
+      <div class="card-header color-header">
+        <div class="row">
+          <div class="col-6 font-admin title">
+            <p class="mb-2">INICIAR SESIÓN</p>
+            <p class="sub-title">Bienvenido</p>
+          </div>
+          <div class="col-6 text-right">
+            <img class="rounded" src="assets/harmony-logo.png" alt="logo">
+          </div>
+        </div>
+      </div>
+
+      <!-- header - body -->
+      <div class="card-body">
+        <div class="justify-content-center panel-form">
+
+          <!-- form - login -->
+          <form
+            #formLogin="ngForm" name="formLogin"
+            (ngSubmit)="beforeIniciarSesion() && formLogin.form.valid && iniciarSesion(formLogin)"
+            (keydown.enter)="$event.preventDefault()" novalidate class="font-size-14">
+
+            <!-- usuario y password o token-->
+            <div class="form-group mb-4">
+              <label for="username" class="font-new-roman label-login">Usuario</label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                autocomplete="off"
+                #username="ngModel"
+                [(ngModel)]="credenciales.usuarioIngreso"
+                maxlength="50"
+                appRequired
+                appAutofocus
+                class="ad-input ad-input-style w-100"
+                [ngClass]="{'ad-input-required' : (formLogin.submitted && !username.valid)}"/>
+              <div class="focus-border"></div>
+            </div>
+
+            <div class="form-group">
+              <label for="clave" class="font-new-roman label-login">Contraseña</label>
+              <input
+                type="password"
+                id="clave"
+                name="clave"
+                autocomplete="off"
+                #clave="ngModel"
+                [(ngModel)]="credenciales.claveIngreso"
+                maxlength="50"
+                appRequired
+                class="ad-input ad-input-style w-100"
+                [ngClass]="{'ad-input-required' : (formLogin.submitted && !clave.valid)}"/>
+              <div class="focus-border"></div>
+            </div>
+            
+            <!-- boton - ingreso-->
+            <div class="form-group mb-2 mt-4">
+              <button type="submit" class="btn btn-primary btn-sm w-100 btn-login">
+                <i class="fa fa-user-circle-o font-size-18"></i>
+                <span class="font-new-roman font-size-16"> Entrar</span>
+              </button>           
+            </div>
+            <p class="text-danger text-center msj-error font-new-roman">{{msjError}}</p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- footer -->
+  <div class="text-center font-new-roman font-size-14">
+    <span>ADMIN </span>
+    <i class="fa fa-copyright"></i>
+    <span> 2020</span>
+  </div>
+</div>

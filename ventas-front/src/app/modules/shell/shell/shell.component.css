@@ -1,0 +1,18 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.btn-no {
+  background-color: #6c757d !important;
+  border-color: #6c757d !important;
+}
+
+.btn-no:hover {
+  background-color: #5d5f61 !important;
+}

@@ -1,0 +1,58 @@
+:host {
+  display: block;
+}
+
+.header {
+  flex-grow: 1;
+  display: flex;
+  min-height: 64px;
+  background-color: #31404a;
+}
+
+.menu-area {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.logo-container {
+  height: 64px;
+  color: #ffffff !important;
+  padding-left: 12px;
+  padding-top: 12px;
+  width: 224px;
+  float: left;
+}
+
+.logo-container-small {
+  height: 64px;
+  padding-top: 12px;
+  float: left;
+}
+
+.logo {
+  height: 40px;
+  width: auto;
+  vertical-align: middle;
+  border: 0 none;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 24px;
+  vertical-align: middle;
+  margin-left: 12px;
+}
+
+.hambu {
+  color: #f4f4f4 !important;
+  width: 64px;
+  text-align: center;
+  line-height: 64px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.hambu:hover {
+  background-color: #48545c;
+}

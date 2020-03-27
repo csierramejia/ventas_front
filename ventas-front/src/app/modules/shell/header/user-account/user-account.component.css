@@ -1,0 +1,45 @@
+:host {
+  text-align: right;
+}
+
+.logo-container {
+  color: white !important;
+  font-size: 14px;
+  height: 64px;
+  line-height: 61px;
+  padding-right: 10px;
+}
+
+.logo-container-small {
+  color: white !important;
+  font-size: 14px;
+  height: 64px;
+  line-height: 61px;
+}
+
+.logo {
+  padding-right: 5px;
+}
+
+.logo-small {
+  padding-right: 3px;
+}
+
+.pnl-user {
+  float: right;
+  color: #f4f4f4 !important;
+  height: 64px;
+  width: 64px;
+  text-align: center;
+  line-height: 64px;
+  font-size: 36px;
+  cursor: pointer;
+}
+
+.pnl-user:hover {
+  background-color: #48545c;
+}
+
+.icon-admin {
+  font-size: 18px;
+}

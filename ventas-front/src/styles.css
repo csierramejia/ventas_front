@@ -1,0 +1,1043 @@
+body {
+  font-family: 'Open Sans', sans-serif !important;
+}
+
+/* Estilos para el menu de la app */
+
+.menu-active>a {
+  background-color: #e0ebf1 !important;
+  cursor: auto !important;
+  color: #333333 !important;
+}
+
+.ui-panelmenu .ui-submenu-list {
+  margin-left: 0 !important;
+}
+
+.ui-panelmenu .ui-submenu-list .ui-submenu-list .ui-menuitem-icon {
+  margin-left: 1.5em;
+}
+
+.ui-panelmenu .ui-submenu-list .ui-submenu-list .ui-submenu-list .ui-menuitem-icon {
+  margin-left: 1.5em;
+}
+
+.ui-panelmenu .ui-panelmenu-header {
+  margin: -2px 0 0 0 !important;
+}
+
+.ui-panelmenu .ui-panelmenu-header-link {
+  outline: none !important;
+  outline-width: 0 !important;
+  box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+}
+
+.ui-panelmenu .ui-panelmenu-panel {
+  margin-top: 0px !important;
+}
+
+.ui-panelmenu .ui-panelmenu-header.ui-state-active>a {
+  border: 1px solid #c8c8c8 !important;
+  background-color: #f4f4f4 !important;
+  color: #333333 !important;
+}
+
+.ui-panelmenu .ui-panelmenu-header.ui-state-active>a .ui-panelmenu-icon {
+  color: #333333 !important;
+}
+
+.ui-panelmenu .ui-panelmenu-header>a {
+  font-family: Times, Times New Roman, serif !important;
+  font-size: 16px !important;
+  font-weight: 400 !important;
+}
+
+.ui-panelmenu .ui-panelmenu-content .ui-menuitem .ui-menuitem-link {
+  padding: 0.514em 0.857em !important;
+  font-family: Times, Times New Roman, serif !important;
+  font-size: 15px !important;
+  padding-left: 42px !important;
+}
+
+.pro-azul .ui-progressbar .ui-progressbar-value {
+  background: #599ccb !important;
+}
+
+/* Estilos para autocomplete */
+
+.ui-autocomplete-panel .ui-autocomplete-items .ui-autocomplete-list-item {
+  font-family: Times, Times New Roman, serif !important;
+  font-size: 16px !important;
+}
+
+/* Estilos para dropdown */
+
+.down-ad-s .ui-dropdown-trigger-icon {
+  display: none !important
+}
+
+.down-ad-s .ui-dropdown-label {
+  padding: 0px !important;
+  font-family: Times, Times New Roman, serif !important;
+  font-size: 14px !important;
+  line-height: 21.8px !important;
+}
+
+.down-ad .ui-dropdown-trigger-icon {
+  display: none !important
+}
+
+.down-ad .ui-dropdown-label {
+  padding: 0px !important;
+  font-family: Times, Times New Roman, serif !important;
+  font-size: 16px !important;
+  line-height: 22.8px !important;
+}
+
+.down-ad .ui-placeholder {
+  font-family: Times, Times New Roman, serif !important;
+  font-size: 15px !important;
+}
+
+.ui-dropdown-items {
+  font-family: Times, Times New Roman, serif !important;
+  font-size: 16px !important
+}
+
+.ui-paginator .ui-dropdown .ui-dropdown-label {
+  color: #333333 !important;
+  background-color: #f4f4f4 !important;
+}
+
+.ui-paginator .ui-dropdown-trigger {
+  color: #333333 !important;
+  background-color: #f4f4f4 !important;
+}
+
+.ui-paginator .ui-dropdown {
+  height: 2.5em !important;
+}
+
+.bg-clr .ui-inputtext {
+  background-color: #f8f9fa !important
+}
+
+.bg-clr .ui-dropdown-trigger {
+  background-color: #f8f9fa !important
+}
+
+/* Estilos para los calendar */
+
+.bg-clr {
+  background-color: #f8f9fa !important
+}
+
+.ui-calendar {
+  display: block !important;
+}
+
+.ui-calendar .ui-widget:disabled {
+  opacity: 1 !important;
+}
+
+.ui-datepicker tbody td {
+  padding: 0.25em 0.325em !important;
+  box-sizing: border-box !important;
+}
+
+.ui-datepicker .ui-button-text {
+  padding: .25em 1em !important;
+  font-family: Times, Times New Roman, serif !important;
+}
+
+.ui-datepicker {
+  min-width: auto !important;
+  padding: 0 !important;
+}
+
+.ui-datepicker table {
+  font-size: 12px !important;
+  margin: 0px !important;
+}
+
+.ui-datepicker:not(.ui-state-disabled) table td a:not(.ui-state-active):not(.ui-state-highlight):hover {
+  background-color: #e8e8e8 !important;
+  color: #000000 !important;
+}
+
+.ui-datepicker tbody td a {
+  padding: 0.25em !important;
+  margin: 0 !important;
+  text-align: center !important;
+  color: #212121 !important;
+  display: inline-block !important;
+  height: 2.25em !important;
+  width: 2.25em !important;
+  -moz-border-radius: 50% !important;
+  -webkit-border-radius: 50% !important;
+  border-radius: 50% !important;
+  line-height: 1.8em !important;
+}
+
+.ui-datepicker tbody td a.ui-state-active {
+  background-color: #7CB342 !important;
+  color: #ffffff !important;
+}
+
+.ui-datepicker thead tr {
+  color: #ffffff !important;
+  background: #607D8B !important;
+}
+
+.ui-datepicker th {
+  padding: .5em !important;
+  text-align: center !important;
+  font-weight: 700 !important;
+  border: 0 !important;
+}
+
+.ui-datepicker .ui-datepicker-header {
+  padding: 0.625em 1em !important;
+  font-size: 1em !important;
+  background: #455A64 !important;
+  border-color: #455A64 !important;
+  color: #fff !important;
+}
+
+.ui-datepicker-next {
+  color: #fff !important;
+}
+
+.ui-datepicker-prev {
+  color: #fff !important;
+}
+
+.ui-datepicker-buttonbar {
+  padding: .1em !important;
+}
+
+.ui-datepicker select.ui-datepicker-month {
+  border-width: 0 !important;
+  padding-bottom: 0px !important;
+  padding-top: .25em !important;
+  font-size: 1em !important;
+  outline: medium none !important;
+  appearance: none !important;
+  background-color: #455A64 !important;
+  color: #fff !important;
+  padding-right: 15px !important;
+  padding-left: 8px !important;
+  cursor: pointer !important;
+}
+
+.ui-datepicker select.ui-datepicker-year {
+  border-width: 0 !important;
+  padding-bottom: 0px !important;
+  padding-top: .25em !important;
+  font-size: 1em !important;
+  outline: medium none !important;
+  appearance: none !important;
+  background-color: #455A64 !important;
+  color: #fff !important;
+  padding-right: 15px !important;
+  padding-left: 8px !important;
+  cursor: pointer !important;
+}
+
+/* Estilos para los fileupload */
+
+.ui-fileupload-buttonbar .ui-button {
+  background-color: #28a745 !important;
+  border-color: #28a745 !important;
+}
+
+.ui-fileupload-buttonbar .ui-button:hover {
+  background-color: #218839 !important;
+  border-color: #218839 !important;
+}
+
+.ui-fileupload .ui-fileupload-buttonbar .ui-button {
+  font-family: Times, Times New Roman, serif !important;
+}
+
+.ui-fileupload-content .ui-progressbar {
+  background-color: #90A4AE !important;
+}
+
+.ui-fileupload-choose .pi-plus::before {
+  content: "\e934" !important;
+  line-height: 0 !important;
+  font-size: 20px !important;
+  line-height: 0% !important;
+}
+
+.filedit .ui-fileupload-content {
+  padding: 0px !important;
+  border: 0px !important;
+}
+
+.filedit .ui-fileupload-buttonbar {
+  border: 0px !important;
+  border-bottom: 1px solid #c8c8c8 !important;
+}
+
+/* Estilos para los inputs */
+
+.ad-input-label {
+  margin-bottom: .2rem;
+}
+
+.in-required {
+  border-color: #a94442 !important;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(169, 68, 66, .6) !important;
+}
+
+.ad-input-required {
+  background-image: linear-gradient(to bottom, #a94442, #a94442), linear-gradient(to bottom, #a94442, #a94442) !important;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(169, 68, 66, .6);
+}
+
+.ad-input {
+  background: transparent no-repeat;
+  background-image: linear-gradient(to bottom, #3f51b5, #3f51b5), linear-gradient(to bottom, #bdbdbd, #bdbdbd);
+  background-size: 0 2px, 100% 1px;
+  background-position: 50% 100%, 50% 100%;
+  border-width: 0;
+  padding-bottom: 0px;
+  padding-top: .25em;
+  font-size: 1em;
+  outline: medium none;
+}
+
+.ad-input:focus {
+  background-size: 0 0px, 0% 0px;
+}
+
+.ad-input-style~.focus-border {
+  position: relative;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background-color: #607D8B;
+  transition: 0.4s;
+  -webkit-transition: 0.4s;
+  -moz-transition: 0.4s;
+  -ms-transition: 0.4s;
+  -o-transition: 0.4s;
+}
+
+.ad-input-style:focus~.focus-border {
+  width: 100%;
+  transition: 0.4s;
+  -webkit-transition: 0.4s;
+  -moz-transition: 0.4s;
+  -ms-transition: 0.4s;
+  -o-transition: 0.4s;
+  left: 0;
+}
+
+.ad-select {
+  border: 0px !important;
+  border-bottom: 1px solid #a6a6a6 !important;
+  border-radius: 0px !important;
+  -moz-border-radius: 0px !important;
+  -webkit-border-radius: 0px !important;
+  width: 100% !important;
+  vertical-align: bottom !important;
+  box-shadow: 0 0 0px !important;
+}
+
+.ad-select-required {
+  border: 0px !important;
+  border-bottom: 1px solid #a94442 !important;
+  border-radius: 0px !important;
+  -moz-border-radius: 0px !important;
+  -webkit-border-radius: 0px !important;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(169, 68, 66, .6) !important;
+  width: 100% !important;
+  vertical-align: bottom !important;
+}
+
+.ad-calendar-s {
+  border: 0px !important;
+  border-bottom: 1px solid #a6a6a6 !important;
+  border-radius: 0px !important;
+  -moz-border-radius: 0px !important;
+  -webkit-border-radius: 0px !important;
+  width: 100% !important;
+  padding: 0px !important;
+}
+
+.ad-calendar {
+  border: 0px !important;
+  border-bottom: 1px solid #a6a6a6 !important;
+  border-radius: 0px !important;
+  -moz-border-radius: 0px !important;
+  -webkit-border-radius: 0px !important;
+  width: 100% !important;
+  padding: 1px !important;
+}
+
+.ad-calendar-required {
+  border: 0px !important;
+  border-radius: 0px !important;
+  -moz-border-radius: 0px !important;
+  -webkit-border-radius: 0px !important;
+  width: 100% !important;
+  padding: 1px !important;
+  border-bottom: 1px solid #a94442 !important;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(169, 68, 66, .6) !important;
+}
+
+/* Estilos para el modal de menu de usuario */
+
+#menuUserSettings .ui-menu {
+  background-color: #212121;
+  color: #eaeaea;
+  width: 15.5em;
+}
+
+#menuUserSettings .ui-menuitem-text {
+  color: #eaeaea;
+}
+
+#menuUserSettings .ui-menuitem-icon {
+  color: #eaeaea;
+}
+
+#menuUserSettings .ui-menu .ui-menuitem-link {
+  text-align: left;
+  outline: none !important;
+  outline-width: 0 !important;
+  box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+}
+
+#menuUserSettings .ui-menu .ui-menuitem-link:hover {
+  background-color: #3a3939;
+}
+
+/* Estilos para el menu para dispositivos con pequenia resolucion */
+
+#smallMenu .ui-sidebar-left {
+  top: 64px !important;
+  width: 242px !important;
+}
+
+#smallMenu .ui-sidebar {
+  padding: 0px !important;
+  background-color: #e9e9e9;
+}
+
+/* Toast mas grande por default */
+
+#toastExtraLong .ui-toast-message {
+  width: 650px !important;
+  left: -90px;
+}
+
+#toastLonger .ui-toast-message {
+  width: 500px !important;
+  left: -90px;
+}
+
+#toastMedium .ui-toast-message {
+  width: 350px !important;
+  left: 0px;
+}
+
+/* Para una visualizacion correcta en el Shell */
+
+.ui-table table {
+  table-layout: auto !important;
+}
+
+.tblhshort .ui-table-thead>tr>th {
+  padding: 0.1em !important;
+  font-family: Times, Times New Roman, serif !important;
+  font-size: 15px !important;
+}
+
+/* header de los p-table */
+
+.ui-table-caption {
+  background-color: #607a8c !important;
+  color: white !important;
+}
+
+#tbldoc .ui-table-tbody>tr>td {
+  padding: 0.371em 0.857em !important;
+}
+
+.tbltitle .ui-table-thead>tr>th {
+  font-family: Times, Times New Roman, serif !important;
+  font-size: 15px !important;
+}
+
+.tblshort .ui-table-tbody>tr>td {
+  padding: 0.480em 0.857em !important;
+}
+
+.tblvshort .ui-table-tbody>tr>td {
+  padding: 0.430em 0.857em !important;
+}
+
+/* circulo redondo paginador */
+
+.ui-paginator-page.ui-state-active {
+  background-color: #f5a96d !important;
+  color: #212121 !important;
+}
+
+.ui-table .ui-table-tbody .ui-state-highlight {
+  background-color: #f5a96d !important;
+}
+
+.ui-paginator .ui-paginator-pages .ui-paginator-page {
+  border-radius: 50% !important;
+  -moz-border-radius: 50% !important;
+  -webkit-border-radius: 50% !important;
+}
+
+/* font para los valores de los tr de las tablas */
+
+.ui-table .ui-table-tbody>tr {
+  font-family: Times, Times New Roman, serif !important;
+  color: #212121 !important;
+  font-size: 16px !important;
+}
+
+/* encabezados de panel */
+
+.ui-panel-titlebar {
+  background-color: #607a8c !important;
+  color: white !important;
+  font-size: 14px !important;
+  text-align: center !important;
+}
+
+/* textos para check-box */
+
+.ui-chkbox-label {
+  font-weight: 700 !important;
+}
+
+/* para los messages de la app */
+
+.ui-messages {
+  padding: 0.425em 1em !important;
+  margin: 0px !important;
+  margin-bottom: 10px !important;
+}
+
+.ui-messages-detail {
+  font-family: Times, Times New Roman, serif !important;
+}
+
+.ui-dialog-titlebar {
+  background-color: #607a8c !important;
+  color: white !important;
+  font-family: Times, Times New Roman, serif !important;
+  font-weight: 700 !important;
+  padding: 0.5em !important;
+}
+
+.ui-dialog-titlebar-icon {
+  color: white !important;
+}
+
+.ui-panel-titlebar-icon {
+  color: white !important;
+}
+
+.ui-confirmdialog-icon {
+  font-size: 2.0em !important;
+  margin-right: 0px !important;
+}
+
+.ui-confirmdialog-message {
+  font-family: Times, Times New Roman, serif !important;
+  font-size: 16px !important;
+}
+
+.ui-confirmdialog.ui-dialog .ui-dialog-content {
+  padding-top: 15px !important;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+}
+
+.ui-radiobutton-label {
+  margin: 0 0 0 .3em !important;
+  font-family: Times, Times New Roman, serif !important;
+  color: #212121 !important;
+  font-size: 0.95rem !important;
+}
+
+#confApp .ui-dialog-content {
+  text-align: center !important;
+}
+
+.splr-dl .ui-dialog-content {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+
+.mdlsintop .ui-dialog-content {
+  padding-top: 0px !important
+}
+
+/* font-size */
+
+.font-size-9 {
+  font-size: 9px !important;
+}
+
+.font-size-10 {
+  font-size: 10px !important;
+}
+
+.font-size-12 {
+  font-size: 12px !important;
+}
+
+.font-size-14 {
+  font-size: 14px !important;
+}
+
+.font-size-15 {
+  font-size: 15px !important;
+}
+
+.font-size-16 {
+  font-size: 16px !important;
+}
+
+.font-size-18 {
+  font-size: 18px !important;
+}
+
+.font-size-20 {
+  font-size: 20px !important;
+}
+
+.font-size-22 {
+  font-size: 22px !important;
+}
+
+.font-size-23 {
+  font-size: 23px !important;
+}
+
+.font-size-24 {
+  font-size: 24px !important;
+}
+
+.font-size-26 {
+  font-size: 26px !important;
+}
+
+.font-size-28 {
+  font-size: 28px !important;
+}
+
+.font-size-35 {
+  font-size: 35px !important;
+}
+
+.btn-size-admin {
+  font-family: Times, Times New Roman, serif !important;
+  margin: 0px !important;
+  cursor: pointer;
+}
+
+/* font family para admin free */
+
+.font-admin {
+  font-family: "Roboto", "Helvetica Neue", sans-serif !important
+}
+
+.font-new-roman {
+  font-family: Times, Times New Roman, serif !important;
+}
+
+/* circulo redondo btns table */
+
+.btn-round-table {
+  border-radius: 50% !important;
+  -moz-border-radius: 50% !important;
+  -webkit-border-radius: 50% !important;
+  width: 2.2em !important;
+  height: 2.2em !important;
+  padding: .22rem .45rem !important;
+}
+
+.icon-round-table {
+  margin-left: -.02em !important;
+  line-height: 1.23 !important;
+}
+
+.icon-round-edit {
+  margin-left: -.2em !important;
+  line-height: 0.9 !important;
+}
+
+.icon-round-table-2 {
+  margin-left: -.13em !important;
+  line-height: 1.1 !important;
+}
+
+.icon-round-del {
+  margin-left: -.13em !important;
+  font-size: 20px !important;
+}
+
+.btn-round-del {
+  background-color: #d68b94 !important;
+  color: #212121 !important;
+}
+
+.btn-pup {
+  background-color: #3F51B5 !important;
+  color: #ffffff !important;
+}
+
+.btn-pup:hover {
+  background-color: rgb(50, 64, 146) !important;
+  color: #ffffff !important;
+}
+
+.btn-round-edit {
+  background-color: #007ad9 !important;
+  color: #ffffff !important;
+}
+
+.btn-round-edit:hover {
+  background-color: #0762a8 !important;
+  color: #ffffff !important;
+}
+
+.btn-round-del:hover {
+  background-color: #c47d86 !important;
+  color: #212121 !important;
+}
+
+.color-info {
+  color: #555a63 !important;
+}
+
+.w-25 {
+  width: 25% !important
+}
+
+.w-65 {
+  width: 65% !important
+}
+
+.w-70 {
+  width: 70% !important
+}
+
+.w-80 {
+  width: 80% !important
+}
+
+.w-90 {
+  width: 90% !important
+}
+
+.w-100-px {
+  width: 100px !important
+}
+
+.w-150-px {
+  width: 150px !important
+}
+
+.w-120-px {
+  width: 120px !important
+}
+
+.w-130-px {
+  width: 130px !important
+}
+
+.w-180-px {
+  width: 180px !important
+}
+
+.w-185-px {
+  width: 185px !important
+}
+
+.w-80-px {
+  width: 80px !important
+}
+
+.w-70-px {
+  width: 70px !important
+}
+
+.w-35-px {
+  width: 35px !important
+}
+
+.sub-title-page {
+  font-family: Times, Times New Roman, serif !important;
+  font-size: 1rem;
+  margin: 0px !important;
+}
+
+.pnl-pt .ui-panel-content {
+  padding: 0px !important;
+  padding-top: 0.01em !important;
+}
+
+.pnl-pt .ui-panel-titlebar {
+  padding: 5px !important;
+}
+
+.steps-pnl .ui-panel-titlebar {
+  background-color: #f9f9f9 !important;
+  text-align: left !important;
+  color: #333333 !important;
+  font-weight: 700 !important;
+  font-size: 15px !important;
+  font-family: Times, Times New Roman, serif !important;
+}
+
+.pnl-basic .ui-panel-titlebar {
+  text-align: left !important;
+  font-size: 15px !important;
+  font-family: Times, Times New Roman, serif !important;
+}
+
+.cir-red {
+  border-radius: 50%;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  display: inline-block;
+  color: #212121;
+  background-color: #d68b94;
+  width: 22px;
+  height: 22px;
+  text-align: center;
+}
+
+.circle-download {
+  border-radius: 50%;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  display: inline-block;
+  background-color: #3F51B5 !important;
+  color: #ffffff !important;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+}
+
+.del-round-min {
+  border-radius: 50%;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  display: inline-block;
+  color: #212121;
+  background-color: #d68b94;
+  width: 22px;
+  height: 22px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 14px !important
+}
+
+.del-round-min:hover {
+  background-color: #c47d86 !important;
+  color: #212121 !important;
+}
+
+.del-round-min-pi {
+  line-height: 1.20 !important;
+}
+
+.edit-round-min {
+  border-radius: 50%;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  display: inline-block;
+  color: white;
+  background-color: #007ad9;
+  width: 22px;
+  height: 22px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 14px !important
+}
+
+.edit-round-min:hover {
+  background-color: #0762a8;
+}
+
+.st {
+  font-size: 0.98rem;
+  font-family: Times, Times New Roman, serif;
+}
+
+.mx-dtl-mdl {
+  max-width: 800px;
+  min-width: 800px;
+}
+
+.mx-sub-mdl {
+  max-width: 850px;
+  min-width: 850px;
+}
+
+.round-up-down {
+  border-radius: 50%;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  display: inline-block;
+  background-color: #f5a96d;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.round-up-down:hover {
+  background-color: #e99657;
+}
+
+.round-up-down-i {
+  font-size: 28px !important;
+  margin-top: 5px !important;
+}
+
+.outl-no {
+  outline: medium none !important
+}
+
+.clr-activo {
+  color: #2E7D32 !important;
+}
+
+.clr-anulado {
+  color: #D84315 !important;
+}
+
+.btn-add {
+  background-color: #138496 !important;
+  border-color: #117a8b !important;
+}
+
+.btn-add:hover {
+  background-color: #0d96ac !important;
+}
+
+.i-slight {
+  color: #808991 !important;
+}
+
+.copy {
+  cursor: pointer;
+}
+
+.copy:hover {
+  text-decoration: underline;
+  color: #3b3b36;
+}
+
+.mdl-btn-h {
+  padding: 2px !important;
+}
+
+.bg-cg {
+  background-color: #f4f4f4;
+  border-top: 1px solid #c8c8c8;
+}
+
+.tblwthclr .ui-table-tbody>tr:nth-child(even) {
+  background-color: #fff !important;
+}
+
+.tblwthclr .ui-table-tbody>tr.ui-selectable-row:not(.ui-state-highlight):not(.ui-contextmenu-selected):hover {
+  cursor: default !important;
+  background-color: #eaeaea !important;
+}
+
+.subserie-clr {
+  border-radius: 50%;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  display: inline-block;
+  background-color: #2E7D32;
+  width: 10px;
+  height: 10px;
+}
+
+.serie-clr {
+  border-radius: 50%;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  display: inline-block;
+  background-color: #D84315;
+  width: 10px;
+  height: 10px;
+}
+
+.tipo-clr {
+  border-radius: 50%;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  display: inline-block;
+  background-color: #607D8B;
+  width: 6px;
+  height: 6px;
+}
+
+.tipo-clr-b {
+  border-radius: 50%;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  display: inline-block;
+  background-color: #607D8B;
+  width: 10px;
+  height: 10px;
+}
+
+.p-2rem {
+  padding: .2rem!important;
+}
+
+.mayuscula {
+  text-transform: uppercase;
+}
+
+.ad-calendar-s:focus {
+  box-shadow: 0 0 0px !important;
+}
+
+.pnl-b1 .ui-panel-content {
+  border-top: 1px solid #c8c8c8 !important;
+}
+
+.steps-st {
+  font-family: Times, Times New Roman, serif;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.steps-circle {
+  border-radius: 50%;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  display: inline-block;
+  color: white;
+  background-color: #007ad9;
+  width: 22px;
+  height: 22px;
+  text-align: center;
+}

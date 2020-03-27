@@ -1,2 +1,2 @@
-# ventas_front
-Repositorio para aplicación venta de productos web
+# frontend-angular
+front para la apicación de ventas
