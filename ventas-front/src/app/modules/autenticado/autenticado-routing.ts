@@ -19,11 +19,11 @@ export const ROUTES: Routes = [
         component: BienvenidaComponent
       },
       {
-        path: RouterConstant.ROUTER_VENTAS,
+        path: RouterConstant.ROUTER_PRODUCTOS,
         canActivate: [PrivilegiosGuard],
         data: { preload: true},
-        loadChildren: () => import('../ventas/ventas.module').then(m => m.VentasModule)
-      }
+        loadChildren: () => import('../productos/productos.module').then(m => m.ProductosModule)
+      },
     ]
   }
 ];

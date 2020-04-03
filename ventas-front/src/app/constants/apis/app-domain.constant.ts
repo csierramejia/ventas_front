@@ -11,7 +11,7 @@ export class AppDomainConstant {
 
   /** Dominio para consumir los recursos de los microservicios de aministracion */
   static readonly ADMINISTRACION: string = 'http://localhost:8087/';
-  
+
     /** Dominio para consumir los recursos de los microservicios de apuestas */
-  static readonly APUESTAS: string = 'http://localhost:8090/';
+  static readonly APUESTAS: string = 'http://localhost:8086/';
 }

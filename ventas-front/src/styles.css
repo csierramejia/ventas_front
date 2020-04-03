@@ -1,5 +1,14 @@
+@font-face {
+  font-family: Montserrat;
+  src: url("/assets/fonts/Montserrat-Bold.otf") format("truetype");
+  src: url("/assets/fonts/Montserrat-Light.otf") format("embedded-opentype");
+  src: url("/assets/fonts/Montserrat-Regular.otf") format("truetype");
+
+}
+
 body {
-  font-family: 'Open Sans', sans-serif !important;
+  /*font-family: 'Open Sans', sans-serif !important;*/
+  font-family: 'Montserrat' !important;
 }
 
 /* Estilos para el menu de la app */

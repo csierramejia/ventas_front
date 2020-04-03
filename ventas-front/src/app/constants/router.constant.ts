@@ -6,6 +6,12 @@ export class RouterConstant {
   /** Router para el modulo del LOGIN */
   public static readonly ROUTER_LOGIN: string = 'login';
 
+  /** Router para el modulo del PRODUCTOS */
+  public static readonly ROUTER_PRODUCTOS: string = 'productos';
+
+  /** Router para el componente de chance */
+  public static readonly ROUTER_CHANCE: string = 'chance';
+
   /** Router para el modulo del PAGINAS DE ERRORES */
   public static readonly ROUTER_ERROR: string = 'error';
 
@@ -22,7 +28,7 @@ export class RouterConstant {
   public static readonly ROUTER_CUENTA_USER: string = 'cuentauser';
 
   /** Router para el modulo de LOTERIAS */
-  public static readonly ROUTER_CHANCE: string = 'chance';
+  // public static readonly ROUTER_CHANCE: string = 'chance';
 
   /** Router para el modulo de ESCRUTINIO */
   public static readonly ROUTER_VENTAS: string = 'ventas';

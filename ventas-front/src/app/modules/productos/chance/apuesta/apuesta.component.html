@@ -1,0 +1,79 @@
+    <form [formGroup]="chanceFormApuesta">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-3 form-group">
+                    <div class="ui-g-12 ui-md-4">
+                        <label class="col-form-label" for="numero">Numero*</label>
+                        <div class="ui-inputgroup">
+                            <span class="ui-inputgroup-addon"><i class="fa fa-list-ol" style="line-height: 1.25;"></i></span>
+                            <input type="number" id="numero" minlength="4" maxlength="4" pInputText (change)="validNumber()" formControlName="numero">         
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 form-group" *ngIf="enabledThree">
+                    <div class="ui-g-12 ui-md-4">
+                        <label class="col-form-label" for="numero">3 Cifras</label>
+                        <div class="ui-inputgroup">
+                            <span class="ui-inputgroup-addon"><p-checkbox></p-checkbox></span>
+                            <input type="text" pInputText formControlName="numeroTres">         
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 form-group" *ngIf="enabledTwo">
+                    <div class="ui-g-12 ui-md-4">
+                        <label class="col-form-label" for="numero">2 Cifras</label>
+                        <div class="ui-inputgroup">
+                            <span class="ui-inputgroup-addon"><p-checkbox></p-checkbox></span>
+                            <input type="text" pInputText formControlName="numeroDos">         
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 form-group" *ngIf="enabledOne">
+                    <div class="ui-g-12 ui-md-4">
+                        <label class="col-form-label" for="numero">1 Cifra</label>
+                        <div class="ui-inputgroup">
+                            <span class="ui-inputgroup-addon"><p-checkbox></p-checkbox></span>
+                            <input type="text" pInputText formControlName="numeroUno">         
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+    
+            <div class="row">
+                <div class="col-md-3 form-group">
+                    <div class="ui-g-12 ui-md-4">
+                        <div class="ui-inputgroup">
+                            <span class="ui-inputgroup-addon"><i class="fa fa-usd" style="line-height: 1.25;"></i></span>
+                            <input type="number" pInputText formControlName="valorNumero">         
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 form-group" *ngIf="enabledThree">
+                    <div class="ui-g-12 ui-md-4">
+                        <div class="ui-inputgroup">
+                            <span class="ui-inputgroup-addon"><i class="fa fa-usd" style="line-height: 1.25;"></i></span>
+                            <input type="number" pInputText formControlName="valorNumeroTres">         
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 form-group" *ngIf="enabledTwo">
+                    <div class="ui-g-12 ui-md-4">
+                        <div class="ui-inputgroup">
+                            <span class="ui-inputgroup-addon"><i class="fa fa-usd" style="line-height: 1.25;"></i></span>
+                            <input type="number" pInputText formControlName="valorNumeroDos">         
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 form-group" *ngIf="enabledOne">
+                    <div class="ui-g-12 ui-md-4">
+                        <div class="ui-inputgroup">
+                            <span class="ui-inputgroup-addon"><i class="fa fa-usd" style="line-height: 1.25;"></i></span>
+                            <input type="number" pInputText formControlName="valorNumeroUno">         
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    
