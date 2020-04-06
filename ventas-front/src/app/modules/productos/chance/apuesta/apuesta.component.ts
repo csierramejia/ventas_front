@@ -12,19 +12,22 @@ export class ApuestaComponent implements OnInit {
 
 
   enabledThree = false;
-  enabledTwo   = false;
-  enabledOne   = false;
+  enabledTwo = false;
+  enabledOne = false;
 
 
-  chanceFormApuesta = new FormGroup({
+  chanceForm = new FormGroup({
+    fecha: new FormControl(''),
     numero: new FormControl(''),
-    numeroTres: new FormControl({value: '', disabled: true}),
-    numeroDos: new FormControl({value: '', disabled: true}),
-    numeroUno: new FormControl({value: '', disabled: true}),
+    tipoChanceDirecto: new FormControl({value: '', disabled: true}),
+    tipoChanceCombinado: new FormControl({value: '', disabled: true}),
+    tresCifras: new FormControl({value: '', disabled: true}),
+    dosCifras: new FormControl({value: '', disabled: true}),
+    unaCifras: new FormControl({value: '', disabled: true}),
     valorNumero: new FormControl(''),
     valorNumeroTres: new FormControl({value: '', disabled: true}),
     valorNumeroDos: new FormControl({value: '', disabled: true}),
-    valorNumeroUno: new FormControl({value: '', disabled: true})
+    valorNumeroUna: new FormControl({value: '', disabled: true})
   });
 
   constructor() { }
@@ -32,62 +35,114 @@ export class ApuestaComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**
+   * @author Luis Hernandez
+   * @description Validamos de cuantas cifras es el
+   * numero para saber que tipo de chance se va a realizar
+   */
   validNumber(): void {
-    if (String(this.chanceFormApuesta.get('numero').value).length === 4) {
-      this.chanceNumero.emit(4);
-    } else if (String(this.chanceFormApuesta.get('numero').value).length === 3) {
-      this.chanceNumero.emit(3);
+    if (String(this.chanceForm.get('numero').value).length === 4) {
+      this.chanceForm.controls.tipoChanceDirecto.enable();
+      this.chanceForm.controls.tipoChanceCombinado.enable();
+    } else if (String(this.chanceForm.get('numero').value).length === 3) {
+      this.chanceForm.controls.tipoChanceDirecto.disable();
+      this.chanceForm.controls.tipoChanceCombinado.disable();
+
+      this.enabledThree = false;
+      this.enabledTwo = true;
+      this.enabledOne = true;
+
+
+    }
+  }
+
+
+  /**
+   * @author Luis Hernandez
+   * @description si el usuario selecciona modalidad
+   * directo habilitamos los cambos de tres, dos y una cifra
+   */
+  enabledInputsMore(isChecked: boolean): void {
+    if (this.chanceForm.controls.tipoChanceDirecto.status === 'VALID' && isChecked) {
+      this.enabledThree = true;
+      this.enabledTwo = true;
+      this.enabledOne = true;
+    } else {
+      this.enabledThree = false;
+      this.enabledTwo = false;
+      this.enabledOne = false;
+    }
+  }
+
+
+  enabledTresCifras(isChecked: boolean): void {
+    if (isChecked) {
+
+
+      console.log(String(this.chanceForm.controls.numero.value).substr(-3));
+
+      this.chanceForm.controls.tresCifras.enable();
+      this.chanceForm.controls.valorNumeroTres.enable();
+    } else {
+      this.chanceForm.controls.tresCifras.disable();
+      this.chanceForm.controls.valorNumeroTres.disable();
     }
   }
 
   /**
    * @author Luis Hernandez
-   * @param isChecked
-   * @description Metodo que se encarga activar
-   * y desactivar los campos de apuesta para 3 cifras
+   * @description Metodo que se encargar de realizar
+   * la preparación inicial del componente
    */
-  /*activateThree(isChecked: boolean): void {
-    if (isChecked) {
-      this.chanceFormApuesta.controls.numeroTres.enable();
-      this.chanceFormApuesta.controls.valorNumeroTres.enable();
-    } else {
-      this.chanceFormApuesta.controls.numeroTres.disable();
-      this.chanceFormApuesta.controls.valorNumeroTres.disable();
-    }
+  /*configInit(): void {
+    this.configCalendar();
   }*/
 
 
   /**
    * @author Luis Hernandez
-   * @param isChecked
-   * @description Metodo que se encarga activar
-   * y desactivar los campos de apuesta para 2 cifras
+   * @description Metodo que se encargar de inicializar
+   * la configuración del calendario
    */
-  /*activateTwo(isChecked: boolean): void {
-    if (isChecked) {
-      this.chanceFormApuesta.controls.numeroDos.enable();
-      this.chanceFormApuesta.controls.valorNumeroDos.enable();
-    } else {
-      this.chanceFormApuesta.controls.numeroDos.disable();
-      this.chanceFormApuesta.controls.valorNumeroDos.disable();
-    }
+  /*configCalendar(): void {
+    this.es = {
+      firstDayOfWeek: 0,
+      dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+      dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'],
+      dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+      monthNames: [
+        'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre' ],
+      monthNamesShort: [ 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic' ],
+      today: 'Hoy',
+      clear: 'Limpiar',
+      dateFormat: 'mm/dd/yy',
+      weekHeader: 'Wk'
+    };
+  }*/
+
+  /**
+   * @author Luis Hernandez
+   * @description Metodo que devuelve un numero aleatorio de 3 cifras
+   */
+  /*getNumberThree(): void {
+    console.log(Math.round(Math.random() * (100 - 999) + 999 ));
   }*/
 
 
   /**
    * @author Luis Hernandez
-   * @param isChecked
-   * @description Metodo que se encarga activar
-   * y desactivar los campos de apuesta para 1 cifra
+   * @description Metodo que devuelve un numero aleatorio de 4 cifras
    */
-  /*activateOne(isChecked: boolean): void {
-    if (isChecked) {
-      this.chanceFormApuesta.controls.numeroUno.enable();
-      this.chanceFormApuesta.controls.valorNumeroUno.enable();
-    } else {
-      this.chanceFormApuesta.controls.numeroUno.disable();
-      this.chanceFormApuesta.controls.valorNumeroUno.disable();
-    }
+  /*getNumberFour(): void {
+    console.log(Math.round(Math.random() * (1000 - 9999) + 9999 ));
+  }*/
+
+
+
+  /*chanceNumero(e): void {
+    console.log('llego el numero');
+    console.log(e);
+    console.log('llego el numero');
   }*/
 
 }

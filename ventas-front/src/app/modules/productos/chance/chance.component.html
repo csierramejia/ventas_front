@@ -1,62 +1,9 @@
 
-    <section class="container">
-        <div class="main-body">Hover me to display side bar</div>
-        <aside>
-            <p-card class="items-cart" *ngFor="let cartItem of cartItems">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-10">
-                            <div class="row">
-                                <b class="numberPlayed">Número Jugado: {{cartItem.numberPlayed}}</b> <br>
-                                <span class="dayDraw">Dia del sorteo: {{cartItem.dataPlayed}}</span>
-                            </div>
-                            <div class="row">
-                                <table style="width:100%">
-                                    <tr>
-                                        <th class="headNumberValues">Directo</th>
-                                        <th class="headNumberValues">Combi</th>
-                                        <th class="headNumberValues">3C</th>
-                                        <th class="headNumberValues">2C</th>
-                                        <th class="headNumberValues">1C</th>
-                                    </tr>
-                                    <tr>
-                                        <td class="textNumberValues">${{cartItem.direct | number}}</td>
-                                        <td class="textNumberValues">${{cartItem.combined | number}}</td>
-                                        <td class="textNumberValues">${{cartItem.threeC | number}}</td>
-                                        <td class="textNumberValues">${{cartItem.twoC | number}}</td>
-                                        <td class="textNumberValues">${{cartItem.oneC | number}}</td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="col-2 actions-btns">
-                            <i class="pi pi-pencil btn-edit-played"></i>
-                            <i class="pi pi-trash btn-remove-played"></i>
-                        </div> 
-                    </div>
-                </div>
-            </p-card>
-
-            <p-card class="">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-4">
-                            Apostado
-                            $ 5.880
-                        </div>
-                        <div class="col-4">
-                            IVA
-                            $ 1.120
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        Total $ 7.000
-                    </div>
-                </div>
-            </p-card>
-
-            <button type="button" class="btn btn-primary btn-lg btn-block">Block level button</button>
-
-        </aside>
+    <section class="container-fluid">
+        <div class="row">
+            <div class="main-body col-8">
+                <app-apuesta></app-apuesta>
+            </div>
+            <app-bolsa class="col-4"></app-bolsa>
+        </div>
     </section>

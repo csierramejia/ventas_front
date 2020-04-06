@@ -1,0 +1,58 @@
+.cardBet{
+    margin-bottom: 15px;
+}
+
+
+.titleBetCard{
+    font-family: Montserrat;
+    font-size: 20px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.22;
+    letter-spacing: normal;
+    text-align: left;
+    color: #999999;
+}
+
+
+.btn-random{
+    width: 100%;
+    border-radius: 30px;
+    box-shadow: 0 1.5px 4px 0 rgba(20, 157, 183, 0.45);
+    background-image: linear-gradient(to bottom, #0083fe, #0bc9ec);
+    font-size: 12px;
+    font-family: Montserrat;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.27;
+    letter-spacing: normal;
+    text-align: left;
+    color: #ffffff;
+}
+
+
+
+
+
+.inner-addon {
+    position: relative;
+  }
+  .inner-addon .glyphicon {
+    position: absolute;
+    padding: 10px;
+    pointer-events: none;
+  }
+  .left-addon .glyphicon {
+    left: 0px;
+  }
+  .right-addon .glyphicon {
+    right: 0px;
+  }
+  .left-addon input {
+    padding-left: 30px;
+  }
+  .right-addon input {
+    padding-right: 30px;
+  }

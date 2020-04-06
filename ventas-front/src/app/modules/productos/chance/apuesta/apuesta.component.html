@@ -1,79 +1,62 @@
-    <form [formGroup]="chanceFormApuesta">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-3 form-group">
-                    <div class="ui-g-12 ui-md-4">
-                        <label class="col-form-label" for="numero">Numero*</label>
-                        <div class="ui-inputgroup">
-                            <span class="ui-inputgroup-addon"><i class="fa fa-list-ol" style="line-height: 1.25;"></i></span>
-                            <input type="number" id="numero" minlength="4" maxlength="4" pInputText (change)="validNumber()" formControlName="numero">         
+
+    <div class="card cardBet">
+        <div class="card-header titleBetCard">Juego</div>
+        <div class="card-body">
+            <div class="container-fluid ">
+                <div class="row">
+                    <div class="col-md-3">
+                        <button type="button" class="btn btn-random">
+                            ALEATORIO <span class="badge badge-light">3</span>
+                        </button>
+                    </div>
+                    <div class="col-md-3">
+                        <button type="button" class="btn btn-random">
+                            ALEATORIO <span class="badge badge-light">4</span>
+                        </button>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control"/>
+                            <span class="input-group-addon">
+                                <i class="fa fa-address-book-o glyphicon" aria-hidden="true"></i>
+                            </span>
                         </div>
                     </div>
+
                 </div>
-                <div class="col-md-3 form-group" *ngIf="enabledThree">
-                    <div class="ui-g-12 ui-md-4">
-                        <label class="col-form-label" for="numero">3 Cifras</label>
-                        <div class="ui-inputgroup">
-                            <span class="ui-inputgroup-addon"><p-checkbox></p-checkbox></span>
-                            <input type="text" pInputText formControlName="numeroTres">         
-                        </div>
+                <div class="row">
+                    <div class="col-md-2">
                     </div>
                 </div>
-                <div class="col-md-3 form-group" *ngIf="enabledTwo">
-                    <div class="ui-g-12 ui-md-4">
-                        <label class="col-form-label" for="numero">2 Cifras</label>
-                        <div class="ui-inputgroup">
-                            <span class="ui-inputgroup-addon"><p-checkbox></p-checkbox></span>
-                            <input type="text" pInputText formControlName="numeroDos">         
-                        </div>
+                <div class="row">
+                    <div class="col-md-2">
                     </div>
                 </div>
-                <div class="col-md-3 form-group" *ngIf="enabledOne">
-                    <div class="ui-g-12 ui-md-4">
-                        <label class="col-form-label" for="numero">1 Cifra</label>
-                        <div class="ui-inputgroup">
-                            <span class="ui-inputgroup-addon"><p-checkbox></p-checkbox></span>
-                            <input type="text" pInputText formControlName="numeroUno">         
-                        </div>
+                <div class="row" >
+                    <div class="col-md-2">
                     </div>
                 </div>
             </div>
+            
+        </div>
+    </div>
     
-    
-            <div class="row">
-                <div class="col-md-3 form-group">
-                    <div class="ui-g-12 ui-md-4">
-                        <div class="ui-inputgroup">
-                            <span class="ui-inputgroup-addon"><i class="fa fa-usd" style="line-height: 1.25;"></i></span>
-                            <input type="number" pInputText formControlName="valorNumero">         
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 form-group" *ngIf="enabledThree">
-                    <div class="ui-g-12 ui-md-4">
-                        <div class="ui-inputgroup">
-                            <span class="ui-inputgroup-addon"><i class="fa fa-usd" style="line-height: 1.25;"></i></span>
-                            <input type="number" pInputText formControlName="valorNumeroTres">         
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 form-group" *ngIf="enabledTwo">
-                    <div class="ui-g-12 ui-md-4">
-                        <div class="ui-inputgroup">
-                            <span class="ui-inputgroup-addon"><i class="fa fa-usd" style="line-height: 1.25;"></i></span>
-                            <input type="number" pInputText formControlName="valorNumeroDos">         
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 form-group" *ngIf="enabledOne">
-                    <div class="ui-g-12 ui-md-4">
-                        <div class="ui-inputgroup">
-                            <span class="ui-inputgroup-addon"><i class="fa fa-usd" style="line-height: 1.25;"></i></span>
-                            <input type="number" pInputText formControlName="valorNumeroUno">         
-                        </div>
-                    </div>
-                </div>
+
+    <div class="card">
+        <h5 class="card-header">
+            <a data-toggle="collapse" href="#collapse-example" aria-expanded="true" aria-controls="collapse-example" id="heading-example" class="d-block">
+                <i class="fa fa-chevron-down pull-right"></i>
+                Collapsible Group Item #1
+            </a>
+        </h5>
+        <div id="collapse-example" class="collapse" aria-labelledby="heading-example">
+            <div class="card-body">
+                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon
+                officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3
+                wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
+                Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan
+                excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt
+                you probably haven't heard of them accusamus labore sustainable VHS.
             </div>
         </div>
-    </form>
-    
+    </div>
