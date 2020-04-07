@@ -20,8 +20,8 @@ export class BolsaComponent implements OnInit {
   ];
 
   cartItems = [
-     { numberPlayed: '1234', dataPlayed: '26/03/2020', direct: 2000, combined: 0, threeC: 500, twoC: 500, oneC: 500 },
-     { numberPlayed: '2736', dataPlayed: '26/03/2020', direct: 2000, combined: 0, threeC: 500, twoC: 500, oneC: 500 },
+     // { numberPlayed: '1234', dataPlayed: '26/03/2020', direct: 2000, combined: 0, threeC: 500, twoC: 500, oneC: 500 },
+     // { numberPlayed: '2736', dataPlayed: '26/03/2020', direct: 2000, combined: 0, threeC: 500, twoC: 500, oneC: 500 },
      // { numberPlayed: '1525', dataPlayed: '26/03/2020', direct: 2000, combined: 0, threeC: 500, twoC: 500, oneC: 500 },
      // { numberPlayed: '6252', dataPlayed: '26/03/2020', direct: 2000, combined: 0, threeC: 500, twoC: 500, oneC: 500 },
      // { numberPlayed: '2615', dataPlayed: '26/03/2020', direct: 2000, combined: 0, threeC: 500, twoC: 500, oneC: 500 },

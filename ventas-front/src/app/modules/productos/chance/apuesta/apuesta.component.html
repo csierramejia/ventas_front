@@ -1,40 +1,110 @@
 
+    <div class="container-fluid">
+        <div class="row calendarRow">
+            <div class="col-md-6">
+                <label class="betDayDate">Seleccione el día del sorteo</label><br>
+                <span 
+                    class="badge badge-secondary chipOptionDay" 
+                    *ngFor="let day of days"
+                    [id]="day.name"
+                    (click)="get_date_bet(day)">
+                    {{day.text}}
+                </span>
+            </div>
+            <div class="col-md-6 calendarDate">
+                <p class="calendar-icon">
+                    <label class="dayBet">Día del sorteo {{ dayBet | date: 'dd/MM/yyyy'}}</label>
+                </p>
+                
+            </div>
+            
+        </div>
+    </div>
+
     <div class="card cardBet">
         <div class="card-header titleBetCard">Juego</div>
         <div class="card-body">
-            <div class="container-fluid ">
+            <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-5 padColLable">
                         <button type="button" class="btn btn-random">
                             ALEATORIO <span class="badge badge-light">3</span>
                         </button>
-                    </div>
-                    <div class="col-md-3">
-                        <button type="button" class="btn btn-random">
+                        <button type="button" class="btn btn-random btnFour">
                             ALEATORIO <span class="badge badge-light">4</span>
                         </button>
                     </div>
                     <div class="col-md-3">
-                        <div class="input-group">
-                            <input type="text" class="form-control"/>
-                            <span class="input-group-addon">
-                                <i class="fa fa-address-book-o glyphicon" aria-hidden="true"></i>
-                            </span>
+                          <label class="titleInput" for="identificacion">Identificación</label>
+                          <div class="form-group has-feedback">
+                            <i class="fa fa-user form-control-feedback"></i>
+                            <input type="text" class="form-control styleInput" placeholder="Cedula">
+                          </div>
+                    </div>
+
+                    <div class="col-md-4 padColLable">
+                        <div class="form-group has-feedback elemClient">
+                            <i class="fa fa-check-square inputSuccess"></i>
+                          <input type="text" class="form-control styleInputClient" placeholder="Cliente">
                         </div>
                     </div>
 
                 </div>
                 <div class="row">
-                    <div class="col-md-2">
+                    <div class="col-md-3">
+                        <label class="titleInput" for="numero">Número</label>
+                        <!-- <div class="form-group has-feedback">
+                          <i class="fa fa-hashtag form-control-feedback" aria-hidden="true"></i>
+                          <input type="text" class="form-control styleInput" placeholder="Número">
+                        </div> -->
+
+                        <div class="input-wrapper">
+                            <input type="text" />
+                        </div>
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-md-3">
+                        <label class="titleInput" for="valorDirecto">Valor Directo</label>
+                        <div class="form-group has-feedback">
+                          <i class="fa fa-usd form-control-feedback" aria-hidden="true"></i>
+                          <input type="text" class="form-control styleInput" placeholder="Directo">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="titleInput" for="combinado">Combinado</label>
+                        <div class="form-group has-feedback">
+                          <i class="fa fa-usd form-control-feedback" aria-hidden="true"></i>
+                          <input type="text" class="form-control styleInput" placeholder="Combinado">
+                        </div>
+                    </div>
                     <div class="col-md-2">
+                        <label class="titleInput" for="valorTres">Valor 3 cifras</label>
+                        <div class="form-group has-feedback">
+                          <i class="fa fa-usd form-control-feedback" aria-hidden="true"></i>
+                          <input type="text" class="form-control styleInput" placeholder="Valor">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="titleInput" for="valorDos">Valor 2 cifras</label>
+                        <div class="form-group has-feedback">
+                          <i class="fa fa-usd form-control-feedback" aria-hidden="true"></i>
+                          <input type="text" class="form-control styleInput" placeholder="Valor">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="titleInput" for="valorDos">Valor 1 cifra</label>
+                        <div class="form-group has-feedback">
+                          <i class="fa fa-usd form-control-feedback" aria-hidden="true"></i>
+                          <input type="text" class="form-control styleInput" placeholder="Valor">
+                        </div>
                     </div>
                 </div>
-                <div class="row" >
-                    <div class="col-md-2">
-                    </div>
+                <hr>
+                <div class="row float-right">
+                    <button type="button" class="btn btn-random">
+                        AGREGAR <i class="fa fa-plus" aria-hidden="true"></i>
+                    </button>
                 </div>
             </div>
             

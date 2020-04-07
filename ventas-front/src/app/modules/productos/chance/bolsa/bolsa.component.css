@@ -1,14 +1,28 @@
 aside{
-    /*width: 430px;*/
-    /*height: calc(100vh - 110px);*/
-    height: auto;
-    box-shadow: 0 1.5px 3px 0 rgba(0, 0, 0, 0.16);
-    background-color: #ffffff;
+    top: 100px;
+    left: 1086px;
+    width: 237px;
+    height: 668px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 6px #00000029;
+    opacity: 1;
+
+}
+
+::ng-deep .ui-card-body{
+    padding: 5px !important;
 }
 
 ::ng-deep .ui-card{
-    margin-bottom: 10px; 
+    margin-bottom: 6px;
     border-left: #0083fe 5px solid;
+    top: 101px;
+    left: 1086px;
+    width: 237px;
+    height: 86px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 6px #00000029;
+    opacity: 1;
 }
 
 .font-played{
@@ -16,6 +30,8 @@ aside{
 }
 
 .actions-btns {
+    padding-right: 0px !important;
+    padding-left: 0px !important;
     border-left: 2px solid #d6d6d6;
 }
 
@@ -34,14 +50,15 @@ aside{
 }
 
 .numberPlayed {
-    font-family: 'Montserrat';
-    font-weight: bold;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.29;
-    letter-spacing: normal;
+    top: 105px;
+    left: 1097px;
+    width: 157px;
+    height: 18px;
     text-align: left;
-    color: #3a3f51;
+    font: Bold 14px/18px Montserrat;
+    letter-spacing: 0px;
+    color: #3A3F51;
+    opacity: 1;
 }
 
 .dayDraw {
@@ -58,24 +75,28 @@ aside{
 
 .headNumberValues {
     font-family: Montserrat;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.25;
-    letter-spacing: normal;
+    top: 237px;
+    left: 1097px;
+    width: 44px;
+    height: 15px;
     text-align: left;
-    color: #0083fe;
+    font-size: 12px;
+    letter-spacing: 0px;
+    color: #0083FE;
+    opacity: 1;
 }
 
 .textNumberValues {
     font-family: Montserrat;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.25;
-    letter-spacing: normal;
+    top: 257px;
+    left: 1097px;
+    width: 50px;
+    height: 15px;
     text-align: left;
-    color: #3a3f51;
+    font: Regular 12px/15px Montserrat;
+    letter-spacing: 0px;
+    color: #3A3F51;
+    opacity: 1;
 }
 
 
@@ -85,13 +106,15 @@ aside{
 }
 
 .totalValues{
-    height: 8rem;
-    background-image: linear-gradient(to bottom, #0083fe, #0bc9ec);
+    top: 380px;
+    left: 1086px;
+    width: 237px;
+    height: 121px;
+    background: transparent linear-gradient(180deg, #0083FE 0%, #0BC9EC 100%) 0% 0% no-repeat padding-box;
+    opacity: 1;
+    position: sticky;
 }
 
-.consolidValues {
-    padding-top: 24px;
-}
 
 .lotteriesCount{
     font-family: Montserrat;
@@ -107,27 +130,30 @@ aside{
 
 .textBet{
     font-family: Montserrat;
-    font-size: 18px;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.19;
-    letter-spacing: normal;
+    top: 623px;
+    left: 1099px;
+    width: 77px;
+    height: 19px;
     text-align: left;
-    color: #ffffff;
+    font-size: 16px;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+
 }
 
 
 .textBetFooter{
     font-family: Montserrat;
-    font-size: 22px;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.19;
-    letter-spacing: normal;
+    top: 677px;
+    left: 1147px;
+    width: 51px;
+    height: 25px;
     text-align: left;
-    color: #ffffff;
+    font-size: 21px;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
 }
 
 .textBetFooterValue{
@@ -167,27 +193,36 @@ aside{
     border-left: #f0f3f4 2px solid;
 }
 
+.consolidValues {
+    padding-top: 12px;
+}
+
 .footerValueTotal{
-    padding-top: 28px;
+    padding-top: 16px
 }
 
 .payButon{
-    width: 90%;
-    border-radius: 30px;
-    box-shadow: 0 1.5px 4px 0 rgba(20, 157, 183, 0.48);
-    background-color: #ffffff;
-    font-family: Montserrat;
-    font-weight: normal;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.23;
-    letter-spacing: normal;
-    color: #0083fe;
+
+    top: 721px;
+    left: 1099px;
+    width: auto;
+    height: 40px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 8px #149DB77A;
+    border-radius: 20px;
+    opacity: 1;
     margin-top: 15px;
     margin-bottom: 15px;
+    font-family: Montserrat;
+    text-align: center;
+    font-size: 16px;
+    letter-spacing: 0px;
+    color: #0083FE;
+    opacity: 1;
 }
 
 
 .alinBtn{
+    position: sticky;
     text-align: center;
 }
