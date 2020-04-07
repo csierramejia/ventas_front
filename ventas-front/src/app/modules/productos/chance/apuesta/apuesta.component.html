@@ -11,11 +11,10 @@
                     {{day.text}}
                 </span>
             </div>
-            <div class="col-md-6 calendarDate">
+            <div class="col-md-6 calendarDate" *ngIf="dayBet">
                 <p class="calendar-icon">
                     <label class="dayBet">Día del sorteo {{ dayBet | date: 'dd/MM/yyyy'}}</label>
                 </p>
-                
             </div>
             
         </div>
@@ -42,7 +41,7 @@
                           </div>
                     </div>
 
-                    <div class="col-md-4 padColLable">
+                    <div class="col-md-4 padColLable" *ngIf="enabledCustomer">
                         <div class="form-group has-feedback elemClient">
                             <i class="fa fa-check-square inputSuccess"></i>
                           <input type="text" class="form-control styleInputClient" placeholder="Cliente">
@@ -53,13 +52,9 @@
                 <div class="row">
                     <div class="col-md-3">
                         <label class="titleInput" for="numero">Número</label>
-                        <!-- <div class="form-group has-feedback">
+                        <div class="form-group has-feedback">
                           <i class="fa fa-hashtag form-control-feedback" aria-hidden="true"></i>
                           <input type="text" class="form-control styleInput" placeholder="Número">
-                        </div> -->
-
-                        <div class="input-wrapper">
-                            <input type="text" />
                         </div>
                     </div>
                 </div>
@@ -71,28 +66,28 @@
                           <input type="text" class="form-control styleInput" placeholder="Directo">
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3" *ngIf="enabledCombined">
                         <label class="titleInput" for="combinado">Combinado</label>
                         <div class="form-group has-feedback">
                           <i class="fa fa-usd form-control-feedback" aria-hidden="true"></i>
                           <input type="text" class="form-control styleInput" placeholder="Combinado">
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-2" *ngIf="enabledThree">
                         <label class="titleInput" for="valorTres">Valor 3 cifras</label>
                         <div class="form-group has-feedback">
                           <i class="fa fa-usd form-control-feedback" aria-hidden="true"></i>
                           <input type="text" class="form-control styleInput" placeholder="Valor">
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-2" *ngIf="enabledTwo">
                         <label class="titleInput" for="valorDos">Valor 2 cifras</label>
                         <div class="form-group has-feedback">
                           <i class="fa fa-usd form-control-feedback" aria-hidden="true"></i>
                           <input type="text" class="form-control styleInput" placeholder="Valor">
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-2" *ngIf="enabledOne">
                         <label class="titleInput" for="valorDos">Valor 1 cifra</label>
                         <div class="form-group has-feedback">
                           <i class="fa fa-usd form-control-feedback" aria-hidden="true"></i>
@@ -112,21 +107,34 @@
     </div>
     
 
+    <!-- <div class="card" *ngIf="viewLotteries"> -->
     <div class="card">
-        <h5 class="card-header">
-            <a data-toggle="collapse" href="#collapse-example" aria-expanded="true" aria-controls="collapse-example" id="heading-example" class="d-block">
-                <i class="fa fa-chevron-down pull-right"></i>
-                Collapsible Group Item #1
+    
+        <div class="card-header titleBetCard">
+            <a 
+                data-toggle="collapse" 
+                href="#collapse-example" 
+                aria-expanded="true" 
+                aria-controls="collapse-example" 
+                id="heading-example" 
+                class="d-block">
+                    Aplicar loterias del día
+                <i class="fa fa-chevron-down"></i>
             </a>
-        </h5>
+        </div>
+        
+
         <div id="collapse-example" class="collapse" aria-labelledby="heading-example">
             <div class="card-body">
-                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon
-                officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3
-                wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
-                Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan
-                excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt
-                you probably haven't heard of them accusamus labore sustainable VHS.
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-2" class="colLot" *ngFor="let loteria of loterias">
+                            <p-checkbox name="groupname" [value]="loteria.idLoteria" [label]="loteria.nombre"></p-checkbox>
+                            <br>
+                            <img class="imgLott" src="{{pathLotteries}}">
+                        </div> 
+                    </div>
+                </div>
             </div>
         </div>
     </div>

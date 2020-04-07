@@ -1,17 +1,24 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ProductosService } from '../../productos.service';
+import { LoteriasDTO } from 'src/app/dtos/escrutinio/loterias/loterias.dto';
 
 @Component({
   selector: 'app-apuesta',
   templateUrl: './apuesta.component.html',
-  styleUrls: ['./apuesta.component.css']
+  styleUrls: ['./apuesta.component.css'],
+  providers: [ProductosService]
 })
 export class ApuestaComponent implements OnInit {
 
   @Output() chanceNumero: EventEmitter<any> = new EventEmitter();
 
-  dayBet: Date;
+  pathLotteries = '../../../../../assets/img/loterias/';
 
+  loterias: LoteriasDTO[];
+
+  dayBet: Date;
+  viewLotteries = false;
   days = [
     { text: 'L', name: 'lun', date: null },
     { text: 'M', name: 'mar', date: null },
@@ -22,6 +29,8 @@ export class ApuestaComponent implements OnInit {
     { text: 'D', name: 'dom', date: null }
   ];
 
+  enabledCustomer = false;
+  enabledCombined = false;
   enabledThree = false;
   enabledTwo = false;
   enabledOne = false;
@@ -41,7 +50,9 @@ export class ApuestaComponent implements OnInit {
     valorNumeroUna: new FormControl({value: '', disabled: true})
   });
 
-  constructor() {
+  constructor(
+    private productosService: ProductosService
+  ) {
     // obtemos el esquema de fechas para que el usuario puede saleccionar el dia de la apuesta a realizar
     const dayWeek = this.getDayWeek();
     this.setDays(dayWeek);
@@ -72,6 +83,24 @@ export class ApuestaComponent implements OnInit {
       }
     });
 
+    // llamamos el metodo que se encarga de consultar las loterias
+    this.getLotteries();
+
+  }
+
+  /**
+   * @author Luis Hernandez
+   */
+  getLotteries(): void {
+      this.productosService.consultarLoterias().subscribe(
+        loteriasData => {
+          this.loterias = loteriasData;
+          this.viewLotteries = true;
+        },
+        error => {
+          // this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+        }
+      );
   }
 
   /**
