@@ -37,7 +37,7 @@
                           <label class="titleInput" for="identificacion">Identificación</label>
                           <div class="form-group has-feedback">
                             <i class="fa fa-user form-control-feedback"></i>
-                            <input type="text" class="form-control styleInput" placeholder="Cedula">
+                            <input type="text" (change)="validExistClient()" class="form-control styleInput" placeholder="Cedula">
                           </div>
                     </div>
 
@@ -131,10 +131,16 @@
                         <div class="col-md-2" class="colLot" *ngFor="let loteria of loterias">
                             <p-checkbox name="groupname" [value]="loteria.idLoteria" [label]="loteria.nombre"></p-checkbox>
                             <br>
-                            <img class="imgLott" src="{{pathLotteries}}">
+                            <!-- <img class="imgLott" src="{{loteria.nombre}}.png"> -->
                         </div> 
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    
+
+    <p-dialog header="Title" [(visible)]="displayModalCreate" [style]="{width: '464px'}">
+        <app-crear-cliente (closePopup)="closeModal($event)" ></app-crear-cliente>
+    </p-dialog>

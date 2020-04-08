@@ -1,0 +1,65 @@
+
+<div class="container-fluid">
+    <h1 class="titleCreate">CREAR CLIENTE</h1>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+              <select class="form-control typeIdentification" id="exampleFormControlSelect1">
+                <option>Tipo de documento</option>  
+                <option>Cédula</option>
+                <option>Tarjeta de identidad</option>
+              </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+              <input type="text" class="form-control inputFormCreate" placeholder="Número de documento">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+              <input type="text" class="form-control inputFormCreate" placeholder="Primer Nombre">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+              <input type="text" class="form-control inputFormCreate" placeholder="Segundo Nombre">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+              <input type="text" class="form-control inputFormCreate" placeholder="Primer Apellido">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+              <input type="text" class="form-control inputFormCreate" placeholder="Segundo Apellido">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+              <input type="text" class="form-control inputFormCreate" placeholder="Correo electrónico">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+              <input type="text" class="form-control inputFormCreate" placeholder="Número celular">
+            </div>
+        </div>
+    </div>
+
+    <div class="row float-right">
+        <button type="button" (click)="closePopupE()" class="btn btn-outline-light btnActions">Cancelar</button>
+        <button type="button" class="btn btn-outline-light btnActions">Registrar</button>
+    </div>
+</div>

@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ProductosService } from '../../productos.service';
 import { LoteriasDTO } from 'src/app/dtos/escrutinio/loterias/loterias.dto';
 
+
 @Component({
   selector: 'app-apuesta',
   templateUrl: './apuesta.component.html',
@@ -14,6 +15,8 @@ export class ApuestaComponent implements OnInit {
   @Output() chanceNumero: EventEmitter<any> = new EventEmitter();
 
   pathLotteries = '../../../../../assets/img/loterias/';
+
+  displayModalCreate = false;
 
   loterias: LoteriasDTO[];
 
@@ -101,6 +104,35 @@ export class ApuestaComponent implements OnInit {
           // this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
         }
       );
+  }
+
+
+  /**
+   * @author Luis Hernandez
+   * @description Metodo que se encarga de validar si
+   * existe o no el cliente, si este no existe se
+   * levanta un popup para su posterior creación
+   */
+  validExistClient(): void {
+    const serviceExisteClient = false;
+
+    if (serviceExisteClient) {
+      console.log('colocar el nombre del usuario');
+    } else {
+      this.displayModalCreate = true;
+    }
+  }
+
+
+  /**
+   * @author Luis Hernandez
+   * @description Metodo que se encarga de
+   * recibir el false que emite el componente
+   * que contiene el html del fomulario de
+   * creación (popup)
+   */
+  closeModal(): void {
+    this.displayModalCreate = false;
   }
 
   /**
