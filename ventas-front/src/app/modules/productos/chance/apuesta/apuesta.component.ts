@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ProductosService } from '../../productos.service';
 import { LoteriasDTO } from 'src/app/dtos/escrutinio/loterias/loterias.dto';
+import { ClientesDTO } from 'src/app/dtos/productos/chance/clientes.dto';
 
 
 @Component({
@@ -42,15 +43,8 @@ export class ApuestaComponent implements OnInit {
   chanceForm = new FormGroup({
     fecha: new FormControl(''),
     numero: new FormControl(''),
-    tipoChanceDirecto: new FormControl({value: '', disabled: true}),
-    tipoChanceCombinado: new FormControl({value: '', disabled: true}),
-    tresCifras: new FormControl({value: '', disabled: true}),
-    dosCifras: new FormControl({value: '', disabled: true}),
-    unaCifras: new FormControl({value: '', disabled: true}),
-    valorNumero: new FormControl(''),
-    valorNumeroTres: new FormControl({value: '', disabled: true}),
-    valorNumeroDos: new FormControl({value: '', disabled: true}),
-    valorNumeroUna: new FormControl({value: '', disabled: true})
+    numeroDocumento: new FormControl(''),
+    nombreCliente: new FormControl(''),
   });
 
   constructor(
@@ -97,6 +91,7 @@ export class ApuestaComponent implements OnInit {
   getLotteries(): void {
       this.productosService.consultarLoterias().subscribe(
         loteriasData => {
+          console.log(loteriasData);
           this.loterias = loteriasData;
           this.viewLotteries = true;
         },
@@ -114,25 +109,51 @@ export class ApuestaComponent implements OnInit {
    * levanta un popup para su posterior creación
    */
   validExistClient(): void {
-    const serviceExisteClient = false;
 
-    if (serviceExisteClient) {
-      console.log('colocar el nombre del usuario');
-    } else {
-      this.displayModalCreate = true;
-    }
+    const clientesDTO: ClientesDTO = new ClientesDTO();
+    this.enabledCustomer = false;
+    this.chanceForm.controls.nombreCliente.setValue('');
+    clientesDTO.numeroDocumento = this.chanceForm.get('numeroDocumento').value;
+
+    this.productosService.clienteApuesta(clientesDTO).subscribe(
+      clienteData => {
+        const responseCliente: any = clienteData;
+        if (responseCliente.existe) {
+          const name = responseCliente.primerNombre + ' ' + responseCliente.segundoNombre + ' ' + responseCliente.primerApellido;
+          console.log(name);
+          this.chanceForm.controls.nombreCliente.setValue(name);
+          this.enabledCustomer = true;
+        } else {
+          this.displayModalCreate = true;
+        }
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
 
   /**
    * @author Luis Hernandez
+   * @param event
    * @description Metodo que se encarga de
    * recibir el false que emite el componente
    * que contiene el html del fomulario de
    * creación (popup)
    */
-  closeModal(): void {
-    this.displayModalCreate = false;
+  closeModal(event): void {
+    this.displayModalCreate = event;
+  }
+
+
+  /**
+   * @author Luis Hernandez
+   * @param event
+   * @description Metodo que se encarga de recibe
+   */
+  createCustomer(event): void {
+
   }
 
   /**
