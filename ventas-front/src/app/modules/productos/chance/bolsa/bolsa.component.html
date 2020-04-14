@@ -5,7 +5,7 @@
                     <div class="col-11">
                         <div class="row">
                             <b class="numberPlayed">Número Jugado: {{cartItem.numberPlayed}}</b> <br>
-                            <span class="dayDraw">Dia del sorteo: {{cartItem.dataPlayed}}</span>
+                            <span class="dayDraw">Dia del sorteo: {{cartItem.dataPlayed | date: 'dd/MM/yyyy'}}</span>
                         </div>
                         <div class="row">
                             <table style="width:100%">

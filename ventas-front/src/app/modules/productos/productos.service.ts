@@ -18,17 +18,9 @@ export class ProductosService {
   constructor(private http: HttpClient) { }
 
 
-  // public consultarLoterias(filtros: LoteriaProductosDTO): Observable<LoteriasDTO[]> {
-  public consultarLoterias(): Observable<LoteriasDTO[]> {
-    // const loteriasRequestDTO = Object.assign({}, filtros);
-    //  return this.http.get<LoteriasDTO[]>('http://localhost:8086/clientes/clienteApuesta/{}');
-    //  const loteriasRequestDTO = Object.assign({}, filtros);
-    const v = encodeURI(JSON.stringify({numeroIdentificacion: '1094918212'}));
-    return this.http.get<LoteriasDTO[]>('http://localhost:8086/clientes/clienteApuesta/'+ v);
-    // return this.http.get<LoteriasDTO[]>(`${ProductosAPIConstant.URL_CONSULTAR_LOTERIAS}/${JSON.stringify(loteriasRequestDTO)}`
-    // );
-     // return this.http.get<LoteriasDTO[]>(`${ProductosAPIConstant.URL_CONSULTAR_LOTERIAS}/${JSON.stringify(loteriasRequestDTO)}`
-    // );
+  public consultarLoterias(fechaSorteoFilter): Observable<LoteriasDTO[]> {
+    const v = encodeURI(JSON.stringify({fechaSorteo: fechaSorteoFilter}));
+    return this.http.get<LoteriasDTO[]>(`${ProductosAPIConstant.URL_CONSULTAR_LOTERIAS}/${v}`);
   }
 
 

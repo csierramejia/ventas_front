@@ -19,19 +19,9 @@ export class BolsaComponent implements OnInit {
     {_id: 5, name: 'Risaralda'}
   ];
 
-  cartItems = [
-    //  { numberPlayed: '1234', dataPlayed: '26/03/2020', direct: 2000, combined: 0, threeC: 500, twoC: 500, oneC: 500 },
-    //  { numberPlayed: '2736', dataPlayed: '26/03/2020', direct: 2000, combined: 0, threeC: 500, twoC: 500, oneC: 500 },
-    //  { numberPlayed: '1525', dataPlayed: '26/03/2020', direct: 2000, combined: 0, threeC: 500, twoC: 500, oneC: 500 },
-    //  { numberPlayed: '6252', dataPlayed: '26/03/2020', direct: 2000, combined: 0, threeC: 500, twoC: 500, oneC: 500 },
-    //  { numberPlayed: '2615', dataPlayed: '26/03/2020', direct: 2000, combined: 0, threeC: 500, twoC: 500, oneC: 500 },
-    //  { numberPlayed: '1291', dataPlayed: '26/03/2020', direct: 2000, combined: 0, threeC: 500, twoC: 500, oneC: 500 },
-    //  { numberPlayed: '8171', dataPlayed: '26/03/2020', direct: 2000, combined: 0, threeC: 500, twoC: 500, oneC: 500 },
-    //  { numberPlayed: '1711', dataPlayed: '26/03/2020', direct: 2000, combined: 0, threeC: 500, twoC: 500, oneC: 500 },
-    //  { numberPlayed: '1716', dataPlayed: '26/03/2020', direct: 2000, combined: 0, threeC: 500, twoC: 500, oneC: 500 },
-    //  { numberPlayed: '3625', dataPlayed: '26/03/2020', direct: 2000, combined: 0, threeC: 500, twoC: 500, oneC: 500 }
-  ];
+  cartItems = [];
 
+  // {documentCustomer: '101911', nameCustomer: 'Luis', numberPlayed: '1234', dataPlayed: '26/03/2020', direct: 2000, combined: 0, threeC: 500, twoC: 500, oneC: 500 }
 
   constructor() { }
 
