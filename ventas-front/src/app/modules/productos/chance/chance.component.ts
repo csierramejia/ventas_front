@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { BolsaComponent } from './bolsa/bolsa.component';
-
+import { ApuestaComponent } from './apuesta/apuesta.component';
 
 @Component({
   selector: 'app-chance',
@@ -10,6 +10,8 @@ import { BolsaComponent } from './bolsa/bolsa.component';
 export class ChanceComponent implements OnInit {
 
   @ViewChild(BolsaComponent) bolsaChild: BolsaComponent;
+  @ViewChild(ApuestaComponent) apuestaChild: ApuestaComponent;
+
 
   constructor() { }
 
@@ -17,12 +19,29 @@ export class ChanceComponent implements OnInit {
 
   }
 
-
+  /**
+   * @author Luis Hernandez
+   * @param event
+   * @description Metodo que se engarda de recibir
+   * la informacion del chance que viene del
+   * componente apuesta y lo envia para el
+   * componente bolsa
+   */
   addBet(event): void {
-    this.bolsaChild.cartItems.push(event);
-    // console.log('new bet component father');
-    // console.log(event);
-    // console.log('new bet component father');
+    this.bolsaChild.validCreateAndEdit(event);
+  }
+
+
+  /**
+   * @author Luis Hernandez
+   * @param event
+   * @description Metodo que se engarda de recibir
+   * la informacion del chance que viene del
+   * componente bolsa y lo envia para el
+   * componente chance
+   */
+  editBet(event): void {
+    this.apuestaChild.editBetSendEmit(event);
   }
 
 }

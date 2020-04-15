@@ -97,8 +97,11 @@
                     </div>
                     <hr>
                     <div class="row float-right">
-                        <button (click)="addBetSend()" type="button" class="btn btn-random">
+                        <button *ngIf="btnAdd" (click)="addBetSend()" type="button" class="btn btn-random">
                             AGREGAR <i class="fa fa-plus" aria-hidden="true"></i>
+                        </button>
+                        <button *ngIf="btnEdit" (click)="editBetSend()" type="button" class="btn btn-random">
+                            EDITAR <i class="fa fa-plus" aria-hidden="true"></i>
                         </button>
                     </div>
                 </div>

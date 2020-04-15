@@ -21,7 +21,9 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
   pathLotteries = '../../../../../assets/img/loterias/';
 
   displayModalCreate = false;
-
+  btnEdit = false;
+  btnAdd  = true;
+  idEdit: any;
   loterias: LoteriasDTO[];
 
   dayBet: Date;
@@ -166,8 +168,15 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
   }
 
 
+  /**
+   * @author Luis Hernandez
+   * @description Metodo que se encarga de
+   * revisar si la cantidad de caracteres del
+   * numero corresponde al minimo de numero
+   * para realizar la apuesta y de esta manera
+   * activar los demas campos
+   */
   chanceNumber(): void {
-    // console.log(this.chanceForm.get('numero').value);
     if (this.chanceForm.get('numero').value.length < 3) {
       this.enabledCombined = false;
       this.enabledThree = false;
@@ -197,6 +206,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
   addBetSend(): void {
     if (this.valid()) {
       this.addBet.emit({
+        action: 1,
         _id: 'bet_' + Math.floor(Math.random() * 999999),
         documentCustomer: this.chanceForm.get('numeroDocumento').value,
         nameCustomer: this.chanceForm.get('nombreCliente').value,
@@ -208,12 +218,76 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
         twoC: this.chanceForm.get('dosCifras').value,
         oneC: this.chanceForm.get('unaCifra').value,
       });
+      this.cleanInputs();
     } else {
       alert('Usted debe diligenciar todos los campos');
     }
   }
 
 
+  /**
+   * @author Luis Hernandez
+   * @description Metodo que se encarga
+   * de enviar a la bolsa el producto modificado
+   */
+  editBetSend() {
+    if (this.valid()) {
+      this.addBet.emit({
+        action: 0,
+        _id: this.idEdit,
+        documentCustomer: this.chanceForm.get('numeroDocumento').value,
+        nameCustomer: this.chanceForm.get('nombreCliente').value,
+        numberPlayed: this.chanceForm.get('numero').value,
+        dataPlayed: this.dayBet,
+        direct: this.chanceForm.get('valorDirecto').value,
+        combined: this.chanceForm.get('combinado').value,
+        threeC: this.chanceForm.get('tresCifras').value,
+        twoC: this.chanceForm.get('dosCifras').value,
+        oneC: this.chanceForm.get('unaCifra').value,
+      });
+      this.cleanInputs();
+    } else {
+      alert('Usted debe diligenciar todos los campos');
+    }
+  }
+
+
+  /**
+   * @author Luis Hernandez
+   * @param event
+   * @description metodo que se encarga
+   * de recibir los datos a editar y hace set
+   */
+  editBetSendEmit(event): void {
+    this.idEdit = event._id;
+    this.dayBet = event.dataPlayed;
+    this.chanceForm.get('numeroDocumento').setValue(event.documentCustomer);
+    this.chanceForm.get('numero').setValue(event.numberPlayed);
+    this.chanceForm.get('valorDirecto').setValue(event.direct);
+    if (event.nameCustomer) {
+      this.chanceForm.get('nombreCliente').setValue(event.nameCustomer);
+      this.enabledCustomer = true;
+    }
+    if (event.combined) {this.chanceForm.get('combinado').setValue(event.combined); }
+    if (event.threeC) {this.chanceForm.get('tresCifras').setValue(event.threeC); }
+    if (event.twoC) {this.chanceForm.get('dosCifras').setValue(event.twoC); }
+    if (event.oneC) {this.chanceForm.get('unaCifra').setValue(event.oneC); }
+    this.enabledCombined = true;
+    this.enabledThree = true;
+    this.enabledTwo = true;
+    this.enabledOne = true;
+
+    this.btnAdd = false;
+    this.btnEdit = true;
+  }
+
+
+  /**
+   * @author Luis Hernandez
+   * @description Metodo que se encarga
+   * de validar que los campos obligatorios
+   * esten diligenciados
+   */
   valid() {
     if (this.chanceForm.get('numeroDocumento').valid &&
         this.chanceForm.get('numero').valid &&
@@ -223,6 +297,29 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
     } else {
       return false;
     }
+  }
+
+
+  /**
+   * @author Luis Hernandez
+   * @description Metodo que se encarga de limpiar los campos
+   */
+  cleanInputs(): void {
+    this.chanceForm.get('numeroDocumento').setValue('');
+    this.chanceForm.get('nombreCliente').setValue('');
+    this.chanceForm.get('numero').setValue('');
+    this.chanceForm.get('valorDirecto').setValue('');
+    this.chanceForm.get('combinado').setValue('');
+    this.chanceForm.get('tresCifras').setValue('');
+    this.chanceForm.get('dosCifras').setValue('');
+    this.chanceForm.get('unaCifra').setValue('');
+    this.enabledCustomer = false;
+    this.enabledCombined = false;
+    this.enabledThree = false;
+    this.enabledTwo = false;
+    this.enabledOne = false;
+    this.btnAdd = true;
+    this.btnEdit = false;
   }
 
   /**
