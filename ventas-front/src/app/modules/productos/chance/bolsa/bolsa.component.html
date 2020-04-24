@@ -44,11 +44,11 @@
             <div class="row consolidValues">
                 <div class="col-5 columValueBet">
                     <b class="textBet">Apostado</b> <br>
-                    <span class="valueBet">$ 5.880</span>
+                    <span class="valueBet">$ {{ valueBet }}</span>
                 </div>
                 <div class="col-7 vatBorder">
                     <b class="textBet">IVA</b> <br>
-                    <span class="valueBet">$ 1.120</span>
+                    <span class="valueBet">$ {{ valueVat }}</span>
                 </div>
             </div>
             <div class="row footerValueTotal">
@@ -56,11 +56,11 @@
                     <b class="textBetFooter">Total</b> <br>
                 </div>
                 <div class="col-7">
-                    <b class="textBetFooterValue">$ 7.000</b> <br>
+                    <b class="textBetFooterValue">{{ valueBetTotal }}</b> <br>
                 </div>
             </div>
             <div class="alinBtn">
-                <button class="btn btn-primary btn-lg payButon">
+                <button *ngIf="cartItems.length > 0 && lotteries.length > 0" (click)="payTransaction()" class="btn btn-primary btn-lg payButon">
                     Pagar
                     <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
                 </button>

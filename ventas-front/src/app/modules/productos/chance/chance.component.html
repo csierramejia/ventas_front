@@ -2,7 +2,10 @@
     <section class="container-fluid">
         <div class="row">
             <div class="col-9">
-                <app-apuesta (addBet)="addBet($event)"></app-apuesta>
+                <app-apuesta
+                    (addBet)="addBet($event)" 
+                    (addLotteries)="addLotteries($event)">
+                </app-apuesta>
             </div>
             <div class="col-3">
                 <app-bolsa (editBet)="editBet($event)"></app-bolsa>

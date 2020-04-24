@@ -9,6 +9,9 @@ export class ProductosAPIConstant {
   static readonly LOTERIAS_API: string = 'apuesta/';
   /** Nombre del REST para el modulo Clientes (Productos) */
   static readonly CLIENTES_API: string = 'clientes/';
+  /** Nombre del REST para el modulo impuestos (Productos) */
+  static readonly IMPUESTOS_API: string = 'impuestos/';
+
 
   /** URL del recurso para obtener las loterias */
   static readonly URL_CONSULTAR_LOTERIAS: string =
@@ -22,5 +25,19 @@ export class ProductosAPIConstant {
     AppDomainConstant.APUESTAS +
     ProductosAPIConstant.CLIENTES_API +
     'clienteApuesta';
+
+
+  /** URL del recurso para obtener el iva */
+  static readonly URL_IMPUESTO_IVA: string =
+    AppDomainConstant.APUESTAS +
+    ProductosAPIConstant.IMPUESTOS_API +
+    'consultarImpuestoNombre';
+
+
+  /** URL del recurso para obtener el iva */
+  static readonly URL_REGISTRAR_APUESTA: string =
+  AppDomainConstant.APUESTAS +
+  ProductosAPIConstant.LOTERIAS_API +
+  'registrarApuesta';
 
 }

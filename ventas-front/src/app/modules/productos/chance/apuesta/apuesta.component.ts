@@ -17,14 +17,18 @@ import { ShellState } from 'src/app/states/shell/shell.state';
 export class ApuestaComponent extends CommonComponent implements OnInit, OnDestroy  {
 
   @Output() addBet: EventEmitter<any> = new EventEmitter();
+  @Output() addLotteries: EventEmitter<any> = new EventEmitter();
+
 
   pathLotteries = '../../../../../assets/img/loterias/';
-
+  idCustomer = '';
   displayModalCreate = false;
   btnEdit = false;
   btnAdd  = true;
   idEdit: any;
   loterias: LoteriasDTO[];
+
+  lotteriesSelected = [];
 
   dayBet: Date;
   viewLotteries = false;
@@ -39,7 +43,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
   ];
 
   enabledCustomer = false;
-  enabledCombined = false;
+  // enabledCombined = false;
   enabledThree = false;
   enabledTwo = false;
   enabledOne = false;
@@ -117,18 +121,16 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
    * levanta un popup para su posterior creación
    */
   validExistClient(): void {
-
     const clientesDTO: ClientesDTO = new ClientesDTO();
     this.enabledCustomer = false;
     this.chanceForm.controls.nombreCliente.setValue('');
     clientesDTO.numeroDocumento = this.chanceForm.get('numeroDocumento').value;
-
     this.productosService.clienteApuesta(clientesDTO).subscribe(
       clienteData => {
         const responseCliente: any = clienteData;
         if (responseCliente.existe) {
           const name = responseCliente.primerNombre + ' ' + responseCliente.segundoNombre + ' ' + responseCliente.primerApellido;
-          console.log(name);
+          this.idCustomer = responseCliente.idCliente;
           this.chanceForm.controls.nombreCliente.setValue(name);
           this.enabledCustomer = true;
         } else {
@@ -148,10 +150,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
    */
   getNumberThree(): void {
     this.chanceForm.controls.numero.setValue( Math.round(Math.random() * (100 - 999) + 999 ) );
-    this.enabledCombined = true;
-    this.enabledThree = true;
-    this.enabledTwo = true;
-    this.enabledOne = true;
+    this.validInputBet();
   }
 
 
@@ -161,10 +160,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
    */
   getNumberFour(): void {
     this.chanceForm.controls.numero.setValue(Math.round(Math.random() * (1000 - 9999) + 9999 ));
-    this.enabledCombined = true;
-    this.enabledThree = true;
-    this.enabledTwo = true;
-    this.enabledOne = true;
+    this.validInputBet();
   }
 
 
@@ -178,16 +174,46 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
    */
   chanceNumber(): void {
     if (this.chanceForm.get('numero').value.length < 3) {
-      this.enabledCombined = false;
       this.enabledThree = false;
       this.enabledTwo = false;
       this.enabledOne = false;
     } else {
-      this.enabledCombined = true;
+      this.validInputBet();
+    }
+  }
+
+
+
+  validInputBet(): void {
+
+    this.enabledThree = false;
+    this.enabledTwo = false;
+    this.enabledOne = false;
+
+    this.chanceForm.get('tresCifras').setValue('');
+    this.chanceForm.get('dosCifras').setValue('');
+    this.chanceForm.get('unaCifra').setValue('');
+
+    if (String(this.chanceForm.get('numero').value).length === 4) {
       this.enabledThree = true;
       this.enabledTwo = true;
       this.enabledOne = true;
+    } else if (String(this.chanceForm.get('numero').value).length === 3) {
+      if (this.chanceForm.get('valorDirecto').value && this.chanceForm.get('combinado').value) {
+        this.enabledThree = false;
+        this.enabledTwo = true;
+        this.enabledOne = true;
+      } else if (this.chanceForm.get('combinado').value && !this.chanceForm.get('valorDirecto').value) {
+        this.enabledThree = false;
+        this.enabledTwo = false;
+        this.enabledOne = false;
+      } else if (this.chanceForm.get('valorDirecto').value && !this.chanceForm.get('combinado').value) {
+        this.enabledThree = false;
+        this.enabledTwo = true;
+        this.enabledOne = true;
+      }
     }
+
   }
 
 
@@ -208,8 +234,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
       this.addBet.emit({
         action: 1,
         _id: 'bet_' + Math.floor(Math.random() * 999999),
-        documentCustomer: this.chanceForm.get('numeroDocumento').value,
-        nameCustomer: this.chanceForm.get('nombreCliente').value,
+        idCustomer: this.idCustomer,
         numberPlayed: this.chanceForm.get('numero').value,
         dataPlayed: this.dayBet,
         direct: this.chanceForm.get('valorDirecto').value,
@@ -222,6 +247,12 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
     } else {
       alert('Usted debe diligenciar todos los campos');
     }
+  }
+
+
+
+  addLotteriesSend(): void {
+      this.addLotteries.emit(this.lotteriesSelected);
   }
 
 
@@ -272,10 +303,9 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
     if (event.threeC) {this.chanceForm.get('tresCifras').setValue(event.threeC); }
     if (event.twoC) {this.chanceForm.get('dosCifras').setValue(event.twoC); }
     if (event.oneC) {this.chanceForm.get('unaCifra').setValue(event.oneC); }
-    this.enabledCombined = true;
-    this.enabledThree = true;
-    this.enabledTwo = true;
-    this.enabledOne = true;
+
+
+    this.validInputBet();
 
     this.btnAdd = false;
     this.btnEdit = true;
@@ -289,11 +319,14 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
    * esten diligenciados
    */
   valid() {
-    if (this.chanceForm.get('numeroDocumento').valid &&
+    if (
         this.chanceForm.get('numero').valid &&
-        this.chanceForm.get('valorDirecto').valid &&
         this.dayBet) {
-        return true;
+          if (this.chanceForm.get('valorDirecto').valid || this.chanceForm.get('combinado').valid) {
+            return true;
+          } else {
+            return false;
+          }
     } else {
       return false;
     }
@@ -305,16 +338,13 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
    * @description Metodo que se encarga de limpiar los campos
    */
   cleanInputs(): void {
-    this.chanceForm.get('numeroDocumento').setValue('');
-    this.chanceForm.get('nombreCliente').setValue('');
     this.chanceForm.get('numero').setValue('');
     this.chanceForm.get('valorDirecto').setValue('');
     this.chanceForm.get('combinado').setValue('');
     this.chanceForm.get('tresCifras').setValue('');
     this.chanceForm.get('dosCifras').setValue('');
     this.chanceForm.get('unaCifra').setValue('');
-    this.enabledCustomer = false;
-    this.enabledCombined = false;
+    // this.enabledCombined = false;
     this.enabledThree = false;
     this.enabledTwo = false;
     this.enabledOne = false;
@@ -423,6 +453,37 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
         break;
     }
   }
+
+
+
+  toggleVisibility(event, loteria): void {
+
+    if (event) {
+      this.lotteriesSelected.push(loteria);
+    } else {
+      const keyResponse = this.getKeyObject(loteria.idLoteria);
+      if ( keyResponse  !== -1 ) {
+        this.lotteriesSelected.splice( keyResponse , 1 );
+      }
+    }
+  }
+
+
+
+  /**
+   * @author Luis Hernandez
+   * @param id
+   * @description metodo que se encarga
+   * de buscar el punto dentro del array
+   * de una loteria
+   */
+  getKeyObject(idLoteria) {
+    return this.lotteriesSelected.map((e) => {
+      return e.idLoteria;
+    }).indexOf(idLoteria);
+  }
+
+
 
   /**
    * Se utiliza para limpiar los mensajes visualizados pantalla y titulos

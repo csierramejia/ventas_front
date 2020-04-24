@@ -36,6 +36,17 @@ export class ChanceComponent implements OnInit {
    * @author Luis Hernandez
    * @param event
    * @description Metodo que se engarda de recibir
+   * la informacion de las loterias
+   */
+  addLotteries(event): void {
+    this.bolsaChild.lotteries = event ;
+  }
+
+
+  /**
+   * @author Luis Hernandez
+   * @param event
+   * @description Metodo que se engarda de recibir
    * la informacion del chance que viene del
    * componente bolsa y lo envia para el
    * componente chance

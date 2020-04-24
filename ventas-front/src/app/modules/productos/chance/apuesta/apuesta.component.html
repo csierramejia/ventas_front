@@ -63,14 +63,14 @@
                             <label class="titleInput" for="valorDirecto">Valor Directo</label>
                             <div class="form-group has-feedback">
                             <i class="fa fa-usd form-control-feedback" aria-hidden="true"></i>
-                            <input type="text" class="form-control styleInput" placeholder="Directo" formControlName="valorDirecto">
+                            <input type="text" (change)="chanceNumber()" class="form-control styleInput" placeholder="Directo" formControlName="valorDirecto">
                             </div>
                         </div>
-                        <div class="col-md-3" *ngIf="enabledCombined">
+                        <div class="col-md-3">
                             <label class="titleInput" for="combinado">Combinado</label>
                             <div class="form-group has-feedback">
                             <i class="fa fa-usd form-control-feedback" aria-hidden="true"></i>
-                            <input type="text" class="form-control styleInput" formControlName="combinado" placeholder="Combinado">
+                            <input type="text" (change)="chanceNumber()" class="form-control styleInput" formControlName="combinado" placeholder="Combinado">
                             </div>
                         </div>
                         <div class="col-md-2" *ngIf="enabledThree">
@@ -132,13 +132,25 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-2" class="colLot" *ngFor="let loteria of loterias">
-                                <p-checkbox name="groupname" [value]="loteria.idLoteria" [label]="loteria.nombre"></p-checkbox>
+                                <p-checkbox 
+                                    name="groupname" 
+                                    [value]="loteria.idLoteria"
+                                    (onChange)="toggleVisibility($event, loteria)" 
+                                    [label]="loteria.nombre">
+                                </p-checkbox>
                                 <br>
                                 <!-- <img class="imgLott" src="{{loteria.nombre}}.png"> -->
                             </div> 
                         </div>
                     </div>
                 </div>
+
+                <div class="row float-right">
+                    <button *ngIf="lotteriesSelected.length > 0" (click)="addLotteriesSend()" type="button" class="btn btn-random">
+                        AGREGAR <i class="fa fa-plus" aria-hidden="true"></i>
+                    </button>
+                </div>
+
             </div>
         </div>
     </form>

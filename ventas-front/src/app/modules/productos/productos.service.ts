@@ -3,8 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { LoteriasDTO } from 'src/app/dtos/escrutinio/loterias/loterias.dto';
 import { ClientesDTO } from 'src/app/dtos/productos/chance/clientes.dto';
+import { ImpuestosDTO } from 'src/app/dtos/productos/chance/impuestos.dto';
 import { ProductosAPIConstant } from 'src/app/constants/apis/productos/productos-api.constant';
-
+import { ResponseDTO } from 'src/app/dtos/productos/chance/response.dto';
 
 /**
  * Service que contiene los procesos de negocio para la Loterias en el sistema
@@ -17,7 +18,11 @@ export class ProductosService {
    */
   constructor(private http: HttpClient) { }
 
-
+  /**
+   * @author Luis Hernandez
+   * @param fechaSorteoFilter
+   * @description Metodo que devuelve las loterias habilitadas para el sorteo de la fecha seleccionada
+   */
   public consultarLoterias(fechaSorteoFilter): Observable<LoteriasDTO[]> {
     const v = encodeURI(JSON.stringify({fechaSorteo: fechaSorteoFilter}));
     return this.http.get<LoteriasDTO[]>(`${ProductosAPIConstant.URL_CONSULTAR_LOTERIAS}/${v}`);
@@ -31,6 +36,36 @@ export class ProductosService {
    */
   public clienteApuesta(cliente: ClientesDTO): Observable<ClientesDTO> {
     return this.http.get<ClientesDTO>(`${ProductosAPIConstant.URL_CONSULTAR_CLIENTE}/${cliente.numeroDocumento}`);
+  }
+
+
+  /**
+   * @author Luis Hernandez
+   * @param iva
+   * @description Metodo que trae del back la información del iva a aplicar
+   */
+  public consultarIva(iva): Observable<ImpuestosDTO> {
+    return this.http.get<ImpuestosDTO>(`${ProductosAPIConstant.URL_IMPUESTO_IVA}/${iva}`);
+  }
+
+
+
+
+  /**
+   * @author Luis Hernandez
+   * @param iva
+   * @description Metodo que envia la transacción de pago de apuesta
+   */
+  // public registrarApuesta(iva) {
+  //   return this.http.post(`${ProductosAPIConstant.URL_IMPUESTO_IVA}/${iva}`);
+  // }
+
+
+  public registrarApuesta(bet): Observable<ResponseDTO> {
+    return this.http.post<ResponseDTO>(
+      ProductosAPIConstant.URL_REGISTRAR_APUESTA,
+      bet
+    );
   }
 
 }
