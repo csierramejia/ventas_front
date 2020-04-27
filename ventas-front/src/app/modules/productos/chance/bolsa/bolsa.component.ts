@@ -36,7 +36,11 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
     this.get_taxes_vat();
   }
 
-
+  /**
+   * @author Luis Hernandez
+   * @description Metodo que se encarga de traer
+   * el iva el cual se le aplica a la apuesta
+   */
   get_taxes_vat(): void {
     this.productosService.consultarIva('IVA').subscribe(
       impuestoData => {
@@ -198,23 +202,37 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
 
     paySend.bets = bets;
 
-    console.log('DESPUES');
-    console.log(paySend);
-    console.log('DESPUES');
-
-
 
     this.productosService.registrarApuesta(paySend).subscribe(
       apuestaData => {
-        console.log('++++++++PAY+++++++');
-        console.log(apuestaData);
-        console.log('++++++++PAY+++++++');
+        const responseApuesta: any = apuestaData;
+        if (responseApuesta.exito) {
+          this.cleanCartValues();
+          alert('Transacción exitosa');
+        } else {
+          alert('Problemas con la transacción');
+        }
       },
       error => {
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
       }
     );
 
+  }
+
+
+  /**
+   * @author Luis Hernandez
+   * @description Metodo que se encarga
+   * de limpiar y restaurar el carro
+   * de compras
+   */
+  cleanCartValues(): void {
+    this.cartItems = [];
+    this.valueBet = 0;
+    this.valueVat = 0;
+    this.valueBetTotal = 0;
+    this.lotteries = [];
   }
 
 

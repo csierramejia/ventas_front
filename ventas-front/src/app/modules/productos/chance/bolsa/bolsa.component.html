@@ -10,18 +10,18 @@
                         <div class="row">
                             <table style="width:100%">
                                 <tr>
-                                    <th class="headNumberValues">Directo</th>
-                                    <th class="headNumberValues">Combi</th>
-                                    <th class="headNumberValues">3C</th>
-                                    <th class="headNumberValues">2C</th>
-                                    <th class="headNumberValues">1C</th>
+                                    <th class="headNumberValues" *ngIf="cartItem.direct">Directo</th>
+                                    <th class="headNumberValues" *ngIf="cartItem.combined">Combi</th>
+                                    <th class="headNumberValues" *ngIf="cartItem.threeC">3C</th>
+                                    <th class="headNumberValues" *ngIf="cartItem.twoC">2C</th>
+                                    <th class="headNumberValues" *ngIf="cartItem.oneC">1C</th>
                                 </tr>
                                 <tr>
-                                    <td class="textNumberValues">${{cartItem.direct | number}}</td>
-                                    <td class="textNumberValues">${{cartItem.combined | number}}</td>
-                                    <td class="textNumberValues">${{cartItem.threeC | number}}</td>
-                                    <td class="textNumberValues">${{cartItem.twoC | number}}</td>
-                                    <td class="textNumberValues">${{cartItem.oneC | number}}</td>
+                                    <td class="textNumberValues" *ngIf="cartItem.direct">${{cartItem.direct | number}}</td>
+                                    <td class="textNumberValues" *ngIf="cartItem.combined">${{cartItem.combined | number}}</td>
+                                    <td class="textNumberValues" *ngIf="cartItem.threeC">${{cartItem.threeC | number}}</td>
+                                    <td class="textNumberValues" *ngIf="cartItem.twoC">${{cartItem.twoC | number}}</td>
+                                    <td class="textNumberValues" *ngIf="cartItem.oneC">${{cartItem.oneC | number}}</td>
                                 </tr>
                             </table>
                         </div>
