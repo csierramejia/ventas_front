@@ -203,20 +203,17 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
     console.log('DESPUES');
 
 
-    // console.log('++++++++PAY+++++++');
-    // console.log(paySend);
-    // console.log('++++++++PAY+++++++');
 
-    // this.productosService.registrarApuesta(paySend).subscribe(
-    //   impuestoData => {
-    //     console.log('++++++++PAY+++++++');
-    //     console.log(impuestoData);
-    //     console.log('++++++++PAY+++++++');
-    //   },
-    //   error => {
-    //     this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
-    //   }
-    // );
+    this.productosService.registrarApuesta(paySend).subscribe(
+      apuestaData => {
+        console.log('++++++++PAY+++++++');
+        console.log(apuestaData);
+        console.log('++++++++PAY+++++++');
+      },
+      error => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
 
   }
 
