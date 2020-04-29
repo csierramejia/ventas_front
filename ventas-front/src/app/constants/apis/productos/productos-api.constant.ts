@@ -20,11 +20,19 @@ export class ProductosAPIConstant {
     'consultarLoteriasSorteo';
 
 
-  /** URL del recurso para obtener las loterias */
+  /** URL del recurso para obtener existencia del cliente */
   static readonly URL_CONSULTAR_CLIENTE: string =
     AppDomainConstant.APUESTAS +
     ProductosAPIConstant.CLIENTES_API +
     'clienteApuesta';
+
+
+  /** URL del recurso para registrar el cliente */
+  static readonly URL_REGISTRAR_CLIENTE: string =
+    AppDomainConstant.APUESTAS +
+    ProductosAPIConstant.CLIENTES_API +
+    'crearCliente';
+
 
 
   /** URL del recurso para obtener el iva */

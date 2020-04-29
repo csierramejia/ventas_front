@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { LoteriasDTO } from 'src/app/dtos/escrutinio/loterias/loterias.dto';
 import { ClientesDTO } from 'src/app/dtos/productos/chance/clientes.dto';
+import { PersonaDTO } from 'src/app/dtos/productos/chance/persona.dto';
 import { ImpuestosDTO } from 'src/app/dtos/productos/chance/impuestos.dto';
 import { ProductosAPIConstant } from 'src/app/constants/apis/productos/productos-api.constant';
 import { ResponseDTO } from 'src/app/dtos/productos/chance/response.dto';
@@ -49,22 +50,29 @@ export class ProductosService {
   }
 
 
-
-
   /**
    * @author Luis Hernandez
    * @param iva
    * @description Metodo que envia la transacción de pago de apuesta
    */
-  // public registrarApuesta(iva) {
-  //   return this.http.post(`${ProductosAPIConstant.URL_IMPUESTO_IVA}/${iva}`);
-  // }
-
-
   public registrarApuesta(bet): Observable<ResponseDTO> {
     return this.http.post<ResponseDTO>(
       ProductosAPIConstant.URL_REGISTRAR_APUESTA,
       bet
+    );
+  }
+
+
+  /**
+   * @author Luis Hernandez
+   * @param cliente
+   * @description Metodo que se encarga de enviar
+   * los datos para la creacion de un cliente
+   */
+  public registrarCliente(cliente): Observable<PersonaDTO> {
+    return this.http.post<PersonaDTO>(
+      ProductosAPIConstant.URL_REGISTRAR_CLIENTE,
+      cliente
     );
   }
 
