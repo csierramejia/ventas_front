@@ -352,13 +352,19 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
     this.btnEdit = false;
   }
 
+
   /**
    * @author Luis Hernandez
    * @param event
-   * @description Metodo que se encarga de recibe
+   * @description Metodo que se encarga de recibir
+   * el cliente creado y mostrarlo en pantalla
    */
   createCustomer(event): void {
-
+    this.displayModalCreate = false;
+    const name = event.primerNombre + ' ' + event.segundoNombre + ' ' + event.primerApellido;
+    this.idCustomer = event.idPersona;
+    this.chanceForm.controls.nombreCliente.setValue(name);
+    this.enabledCustomer = true;
   }
 
 

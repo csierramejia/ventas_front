@@ -42,19 +42,25 @@ export class CrearClienteComponent extends CommonComponent implements OnInit, On
   ngOnInit(): void {
   }
 
+
+  /**
+   * @author Luis Hernandez
+   * @description Metodo que emite el evento indicando
+   * que el usuario dicidio no registrar ningun cliente
+   * para que posteriormente cerrar el modal
+   */
   closePopupE(): void {
     this.closePopup.emit(false);
   }
 
+
+  /**
+   * @author Luis Hernandez
+   * @description Metodo que se encarga de validar
+   * si van los campos obligatorios para posteriormente
+   * pasar a crear el cliente
+   */
   validCreateCustomerE(): void {
-
-    console.log(this.clienteForm.get('tipoDocumento'));
-    console.log(this.clienteForm.get('numeroDocumento'));
-    console.log(this.clienteForm.get('primerNombre'));
-    console.log(this.clienteForm.get('primerApellido'));
-    console.log(this.clienteForm.get('numeroCelular'));
-
-
     if (
       this.clienteForm.get('tipoDocumento').valid &&
       this.clienteForm.get('numeroDocumento').valid &&
@@ -79,31 +85,38 @@ export class CrearClienteComponent extends CommonComponent implements OnInit, On
 
   }
 
-  createCustomerService(clientSend): void {
 
-    console.log('11111');
-    console.log(clientSend);
-    console.log('11111');
+  /**
+   * @author Luis Hernandez
+   * @param clientSend
+   * @description Metodo que se encarga de crear el cliente
+   */
+  createCustomerService(clientSend): void {
 
     this.productosService.registrarCliente(clientSend).subscribe(
       clienteData => {
         const responseCliente: any = clienteData;
-
-        console.log('.-.-.-.-.-.');
-        console.log(responseCliente);
-        console.log('.-.-.-.-.-.');
-
-        // if (responseApuesta.exito) {
-        //   this.cleanCartValues();
-        //   alert('Transacción exitosa');
-        // } else {
-        //   alert('Problemas con la transacción');
-        // }
+        if (responseCliente.idPersona) {
+          alert('Cliente Registrado');
+          this.createCustomerE(responseCliente);
+        } else {
+          alert('Problemas al registrar el cliente');
+        }
       },
       error => {
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
       }
     );
+  }
+
+
+  /**
+   * @author Luis Hernandez
+   * @param customer
+   * @description Metodo que se encarga de enviar el cliente que fue creado
+   */
+  createCustomerE(customer): void {
+    this.createCustomer.emit(customer);
   }
 
 
