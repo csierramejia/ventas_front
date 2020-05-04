@@ -36,7 +36,7 @@ export class ProductosService {
    * @description funcion que hace la peticion de validación de existencia de un cliente
    */
   public clienteApuesta(cliente: ClientesDTO): Observable<ClientesDTO> {
-    return this.http.get<ClientesDTO>(`${ProductosAPIConstant.URL_CONSULTAR_CLIENTE}/${cliente.numeroDocumento}`);
+    return this.http.get<ClientesDTO>(`${ProductosAPIConstant.URL_CONSULTAR_CLIENTE}/${cliente.numeroDocumento}/${cliente.tipoDocumento}`);
   }
 
 

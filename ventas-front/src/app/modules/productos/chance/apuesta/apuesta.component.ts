@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ProductosService } from '../../productos.service';
 import { LoteriasDTO } from 'src/app/dtos/escrutinio/loterias/loterias.dto';
@@ -7,6 +7,7 @@ import { MessageService } from 'primeng/api';
 import { MsjUtil } from 'src/app/utilities/messages.util';
 import { CommonComponent } from 'src/app/utilities/common.component';
 import { ShellState } from 'src/app/states/shell/shell.state';
+import { CrearClienteComponent } from '../crear-cliente/crear-cliente.component';
 
 @Component({
   selector: 'app-apuesta',
@@ -19,6 +20,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
   @Output() addBet: EventEmitter<any> = new EventEmitter();
   @Output() addLotteries: EventEmitter<any> = new EventEmitter();
 
+  @ViewChild(CrearClienteComponent) crearClienteChild: CrearClienteComponent;
 
   pathLotteries = '../../../../../assets/img/loterias/';
   idCustomer = '';
@@ -52,6 +54,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
   chanceForm = new FormGroup({
     fecha: new FormControl(''),
     numero: new FormControl('', [Validators.required]),
+    tipoDocumento: new FormControl('', [Validators.required]),
     numeroDocumento: new FormControl('', [Validators.required]),
     nombreCliente: new FormControl(''),
     valorDirecto: new FormControl('', [Validators.required]),
@@ -121,26 +124,33 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
    * levanta un popup para su posterior creación
    */
   validExistClient(): void {
-    const clientesDTO: ClientesDTO = new ClientesDTO();
-    this.enabledCustomer = false;
-    this.chanceForm.controls.nombreCliente.setValue('');
-    clientesDTO.numeroDocumento = this.chanceForm.get('numeroDocumento').value;
-    this.productosService.clienteApuesta(clientesDTO).subscribe(
-      clienteData => {
-        const responseCliente: any = clienteData;
-        if (responseCliente.existe) {
-          const name = responseCliente.primerNombre + ' ' + responseCliente.segundoNombre + ' ' + responseCliente.primerApellido;
-          this.idCustomer = responseCliente.idCliente;
-          this.chanceForm.controls.nombreCliente.setValue(name);
-          this.enabledCustomer = true;
-        } else {
-          this.displayModalCreate = true;
+
+    if (this.chanceForm.get('tipoDocumento').value && this.chanceForm.get('numeroDocumento').value) {
+      const clientesDTO: ClientesDTO = new ClientesDTO();
+      this.enabledCustomer = false;
+      this.chanceForm.controls.nombreCliente.setValue('');
+      clientesDTO.numeroDocumento = this.chanceForm.get('numeroDocumento').value;
+      clientesDTO.tipoDocumento = this.chanceForm.get('tipoDocumento').value;
+      this.productosService.clienteApuesta(clientesDTO).subscribe(
+        clienteData => {
+          const responseCliente: any = clienteData;
+          if (responseCliente.existe) {
+            const name = responseCliente.primerNombre + ' ' + responseCliente.segundoNombre + ' ' + responseCliente.primerApellido;
+            this.idCustomer = responseCliente.idCliente;
+            this.chanceForm.controls.nombreCliente.setValue(name);
+            this.enabledCustomer = true;
+          } else {
+            this.crearClienteChild.clienteForm.get('tipoDocumento').setValue(this.chanceForm.get('tipoDocumento').value);
+            this.crearClienteChild.clienteForm.get('numeroDocumento').setValue(this.chanceForm.get('numeroDocumento').value);
+            this.displayModalCreate = true;
+          }
+        },
+        error => {
+          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
         }
-      },
-      error => {
-        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
-      }
-    );
+      );
+    }
+
   }
 
 
@@ -195,9 +205,15 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
     this.chanceForm.get('unaCifra').setValue('');
 
     if (String(this.chanceForm.get('numero').value).length === 4) {
-      this.enabledThree = true;
-      this.enabledTwo = true;
-      this.enabledOne = true;
+      if (this.chanceForm.get('combinado').value && !this.chanceForm.get('valorDirecto').value) {
+        this.enabledThree = false;
+        this.enabledTwo = false;
+        this.enabledOne = false;
+      } else {
+        this.enabledThree = true;
+        this.enabledTwo = true;
+        this.enabledOne = true;
+      }
     } else if (String(this.chanceForm.get('numero').value).length === 3) {
       if (this.chanceForm.get('valorDirecto').value && this.chanceForm.get('combinado').value) {
         this.enabledThree = false;
@@ -245,7 +261,8 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
       });
       this.cleanInputs();
     } else {
-      alert('Usted debe diligenciar todos los campos');
+      // alert('Usted debe diligenciar todos los campos');
+      this.messageService.add(MsjUtil.getMsjError('Usted debe diligenciar todos los campos'));
     }
   }
 
@@ -278,7 +295,8 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
       });
       this.cleanInputs();
     } else {
-      alert('Usted debe diligenciar todos los campos');
+      // alert('Usted debe diligenciar todos los campos');
+      this.messageService.add(MsjUtil.getMsjError('Usted debe diligenciar todos los campos'));
     }
   }
 
@@ -309,6 +327,33 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
 
     this.btnAdd = false;
     this.btnEdit = true;
+  }
+
+
+  /**
+   * @author Luis Hernandez
+   * @param event
+   * @description metodo que se da cuenta cuanto la transaccion fue ok
+   */
+  createBetSendEmit(event): void {
+    if (event) {
+      // limpiamos campos de información del cliente
+      this.chanceForm.get('tipoDocumento').setValue('');
+      this.chanceForm.get('numeroDocumento').setValue('');
+      this.chanceForm.get('nombreCliente').setValue('');
+      this.enabledCustomer = false;
+
+      // quitamos fecha y loterias seleccionadas
+      this.loterias = [];
+      this.days.forEach(element => {
+        const chip = document.getElementById(element.name);
+        chip.style.backgroundColor = '#ffffff';
+        chip.style.color = '#0083fe';
+      });
+      delete this.dayBet;
+      // limpiamos los demas campos
+      this.cleanInputs();
+    }
   }
 
 

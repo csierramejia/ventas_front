@@ -34,27 +34,36 @@
                             </button>
                         </div>
                         <div class="col-md-3">
+                            <label class="titleInput" for="identificacion">Tipo Identificación</label>
+                            <div class="form-group">
+                                <select (change)="validExistClient()" formControlName="tipoDocumento" class="form-control typeIdentification">
+                                  <option value="CC">CC</option>
+                                  <option value="TI">TI</option>
+                                </select>
+                              </div>
+                        </div>
+                        <div class="col-md-3">
                             <label class="titleInput" for="identificacion">Identificación</label>
                             <div class="form-group has-feedback">
                                 <i class="fa fa-user form-control-feedback"></i>
                                 <input type="text" (change)="validExistClient()" formControlName="numeroDocumento" class="form-control styleInput" placeholder="Cedula">
                             </div>
                         </div>
-
-                        <div class="col-md-4 padColLable" *ngIf="enabledCustomer">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 padColLable" *ngIf="enabledCustomer">
                             <div class="form-group has-feedback elemClient">
                                 <i class="fa fa-check-square inputSuccess"></i>
                                 <input type="text" class="form-control styleInputClient" formControlName="nombreCliente" placeholder="Cliente">
                             </div>
                         </div>
-
                     </div>
                     <div class="row">
                         <div class="col-md-3">
                             <label class="titleInput" for="numero">Número</label>
                             <div class="form-group has-feedback">
                             <i class="fa fa-hashtag form-control-feedback" aria-hidden="true"></i>
-                            <input type="text" (change)="chanceNumber()" class="form-control styleInput" formControlName="numero" placeholder="Número">
+                            <input type="number" (change)="chanceNumber()" class="form-control styleInput" formControlName="numero" placeholder="Número">
                             </div>
                         </div>
                     </div>
@@ -63,35 +72,35 @@
                             <label class="titleInput" for="valorDirecto">Valor Directo</label>
                             <div class="form-group has-feedback">
                             <i class="fa fa-usd form-control-feedback" aria-hidden="true"></i>
-                            <input type="text" (change)="chanceNumber()" class="form-control styleInput" placeholder="Directo" formControlName="valorDirecto">
+                            <input type="number" (change)="chanceNumber()" class="form-control styleInput" placeholder="Directo" formControlName="valorDirecto">
                             </div>
                         </div>
                         <div class="col-md-3">
                             <label class="titleInput" for="combinado">Combinado</label>
                             <div class="form-group has-feedback">
                             <i class="fa fa-usd form-control-feedback" aria-hidden="true"></i>
-                            <input type="text" (change)="chanceNumber()" class="form-control styleInput" formControlName="combinado" placeholder="Combinado">
+                            <input type="number" (change)="chanceNumber()" class="form-control styleInput" formControlName="combinado" placeholder="Combinado">
                             </div>
                         </div>
                         <div class="col-md-2" *ngIf="enabledThree">
                             <label class="titleInput" for="valorTres">Valor 3 cifras</label>
                             <div class="form-group has-feedback">
                             <i class="fa fa-usd form-control-feedback" aria-hidden="true"></i>
-                            <input type="text" class="form-control styleInput" formControlName="tresCifras" placeholder="Valor">
+                            <input type="number" class="form-control styleInput" formControlName="tresCifras" placeholder="Valor">
                             </div>
                         </div>
                         <div class="col-md-2" *ngIf="enabledTwo">
                             <label class="titleInput" for="valorDos">Valor 2 cifras</label>
                             <div class="form-group has-feedback">
                             <i class="fa fa-usd form-control-feedback" aria-hidden="true"></i>
-                            <input type="text" class="form-control styleInput" formControlName="dosCifras" placeholder="Valor">
+                            <input type="number" class="form-control styleInput" formControlName="dosCifras" placeholder="Valor">
                             </div>
                         </div>
                         <div class="col-md-2" *ngIf="enabledOne">
                             <label class="titleInput" for="valorDos">Valor 1 cifra</label>
                             <div class="form-group has-feedback">
                             <i class="fa fa-usd form-control-feedback" aria-hidden="true"></i>
-                            <input type="text" class="form-control styleInput" formControlName="unaCifra" placeholder="Valor">
+                            <input type="number" class="form-control styleInput" formControlName="unaCifra" placeholder="Valor">
                             </div>
                         </div>
                     </div>

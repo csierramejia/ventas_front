@@ -55,4 +55,16 @@ export class ChanceComponent implements OnInit {
     this.apuestaChild.editBetSendEmit(event);
   }
 
+
+
+  /**
+   * @author Luis Hernandez
+   * @param event
+   * @description Metodo que se engarda de notificar
+   * que la transaccion esta ok
+   */
+  creatingBet(event): void {
+    this.apuestaChild.createBetSendEmit(event);
+  }
+
 }

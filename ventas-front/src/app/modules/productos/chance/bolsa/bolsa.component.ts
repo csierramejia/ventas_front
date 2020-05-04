@@ -4,7 +4,7 @@ import { ShellState } from 'src/app/states/shell/shell.state';
 import { MessageService } from 'primeng/api';
 import { ProductosService } from '../../productos.service';
 import { MsjUtil } from 'src/app/utilities/messages.util';
-import { Directionality } from '@angular/cdk/bidi';
+
 
 @Component({
   selector: 'app-bolsa',
@@ -14,7 +14,11 @@ import { Directionality } from '@angular/cdk/bidi';
 })
 export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy  {
 
+
+
   @Output() editBet: EventEmitter<any> = new EventEmitter();
+  @Output() creatingBet: EventEmitter<any> = new EventEmitter();
+
 
   inputVat = 0;
   valueBet = 0;
@@ -104,6 +108,8 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
   }
 
 
+
+
   /**
    * @author Luis Hernandez
    * @param element
@@ -166,6 +172,7 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
     const bets = [];
 
     const paySend = {
+      idUser: this.shellState.userAccount.auth.usuario.idUsuario,
       datePlayed: this.cartItems[0].dataPlayed,
       idCustomer: this.cartItems[0].idCustomer,
       valueBet : this.valueBet,
@@ -202,15 +209,17 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
 
     paySend.bets = bets;
 
-
     this.productosService.registrarApuesta(paySend).subscribe(
       apuestaData => {
         const responseApuesta: any = apuestaData;
         if (responseApuesta.exito) {
           this.cleanCartValues();
-          alert('Transacción exitosa');
+          this.messageService.add(MsjUtil.getMsjSuccess('Transacción exitosa'));
+
+          this.creatingBet.emit(true);
+
         } else {
-          alert('Problemas con la transacción');
+          this.messageService.add(MsjUtil.getMsjError('Problemas con la transacción'));
         }
       },
       error => {

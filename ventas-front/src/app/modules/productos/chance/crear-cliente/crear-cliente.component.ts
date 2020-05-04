@@ -63,6 +63,7 @@ export class CrearClienteComponent extends CommonComponent implements OnInit, On
   validCreateCustomerE(): void {
     if (
       this.clienteForm.get('tipoDocumento').valid &&
+      this.clienteForm.get('tipoDocumento').value !== 'option' &&
       this.clienteForm.get('numeroDocumento').valid &&
       this.clienteForm.get('primerNombre').valid &&
       this.clienteForm.get('primerApellido').valid &&
@@ -80,7 +81,7 @@ export class CrearClienteComponent extends CommonComponent implements OnInit, On
         };
         this.createCustomerService(clientSend);
     } else {
-      alert('Usted debe de diligenciar los campos obligatorios');
+      this.messageService.add(MsjUtil.getMsjError('Usted debe de diligenciar los campos obligatorios'));
     }
 
   }
@@ -97,10 +98,10 @@ export class CrearClienteComponent extends CommonComponent implements OnInit, On
       clienteData => {
         const responseCliente: any = clienteData;
         if (responseCliente.idPersona) {
-          alert('Cliente Registrado');
+          this.messageService.add(MsjUtil.getMsjSuccess('Cliente Registrado'));
           this.createCustomerE(responseCliente);
         } else {
-          alert('Problemas al registrar el cliente');
+          this.messageService.add(MsjUtil.getMsjError('Problemas al registrar el cliente'));
         }
       },
       error => {

@@ -8,7 +8,10 @@
                 </app-apuesta>
             </div>
             <div class="col-3">
-                <app-bolsa (editBet)="editBet($event)"></app-bolsa>
+                <app-bolsa 
+                    (editBet)="editBet($event)"
+                    (creatingBet)="creatingBet($event)">
+                </app-bolsa>
             </div>
         </div>
     </section>
