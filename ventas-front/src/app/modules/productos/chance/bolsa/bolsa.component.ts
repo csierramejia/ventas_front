@@ -160,6 +160,8 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
       if (element.oneC) { this.valueBet = this.valueBet + parseInt(element.oneC); }
     });
 
+    this.valueBet = (this.lotteries.length * this.valueBet);
+
     this.valueVat = Math.floor(this.valueBet * this.inputVat) / 100;
     this.valueBet = this.valueBet - this.valueVat;
 
@@ -227,6 +229,17 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
       }
     );
 
+  }
+
+
+  /**
+   * @author Luis Hernandez
+   * @description Metodo que se encarga recibir las loterias seleccionadas
+   * y llama al metodo que recalcula valores de la apuesta
+   */
+  addLotteries(event): void {
+    this.lotteries = event;
+    this.get_values_totals();
   }
 
 

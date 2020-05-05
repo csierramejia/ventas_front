@@ -46,9 +46,9 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
 
   enabledCustomer = false;
   // enabledCombined = false;
-  enabledThree = false;
-  enabledTwo = false;
-  enabledOne = false;
+  enabledThree = true;
+  enabledTwo = true;
+  enabledOne = true;
 
 
   chanceForm = new FormGroup({
@@ -160,7 +160,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
    */
   getNumberThree(): void {
     this.chanceForm.controls.numero.setValue( Math.round(Math.random() * (100 - 999) + 999 ) );
-    this.validInputBet();
+    // this.validInputBet();
   }
 
 
@@ -170,7 +170,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
    */
   getNumberFour(): void {
     this.chanceForm.controls.numero.setValue(Math.round(Math.random() * (1000 - 9999) + 9999 ));
-    this.validInputBet();
+    // this.validInputBet();
   }
 
 
@@ -187,13 +187,19 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
       this.enabledThree = false;
       this.enabledTwo = false;
       this.enabledOne = false;
-    } else {
-      this.validInputBet();
     }
+    // else {
+    //   this.validInputBet();
+    // }
   }
 
 
-
+  /**
+   * @author Luis Hernandez
+   * @description Metodo que se encarga de aplicar reglas de negocio
+   * de apuesta por el momento no se va a utilizar dado que indicaron
+   * que las apuesta debe quedar abierta
+   */
   validInputBet(): void {
 
     this.enabledThree = false;
@@ -322,8 +328,8 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
     if (event.twoC) {this.chanceForm.get('dosCifras').setValue(event.twoC); }
     if (event.oneC) {this.chanceForm.get('unaCifra').setValue(event.oneC); }
 
-
-    this.validInputBet();
+    // regla de negocio que queda pendiente
+    // this.validInputBet();
 
     this.btnAdd = false;
     this.btnEdit = true;
@@ -390,9 +396,9 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
     this.chanceForm.get('dosCifras').setValue('');
     this.chanceForm.get('unaCifra').setValue('');
     // this.enabledCombined = false;
-    this.enabledThree = false;
-    this.enabledTwo = false;
-    this.enabledOne = false;
+    // this.enabledThree = false;
+    // this.enabledTwo = false;
+    // this.enabledOne = false;
     this.btnAdd = true;
     this.btnEdit = false;
   }

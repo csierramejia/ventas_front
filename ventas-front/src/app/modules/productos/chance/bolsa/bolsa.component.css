@@ -55,7 +55,9 @@ aside{
     width: 157px;
     height: 18px;
     text-align: left;
-    font: Bold 14px/18px Montserrat;
+    font-size: 12px;
+    font-family: 'Montserrat';
+    font-weight: bold;
     letter-spacing: 0px;
     color: #3A3F51;
     opacity: 1;
@@ -87,13 +89,13 @@ aside{
 }
 
 .textNumberValues {
-    font-family: Montserrat;
+    font-family: 'Montserrat';
+    font-size: 12px;
     top: 257px;
     left: 1097px;
     width: 50px;
     height: 15px;
     text-align: left;
-    font: Regular 12px/15px Montserrat;
     letter-spacing: 0px;
     color: #3A3F51;
     opacity: 1;

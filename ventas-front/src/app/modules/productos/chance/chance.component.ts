@@ -39,7 +39,7 @@ export class ChanceComponent implements OnInit {
    * la informacion de las loterias
    */
   addLotteries(event): void {
-    this.bolsaChild.lotteries = event ;
+    this.bolsaChild.addLotteries(event);
   }
 
 
