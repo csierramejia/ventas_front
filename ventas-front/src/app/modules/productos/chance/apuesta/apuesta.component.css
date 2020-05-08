@@ -28,7 +28,7 @@
 
 .inner-addon {
     position: relative;
-  }
+}
 .inner-addon .glyphicon {
   position: absolute;
   padding: 10px;
@@ -200,6 +200,14 @@
 .typeIdentification{
   padding-left: 0 !important;
   height: 31px;
+}
+
+
+.element-actions-btns{
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+  margin-bottom: 10px !important;
+  margin-right: 10px !important;
 }
 
 

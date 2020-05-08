@@ -68,12 +68,25 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
   validCreateAndEdit(event): void {
     if (event.action === 1) {
       delete event.action;
+      // this.lotteries = event.lotteries;
+      // delete event.lotteries;
       this.cartItems.push(event);
       this.get_values_totals();
     } else {
       const keyResponse = this.getKeyObject(event._id);
       this.setData(keyResponse, event);
     }
+  }
+
+
+  /**
+   * @author Luis Hernandez
+   * @param event
+   * @description Metodo que se encarga
+   */
+  setLotteries(event): void {
+    this.lotteries = event;
+    this.get_values_totals();
   }
 
 
@@ -91,6 +104,7 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
     this.cartItems[key].threeC = event.threeC;
     this.cartItems[key].twoC = event.twoC;
     this.cartItems[key].oneC = event.oneC;
+    // this.lotteries = event.lotteries;
     this.get_values_totals();
   }
 
@@ -217,7 +231,6 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
         if (responseApuesta.exito) {
           this.cleanCartValues();
           this.messageService.add(MsjUtil.getMsjSuccess('Transacción exitosa'));
-
           this.creatingBet.emit(true);
 
         } else {
@@ -232,16 +245,6 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
   }
 
 
-  /**
-   * @author Luis Hernandez
-   * @description Metodo que se encarga recibir las loterias seleccionadas
-   * y llama al metodo que recalcula valores de la apuesta
-   */
-  addLotteries(event): void {
-    this.lotteries = event;
-    this.get_values_totals();
-  }
-
 
   /**
    * @author Luis Hernandez
@@ -255,6 +258,10 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
     this.valueVat = 0;
     this.valueBetTotal = 0;
     this.lotteries = [];
+
+    // this.valueBet = 0;
+    //       this.valueVat = 0;
+    //       this.valueBetTotal = 0;
   }
 
 

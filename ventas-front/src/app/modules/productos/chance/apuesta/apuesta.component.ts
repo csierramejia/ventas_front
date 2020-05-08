@@ -1,7 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, OnDestroy, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ProductosService } from '../../productos.service';
-import { LoteriasDTO } from 'src/app/dtos/escrutinio/loterias/loterias.dto';
 import { ClientesDTO } from 'src/app/dtos/productos/chance/clientes.dto';
 import { MessageService } from 'primeng/api';
 import { MsjUtil } from 'src/app/utilities/messages.util';
@@ -22,14 +21,14 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
 
   @ViewChild(CrearClienteComponent) crearClienteChild: CrearClienteComponent;
 
-  pathLotteries = '../../../../../assets/img/loterias/';
   idCustomer = '';
   displayModalCreate = false;
   btnEdit = false;
   btnAdd  = true;
   idEdit: any;
-  loterias: LoteriasDTO[];
 
+  selectUnmarkAllBol = false;
+  loterias = [];
   lotteriesSelected = [];
 
   dayBet: Date;
@@ -44,8 +43,8 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
     { text: 'D', name: 'dom', date: null }
   ];
 
+
   enabledCustomer = false;
-  // enabledCombined = false;
   enabledThree = true;
   enabledTwo = true;
   enabledOne = true;
@@ -53,11 +52,11 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
 
   chanceForm = new FormGroup({
     fecha: new FormControl(''),
-    numero: new FormControl('', [Validators.required]),
-    tipoDocumento: new FormControl('', [Validators.required]),
-    numeroDocumento: new FormControl('', [Validators.required]),
+    numero: new FormControl('', [Validators.required, Validators.maxLength(4)]),
+    tipoDocumento: new FormControl(''),
+    numeroDocumento: new FormControl(''),
     nombreCliente: new FormControl(''),
-    valorDirecto: new FormControl('', [Validators.required]),
+    valorDirecto: new FormControl(''),
     combinado: new FormControl(''),
     tresCifras: new FormControl(''),
     dosCifras: new FormControl(''),
@@ -77,6 +76,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
 
   ngOnInit(): void {
   }
+
 
   /**
    * @author Luis Hernandez
@@ -101,14 +101,30 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
     this.getLotteries();
   }
 
+
   /**
    * @author Luis Hernandez
+   * @description funcion que llama al servicio
+   * de loterias y trae las loterias disponibles
+   * según el día
    */
   getLotteries(): void {
       this.productosService.consultarLoterias(this.dayBet).subscribe(
         loteriasData => {
-          this.loterias = loteriasData;
-          this.viewLotteries = true;
+          const rs: any = loteriasData;
+          rs.forEach(element => {
+            this.loterias.push({
+              idLoteria: element.idLoteria,
+              codigo: element.codigo,
+              nombre: element.nombre,
+              nombreCorto: element.nombreCorto,
+              telefono: element.telefono,
+              idEstado: element.idEstado,
+              idEmpresa: element.idEmpresa,
+              idSorteo: element.idSorteo,
+              checked: false
+            });
+          });
         },
         error => {
           this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
@@ -160,7 +176,6 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
    */
   getNumberThree(): void {
     this.chanceForm.controls.numero.setValue( Math.round(Math.random() * (100 - 999) + 999 ) );
-    // this.validInputBet();
   }
 
 
@@ -170,7 +185,6 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
    */
   getNumberFour(): void {
     this.chanceForm.controls.numero.setValue(Math.round(Math.random() * (1000 - 9999) + 9999 ));
-    // this.validInputBet();
   }
 
 
@@ -251,10 +265,18 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
     this.displayModalCreate = event;
   }
 
+
+  /**
+   * @author Luis Hernandez
+   * @description funcion que se encarga de
+   * emitir la apuesta al componente bolsa
+   */
   addBetSend(): void {
+    // this.lotteriesSelected = this.get_lotteriesSelected();
     if (this.valid()) {
       this.addBet.emit({
         action: 1,
+        // lotteries: this.lotteriesSelected,
         _id: 'bet_' + Math.floor(Math.random() * 999999),
         idCustomer: this.idCustomer,
         numberPlayed: this.chanceForm.get('numero').value,
@@ -267,15 +289,8 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
       });
       this.cleanInputs();
     } else {
-      // alert('Usted debe diligenciar todos los campos');
-      this.messageService.add(MsjUtil.getMsjError('Usted debe diligenciar todos los campos'));
+      this.messageService.add(MsjUtil.getMsjError('Usted debe diligenciar los campos requeridos'));
     }
-  }
-
-
-
-  addLotteriesSend(): void {
-      this.addLotteries.emit(this.lotteriesSelected);
   }
 
 
@@ -285,9 +300,11 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
    * de enviar a la bolsa el producto modificado
    */
   editBetSend() {
+    // this.lotteriesSelected = this.get_lotteriesSelected();
     if (this.valid()) {
       this.addBet.emit({
         action: 0,
+        // lotteries: this.lotteriesSelected,
         _id: this.idEdit,
         documentCustomer: this.chanceForm.get('numeroDocumento').value,
         nameCustomer: this.chanceForm.get('nombreCliente').value,
@@ -301,9 +318,33 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
       });
       this.cleanInputs();
     } else {
-      // alert('Usted debe diligenciar todos los campos');
-      this.messageService.add(MsjUtil.getMsjError('Usted debe diligenciar todos los campos'));
+      this.messageService.add(MsjUtil.getMsjError('Usted debe diligenciar los campos requeridos'));
     }
+  }
+
+
+  /**
+   * @author Luis Hernandez
+   * @description Metodo que se valida cuales fueron
+   * las loterias seleccionadas y las manda para el carrito
+   */
+  get_lotteriesSelected() {
+    this.lotteriesSelected = [];
+    this.loterias.forEach(element => {
+      if (element.checked) {
+        this.lotteriesSelected.push({
+          idLoteria: element.idLoteria,
+          codigo: element.codigo,
+          nombre: element.nombre,
+          nombreCorto: element.nombreCorto,
+          telefono: element.telefono,
+          idEstado: element.idEstado,
+          idEmpresa: element.idEmpresa,
+          idSorteo: element.idSorteo,
+        });
+      }
+    });
+    return this.lotteriesSelected;
   }
 
 
@@ -370,14 +411,16 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
    * esten diligenciados
    */
   valid() {
-    if (
-        this.chanceForm.get('numero').valid &&
-        this.dayBet) {
-          if (this.chanceForm.get('valorDirecto').valid || this.chanceForm.get('combinado').valid) {
+    if (this.chanceForm.get('numero').valid && this.dayBet) {
+      if (this.chanceForm.get('valorDirecto').value ||
+          this.chanceForm.get('combinado').value ||
+          this.chanceForm.get('tresCifras').value ||
+          this.chanceForm.get('dosCifras').value ||
+          this.chanceForm.get('unaCifra').value ) {
             return true;
-          } else {
-            return false;
-          }
+      } else {
+        return false;
+      }
     } else {
       return false;
     }
@@ -512,21 +555,6 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
   }
 
 
-
-  toggleVisibility(event, loteria): void {
-
-    if (event) {
-      this.lotteriesSelected.push(loteria);
-    } else {
-      const keyResponse = this.getKeyObject(loteria.idLoteria);
-      if ( keyResponse  !== -1 ) {
-        this.lotteriesSelected.splice( keyResponse , 1 );
-      }
-    }
-  }
-
-
-
   /**
    * @author Luis Hernandez
    * @param id
@@ -535,11 +563,91 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
    * de una loteria
    */
   getKeyObject(idLoteria) {
-    return this.lotteriesSelected.map((e) => {
+    return this.loterias.map((e) => {
       return e.idLoteria;
     }).indexOf(idLoteria);
   }
 
+
+  /**
+   * @author Luis Hernandez
+   * @description Funcion que permite valida que el usuario
+   * solo ingrese numeros en los campos donde se espera solo numeros
+   * @param e
+   */
+  keyPressNumber(e) {
+    const key = window.Event ? e.which : e.keyCode;
+    e.key.replace(/\D|\-/, '');
+    return (key >= 48 && key <= 57);
+  }
+
+
+  /**
+   * @author Luis Hernandez
+   * @description Funcion que permite valida que el usuario
+   * solo ingrese numeros en los campos donde se espera solo numeros
+   * @param e
+   */
+  keyPressNumberChance(e) {
+    const key = window.Event ? e.which : e.keyCode;
+    e.key.replace(/\D|\-/, '');
+    return (key >= 48 && key <= 57);
+  }
+
+
+  /**
+   * @author Luis Hernandez
+   * @description Metodo que se encarga de marcar
+   * y desmarcar un checkbox seleccionado por el usuario
+   * @param event
+   * @param loteria
+   */
+  toggleVisibility(loteria): void {
+    const keyResponse = this.getKeyObject(loteria.idLoteria);
+    if (this.loterias[keyResponse].checked) {
+      this.loterias[keyResponse].checked = false;
+    } else {
+      this.loterias[keyResponse].checked = true;
+    }
+
+    let valid = true;
+    this.loterias.forEach(element => {
+      if (!element.checked) { valid = false; }
+    });
+
+    if (valid) {
+      this.selectUnmarkAllBol = true;
+    } else {
+      this.selectUnmarkAllBol = false;
+    }
+
+    this.addLotteries.emit(this.get_lotteriesSelected());
+  }
+
+
+  /**
+   * @author Luis Hernandez
+   * @description Metodo que se encarga de
+   * seleccionar todas las loterias y marcar
+   * todos los checkbox
+   */
+  selectUnmarkAll(): void {
+    if (!this.selectUnmarkAllBol) {
+      // tslint:disable-next-line: prefer-for-of
+      for (let index = 0; index < this.loterias.length; index++) {
+        this.loterias[index].checked = true;
+      }
+      this.selectUnmarkAllBol = true;
+    } else {
+      // tslint:disable-next-line: prefer-for-of
+      for (let index = 0; index < this.loterias.length; index++) {
+        this.loterias[index].checked = false;
+      }
+      this.selectUnmarkAllBol = false;
+    }
+
+    this.addLotteries.emit(this.get_lotteriesSelected());
+  }
 
 
   /**

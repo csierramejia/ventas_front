@@ -46,7 +46,7 @@
                             <label class="titleInput" for="identificacion">Identificación</label>
                             <div class="form-group has-feedback">
                                 <i class="fa fa-user form-control-feedback"></i>
-                                <input type="text" (change)="validExistClient()" formControlName="numeroDocumento" class="form-control styleInput" placeholder="Cedula">
+                                <input type="text" (keypress)="keyPressNumber($event)" (change)="validExistClient()" formControlName="numeroDocumento" class="form-control styleInput" placeholder="Cedula">
                             </div>
                         </div>
                     </div>
@@ -63,7 +63,7 @@
                             <label class="titleInput" for="numero">Número</label>
                             <div class="form-group has-feedback">
                             <i class="fa fa-hashtag form-control-feedback" aria-hidden="true"></i>
-                            <input type="number" (change)="chanceNumber()" class="form-control styleInput" formControlName="numero" placeholder="Número">
+                            <input type="text" maxlength="4" (keypress)="keyPressNumberChance($event)" (change)="chanceNumber()" class="form-control styleInput" formControlName="numero" placeholder="Número">
                             </div>
                         </div>
                     </div>
@@ -72,97 +72,93 @@
                             <label class="titleInput" for="valorDirecto">Valor Directo</label>
                             <div class="form-group has-feedback">
                             <i class="fa fa-usd form-control-feedback" aria-hidden="true"></i>
-                            <input type="number" (change)="chanceNumber()" class="form-control styleInput" placeholder="Directo" formControlName="valorDirecto">
+                            <input type="text" (keypress)="keyPressNumber($event)" (change)="chanceNumber()" class="form-control styleInput" placeholder="Directo" formControlName="valorDirecto">
                             </div>
                         </div>
                         <div class="col-md-3">
                             <label class="titleInput" for="combinado">Combinado</label>
                             <div class="form-group has-feedback">
                             <i class="fa fa-usd form-control-feedback" aria-hidden="true"></i>
-                            <input type="number" (change)="chanceNumber()" class="form-control styleInput" formControlName="combinado" placeholder="Combinado">
+                            <input type="text" (keypress)="keyPressNumber($event)" (change)="chanceNumber()" class="form-control styleInput" formControlName="combinado" placeholder="Combinado">
                             </div>
                         </div>
                         <div class="col-md-2" *ngIf="enabledThree">
                             <label class="titleInput" for="valorTres">Valor 3 cifras</label>
                             <div class="form-group has-feedback">
                             <i class="fa fa-usd form-control-feedback" aria-hidden="true"></i>
-                            <input type="number" class="form-control styleInput" formControlName="tresCifras" placeholder="Valor">
+                            <input type="text" (keypress)="keyPressNumber($event)" class="form-control styleInput" formControlName="tresCifras" placeholder="Valor">
                             </div>
                         </div>
                         <div class="col-md-2" *ngIf="enabledTwo">
                             <label class="titleInput" for="valorDos">Valor 2 cifras</label>
                             <div class="form-group has-feedback">
                             <i class="fa fa-usd form-control-feedback" aria-hidden="true"></i>
-                            <input type="number" class="form-control styleInput" formControlName="dosCifras" placeholder="Valor">
+                            <input type="text" (keypress)="keyPressNumber($event)" class="form-control styleInput" formControlName="dosCifras" placeholder="Valor">
                             </div>
                         </div>
                         <div class="col-md-2" *ngIf="enabledOne">
                             <label class="titleInput" for="valorDos">Valor 1 cifra</label>
                             <div class="form-group has-feedback">
                             <i class="fa fa-usd form-control-feedback" aria-hidden="true"></i>
-                            <input type="number" class="form-control styleInput" formControlName="unaCifra" placeholder="Valor">
+                            <input type="text" (keypress)="keyPressNumber($event)" class="form-control styleInput" formControlName="unaCifra" placeholder="Valor">
                             </div>
                         </div>
                     </div>
                     <hr>
-                    <div class="row float-right">
-                        <button *ngIf="btnAdd" (click)="addBetSend()" type="button" class="btn btn-random">
-                            AGREGAR <i class="fa fa-plus" aria-hidden="true"></i>
-                        </button>
-                        <button *ngIf="btnEdit" (click)="editBetSend()" type="button" class="btn btn-random">
-                            EDITAR <i class="fa fa-plus" aria-hidden="true"></i>
-                        </button>
-                    </div>
                 </div>
                 
             </div>
         </div>
+    </form>
+
+
+    <div class="card">
+        <div class="card-header titleBetCard">
+            <a 
+                data-toggle="collapse" 
+                href="#collapse-example" 
+                aria-expanded="true" 
+                aria-controls="collapse-example" 
+                id="heading-example" 
+                class="d-block">
+                    Aplicar loterias del día
+                <i class="fa fa-chevron-down"></i>
+            </a>
+        </div>
         
 
-        <!-- <div class="card" *ngIf="viewLotteries"> -->
-        <div class="card">
-        
-            <div class="card-header titleBetCard">
-                <a 
-                    data-toggle="collapse" 
-                    href="#collapse-example" 
-                    aria-expanded="true" 
-                    aria-controls="collapse-example" 
-                    id="heading-example" 
-                    class="d-block">
-                        Aplicar loterias del día
-                    <i class="fa fa-chevron-down"></i>
-                </a>
-            </div>
-            
-
-            <div id="collapse-example" class="collapse" aria-labelledby="heading-example">
-                <div class="card-body">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-2" class="colLot" *ngFor="let loteria of loterias">
-                                <p-checkbox 
-                                    name="groupname" 
-                                    [value]="loteria.idLoteria"
-                                    (onChange)="toggleVisibility($event, loteria)" 
-                                    [label]="loteria.nombre">
-                                </p-checkbox>
-                                <br>
-                                <!-- <img class="imgLott" src="{{loteria.nombre}}.png"> -->
-                            </div> 
+        <div id="collapse-example" class="collapse show" aria-labelledby="heading-example">
+            <div class="card-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-2" class="colLot" *ngFor="let loteria of loterias">
+                            <input type="checkbox" (click)="toggleVisibility(loteria)" [(ngModel)]="loteria.checked"/>
+                            <label>{{loteria.nombre}}</label>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="row float-right">
-                    <button *ngIf="lotteriesSelected.length > 0" (click)="addLotteriesSend()" type="button" class="btn btn-random">
-                        AGREGAR <i class="fa fa-plus" aria-hidden="true"></i>
-                    </button>
-                </div>
+            <hr>
+            <div class="row float-right element-actions-btns" *ngIf="dayBet">
+                <button (click)="selectUnmarkAll()" *ngIf="!selectUnmarkAllBol" type="button" class="btn btn-random">
+                    Seleccionar todas <i class="fa fa-plus" aria-hidden="true"></i>
+                </button>
 
+                <button (click)="selectUnmarkAll()" *ngIf="selectUnmarkAllBol" type="button" class="btn btn-random">
+                    Desmarcar todas <i class="fa fa-plus" aria-hidden="true"></i>
+                </button>
+
+                <button *ngIf="btnAdd" (click)="addBetSend()" type="button" class="btn btn-random">
+                    AGREGAR <i class="fa fa-plus" aria-hidden="true"></i>
+                </button>
+                <button *ngIf="btnEdit" (click)="editBetSend()" type="button" class="btn btn-random">
+                    EDITAR <i class="fa fa-plus" aria-hidden="true"></i>
+                </button>
             </div>
         </div>
-    </form>
+    </div>
+    
 
     
 

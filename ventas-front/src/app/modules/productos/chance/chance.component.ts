@@ -31,16 +31,16 @@ export class ChanceComponent implements OnInit {
     this.bolsaChild.validCreateAndEdit(event);
   }
 
-
   /**
    * @author Luis Hernandez
    * @param event
-   * @description Metodo que se engarda de recibir
-   * la informacion de las loterias
+   * @description funcion que se encarga de setear las loterias en la bolsa
    */
   addLotteries(event): void {
-    this.bolsaChild.addLotteries(event);
+    this.bolsaChild.setLotteries(event);
   }
+
+
 
 
   /**
