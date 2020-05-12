@@ -16,7 +16,6 @@
                         <label class="dayBet">Día del sorteo {{ dayBet | date: 'dd/MM/yyyy'}}</label>
                     </p>
                 </div>
-                
             </div>
         </div>
 
@@ -63,7 +62,7 @@
                             <label class="titleInput" for="numero">Número</label>
                             <div class="form-group has-feedback">
                             <i class="fa fa-hashtag form-control-feedback" aria-hidden="true"></i>
-                            <input type="text" maxlength="4" (keypress)="keyPressNumberChance($event)" (change)="chanceNumber()" class="form-control styleInput" formControlName="numero" placeholder="Número">
+                            <input type="text" maxlength="4" (keypress)="keyPressNumberChance($event)" (change)="chanceNumber($event.target.value)" class="form-control styleInput" formControlName="numero" placeholder="Número">
                             </div>
                         </div>
                     </div>
@@ -72,14 +71,14 @@
                             <label class="titleInput" for="valorDirecto">Valor Directo</label>
                             <div class="form-group has-feedback">
                             <i class="fa fa-usd form-control-feedback" aria-hidden="true"></i>
-                            <input type="text" (keypress)="keyPressNumber($event)" (change)="chanceNumber()" class="form-control styleInput" placeholder="Directo" formControlName="valorDirecto">
+                            <input type="text" (keypress)="keyPressNumber($event)" (change)="chanceNumber(chanceForm.get('numero'))" class="form-control styleInput" placeholder="Directo" formControlName="valorDirecto">
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-3" *ngIf="enabledCombined">
                             <label class="titleInput" for="combinado">Combinado</label>
                             <div class="form-group has-feedback">
-                            <i class="fa fa-usd form-control-feedback" aria-hidden="true"></i>
-                            <input type="text" (keypress)="keyPressNumber($event)" (change)="chanceNumber()" class="form-control styleInput" formControlName="combinado" placeholder="Combinado">
+                                <i class="fa fa-usd form-control-feedback" aria-hidden="true"></i>
+                                <input type="text" (keypress)="keyPressNumber($event)" (change)="chanceNumber(chanceForm.get('numero'))" class="form-control styleInput" formControlName="combinado" placeholder="Combinado">
                             </div>
                         </div>
                         <div class="col-md-2" *ngIf="enabledThree">
@@ -153,7 +152,7 @@
                     AGREGAR <i class="fa fa-plus" aria-hidden="true"></i>
                 </button>
                 <button *ngIf="btnEdit" (click)="editBetSend()" type="button" class="btn btn-random">
-                    EDITAR <i class="fa fa-plus" aria-hidden="true"></i>
+                    ACTUALIZAR <i class="fa fa-plus" aria-hidden="true"></i>
                 </button>
             </div>
         </div>

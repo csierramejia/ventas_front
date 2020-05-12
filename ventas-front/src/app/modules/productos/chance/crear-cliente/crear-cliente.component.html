@@ -15,45 +15,47 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                  <input type="text" formControlName="numeroDocumento" class="form-control inputFormCreate" placeholder="Número de documento">
+                  <input type="text" formControlName="numeroDocumento" (keypress)="keyPressNumber($event)"  class="form-control inputFormCreate" placeholder="Número de documento">
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                  <input type="text" formControlName="primerNombre" class="form-control inputFormCreate" placeholder="Primer Nombre">
+                  <input type="text" type="text" formControlName="primerNombre" (keypress)="keyPressChart($event)" class="form-control inputFormCreate" placeholder="Primer Nombre">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                  <input type="text" formControlName="segundoNombre" class="form-control inputFormCreate" placeholder="Segundo Nombre">
+                  <input type="text" formControlName="segundoNombre" (keypress)="keyPressChart($event)" class="form-control inputFormCreate" placeholder="Segundo Nombre">
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                  <input type="text" formControlName="primerApellido" class="form-control inputFormCreate" placeholder="Primer Apellido">
+                  <input type="text" formControlName="primerApellido" (keypress)="keyPressChart($event)" class="form-control inputFormCreate" placeholder="Primer Apellido">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                  <input type="text" class="form-control inputFormCreate" formControlName="segundoApellido" placeholder="Segundo Apellido">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                  <input type="text" class="form-control inputFormCreate" formControlName="correo" placeholder="Correo electrónico">
+                  <input type="text" class="form-control inputFormCreate" (keypress)="keyPressChart($event)" formControlName="segundoApellido" placeholder="Segundo Apellido">
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                  <input type="text" class="form-control inputFormCreate" formControlName="numeroCelular" placeholder="Número celular">
+                  <input type="text" [ngClass]="{'alert-input': clienteForm.get('correo').errors?.email}" class="form-control inputFormCreate" formControlName="correo" placeholder="Correo electrónico">
+                  <span class="alert-mail" *ngIf="clienteForm.get('correo').errors?.email">por favor ingrese un email valido</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                  <input type="text" [ngClass]="{'alert-input': !clienteForm.get('numeroCelular').valid}" class="form-control inputFormCreate" minlength="10" maxlength="10" (keypress)="keyPressNumber($event)" formControlName="numeroCelular" placeholder="Número celular">
+                  <span class="alert-mail" *ngIf="!clienteForm.get('numeroCelular').valid">por favor ingrese un numero de celular correcto</span>
                 </div>
             </div>
         </div>

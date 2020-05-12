@@ -24,6 +24,20 @@
 }
 
 
+.alert-mail{
+    font-family: "Montserrat";
+    font-weight: 800;
+    font-style: normal;
+    font-size: 15px;
+    color: red;
+}
+
+
+.alert-input{
+    border: 1px solid #f00;
+}
+
+
 .btnActions{
     text-align: left;
     font: Regular 11px/14px Montserrat;

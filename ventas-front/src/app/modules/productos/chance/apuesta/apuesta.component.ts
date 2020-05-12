@@ -45,9 +45,11 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
 
 
   enabledCustomer = false;
+  enabledCombined = true;
   enabledThree = true;
   enabledTwo = true;
   enabledOne = true;
+
 
 
   chanceForm = new FormGroup({
@@ -176,6 +178,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
    */
   getNumberThree(): void {
     this.chanceForm.controls.numero.setValue( Math.round(Math.random() * (100 - 999) + 999 ) );
+    this.chanceNumber(this.chanceForm.get('numero').value);
   }
 
 
@@ -183,28 +186,48 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
    * @author Luis Hernandez
    * @description Metodo que devuelve un numero aleatorio de 4 cifras
    */
-  getNumberFour(): void {
+  getNumberFour() {
     this.chanceForm.controls.numero.setValue(Math.round(Math.random() * (1000 - 9999) + 9999 ));
+    console.log(this.chanceForm.get('numero').value);
+    this.chanceNumber(this.chanceForm.get('numero').value);
   }
 
 
   /**
    * @author Luis Hernandez
    * @description Metodo que se encarga de
-   * revisar si la cantidad de caracteres del
-   * numero corresponde al minimo de numero
-   * para realizar la apuesta y de esta manera
-   * activar los demas campos
+   * habilitar y deshabilitar los campos de
+   * apuesta de cifras y combinado segun la
+   * cantidad de numeros de numero principal
+   * de la apuesta
    */
-  chanceNumber(): void {
-    if (this.chanceForm.get('numero').value.length < 3) {
+  chanceNumber(event) {
+    const value = event;
+    this.enabledCombined = true;
+    this.enabledThree = true;
+    this.enabledTwo = true;
+    this.enabledOne = true;
+    if (String(value).length === 4) {
+      this.enabledCombined = true;
+      this.enabledThree = true;
+      this.enabledTwo = true;
+      this.enabledOne = true;
+    } else if (String(value).length === 3) {
+      this.enabledCombined = true;
+      this.enabledThree = false;
+      this.chanceForm.get('tresCifras').setValue('');
+      this.enabledTwo = true;
+      this.enabledOne = true;
+    } else if (String(value).length === 2 || String(value).length === 1) {
+      this.enabledCombined = false;
       this.enabledThree = false;
       this.enabledTwo = false;
       this.enabledOne = false;
+      this.chanceForm.get('combinado').setValue('');
+      this.chanceForm.get('tresCifras').setValue('');
+      this.chanceForm.get('dosCifras').setValue('');
+      this.chanceForm.get('unaCifra').setValue('');
     }
-    // else {
-    //   this.validInputBet();
-    // }
   }
 
 
@@ -214,43 +237,43 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
    * de apuesta por el momento no se va a utilizar dado que indicaron
    * que las apuesta debe quedar abierta
    */
-  validInputBet(): void {
+  // validInputBet(): void {
 
-    this.enabledThree = false;
-    this.enabledTwo = false;
-    this.enabledOne = false;
+  //   this.enabledThree = false;
+  //   this.enabledTwo = false;
+  //   this.enabledOne = false;
 
-    this.chanceForm.get('tresCifras').setValue('');
-    this.chanceForm.get('dosCifras').setValue('');
-    this.chanceForm.get('unaCifra').setValue('');
+  //   this.chanceForm.get('tresCifras').setValue('');
+  //   this.chanceForm.get('dosCifras').setValue('');
+  //   this.chanceForm.get('unaCifra').setValue('');
 
-    if (String(this.chanceForm.get('numero').value).length === 4) {
-      if (this.chanceForm.get('combinado').value && !this.chanceForm.get('valorDirecto').value) {
-        this.enabledThree = false;
-        this.enabledTwo = false;
-        this.enabledOne = false;
-      } else {
-        this.enabledThree = true;
-        this.enabledTwo = true;
-        this.enabledOne = true;
-      }
-    } else if (String(this.chanceForm.get('numero').value).length === 3) {
-      if (this.chanceForm.get('valorDirecto').value && this.chanceForm.get('combinado').value) {
-        this.enabledThree = false;
-        this.enabledTwo = true;
-        this.enabledOne = true;
-      } else if (this.chanceForm.get('combinado').value && !this.chanceForm.get('valorDirecto').value) {
-        this.enabledThree = false;
-        this.enabledTwo = false;
-        this.enabledOne = false;
-      } else if (this.chanceForm.get('valorDirecto').value && !this.chanceForm.get('combinado').value) {
-        this.enabledThree = false;
-        this.enabledTwo = true;
-        this.enabledOne = true;
-      }
-    }
+  //   if (String(this.chanceForm.get('numero').value).length === 4) {
+  //     if (this.chanceForm.get('combinado').value && !this.chanceForm.get('valorDirecto').value) {
+  //       this.enabledThree = false;
+  //       this.enabledTwo = false;
+  //       this.enabledOne = false;
+  //     } else {
+  //       this.enabledThree = true;
+  //       this.enabledTwo = true;
+  //       this.enabledOne = true;
+  //     }
+  //   } else if (String(this.chanceForm.get('numero').value).length === 3) {
+  //     if (this.chanceForm.get('valorDirecto').value && this.chanceForm.get('combinado').value) {
+  //       this.enabledThree = false;
+  //       this.enabledTwo = true;
+  //       this.enabledOne = true;
+  //     } else if (this.chanceForm.get('combinado').value && !this.chanceForm.get('valorDirecto').value) {
+  //       this.enabledThree = false;
+  //       this.enabledTwo = false;
+  //       this.enabledOne = false;
+  //     } else if (this.chanceForm.get('valorDirecto').value && !this.chanceForm.get('combinado').value) {
+  //       this.enabledThree = false;
+  //       this.enabledTwo = true;
+  //       this.enabledOne = true;
+  //     }
+  //   }
 
-  }
+  // }
 
 
   /**
@@ -438,10 +461,11 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
     this.chanceForm.get('tresCifras').setValue('');
     this.chanceForm.get('dosCifras').setValue('');
     this.chanceForm.get('unaCifra').setValue('');
-    // this.enabledCombined = false;
-    // this.enabledThree = false;
-    // this.enabledTwo = false;
-    // this.enabledOne = false;
+    this.enabledCustomer = false;
+    this.enabledCombined = true;
+    this.enabledThree = true;
+    this.enabledTwo = true;
+    this.enabledOne = true;
     this.btnAdd = true;
     this.btnEdit = false;
   }

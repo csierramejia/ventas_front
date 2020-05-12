@@ -5,6 +5,7 @@ import { ProductosService } from '../../productos.service';
 import { MessageService } from 'primeng/api';
 import { ShellState } from 'src/app/states/shell/shell.state';
 import { MsjUtil } from 'src/app/utilities/messages.util';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-crear-cliente',
@@ -19,6 +20,9 @@ export class CrearClienteComponent extends CommonComponent implements OnInit, On
   @Output() closePopup: EventEmitter<any> = new EventEmitter();
   @Output() createCustomer: EventEmitter<any> = new EventEmitter();
 
+
+  // validEmail = false;
+
   clienteForm = new FormGroup({
     tipoDocumento: new FormControl('', [Validators.required]),
     numeroDocumento: new FormControl('', [Validators.required]),
@@ -26,7 +30,7 @@ export class CrearClienteComponent extends CommonComponent implements OnInit, On
     segundoNombre: new FormControl(''),
     primerApellido: new FormControl('', [Validators.required]),
     segundoApellido: new FormControl(''),
-    correo: new FormControl(''),
+    correo: new FormControl('', [Validators.required, Validators.email]),
     numeroCelular: new FormControl('', [Validators.required]),
 
   });
@@ -67,7 +71,8 @@ export class CrearClienteComponent extends CommonComponent implements OnInit, On
       this.clienteForm.get('numeroDocumento').valid &&
       this.clienteForm.get('primerNombre').valid &&
       this.clienteForm.get('primerApellido').valid &&
-      this.clienteForm.get('numeroCelular').valid
+      this.clienteForm.get('numeroCelular').valid &&
+      this.clienteForm.get('correo').valid
       ) {
         const clientSend = {
           tipoDocumento : this.clienteForm.get('tipoDocumento').value,
@@ -83,7 +88,6 @@ export class CrearClienteComponent extends CommonComponent implements OnInit, On
     } else {
       this.messageService.add(MsjUtil.getMsjError('Usted debe de diligenciar los campos obligatorios'));
     }
-
   }
 
 
@@ -99,6 +103,7 @@ export class CrearClienteComponent extends CommonComponent implements OnInit, On
         const responseCliente: any = clienteData;
         if (responseCliente.idPersona) {
           this.messageService.add(MsjUtil.getMsjSuccess('Cliente Registrado'));
+          this.cleanInputs();
           this.createCustomerE(responseCliente);
         } else {
           this.messageService.add(MsjUtil.getMsjError('Problemas al registrar el cliente'));
@@ -119,6 +124,68 @@ export class CrearClienteComponent extends CommonComponent implements OnInit, On
   createCustomerE(customer): void {
     this.createCustomer.emit(customer);
   }
+
+
+  /**
+   * @author Luis Hernandez
+   * @description Funcion que permite valida que el usuario
+   * solo ingrese numeros en los campos donde se espera solo numeros
+   * @param e
+   */
+  keyPressNumber(e) {
+    const key = window.Event ? e.which : e.keyCode;
+    e.key.replace(/\D|\-/, '');
+    return (key >= 48 && key <= 57);
+  }
+
+
+  /**
+   * @author Luis Hernandez
+   * @description Funcion que permite valida que el usuario
+   * solo ingrese letras en los campos donde se espera solo letras
+   * @param e
+   */
+  keyPressChart(e) {
+    const filtro = '1234567890'; // Caracteres invalidos
+    for (let i = 0; i < e.key.length; i++) {
+      console.log(filtro.indexOf(e.key.charAt(i)) === -1);
+      if (filtro.indexOf(e.key.charAt(i)) === -1) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
+
+
+  /**
+   * @author Luis Hernandez
+   * @description Metodo que se encarga de limpiar los campos
+   */
+  cleanInputs(): void {
+    this.clienteForm.get('tipoDocumento').setValue('');
+    this.clienteForm.get('numeroDocumento').setValue('');
+    this.clienteForm.get('primerNombre').setValue('');
+    this.clienteForm.get('segundoNombre').setValue('');
+    this.clienteForm.get('primerApellido').setValue('');
+    this.clienteForm.get('segundoApellido').setValue('');
+    this.clienteForm.get('correo').setValue('');
+    this.clienteForm.get('numeroCelular').setValue('');
+  }
+
+
+
+  // esEmailValido(email: string):boolean {
+  //   let mailValido = false;
+  //     'use strict';
+
+  //     var EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+  //     if (email.match(EMAIL_REGEX)){
+  //       mailValido = true;
+  //     }
+  //   return mailValido;
+  // }
 
 
   /**
