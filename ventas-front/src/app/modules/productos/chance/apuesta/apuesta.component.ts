@@ -434,6 +434,17 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
    * esten diligenciados
    */
   valid() {
+    //valido q selecionaron loterias
+     //selimpia panel loterias
+     let valid = true;
+     this.loterias.forEach(element => {
+       if (element.checked) {
+          valid = false; 
+        }
+     });
+     if(valid){
+      return false;
+     }
     if (this.chanceForm.get('numero').valid && this.dayBet) {
       if (this.chanceForm.get('valorDirecto').value ||
           this.chanceForm.get('combinado').value ||
@@ -468,6 +479,10 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
     this.enabledOne = true;
     this.btnAdd = true;
     this.btnEdit = false;
+    //selimpia panel loterias
+    this.loterias.forEach(element => {
+        element.checked= false; 
+    });
   }
 
 
