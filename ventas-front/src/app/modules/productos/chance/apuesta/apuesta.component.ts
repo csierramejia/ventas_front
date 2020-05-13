@@ -462,6 +462,33 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
      if(valid){
       return false;
      }
+     valid=false;
+     if (String(this.chanceForm.get('numero').value).length === 4
+        && this.chanceForm.get('valorDirecto').value &&
+        this.chanceForm.get('combinado').value &&
+        this.chanceForm.get('tresCifras').value &&
+        this.chanceForm.get('dosCifras').value &&
+        this.chanceForm.get('unaCifra').value) {
+          valid= true;
+    } else  if (String(this.chanceForm.get('numero').value).length === 3
+    && this.chanceForm.get('valorDirecto').value &&
+    this.chanceForm.get('combinado').value &&
+    this.chanceForm.get('dosCifras').value &&
+    this.chanceForm.get('unaCifra').value) {
+      valid= true;
+     }
+     else  if (String(this.chanceForm.get('numero').value).length === 2
+     && this.chanceForm.get('valorDirecto').value &&
+     this.chanceForm.get('unaCifra').value) {
+       valid= true;
+      }
+      else  if (String(this.chanceForm.get('numero').value).length === 1
+    && this.chanceForm.get('valorDirecto').value) {
+      valid= true;
+     }
+     if(!valid){
+      return false;
+     }
     if (this.chanceForm.get('numero').valid && this.dayBet) {
       if (this.chanceForm.get('valorDirecto').value ||
           this.chanceForm.get('combinado').value ||
