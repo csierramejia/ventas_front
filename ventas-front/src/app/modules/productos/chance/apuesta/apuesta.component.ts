@@ -326,6 +326,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
         oneC: this.chanceForm.get('unaCifra').value,
       });
       this.cleanInputs();
+      this.enabledCustomer = true;
     } else {
       this.messageService.add(MsjUtil.getMsjError('Usted debe diligenciar los campos requeridos'));
     }
@@ -355,6 +356,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
         oneC: this.chanceForm.get('unaCifra').value,
       });
       this.cleanInputs();
+      this.enabledCustomer = true;
     } else {
       this.messageService.add(MsjUtil.getMsjError('Usted debe diligenciar los campos requeridos'));
     }
