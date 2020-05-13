@@ -217,7 +217,18 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
         if (element.twoC) { bet.push({code: 5, valor: element.twoC}); }
         if (element.oneC) { bet.push({code: 6, valor: element.oneC}); }
 
+      } else if (String(element.numberPlayed).length === 2) {
+
+        if (element.direct) { bet.push({code: 5, valor: element.direct}); }
+        if (element.oneC) { bet.push({code: 6, valor: element.oneC}); }
+
       }
+      else if (String(element.numberPlayed).length === 1) {
+
+        if (element.direct) { bet.push({code: 6, valor: element.direct}); }
+
+      }
+
 
       betDetail.details = bet;
       bets.push(betDetail);
