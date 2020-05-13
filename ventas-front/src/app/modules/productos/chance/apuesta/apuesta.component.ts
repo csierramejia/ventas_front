@@ -202,7 +202,14 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
    * de la apuesta
    */
   chanceNumber(event) {
-    const value = event;
+    let value = null;
+    if(event && event.value){
+      value=event.value;
+    }
+    else{
+      value=event;
+    }
+  
     this.enabledCombined = true;
     this.enabledThree = true;
     this.enabledTwo = true;
@@ -218,7 +225,15 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
       this.chanceForm.get('tresCifras').setValue('');
       this.enabledTwo = true;
       this.enabledOne = true;
-    } else if (String(value).length === 2 || String(value).length === 1) {
+    } else if (String(value).length === 2) {
+      this.enabledCombined = false;
+      this.enabledThree = false;
+      this.enabledTwo = false;
+      this.chanceForm.get('combinado').setValue('');
+      this.chanceForm.get('tresCifras').setValue('');
+      this.chanceForm.get('dosCifras').setValue('');
+    }
+    else if (String(value).length === 1) {
       this.enabledCombined = false;
       this.enabledThree = false;
       this.enabledTwo = false;
