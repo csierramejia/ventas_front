@@ -312,6 +312,11 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
    */
   addBetSend(): void {
     // this.lotteriesSelected = this.get_lotteriesSelected();
+    if(this.idCustomer == null || this.idCustomer==undefined ||
+      this.idCustomer==""){
+        this.messageService.add(MsjUtil.getMsjError('Debe seleccionar un cliente'));
+        return;
+    }
     if (this.valid()) {
       this.addBet.emit({
         action: 1,
@@ -328,6 +333,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
       });
       this.cleanInputs();
       this.enabledCustomer = true;
+      this.selectUnmarkAllBol=false;
     } else {
       this.messageService.add(MsjUtil.getMsjError('Usted debe diligenciar los campos requeridos'));
     }
@@ -341,6 +347,11 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
    */
   editBetSend() {
     // this.lotteriesSelected = this.get_lotteriesSelected();
+    if(this.chanceForm.get('nombreCliente').value == null || this.chanceForm.get('nombreCliente').value==undefined ||
+    this.chanceForm.get('nombreCliente').value==""){
+        this.messageService.add(MsjUtil.getMsjError('Debe seleccionar un cliente'));
+        return;
+    }
     if (this.valid()) {
       this.addBet.emit({
         action: 0,
@@ -358,6 +369,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
       });
       this.cleanInputs();
       this.enabledCustomer = true;
+      this.selectUnmarkAllBol=false;
     } else {
       this.messageService.add(MsjUtil.getMsjError('Usted debe diligenciar los campos requeridos'));
     }
