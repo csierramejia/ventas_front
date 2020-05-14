@@ -111,6 +111,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
    * según el día
    */
   getLotteries(): void {
+    this.loterias=[];
       this.productosService.consultarLoterias(this.dayBet).subscribe(
         loteriasData => {
           const rs: any = loteriasData;
