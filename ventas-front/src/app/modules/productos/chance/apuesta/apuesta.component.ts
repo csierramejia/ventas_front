@@ -464,22 +464,16 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
      }
      valid=false;
      if (String(this.chanceForm.get('numero').value).length === 4
-        && this.chanceForm.get('valorDirecto').value &&
-        this.chanceForm.get('combinado').value &&
-        this.chanceForm.get('tresCifras').value &&
-        this.chanceForm.get('dosCifras').value &&
-        this.chanceForm.get('unaCifra').value) {
+        && (this.chanceForm.get('valorDirecto').value ||
+        this.chanceForm.get('combinado').value)) {
           valid= true;
     } else  if (String(this.chanceForm.get('numero').value).length === 3
-    && this.chanceForm.get('valorDirecto').value &&
-    this.chanceForm.get('combinado').value &&
-    this.chanceForm.get('dosCifras').value &&
-    this.chanceForm.get('unaCifra').value) {
+    && (this.chanceForm.get('valorDirecto').value ||
+    this.chanceForm.get('combinado').value)) {
       valid= true;
      }
      else  if (String(this.chanceForm.get('numero').value).length === 2
-     && this.chanceForm.get('valorDirecto').value &&
-     this.chanceForm.get('unaCifra').value) {
+     && this.chanceForm.get('valorDirecto').value) {
        valid= true;
       }
       else  if (String(this.chanceForm.get('numero').value).length === 1
