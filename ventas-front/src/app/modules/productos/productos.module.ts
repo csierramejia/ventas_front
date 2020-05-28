@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { RouterConstant } from './../../constants/router.constant';
 import { SharedModule} from '../shared/shared.module';
 import { ApuestaComponent } from './chance/apuesta/apuesta.component';
+import { ApuestaMillonariaComponent } from './chance/apuesta-millonaria/apuesta-millonaria.component'
 import {CardModule} from 'primeng/card';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {DialogModule} from 'primeng/dialog';
@@ -13,7 +14,7 @@ import { CrearClienteComponent } from './chance/crear-cliente/crear-cliente.comp
 
 
 @NgModule({
-  declarations: [ChanceComponent, ApuestaComponent, BolsaComponent, CrearClienteComponent],
+  declarations: [ChanceComponent, ApuestaComponent, BolsaComponent, CrearClienteComponent,ApuestaMillonariaComponent],
   imports: [
     RouterModule.forChild([
       {

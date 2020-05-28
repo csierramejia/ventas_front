@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { BolsaComponent } from './bolsa/bolsa.component';
 import { ApuestaComponent } from './apuesta/apuesta.component';
+import { ApuestaMillonariaComponent } from './apuesta-millonaria/apuesta-millonaria.component';
 
 @Component({
   selector: 'app-chance',
@@ -11,12 +12,15 @@ export class ChanceComponent implements OnInit {
 
   @ViewChild(BolsaComponent) bolsaChild: BolsaComponent;
   @ViewChild(ApuestaComponent) apuestaChild: ApuestaComponent;
+  @ViewChild(ApuestaMillonariaComponent) apuestaMillonariaComponent: ApuestaComponent;
 
+  esMillonaria:boolean;
+  constructor() {
 
-  constructor() { }
+   }
 
   ngOnInit(): void {
-
+    this.esMillonaria=false;
   }
 
   /**
@@ -52,7 +56,12 @@ export class ChanceComponent implements OnInit {
    * componente chance
    */
   editBet(event): void {
+    if(!this.esMillonaria){
     this.apuestaChild.editBetSendEmit(event);
+    }
+    else{
+      this.apuestaMillonariaComponent.editBetSendEmit(event);
+    }
   }
 
 
@@ -64,7 +73,13 @@ export class ChanceComponent implements OnInit {
    * que la transaccion esta ok
    */
   creatingBet(event): void {
+    if(!this.esMillonaria){
     this.apuestaChild.createBetSendEmit(event);
+    }
+    else{
+      this.apuestaMillonariaComponent.createBetSendEmit(event);
+    }
   }
+
 
 }
