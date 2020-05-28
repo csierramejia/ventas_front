@@ -97,13 +97,22 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
   setData(key, event): void {
     this.cartItems[key].documentCustomer = event.documentCustomer;
     this.cartItems[key].nameCustomer = event.nameCustomer;
-    this.cartItems[key].numberPlayed = event.numberPlayed;
     this.cartItems[key].dataPlayed = event.dataPlayed;
+    if(event.numberPlayed ==null){
+      this.cartItems[key].apuestaA = event.apuestaA;
+      this.cartItems[key].apuestaB = event.apuestaB;
+      this.cartItems[key].apuestaC = event.apuestaC;
+      this.cartItems[key].apuestaD = event.apuestaD;
+      this.cartItems[key].apuestaE = event.apuestaE;
+    }
+    else{
+    this.cartItems[key].numberPlayed = event.numberPlayed;
     this.cartItems[key].direct = event.direct;
     this.cartItems[key].combined = event.combined;
     this.cartItems[key].threeC = event.threeC;
     this.cartItems[key].twoC = event.twoC;
     this.cartItems[key].oneC = event.oneC;
+    }
     // this.lotteries = event.lotteries;
     this.get_values_totals();
   }
@@ -162,6 +171,16 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
     this.valueBet = 0;
     this.valueVat = 0;
     this.cartItems.forEach(element => {
+      if(element.numberPlayed==null){
+        if(element.modalidad=="4 Cifras"){
+          this.valueBet =2400;
+        }
+        else{
+          this.valueBet =1800;
+        }
+      
+      }
+      else{
       // tslint:disable-next-line: radix
       if (element.direct) { this.valueBet = (this.valueBet + parseInt(element.direct)); }
       // tslint:disable-next-line: radix
@@ -172,6 +191,7 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
       if (element.twoC) { this.valueBet = (this.valueBet + parseInt(element.twoC)); }
       // tslint:disable-next-line: radix
       if (element.oneC) { this.valueBet = this.valueBet + parseInt(element.oneC); }
+      }
     });
 
     this.valueBet = (this.lotteries.length * this.valueBet);
@@ -200,7 +220,16 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
 
     this.cartItems.forEach(element => {
       const bet = [];
-      const betDetail = {numberPlayed: null, details: null};
+      const betDetail = {numberPlayed: null, apuestaA: null, apuestaB: null, 
+        apuestaC: null, apuestaD: null, apuestaE: null, details: null};
+      if(element.numberPlayed==null){
+        betDetail.apuestaA=element.apuestaA;
+        betDetail.apuestaB=element.apuestaB;
+        betDetail.apuestaC=element.apuestaC;
+        betDetail.apuestaD=element.apuestaD;
+        betDetail.apuestaE=element.apuestaE;
+      }
+      else {
       betDetail.numberPlayed = element.numberPlayed;
       if (String(element.numberPlayed).length === 4) {
 
@@ -228,9 +257,8 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
         if (element.direct) { bet.push({code: 6, valor: element.direct}); }
 
       }
-
-
       betDetail.details = bet;
+     }
       bets.push(betDetail);
     });
 

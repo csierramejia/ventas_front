@@ -460,42 +460,54 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
      //validar longitudes
      valida=false;
     if(this.seleccionado==3){
-      if(this.chanceForm.get('numeroA').value.length != 3){
+      if(this.chanceForm.get('numeroA').value.toString().length != 3){
         valida=true;
       }
-      else if(this.chanceForm.get('numeroB').value.length != 3){
+      else if(this.chanceForm.get('numeroB').value.toString().length != 3){
         valida=true;
       }
-      else if(this.chanceForm.get('numeroC').value.length != 3){
+      else if(this.chanceForm.get('numeroC').value.toString().length != 3){
         valida=true;
       }
-      else if(this.chanceForm.get('numeroD').value.length != 3){
+      else if(this.chanceForm.get('numeroD').value.toString().length != 3){
         valida=true;
       }
-      else if(this.chanceForm.get('numeroE').value.length != 3){
+      else if(this.chanceForm.get('numeroE').value.toString().length != 3){
         valida=true;
       }
     }
     else if(this.seleccionado==4){
-      if(this.chanceForm.get('numeroA').value.length != 4){
+      if(this.chanceForm.get('numeroA').value.toString().length != 4){
         valida=true;
       }
-      else  if(this.chanceForm.get('numeroB').value.length != 4){
+      else  if(this.chanceForm.get('numeroB').value.toString().length != 4){
         valida=true;
       }
-      else if(this.chanceForm.get('numeroC').value.length != 4){
+      else if(this.chanceForm.get('numeroC').value.toString().length != 4){
         valida=true;
       }
-      else if(this.chanceForm.get('numeroD').value.length != 4){
+      else if(this.chanceForm.get('numeroD').value.toString().length != 4){
         valida=true;
       }
-      else if(this.chanceForm.get('numeroE').value.length != 4){
+      else if(this.chanceForm.get('numeroE').value.toString().length != 4){
         valida=true;
       }
     }
 
     if(valida){
       this.messageService.add(MsjUtil.getMsjError('Sólo se permiten dígitos de 3 y 4 cifras, según la modalidad seleccionada'));
+      return;
+    }
+
+    //validar repetidos
+    let numeros=[this.chanceForm.get('numeroA').value.toString(),this.chanceForm.get('numeroB').value.toString(),
+    this.chanceForm.get('numeroC').value.toString(),this.chanceForm.get('numeroD').value.toString(),
+    this.chanceForm.get('numeroE').value.toString()];
+    let uniqs = numeros.filter(function(item, index, array) {
+      return array.indexOf(item) === index;
+    })
+    if(uniqs.length != numeros.length){
+      this.messageService.add(MsjUtil.getMsjError('No se pueden realizar apuestas repetidas'));
       return;
     }
 
@@ -519,21 +531,19 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
    * emitir la apuesta al componente bolsa
    */
   addBetSend(): void {
-    // this.lotteriesSelected = this.get_lotteriesSelected();
-
-    if (this.valid()) {
       this.addBet.emit({
         action: 1,
         // lotteries: this.lotteriesSelected,
         _id: 'bet_' + Math.floor(Math.random() * 999999),
         idCustomer: this.idCustomer,
-        numberPlayed: this.chanceForm.get('numero').value,
-        dataPlayed: this.dayBet,
-        direct: this.chanceForm.get('valorDirecto').value,
-        combined: this.chanceForm.get('combinado').value,
-        threeC: this.chanceForm.get('tresCifras').value,
-        twoC: this.chanceForm.get('dosCifras').value,
-        oneC: this.chanceForm.get('unaCifra').value,
+        modalidad: this.seleccionado==4 ? '4 Cifras' : '3 Cifras',
+        numberPlayed:null,
+        apuestaA: this.chanceForm.get('numeroA').value,
+        apuestaB: this.chanceForm.get('numeroB').value,
+        apuestaC: this.chanceForm.get('numeroC').value,
+        apuestaD: this.chanceForm.get('numeroD').value,
+        apuestaE: this.chanceForm.get('numeroE').value,
+        dataPlayed: this.dayBet
       });
       this.cleanInputs();
       if(this.idCustomer == null || this.idCustomer==undefined ||
@@ -545,9 +555,7 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
       }
      
       this.selectUnmarkAllBol=false;
-    } else {
-      this.messageService.add(MsjUtil.getMsjError('Usted debe diligenciar los campos requeridos'));
-    }
+    
   }
 
 
@@ -557,22 +565,20 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
    * de enviar a la bolsa el producto modificado
    */
   editBetSend() {
-    // this.lotteriesSelected = this.get_lotteriesSelected();
-   
-    if (this.valid()) {
       this.addBet.emit({
         action: 0,
         // lotteries: this.lotteriesSelected,
         _id: this.idEdit,
         documentCustomer: this.chanceForm.get('numeroDocumento').value,
         nameCustomer: this.chanceForm.get('nombreCliente').value,
-        numberPlayed: this.chanceForm.get('numero').value,
-        dataPlayed: this.dayBet,
-        direct: this.chanceForm.get('valorDirecto').value,
-        combined: this.chanceForm.get('combinado').value,
-        threeC: this.chanceForm.get('tresCifras').value,
-        twoC: this.chanceForm.get('dosCifras').value,
-        oneC: this.chanceForm.get('unaCifra').value,
+        modalidad: this.seleccionado==4 ? '4 Cifras' : '3 Cifras',
+        numberPlayed:null,
+        apuestaA: this.chanceForm.get('numeroA').value,
+        apuestaB: this.chanceForm.get('numeroB').value,
+        apuestaC: this.chanceForm.get('numeroC').value,
+        apuestaD: this.chanceForm.get('numeroD').value,
+        apuestaE: this.chanceForm.get('numeroE').value,
+        dataPlayed: this.dayBet
       });
       this.cleanInputs();
       if(this.chanceForm.get('nombreCliente').value == null || this.chanceForm.get('nombreCliente').value==undefined ||
@@ -583,9 +589,7 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
         this.enabledCustomer = true;
       }
       this.selectUnmarkAllBol=false;
-    } else {
-      this.messageService.add(MsjUtil.getMsjError('Usted debe diligenciar los campos requeridos'));
-    }
+    
   }
 
   aleatorioLoterias(){
@@ -650,20 +654,15 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
     this.idEdit = event._id;
     this.dayBet = event.dataPlayed;
     this.chanceForm.get('numeroDocumento').setValue(event.documentCustomer);
-    this.chanceForm.get('numero').setValue(event.numberPlayed);
-    this.chanceForm.get('valorDirecto').setValue(event.direct);
+    this.chanceForm.get('numeroA').setValue(event.apuestaA);
+    this.chanceForm.get('numeroB').setValue(event.apuestaB);
+    this.chanceForm.get('numeroC').setValue(event.apuestaC);
+    this.chanceForm.get('numeroD').setValue(event.apuestaD);
+    this.chanceForm.get('numeroE').setValue(event.apuestaE);
     if (event.nameCustomer) {
       this.chanceForm.get('nombreCliente').setValue(event.nameCustomer);
       this.enabledCustomer = true;
     }
-    if (event.combined) {this.chanceForm.get('combinado').setValue(event.combined); }
-    if (event.threeC) {this.chanceForm.get('tresCifras').setValue(event.threeC); }
-    if (event.twoC) {this.chanceForm.get('dosCifras').setValue(event.twoC); }
-    if (event.oneC) {this.chanceForm.get('unaCifra').setValue(event.oneC); }
-
-    // regla de negocio que queda pendiente
-    // this.validInputBet();
-
     this.btnAdd = false;
     this.btnEdit = true;
   }
@@ -756,12 +755,11 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
    * @description Metodo que se encarga de limpiar los campos
    */
   cleanInputs(): void {
-    this.chanceForm.get('numero').setValue('');
-    this.chanceForm.get('valorDirecto').setValue('');
-    this.chanceForm.get('combinado').setValue('');
-    this.chanceForm.get('tresCifras').setValue('');
-    this.chanceForm.get('dosCifras').setValue('');
-    this.chanceForm.get('unaCifra').setValue('');
+    this.chanceForm.get('numeroA').setValue('');
+    this.chanceForm.get('numeroB').setValue('');
+    this.chanceForm.get('numeroC').setValue('');
+    this.chanceForm.get('numeroD').setValue('');
+    this.chanceForm.get('numeroE').setValue('');;
     this.enabledCustomer = false;
     this.enabledCombined = true;
     this.enabledThree = true;
