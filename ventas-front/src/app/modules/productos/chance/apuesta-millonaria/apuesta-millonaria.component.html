@@ -1,4 +1,4 @@
-<form [formGroup]="chanceForm">
+
     <div class="container-fluid">
         <div class="row calendarRow">
             <div class="col-md-6">
@@ -29,7 +29,8 @@
         </div>
     </div>
 
-    <div class="card">
+
+<div class="card">
     <div class="card-header titleBetCard">
         <a 
             data-toggle="collapse" 
@@ -38,10 +39,10 @@
             aria-controls="collapse-example" 
             id="heading-example" 
             class="d-block">
-                Seleccionar Loterias
+                Aplicar loterias del día
             <i class="fa fa-chevron-down"></i>
-            <button (click)="getNumberThree()" style="margin-left: 20px;" type="button" class="btn btn-random">
-                ALEATORIO <span class="fa fa-random"></span>
+            <button (click)="aleatorioLoterias()" *ngIf="loterias && loterias.length > 0" style="margin-left: 10px" type="button" class="btn btn-random">
+                ALEATORIO <i class="fa fa-random" aria-expanded="true"></i>
             </button>
         </a>
     </div>
@@ -60,21 +61,12 @@
         </div>
 
         <hr>
-        <div class="row float-right element-actions-btns" *ngIf="dayBet">
-           <button *ngIf="btnAdd" (click)="addBetSend()" type="button" class="btn btn-random">
-                AGREGAR <i class="fa fa-plus" aria-hidden="true"></i>
-            </button>
-            <button *ngIf="btnEdit" (click)="editBetSend()" type="button" class="btn btn-random">
-                ACTUALIZAR <i class="fa fa-plus" aria-hidden="true"></i>
-            </button>
-        </div>
     </div>
 </div>
 
-<br/>
-<br/>
-<div class="card">
-    <div class="card-header titleBetCard">
+    <form [formGroup]="chanceForm">
+    <div class="card">
+        <div class="card-header titleBetCard">
         <a 
             data-toggle="collapse" 
             href="#collapse-example2" 
@@ -153,7 +145,7 @@
                     <div class="col-md-4">
                         <label class="titleInput" for="aleatorio">NÚMEROS A JUGAR</label>
                         <div class="form-group has-feedback" style="display: -webkit-box">
-                            <input type="text"  formControlName="numeroA" class="form-control styleInput">
+                            <input type="text" minlength="3" maxlength="4" (keypress)="keyPressNumber($event)"  formControlName="numeroA" class="form-control styleInput">
                             <div class="input-group-append">
                                 <a  style="margin-left: 5px" (click)="generrarA()">
                                     <i class="fa fa-random" aria-hidden="true"></i>
@@ -165,7 +157,7 @@
                         </div>
                        
                         <div class="form-group has-feedback" style="display: -webkit-box">
-                            <input type="text"  formControlName="numeroB" class="form-control styleInput">
+                            <input type="text"  minlength="3" maxlength="4" (keypress)="keyPressNumber($event)"  formControlName="numeroB" class="form-control styleInput">
                             <div class="input-group-append">
                                 <a  style="margin-left: 5px" (click)="generrarB()">
                                     <i class="fa fa-random" aria-hidden="true"></i>
@@ -176,7 +168,7 @@
                             </div>
                         </div>
                         <div class="form-group has-feedback" style="display: -webkit-box">
-                            <input type="text" formControlName="numeroC" class="form-control styleInput">
+                            <input type="text"  minlength="3" maxlength="4" (keypress)="keyPressNumber($event)" formControlName="numeroC" class="form-control styleInput">
                             <div class="input-group-append">
                                 <a  style="margin-left: 5px" (click)="generrarC()">
                                     <i class="fa fa-random" aria-hidden="true"></i>
@@ -187,7 +179,7 @@
                             </div>
                         </div>
                         <div class="form-group has-feedback" style="display: -webkit-box">
-                            <input type="text" formControlName="numeroD" class="form-control styleInput">
+                            <input type="text"  minlength="3" maxlength="4" (keypress)="keyPressNumber($event)"  formControlName="numeroD" class="form-control styleInput">
                             <div class="input-group-append">
                                 <a  style="margin-left: 5px" (click)="generrarD()">
                                     <i class="fa fa-random" aria-hidden="true"></i>
@@ -198,7 +190,7 @@
                             </div>
                         </div>
                         <div class="form-group has-feedback" style="display: -webkit-box">
-                            <input type="text" formControlName="numeroE" class="form-control styleInput">
+                            <input type="text"  minlength="3" maxlength="4" (keypress)="keyPressNumber($event)"  formControlName="numeroE" class="form-control styleInput">
                             <div class="input-group-append">
                                 <a  style="margin-left: 5px" (click)="generrarE()">
                                     <i class="fa fa-random" aria-hidden="true"></i>
@@ -210,7 +202,7 @@
                         </div>
                     </div>
                     <div>  
-                        <button  (click)="addBetSend()" style="top: 25px; position: relative; margin-left: 50px;" type="button" class="btn btn-random">
+                        <button  (click)="validarLoterias()" style="top: 25px; position: relative; margin-left: 50px;" type="button" class="btn btn-random">
                             AGREGAR <i class="fa fa-plus" aria-hidden="true"></i>
                         </button>
                       

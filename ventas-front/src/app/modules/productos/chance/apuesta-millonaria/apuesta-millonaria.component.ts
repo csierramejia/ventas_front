@@ -429,6 +429,90 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
   }
 
 
+  validarLoterias(){
+    let valida=false;
+    //seleccion
+    if(this.loterias==null || this.loterias==undefined || this.loterias.length==0){
+      this.messageService.add(MsjUtil.getMsjError('Debe seleccionar el día para la apuesta'));
+      return;
+    }
+    //valida nulos
+    if(this.chanceForm.get('numeroA').value == null || this.chanceForm.get('numeroA').value ==''){
+      valida=true;
+    }
+    else if(this.chanceForm.get('numeroB').value == null || this.chanceForm.get('numeroB').value ==''){
+      valida=true;
+    }
+    else if(this.chanceForm.get('numeroC').value == null || this.chanceForm.get('numeroC').value ==''){
+      valida=true;
+    }
+    else if(this.chanceForm.get('numeroD').value == null || this.chanceForm.get('numeroD').value ==''){
+      valida=true;
+    }
+    else if(this.chanceForm.get('numeroE').value == null || this.chanceForm.get('numeroE').value ==''){
+      valida=true;
+    }
+    if(valida){
+      this.messageService.add(MsjUtil.getMsjError('Debe llenar todas las apuestas'));
+      return;
+    }
+
+     //validar longitudes
+     valida=false;
+    if(this.seleccionado==3){
+      if(this.chanceForm.get('numeroA').value.length != 3){
+        valida=true;
+      }
+      else if(this.chanceForm.get('numeroB').value.length != 3){
+        valida=true;
+      }
+      else if(this.chanceForm.get('numeroC').value.length != 3){
+        valida=true;
+      }
+      else if(this.chanceForm.get('numeroD').value.length != 3){
+        valida=true;
+      }
+      else if(this.chanceForm.get('numeroE').value.length != 3){
+        valida=true;
+      }
+    }
+    else if(this.seleccionado==4){
+      if(this.chanceForm.get('numeroA').value.length != 4){
+        valida=true;
+      }
+      else  if(this.chanceForm.get('numeroB').value.length != 4){
+        valida=true;
+      }
+      else if(this.chanceForm.get('numeroC').value.length != 4){
+        valida=true;
+      }
+      else if(this.chanceForm.get('numeroD').value.length != 4){
+        valida=true;
+      }
+      else if(this.chanceForm.get('numeroE').value.length != 4){
+        valida=true;
+      }
+    }
+
+    if(valida){
+      this.messageService.add(MsjUtil.getMsjError('Sólo se permiten dígitos de 3 y 4 cifras, según la modalidad seleccionada'));
+      return;
+    }
+
+    let contadorLoterias=0;
+    this.loterias.forEach(element => {
+    if (element.checked) {
+      contadorLoterias++;
+    }
+    });
+    if(contadorLoterias==2){
+      this.addBetSend();
+    }
+    else{
+      this.messageService.add(MsjUtil.getMsjError('Se deben seleccionar dos loterias'));
+    }
+
+  }
   /**
    * @author Luis Hernandez
    * @description funcion que se encarga de
@@ -504,7 +588,33 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
     }
   }
 
+  aleatorioLoterias(){
+    let aleatorio= Math.round(Math.random() * (this.loterias.length-1 - 0) + 0);
+    this.loterias[aleatorio].checked=true;
+    aleatorio=aleatorio= Math.round(Math.random() * (this.loterias.length-1 - 0) + 0);
+    this.loterias[aleatorio].checked=true;
+    this.validarCantidad();
+  }
 
+
+  validarCantidad(){
+    let contadorLoterias=0;
+    this.loterias.forEach(element => {
+    if (element.checked) {
+      contadorLoterias++;
+    }
+    });
+    if(contadorLoterias==2){
+      this.addLotteries.emit(this.get_lotteriesSelected());
+      return;
+    }
+    else{
+      this.loterias.forEach(element => {
+        element.checked=false;
+        });
+      this.aleatorioLoterias();
+    }
+  }
   /**
    * @author Luis Hernandez
    * @description Metodo que se valida cuales fueron
