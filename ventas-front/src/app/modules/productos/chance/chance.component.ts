@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { BolsaComponent } from './bolsa/bolsa.component';
 import { ApuestaComponent } from './apuesta/apuesta.component';
-import { ApuestaMillonariaComponent } from './apuesta-millonaria/apuesta-millonaria.component';
+import { ApuestaMillonariaComponent } from '../chance-millonario/apuesta-millonaria/apuesta-millonaria.component';
 
 @Component({
   selector: 'app-chance',
@@ -12,7 +12,7 @@ export class ChanceComponent implements OnInit {
 
   @ViewChild(BolsaComponent) bolsaChild: BolsaComponent;
   @ViewChild(ApuestaComponent) apuestaChild: ApuestaComponent;
-  @ViewChild(ApuestaMillonariaComponent) apuestaMillonariaComponent: ApuestaComponent;
+  @ViewChild(ApuestaMillonariaComponent) apuestaMillonariaComponent: ApuestaMillonariaComponent;
 
   esMillonaria:boolean;
   constructor() {

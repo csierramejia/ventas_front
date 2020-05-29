@@ -12,6 +12,9 @@ export class RouterConstant {
   /** Router para el componente de chance */
   public static readonly ROUTER_CHANCE: string = 'chance';
 
+   /** Router para el componente de chance */
+   public static readonly ROUTER_CHANCE_MILLONARIO: string = 'chance-millonario';
+
   /** Router para el modulo del PAGINAS DE ERRORES */
   public static readonly ROUTER_ERROR: string = 'error';
 
