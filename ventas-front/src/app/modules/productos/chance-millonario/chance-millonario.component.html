@@ -1,0 +1,22 @@
+    <section class="container-fluid">
+        <div class="row">
+            <div class="col-9" *ngIf="!esMillonaria">
+                <app-apuesta
+                    (addBet)="addBet($event)"
+                    (addLotteries)="addLotteries($event)">
+                </app-apuesta>
+            </div>
+            <div class="col-9" *ngIf="esMillonaria">
+                <app-apuesta-millonaria
+                    (addBet)="addBet($event)"
+                    (addLotteries)="addLotteries($event)">
+                </app-apuesta-millonaria>
+            </div>
+            <div class="col-3">
+                <app-bolsa 
+                    (editBet)="editBet($event)"
+                    (creatingBet)="creatingBet($event)">
+                </app-bolsa>
+            </div>
+        </div>
+    </section>
