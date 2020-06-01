@@ -12,6 +12,8 @@ export class ProductosAPIConstant {
   /** Nombre del REST para el modulo impuestos (Productos) */
   static readonly IMPUESTOS_API: string = 'impuestos/';
 
+  static readonly MODALIDADES_API: string = 'modalidades/';
+
 
   /** URL del recurso para obtener las loterias */
   static readonly URL_CONSULTAR_LOTERIAS: string =
@@ -47,5 +49,13 @@ export class ProductosAPIConstant {
   AppDomainConstant.APUESTAS +
   ProductosAPIConstant.LOTERIAS_API +
   'registrarApuesta';
+
+    /** URL del recurso para obtener las loterias */
+    static readonly URL_CONSULTAR_MODALIDADES_VALORES: string =
+    AppDomainConstant.APUESTAS +
+    ProductosAPIConstant.MODALIDADES_API +
+    'consultarInfoModalidad';
+
+
 
 }

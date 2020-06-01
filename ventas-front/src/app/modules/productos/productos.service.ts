@@ -7,7 +7,7 @@ import { PersonaDTO } from 'src/app/dtos/productos/chance/persona.dto';
 import { ImpuestosDTO } from 'src/app/dtos/productos/chance/impuestos.dto';
 import { ProductosAPIConstant } from 'src/app/constants/apis/productos/productos-api.constant';
 import { ResponseDTO } from 'src/app/dtos/productos/chance/response.dto';
-
+import { ModalidadesDTO } from 'src/app/dtos/escrutinio/loterias/modalidades.dto';
 /**
  * Service que contiene los procesos de negocio para la Loterias en el sistema
  */
@@ -27,6 +27,10 @@ export class ProductosService {
   public consultarLoterias(fechaSorteoFilter): Observable<LoteriasDTO[]> {
     const v = encodeURI(JSON.stringify({fechaSorteo: fechaSorteoFilter}));
     return this.http.get<LoteriasDTO[]>(`${ProductosAPIConstant.URL_CONSULTAR_LOTERIAS}/${v}`);
+  }
+
+  public consultarValoresModalidad(nombreProducto:string, idModalidad:number): Observable<number[]> {
+    return this.http.get<number[]>(`${ProductosAPIConstant.URL_CONSULTAR_MODALIDADES_VALORES}/${nombreProducto}/${idModalidad}`);
   }
 
 

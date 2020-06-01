@@ -173,10 +173,10 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
     this.cartItems.forEach(element => {
       if(element.numberPlayed==null){
         if(element.modalidad=="4 Cifras"){
-          this.valueBet =2400;
+          this.valueBet =element.valorApostado;
         }
         else{
-          this.valueBet =1800;
+          this.valueBet =element.valorApostado;
         }
       
       }

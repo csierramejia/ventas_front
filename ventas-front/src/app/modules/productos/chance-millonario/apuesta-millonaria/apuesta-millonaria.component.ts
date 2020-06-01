@@ -64,7 +64,10 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
     numeroC: new FormControl(''),
     numeroD: new FormControl(''),
     numeroE: new FormControl(''),
+    valorApostado:new FormControl()
   });
+
+  valoresModalidades:any;
 
   constructor(
     private productosService: ProductosService,
@@ -298,8 +301,21 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
   }
   seleccion(i){
     this.seleccionado=i;
+    this.consultarValoresModalidad();
+  
   }
 
+  consultarValoresModalidad(){
+    this.valoresModalidades=[];
+      this.productosService.consultarValoresModalidad("CHANCE MILLONARIO",this.seleccionado).subscribe(
+        valoresData => {
+         this.valoresModalidades=valoresData;
+        },
+        error => {
+          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+        }
+      );
+  }
   limpiar(){
     this.chanceForm.controls.numeroA.setValue(null);
     this.chanceForm.controls.numeroB.setValue(null);
@@ -456,7 +472,15 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
       this.messageService.add(MsjUtil.getMsjError('Debe llenar todas las apuestas'));
       return;
     }
-
+    valida=false;
+   if( this.chanceForm.get('valorApostado').value==null ||  this.chanceForm.get('valorApostado').value==undefined
+   ||  this.chanceForm.get('valorApostado').value==''){
+    valida=true;
+   }
+    if(valida){
+      this.messageService.add(MsjUtil.getMsjError('Debe seleccionar un valor para apostar'));
+      return;
+    }
      //validar longitudes
      valida=false;
     if(this.seleccionado==3){
@@ -538,6 +562,7 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
         idCustomer: this.idCustomer,
         modalidad: this.seleccionado==4 ? '4 Cifras' : '3 Cifras',
         numberPlayed:null,
+        valorApostado: this.chanceForm.get('valorApostado').value,
         apuestaA: this.chanceForm.get('numeroA').value,
         apuestaB: this.chanceForm.get('numeroB').value,
         apuestaC: this.chanceForm.get('numeroC').value,
@@ -759,7 +784,9 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
     this.chanceForm.get('numeroB').setValue('');
     this.chanceForm.get('numeroC').setValue('');
     this.chanceForm.get('numeroD').setValue('');
-    this.chanceForm.get('numeroE').setValue('');;
+    this.chanceForm.get('numeroE').setValue('');
+    this.valoresModalidades=[];
+    this.chanceForm.get('valorApostado').setValue('');
     this.enabledCustomer = false;
     this.enabledCombined = true;
     this.enabledThree = true;

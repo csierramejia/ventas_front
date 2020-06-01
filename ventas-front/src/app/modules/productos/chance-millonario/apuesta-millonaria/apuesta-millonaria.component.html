@@ -201,8 +201,16 @@
                             </div>
                         </div>
                     </div>
-                    <div>  
-                        <button  (click)="validarLoterias()" style="top: 25px; position: relative; margin-left: 50px;" type="button" class="btn btn-random">
+                    <div class="col-md-5 px-5">  
+                        <label class="titleValores" for="aleatorio">CHANCE MILLONARIO</label>
+                        <div *ngFor="let enum of valoresModalidades">
+                            <label for="valorApostado">
+                              <input  [value]='enum' type="radio" name="valorApostado"
+                              formControlName="valorApostado" >
+                              {{enum}}
+                            </label>
+                          </div>
+                        <button  (click)="validarLoterias()" type="button" class="btn btn-random">
                             AGREGAR <i class="fa fa-plus" aria-hidden="true"></i>
                         </button>
                       
