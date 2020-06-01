@@ -982,7 +982,6 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
    */
   ngOnDestroy(): void {
     this.messageService.clear();
-    this.shellState.title.clear();
   }
 
 }

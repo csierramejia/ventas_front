@@ -2,7 +2,6 @@
   display: flex;
   background-color: #f4f4f4;
   flex-grow: 1;
-  min-height: 0px !important;
 }
 
 .body-style {
@@ -12,4 +11,12 @@
 
 .contenido {
   padding: 10px;
+}
+
+:host ::ng-deep #smallMenu .ui-sidebar-left {
+  width: 242px !important;
+}
+
+:host ::ng-deep #smallMenu .ui-sidebar {
+  padding: 0px !important;  
 }

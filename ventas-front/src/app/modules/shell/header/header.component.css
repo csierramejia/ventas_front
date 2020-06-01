@@ -5,54 +5,72 @@
 .header {
   flex-grow: 1;
   display: flex;
-  min-height: 64px;
-  background-color: #31404a;
-}
-
-.menu-area {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-}
-
-.logo-container {
-  height: 64px;
-  color: #ffffff !important;
-  padding-left: 12px;
-  padding-top: 12px;
-  width: 224px;
-  float: left;
-}
-
-.logo-container-small {
-  height: 64px;
-  padding-top: 12px;
-  float: left;
-}
-
-.logo {
-  height: 40px;
-  width: auto;
-  vertical-align: middle;
-  border: 0 none;
-}
-
-.title {
-  font-weight: bold;
-  font-size: 24px;
-  vertical-align: middle;
-  margin-left: 12px;
+  background-color: #ffffff;
+  position: fixed;
+  z-index: 900;
+  width: 100%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.18);
 }
 
 .hambu {
-  color: #f4f4f4 !important;
   width: 64px;
   text-align: center;
-  line-height: 64px;
   font-size: 24px;
   cursor: pointer;
+  padding-top: 14px;
+  height: 100%;
 }
 
 .hambu:hover {
-  background-color: #48545c;
+  background-color: rgb(250, 249, 249);
+}
+
+.pad {
+  text-align: center;
+  cursor: pointer;
+  line-height: 40px;
+}
+
+.pad:hover {
+  background-color: rgb(250, 249, 249);
+}
+
+.back {
+  height: 30px;
+  width: 30px;
+}
+
+.rotation {
+  transform: rotate(180deg) translateY(-0%);
+  -webkit-transform: rotate(180deg) translateY(-0%);
+  -ms-transform: rotate(180deg) translateY(-0%);
+}
+
+:host ::ng-deep #menuUserSettings .ui-menu {
+  background-image: linear-gradient(0deg, #0bc9ec, #0083fe);
+  color: #eaeaea;
+  width: 18em;
+}
+
+:host ::ng-deep #menuUserSettings .ui-menuitem-text {
+  font-family: Times, Times New Roman, serif !important;
+  color: #eaeaea;
+  font-size: 16px;
+}
+
+:host ::ng-deep #menuUserSettings .ui-menuitem-icon {
+  color: #eaeaea;
+}
+
+:host ::ng-deep #menuUserSettings .ui-menu .ui-menuitem-link {
+  text-align: left;
+  outline: none !important;
+  outline-width: 0 !important;
+  box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+}
+
+:host ::ng-deep #menuUserSettings .ui-menu .ui-menuitem-link:hover {
+  background-image: linear-gradient(0deg, #12c0df, #0083fe);
 }

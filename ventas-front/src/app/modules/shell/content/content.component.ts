@@ -19,8 +19,10 @@ import {
   styleUrls: ['./content.component.css'],
   animations: [
     trigger('openClose', [
-      state('open', style({ left: '0px' })),
-      state('closed', style({ left: '-240px', width: '0px' })),
+      state('open-menu', style({ left: '0px' })),
+      state('closed-menu', style({ left: '-240px', 'min-width': '0px', width: '0px' })),
+      state('open-menu-content', style({ 'margin-left' : '241px' })),
+      state('closed-menu-content', style({ 'margin-left' : '0px' })),
       transition('* => *', animate(300))
     ])
   ]
@@ -80,5 +82,20 @@ export class ContentComponent implements OnInit {
       }
     })();
     return response;
+  }
+
+  /**
+   * Metodo que permite fijar el scroll del DIV content
+   * en la parte de abajo del navegador
+   */
+  public setPositionScrollBottomDelay() {
+    setTimeout(() => {
+      (function setPositionScrollFunction() {
+        const div = document.getElementById('maincontent');
+        if (div) {
+          div.scrollTop = div.scrollHeight;
+        }
+      })();
+    }, 10);
   }
 }

@@ -11,7 +11,7 @@ import { HttpRequestInterceptor } from './interceptors/http-request.interceptor'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SelectivePreload } from './directives/preload/selective-preload';
 import { PrivilegiosGuard } from './auth-guard/privilegios.guard';
-
+import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
 /**
  * Modulo principal de la aplicacion, contiene
  * todos los componentes y modulos de inicio
@@ -25,7 +25,8 @@ import { PrivilegiosGuard } from './auth-guard/privilegios.guard';
     RouterModule.forRoot(ROUTES, { preloadingStrategy: SelectivePreload }),
     HttpClientModule,
     BrowserModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NgIdleKeepaliveModule.forRoot()
   ],
   providers: [
     {

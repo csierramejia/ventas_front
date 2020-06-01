@@ -1,5 +1,5 @@
 <!-- para dispositivos con resolucion grande -->
-<app-menu [@openClose]="(shellState.screen.isBigScreen() && (shellState.menu.isToogleMenuFirstTime || shellState.menu.isMenuOpen))  ? 'open' : 'closed'" class="content-menu">
+<app-menu [@openClose]="(shellState.screen.isBigScreen() && (shellState.menu.isToogleMenuFirstTime || shellState.menu.isMenuOpen))  ? 'open-menu' : 'closed-menu'" class="content-menu">
 </app-menu>
 
 <!-- para dispositivos con resolucion pequenia -->
@@ -14,12 +14,16 @@
 <!-- aca es donde va el contenido del shell -->
 <div id="maincontent" class="body-style">
 
-  <!-- Miga de pan de la aplicacion -->
-  <app-breadcrumb></app-breadcrumb>
+  <!-- header del shell -->
+  <app-header> </app-header>
+
+  <!-- miga de pan del shel -->
+  <div [@openClose]="(shellState.screen.isBigScreen() && (shellState.menu.isToogleMenuFirstTime || shellState.menu.isMenuOpen))  ? 'open-menu-content' : 'closed-menu-content'">
+    <app-breadcrumb></app-breadcrumb>
+  </div>
 
   <!-- Aca es donde va las paginas seleccionadas por el user -->
-  <div class="contenido">
-    <app-title></app-title>
+  <div [@openClose]="(shellState.screen.isBigScreen() && (shellState.menu.isToogleMenuFirstTime || shellState.menu.isMenuOpen))  ? 'open-menu-content' : 'closed-menu-content'" class="contenido">
     <router-outlet></router-outlet>
   </div>
 </div>

@@ -309,7 +309,6 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
    */
   ngOnDestroy(): void {
     this.messageService.clear();
-    this.shellState.title.clear();
   }
 
 

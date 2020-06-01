@@ -1,24 +1,39 @@
-<!-- header para resoluciones grandes -->
-<div class="header" *ngIf="shellState.screen.isBigScreen()">
-  <a class="logo-container">
-    <img class="logo" src="assets/harmony-logo.png" alt="logo">
-    <span class="title">HARMONY</span>
-  </a>
-  <a class="hambu" (click)="shellState.menu.toggleMenu()">
-    <i class="fa fa-bars"></i>
-  </a>
-  <div class="menu-area">
-    <app-user-account></app-user-account>
+<!-- panel principal -->
+<div class="header">
+  <div class="ui-g w-100">
+
+    <!-- icono hidden menu -->
+    <div class="ui-g-3 text-right p-0">
+      <div class="hambu" (click)="shellState.menu.toggleMenu()" [@icon-open-close]="(shellState.screen.isBigScreen() && (shellState.menu.isToogleMenuFirstTime || shellState.menu.isMenuOpen)) ? 'icon-open-menu' : ''">
+        <img src="assets/header/back@3x.png" [class]="(shellState.screen.isBigScreen() && (shellState.menu.isToogleMenuFirstTime || shellState.menu.isMenuOpen))  ? '' : 'rotation'" class="back"/>
+      </div>
+    </div>
+
+    <!-- nombre user -->
+    <div class="ui-g-8 text-right p-0 pr-1">
+      <div class="ui-g-12 p-0 pt-2">
+        <span class="font-new-roman font-size-16" style="color: #707070;">
+          {{ shellState.userAccount.auth?.usuario?.nombreCompleto }}
+        </span>
+      </div>
+      <div class="ui-g-12 p-0">
+        <span class="font-new-roman font-size-15" style="color: #b1b1b1;">
+          {{ shellState.userAccount.auth?.usuario?.roles }}
+        </span>
+      </div>
+    </div>
+
+    <!-- photo del user -->
+    <div class="ui-g-1 p-0">
+      <div (click)="menuUserSettings.toggle($event)" class="ui-g-12 pad">
+        <span *ngIf="shellState.screen.isBigScreen()" class="font-new-roman font-size-16 mr-3">
+          <img src="assets/avatar.png" alt="user"/>
+        </span>
+        <i class="fa fa-chevron-down font-size-16"></i>
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- header para resoluciones pequenia -->
-<div class="header" *ngIf="!shellState.screen.isBigScreen()">
-  <a class="hambu" (click)="shellState.menu.toggleMenu()"><i class="fa fa-bars"></i></a>
-  <a class="logo-container-small">
-    <img class="logo" src="assets/harmony-logo.png" alt="logo">
-  </a>
-  <div class="menu-area">
-    <app-user-account></app-user-account>
-  </div>
-</div>
+<!-- popup menu settins user -->
+<p-menu #menuUserSettings id="menuUserSettings" [popup]="true" [model]="items"></p-menu>

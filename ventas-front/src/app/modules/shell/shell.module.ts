@@ -12,7 +12,6 @@ import { HeaderComponent } from './header/header.component';
 import { UserAccountComponent } from './header/user-account/user-account.component';
 import { MenuComponent } from './menus/menu/menu.component';
 import { ContentComponent } from './content/content.component';
-import { TitleComponent } from './title/title.component';
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 
 
@@ -36,7 +35,6 @@ import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
     ContentComponent,
     MenuComponent,
     UserAccountComponent,
-    TitleComponent,
     BreadcrumbComponent
   ],
   exports: [

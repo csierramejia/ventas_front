@@ -1050,3 +1050,58 @@ body {
   height: 22px;
   text-align: center;
 }
+
+
+.input-app-sm {
+  border-radius: 15px;
+  background-color: #f2f2f2;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border: 0px;
+  outline: medium none;
+  font-family: Times, Times New Roman, serif !important;
+}
+
+.btn-light-dark {
+  box-shadow: 0 3.5px 4px 0 rgba(20, 157, 183, 0.45);
+  border-radius: 15px;
+  background-color: #0bc9ec;
+  color: #f1f1f1;
+  padding: .30rem .8rem;
+  border: 0px;
+  outline: 0px !important;
+}
+
+.btn-light-dark:hover {
+  background-color: #1ec2df;
+}
+
+.btn-light {
+  box-shadow: 0 3.5px 4px 0 rgba(20, 157, 183, 0.45);
+  border-radius: 15px;
+  background-image: linear-gradient(0deg, #0bc9ec, #0083fe);
+  color: #f1f1f1;
+  padding: .30rem .8rem;
+  border: 0px;
+  outline: 0px !important;
+}
+
+.btn-light:hover {
+  background-image: linear-gradient(0deg, #37cae4, #409cf1);
+}
+
+.btn-less {
+  box-shadow: 0 3.5px 4px 0 rgba(167, 187, 190, 0.45);
+  border-radius: 15px;
+  background-color: #6c757d;
+  color: #f1f1f1;
+  padding: .30rem .8rem;
+  border: 0px;
+  outline: 0px !important;
+}
+
+.btn-less:hover {
+  background-color: #50585f;
+}

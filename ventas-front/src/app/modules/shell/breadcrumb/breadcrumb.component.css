@@ -1,12 +1,29 @@
 .miga-pan {
   padding: .79rem 1rem!important;
   margin-bottom: 0px;
-  background-color: #e8e8e8;
+  background-color: #f6f8f8;
   border-bottom: 1px solid #d0d0d0 !important;
   border-radius: .0rem !important;
+  margin-top: 58px;
 }
 
-.miga-text {
-  font-size: 15px;
+.miga-modulo {
   font-family: Times, Times New Roman, serif !important;
+  font-size: 17px;
+  color: #999999;
+  font-weight: bold;
+  margin-right: 3px;
+}
+
+.miga-url {
+  font-size: 15.5px;
+  font-family: Times, Times New Roman, serif !important;
+  color: #999999;
+  font-weight: bold;
+}
+
+.icon {
+  color: #0083fe;
+  font-size: 20px;
+  margin-right: 5px;
 }

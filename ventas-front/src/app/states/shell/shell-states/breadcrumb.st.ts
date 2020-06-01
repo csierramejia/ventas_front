@@ -3,6 +3,9 @@
  */
 export class BreadCrumbST {
 
+  /** Es el nombre del modulo donde pertenece la URL */
+  public modulo: string;
+
   /** URL actual de la miga de pan */
   public url: string;
 

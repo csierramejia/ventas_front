@@ -1,11 +1,59 @@
-<p-panelMenu
-  [model]="shellState.menu.modulos"
-  [style]="{'width':'220px'}"
-  [multiple]="true">
-</p-panelMenu>
+<!-- panel principal -->
+<div class="ui-g mt-4">
 
-<div class="f-1 font-new-roman font-size-14 text-center">
-  <span>ADMIN </span>
-  <i class="fa fa-copyright"></i>
-  <span> 2020</span>
+  <!-- logo app -->
+  <div class="ui-g-12 mb-4 p-0 text-center">
+    <img src="assets/menu/logo@2x.png" srcset="assets/menu/logo@2x.png 2x, assets/menu/logo@3x.png 3x" class="logo"/>
+  </div>
+
+  <!-- item inicio -->
+  <div (click)="goToBienvenida()" class="ui-g-12 item">
+    <i class="fa fa-home item-icon"></i>
+    <span>Inicio</span>
+  </div>
+  <div class="ui-g-12 barra"></div>
+
+  <!-- items del menu -->
+  <ng-container *ngIf="shellState.menu.modulos && shellState.menu.modulos.length">
+
+    <!-- acordeon del menu -->
+    <ul id="accordion" class="accordion">
+
+      <!-- modulo principales -->
+      <li *ngFor="let modulo of shellState.menu.modulos" class="item-bottom">
+        <div [title]="modulo.title" class="menu" (click)="toggle(modulo)">
+          <i class="fa {{ modulo.icon }} item-icon"></i> {{ modulo.label }}
+          <i class="fa fa-chevron-down" [ngClass]="{ rotate: !modulo.expanded }"></i>
+        </div>
+
+        <!-- items del modulo principal -->
+        <ul [ngClass]="{'d-none' : isStartUp}" class="submenu" #submenu [@open]="modulo.expanded ? 'open-item' : ''">
+          <li *ngFor="let submenu of modulo.items">
+
+            <!-- se valida si este item es un submodulo -->
+            <ng-container *ngIf="submenu.items && submenu.items.length; else elseBlock">              
+              <div class="sub-menu" (click)="toggle(submenu)"><i class="fa {{ submenu.icon }} sub-icon-wm"></i> {{ submenu.label }}
+                <i class="fa fa-chevron-down" [ngClass]="{ rotate: !submenu.expanded }"></i>
+              </div>
+              <ul [@open]="submenu.expanded ? 'open-item' : ''" class="item-route">
+                <li *ngFor="let item of submenu.items">
+                  <a [title]="item.title" [routerLink]="item.routerLink" routerLinkActive="active-link">
+                    <span class="st-sub-item"><i class="fa {{ item.icon }} sub-icon-wm2"></i> {{ item.label }}</span>
+                  </a>
+                </li>
+              </ul>
+            </ng-container>
+
+            <!-- si el item no es un submodulo -->
+            <ng-template #elseBlock>
+              <a [title]="submenu.title" [routerLink]="submenu.routerLink" routerLinkActive="active-link">
+                <i class="fa {{ submenu.icon }} sub-icon"></i>
+                <span class="st-item">{{ submenu.label }}</span>
+              </a>
+            </ng-template>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </ng-container>
 </div>

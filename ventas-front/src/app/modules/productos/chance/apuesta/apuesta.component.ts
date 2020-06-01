@@ -750,7 +750,6 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
    */
   ngOnDestroy(): void {
     this.messageService.clear();
-    this.shellState.title.clear();
   }
 
 }
