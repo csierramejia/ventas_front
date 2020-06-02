@@ -11,6 +11,19 @@
     font-size: 18px;
 }
 
+.numeroserie{
+  text-align: left;
+  font: Regular 13px/16px Montserrat;
+  letter-spacing: 0px;
+  color: #FF6969;
+  opacity: 1;
+}
+
+.radioAzul{
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+border: 2px solid #0083FE;
+opacity: 1;
+}
 .titleValores{
 text-align: left;
 font: Bold 12px/15px Montserrat;
@@ -174,9 +187,32 @@ opacity: 1;
   padding-top: 4p
 }
 
+.{
+text-align: left;
+font: Regular 13px/16px Montserrat;
+letter-spacing: 0px;
+color: #999999;
+opacity: 1;
+}
+
+.botonesApuesta{
+  text-align: center !important;
+width: 80% !important;
+height: 31px  !important;
+}
+.aleatorio{
+  line-height: 30px;
+font-size: 20px;
+color: #0083FE;
+}
+.papelera{
+  line-height: 27px;
+font-size: 20px;
+color: #FF0088;
+}
 .dayBet{
   text-align: left;
-  font-size: 18px;
+  font-size: 13px;
   font-family: Montserrat;
   letter-spacing: 0px;
   color: #999999 !important;

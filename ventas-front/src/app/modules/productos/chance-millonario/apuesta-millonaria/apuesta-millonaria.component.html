@@ -2,11 +2,11 @@
     <div class="container-fluid">
         <div class="row calendarRow">
             <div class="col-md-6">
-                <label class="betDayDate">Número de serie {{numeroSerie}}</label><br>
+                <label class="numeroserie">Número de serie {{numeroSerie}}</label><br>
             </div>
             <div class="col-md-6">
                 <p class="clock-icon">
-                    <label class="dayBet">{{ fechaActual | date: 'dd/MM/yyyy'}}</label>
+                    <label class="diaActual">{{ fechaActual | date: 'dd/MM/yyyy'}}</label>
                 </p>
             </div>
         </div>
@@ -85,15 +85,15 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-3">
-                        <label class="col-form-label">Modalidad</label>
+                        <label style="margin-top: -6px;" class="col-form-label">Modalidad</label>
                             <div class="form-check">
                                 <input class="form-check-input" (change)="seleccion(3)" type="radio"
-                                    name="exampleRadios" id="radioUno" value="3">
+                                    name="exampleRadios" class="radioAzul" id="radioUno" value="3">
                                 <label class="form-check-label" for="radioUno">3 Cifras</label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" 
-                                    (change)="seleccion(4)" type="radio" name="exampleRadios" id="radioDos"
+                                    (change)="seleccion(4)" class="radioAzul" type="radio" name="exampleRadios" id="radioDos"
                                     value="4">
                                 <label class="form-check-label" for="radioDos">4 Cifras</label>
                             </div>
@@ -126,17 +126,17 @@
                 </div>
 
                <br/>
-                
+               <hr>
                 <div class="row">
                       <div class="col-md-3">
                         <label class="titleInput" for="aleatorio">JUEGO ALEATORIO</label>  
                         <div class="form-group has-feedback">    
-                        <button  (click)="generar()" type="button" class="btn btn-random">
+                        <button  (click)="generar()" type="button" class="btn btn-random botonesApuesta">
                             GENERAR <i class="fa fa-random" aria-hidden="true"></i>
                         </button>
                         </div>
                         <div class="form-group has-feedback">
-                        <button  (click)="limpiar()" type="button" class="btn btn-random">
+                        <button  (click)="limpiar()" type="button" class="btn btn-random botonesApuesta">
                             LIMPIAR <i class="fa fa-trash" aria-hidden="true"></i>
                         </button>
                     </div>
@@ -148,10 +148,10 @@
                             <input type="text" minlength="3" maxlength="4" (keypress)="keyPressNumber($event)"  formControlName="numeroA" class="form-control styleInput">
                             <div class="input-group-append">
                                 <a  style="margin-left: 5px" (click)="generrarA()">
-                                    <i class="fa fa-random" aria-hidden="true"></i>
+                                    <i class="fa fa-random aleatorio"  aria-hidden="true"></i>
                                   </a>
                                 <a  style="margin-left: 5px" (click)="limpiarA()">
-                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                    <i class="fa fa-trash papelera" aria-hidden="true"></i>
                                   </a>
                             </div>
                         </div>
@@ -160,10 +160,10 @@
                             <input type="text"  minlength="3" maxlength="4" (keypress)="keyPressNumber($event)"  formControlName="numeroB" class="form-control styleInput">
                             <div class="input-group-append">
                                 <a  style="margin-left: 5px" (click)="generrarB()">
-                                    <i class="fa fa-random" aria-hidden="true"></i>
+                                    <i class="fa fa-random aleatorio" aria-hidden="true"></i>
                                   </a>
                                 <a  style="margin-left: 5px" (click)="limpiarB()">
-                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                    <i class="fa fa-trash papelera" aria-hidden="true"></i>
                                   </a>
                             </div>
                         </div>
@@ -171,10 +171,10 @@
                             <input type="text"  minlength="3" maxlength="4" (keypress)="keyPressNumber($event)" formControlName="numeroC" class="form-control styleInput">
                             <div class="input-group-append">
                                 <a  style="margin-left: 5px" (click)="generrarC()">
-                                    <i class="fa fa-random" aria-hidden="true"></i>
+                                    <i class="fa fa-random aleatorio" aria-hidden="true"></i>
                                   </a>
                                 <a  style="margin-left: 5px" (click)="limpiarC()">
-                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                    <i class="fa fa-trash papelera" aria-hidden="true"></i>
                                   </a>
                             </div>
                         </div>
@@ -182,10 +182,10 @@
                             <input type="text"  minlength="3" maxlength="4" (keypress)="keyPressNumber($event)"  formControlName="numeroD" class="form-control styleInput">
                             <div class="input-group-append">
                                 <a  style="margin-left: 5px" (click)="generrarD()">
-                                    <i class="fa fa-random" aria-hidden="true"></i>
+                                    <i class="fa fa-random aleatorio" aria-hidden="true"></i>
                                   </a>
                                 <a  style="margin-left: 5px" (click)="limpiarD()">
-                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                    <i class="fa fa-trash papelera" aria-hidden="true"></i>
                                   </a>
                             </div>
                         </div>
@@ -193,10 +193,10 @@
                             <input type="text"  minlength="3" maxlength="4" (keypress)="keyPressNumber($event)"  formControlName="numeroE" class="form-control styleInput">
                             <div class="input-group-append">
                                 <a  style="margin-left: 5px" (click)="generrarE()">
-                                    <i class="fa fa-random" aria-hidden="true"></i>
+                                    <i class="fa fa-random aleatorio" aria-hidden="true"></i>
                                   </a>
                                 <a  style="margin-left: 5px" (click)="limpiarE()">
-                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                    <i class="fa fa-trash papelera" aria-hidden="true"></i>
                                   </a>
                             </div>
                         </div>
@@ -205,12 +205,12 @@
                         <label class="titleValores" for="aleatorio">CHANCE MILLONARIO</label>
                         <div *ngFor="let enum of valoresModalidades">
                             <label for="valorApostado">
-                              <input  [value]='enum' type="radio" name="valorApostado"
+                              <input  [value]='enum' class="radioAzul" type="radio" name="valorApostado"
                               formControlName="valorApostado" >
                               {{enum}}
                             </label>
                           </div>
-                        <button  (click)="validarLoterias()" type="button" class="btn btn-random">
+                        <button  (click)="validarLoterias()" type="button" class="btn btn-random botonesApuesta">
                             AGREGAR <i class="fa fa-plus" aria-hidden="true"></i>
                         </button>
                       
