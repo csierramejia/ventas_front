@@ -187,7 +187,7 @@ opacity: 1;
   padding-top: 4p
 }
 
-.{
+.diaActual{
 text-align: left;
 font: Regular 13px/16px Montserrat;
 letter-spacing: 0px;
@@ -210,12 +210,13 @@ color: #0083FE;
 font-size: 20px;
 color: #FF0088;
 }
+
 .dayBet{
   text-align: left;
-  font-size: 13px;
+  font-size: 18px;
   font-family: Montserrat;
   letter-spacing: 0px;
-  color: #999999 !important;
+  color: #999999;
   opacity: 1;
 }
 
