@@ -133,6 +133,8 @@
                         <div class="col-md-2" class="colLot" *ngFor="let loteria of loterias">
                             <input type="checkbox" (click)="toggleVisibility(loteria)" [(ngModel)]="loteria.checked"/>
                             <label>{{loteria.nombre}}</label>
+                            <br>
+                        <img [src]="loteria.url"/>
                         </div>
                     </div>
                 </div>

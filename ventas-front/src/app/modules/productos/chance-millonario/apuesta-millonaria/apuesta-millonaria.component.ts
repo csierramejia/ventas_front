@@ -136,7 +136,8 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
               idEstado: element.idEstado,
               idEmpresa: element.idEmpresa,
               idSorteo: element.idSorteo,
-              checked: false
+              checked: false,
+              url:"assets/img/loterias/"+element.nombre.toUpperCase()+".png"
             });
           });
         },

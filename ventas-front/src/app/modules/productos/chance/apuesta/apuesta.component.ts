@@ -125,7 +125,8 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
               idEstado: element.idEstado,
               idEmpresa: element.idEmpresa,
               idSorteo: element.idSorteo,
-              checked: false
+              checked: false,
+              url:"assets/img/loterias/"+element.nombre.toUpperCase()+".png"
             });
           });
         },
