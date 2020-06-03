@@ -88,14 +88,14 @@
                         <label style="margin-top: -6px;" class="col-form-label">Modalidad</label>
                             <div class="form-check">
                                 <input class="form-check-input"  formControlName="radioUno" (change)="seleccion(3)" type="radio"
-                                    name="radioUno" class="radioAzul" id="radioUno" value="3">
+                                    name="radioUno" class="radioAzul" value="3">
                                 <label class="form-check-label" for="radioUno">3 Cifras</label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" 
-                                    (change)="seleccion(4)" class="radioAzul"  formControlName="radioDos" type="radio" name="radioDos" id="radioDos"
+                                    (change)="seleccion(4)" class="radioAzul"  formControlName="radioUno" type="radio" name="radioUno" 
                                     value="4">
-                                <label class="form-check-label" for="radioDos">4 Cifras</label>
+                                <label class="form-check-label" for="radioUno">4 Cifras</label>
                             </div>
 
                     </div>
@@ -145,7 +145,9 @@
                     <div class="col-md-4">
                         <label class="titleInput" for="aleatorio">NÚMEROS A JUGAR</label>
                         <div class="form-group has-feedback" style="display: -webkit-box">
-                            <input type="text" minlength="3" maxlength="4" (keypress)="keyPressNumber($event)"  formControlName="numeroA" class="form-control styleInput">
+                            <input type="text" minlength="3" maxlength="4"
+                             (keypress)="keyPressNumber($event)"  formControlName="numeroA" 
+                             class="form-control styleInput">
                             <div class="input-group-append">
                                 <a  style="margin-left: 5px" (click)="generrarA()">
                                     <i class="fa fa-random aleatorio"  aria-hidden="true"></i>

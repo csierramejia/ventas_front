@@ -59,7 +59,8 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
     tipoDocumento: new FormControl(''),
     numeroDocumento: new FormControl(''),
     nombreCliente: new FormControl(''),
-    numeroA: new FormControl(''),
+   // numeroA: new FormControl({value:'',disabled: this.seleccionado==null?true:false}),
+   numeroA: new FormControl(''),
     numeroB: new FormControl(''),
     numeroC: new FormControl(''),
     numeroD: new FormControl(''),
@@ -791,6 +792,7 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
     this.chanceForm.get('valorApostado').setValue('');
     this.chanceForm.get('radioUno').setValue(null);
     this.chanceForm.get('radioDos').setValue(null);
+    this.seleccionado=null;
     this.enabledCustomer = false;
     this.enabledCombined = true;
     this.enabledThree = true;
@@ -934,9 +936,13 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
    * @param e
    */
   keyPressNumber(e) {
-    const key = window.Event ? e.which : e.keyCode;
-    e.key.replace(/\D|\-/, '');
-    return (key >= 48 && key <= 57);
+    if(this.seleccionado){
+      const key = window.Event ? e.which : e.keyCode;
+      e.key.replace(/\D|\-/, '');
+      return (key >= 48 && key <= 57);
+    }
+    return false;
+    
   }
 
 
