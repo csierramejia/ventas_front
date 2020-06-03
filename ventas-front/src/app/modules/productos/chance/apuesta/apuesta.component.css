@@ -65,6 +65,18 @@
   padding-left: 30px!important;
 }
 
+.labelloteria{
+  text-align: left;
+  font-family: Montserrat;
+  font-size: 14px;
+  letter-spacing: 0px;
+  color: #58666E;
+  opacity: 1;
+  margin-left: 3px;
+  top: -2px;
+  position: relative;
+
+}
 .loteriastamanio{
   width: 70px;
     height: 60px;
