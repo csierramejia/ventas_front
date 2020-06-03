@@ -574,12 +574,11 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
         dataPlayed: this.dayBet
       });
       this.cleanInputs();
-      if(this.idCustomer == null || this.idCustomer==undefined ||
-        this.idCustomer==""){
-          this.enabledCustomer = false;
+      if(this.idCustomer){
+          this.enabledCustomer = true;
       }
       else{
-        this.enabledCustomer = true;
+        this.enabledCustomer = false;
       }
      
       this.selectUnmarkAllBol=false;
@@ -609,12 +608,11 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
         dataPlayed: this.dayBet
       });
       this.cleanInputs();
-      if(this.chanceForm.get('nombreCliente').value == null || this.chanceForm.get('nombreCliente').value==undefined ||
-      this.chanceForm.get('nombreCliente').value==""){
-          this.enabledCustomer = false;
+      if(this.chanceForm.get('nombreCliente').value){
+          this.enabledCustomer = true;
       }
       else{
-        this.enabledCustomer = true;
+        this.enabledCustomer = false;
       }
       this.selectUnmarkAllBol=false;
     
