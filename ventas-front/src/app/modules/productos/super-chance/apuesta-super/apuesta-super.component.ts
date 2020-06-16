@@ -116,6 +116,7 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
   }
 
   todas(){
+    this.selectTodas=true;
     this.loterias.forEach(l => {
       l.checked=true;
     });
