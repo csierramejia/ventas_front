@@ -1,25 +1,26 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ApuestaMillonariaComponent } from './apuesta-millonaria/apuesta-millonaria.component';
 import { BolsaComponent } from '../chance/bolsa/bolsa.component';
 import { ApuestaComponent } from '../chance/apuesta/apuesta.component';
+import { ApuestaSuperComponent } from './apuesta-super/apuesta-super.component';
 
 @Component({
-  selector: 'app-chance-millonario',
-  templateUrl: './chance-millonario.component.html',
-  styleUrls: ['./chance-millonario.component.css']
+  selector: 'app-super-chance',
+  templateUrl: './super-chance.component.html',
+  styleUrls: ['./super-chance.component.css']
 })
-export class ChanceMillonarioComponent implements OnInit {
+export class SuperChanceComponent implements OnInit {
 
   @ViewChild(BolsaComponent) bolsaChild: BolsaComponent;
   @ViewChild(ApuestaComponent) apuestaChild: ApuestaComponent;
-  @ViewChild(ApuestaMillonariaComponent) apuestaMillonariaComponent: ApuestaMillonariaComponent;
+  @ViewChild(ApuestaSuperComponent) apuestaMillonariaComponent: ApuestaSuperComponent;
 
+  esMillonaria:boolean;
   constructor() {
 
    }
 
   ngOnInit(): void {
-   
+    this.esMillonaria=true;
   }
 
   /**
@@ -55,8 +56,12 @@ export class ChanceMillonarioComponent implements OnInit {
    * componente chance
    */
   editBet(event): void {
+    if(!this.esMillonaria){
+    this.apuestaChild.editBetSendEmit(event);
+    }
+    else{
       this.apuestaMillonariaComponent.editBetSendEmit(event);
-    
+    }
   }
 
 
@@ -68,8 +73,12 @@ export class ChanceMillonarioComponent implements OnInit {
    * que la transaccion esta ok
    */
   creatingBet(event): void {
+    if(!this.esMillonaria){
+    this.apuestaChild.createBetSendEmit(event);
+    }
+    else{
       this.apuestaMillonariaComponent.createBetSendEmit(event);
-    
+    }
   }
 
 

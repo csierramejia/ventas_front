@@ -171,7 +171,7 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
     this.valueBet = 0;
     this.valueVat = 0;
     this.cartItems.forEach(element => {
-      if(element.numberPlayed==null){
+      if(element.modalidad && element.numeroSuper==null){
         if(element.modalidad=="4 Cifras"){
           this.valueBet =element.valorApostado;
         }
@@ -179,6 +179,9 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
           this.valueBet =element.valorApostado;
         }
       
+      }
+      else if(element.modalidad==null && element.numeroSuper){
+          this.valueBet =element.valorApostado;
       }
       else{
       // tslint:disable-next-line: radix
@@ -221,13 +224,16 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
     this.cartItems.forEach(element => {
       const bet = [];
       const betDetail = {numberPlayed: null, apuestaA: null, apuestaB: null, 
-        apuestaC: null, apuestaD: null, apuestaE: null, details: null};
-      if(element.numberPlayed==null){
+        apuestaC: null, apuestaD: null, apuestaE: null, numeroSuper:null,details: null};
+      if(element.modalidad && element.numeroSuper==null){
         betDetail.apuestaA=element.apuestaA;
         betDetail.apuestaB=element.apuestaB;
         betDetail.apuestaC=element.apuestaC;
         betDetail.apuestaD=element.apuestaD;
         betDetail.apuestaE=element.apuestaE;
+      }
+      else if(element.modalidad==null && element.numeroSuper){
+        betDetail.numeroSuper=element.numeroSuper;
       }
       else {
       betDetail.numberPlayed = element.numberPlayed;

@@ -5,7 +5,8 @@
                     <div class="col-11">
                         <div class="row">
                             <b *ngIf="cartItem.numberPlayed" class="numberPlayed">Número Jugado: {{cartItem.numberPlayed}}</b>
-                            <b *ngIf="cartItem.numberPlayed==null" class="numberPlayed">Modalidad: {{cartItem.modalidad}}</b> <br>
+                            <b *ngIf="cartItem.numberPlayed==null && cartItem.modalidad" class="numberPlayed">Modalidad: {{cartItem.modalidad}}</b> <br>
+                            <b *ngIf="cartItem.numberPlayed==null && cartItem.modalidad==null && cartItem.numeroSuper" class="numberPlayed">Número jugado: {{cartItem.numeroSuper}}</b> <br>
                             <span class="dayDraw">Dia del sorteo: {{cartItem.dataPlayed | date: 'dd/MM/yyyy'}}</span>
                         </div>
                         <div class="row">
@@ -26,13 +27,18 @@
                                 </tr>
                             </table>
 
-                            <table *ngIf="cartItem.numberPlayed==null" style="width:100%">
+                            <table *ngIf="cartItem.numberPlayed==null && cartItem.modalidad" style="width:100%">
                                 <tr>
                                     <td class="textNumberValues" *ngIf="cartItem.apuestaA">{{cartItem.apuestaA}}</td>
                                     <td class="textNumberValues" *ngIf="cartItem.apuestaB">{{cartItem.apuestaB}}</td>
                                     <td class="textNumberValues" *ngIf="cartItem.apuestaC">{{cartItem.apuestaC}}</td>
                                     <td class="textNumberValues" *ngIf="cartItem.apuestaD">{{cartItem.apuestaD}}</td>
                                     <td class="textNumberValues" *ngIf="cartItem.apuestaE">{{cartItem.apuestaE}}</td>
+                                </tr>
+                            </table>
+                            <table *ngIf="cartItem.numberPlayed==null && cartItem.modalidad==null && cartItem.numeroSuper" style="width:100%">
+                                <tr>
+                                    <td class="textNumberValues" *ngIf="cartItem.valorApostado">Valor: {{cartItem.valorApostado}}</td>
                                 </tr>
                             </table>
                         </div>

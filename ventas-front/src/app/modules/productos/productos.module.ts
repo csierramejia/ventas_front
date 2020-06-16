@@ -12,10 +12,12 @@ import {SidebarModule} from 'primeng/sidebar';
 import { BolsaComponent } from './chance/bolsa/bolsa.component';
 import { CrearClienteComponent } from './chance/crear-cliente/crear-cliente.component';
 import { ApuestaMillonariaComponent } from './chance-millonario/apuesta-millonaria/apuesta-millonaria.component';
+import { SuperChanceComponent } from './super-chance/super-chance.component';
+import { ApuestaSuperComponent } from './super-chance/apuesta-super/apuesta-super.component';
 
 
 @NgModule({
-  declarations: [ChanceComponent,ChanceMillonarioComponent, ApuestaComponent, BolsaComponent, CrearClienteComponent,ApuestaMillonariaComponent],
+  declarations: [ChanceComponent,ChanceMillonarioComponent, ApuestaComponent, BolsaComponent, CrearClienteComponent,ApuestaMillonariaComponent,SuperChanceComponent,ApuestaSuperComponent],
   imports: [
     RouterModule.forChild([
       {
@@ -25,6 +27,10 @@ import { ApuestaMillonariaComponent } from './chance-millonario/apuesta-millonar
       {
         path: RouterConstant.ROUTER_CHANCE_MILLONARIO,
         component: ChanceMillonarioComponent
+      },
+      {
+        path: RouterConstant.ROUTER_SUPER_CHANCE,
+        component: SuperChanceComponent
       }
     ]),
     SharedModule,

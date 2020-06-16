@@ -56,12 +56,8 @@ export class ChanceComponent implements OnInit {
    * componente chance
    */
   editBet(event): void {
-    if(!this.esMillonaria){
-    this.apuestaChild.editBetSendEmit(event);
-    }
-    else{
       this.apuestaMillonariaComponent.editBetSendEmit(event);
-    }
+    
   }
 
 
@@ -73,12 +69,8 @@ export class ChanceComponent implements OnInit {
    * que la transaccion esta ok
    */
   creatingBet(event): void {
-    if(!this.esMillonaria){
-    this.apuestaChild.createBetSendEmit(event);
-    }
-    else{
       this.apuestaMillonariaComponent.createBetSendEmit(event);
-    }
+    
   }
 
 

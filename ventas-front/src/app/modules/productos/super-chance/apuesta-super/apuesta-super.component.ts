@@ -9,12 +9,12 @@ import { ShellState } from 'src/app/states/shell/shell.state';
 import { CrearClienteComponent } from '../../chance/crear-cliente/crear-cliente.component';
 
 @Component({
-  selector: 'app-apuesta-millonaria',
-  templateUrl: './apuesta-millonaria.component.html',
-  styleUrls: ['./apuesta-millonaria.component.css'],
+  selector: 'app-apuesta-super',
+  templateUrl: './apuesta-super.component.html',
+  styleUrls: ['./apuesta-super.component.css'],
   providers: [ProductosService]
 })
-export class ApuestaMillonariaComponent extends CommonComponent implements OnInit, OnDestroy  {
+export class ApuestaSuperComponent extends CommonComponent implements OnInit, OnDestroy  {
 
   @Output() addBet: EventEmitter<any> = new EventEmitter();
   @Output() addLotteries: EventEmitter<any> = new EventEmitter();
@@ -26,7 +26,7 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
   btnEdit = false;
   btnAdd  = true;
   idEdit: any;
-
+  selectTodas:boolean;
   selectUnmarkAllBol = false;
   loterias = [];
   lotteriesSelected = [];
@@ -84,6 +84,7 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
   }
 
   ngOnInit(): void {
+    this.selectTodas=null;
     this.fechaActual=new Date();
     this.numeroSerie="AD123456";
 
@@ -113,6 +114,13 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
     // llamamos el metodo que se encarga de consultar las loterias
     this.getLotteries();
   }
+
+  todas(){
+    this.loterias.forEach(l => {
+      l.checked=true;
+    });
+  }
+
 
 
   /**
@@ -264,54 +272,23 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
       this.messageService.add(MsjUtil.getMsjError('Debe diligenciar una modalidad'));
     }
   }
-  generar(){
-    if(this.seleccionado==3){
-      if(this.chanceForm.get('numeroA').value==null || this.chanceForm.get('numeroA').value==''){
+  generar(numero){
+    this.seleccionado=numero;
+    if(numero==3){
       this.chanceForm.controls.numeroA.setValue(Math.round(Math.random() * (100 - 999) + 999 ) );
-      }
-      if(this.chanceForm.get('numeroB').value==null || this.chanceForm.get('numeroB').value==''){
-      this.chanceForm.controls.numeroB.setValue(Math.round(Math.random() * (100 - 999) + 999 ) );
-      }
-      if(this.chanceForm.get('numeroC').value==null || this.chanceForm.get('numeroC').value==''){
-      this.chanceForm.controls.numeroC.setValue(Math.round(Math.random() * (100 - 999) + 999 ) );
-      }
-      if(this.chanceForm.get('numeroD').value==null || this.chanceForm.get('numeroD').value==''){
-      this.chanceForm.controls.numeroD.setValue(Math.round(Math.random() * (100 - 999) + 999 ) );
-      }
-      if(this.chanceForm.get('numeroE').value==null || this.chanceForm.get('numeroE').value==''){
-      this.chanceForm.controls.numeroE.setValue(Math.round(Math.random() * (100 - 999) + 999 ) );
-      }
     }
-    else if(this.seleccionado==4){
-      if(this.chanceForm.get('numeroA').value==null || this.chanceForm.get('numeroA').value==''){
+    else if(numero==4){
       this.chanceForm.controls.numeroA.setValue(Math.round(Math.random() * (1000 - 9999) + 9999 ));
-      }
-      if(this.chanceForm.get('numeroB').value==null || this.chanceForm.get('numeroB').value==''){
-      this.chanceForm.controls.numeroB.setValue(Math.round(Math.random() * (1000 - 9999) + 9999 ));
-      }
-      if(this.chanceForm.get('numeroC').value==null || this.chanceForm.get('numeroC').value==''){
-      this.chanceForm.controls.numeroC.setValue(Math.round(Math.random() * (1000 - 9999) + 9999 ));
-      }
-      if(this.chanceForm.get('numeroD').value==null || this.chanceForm.get('numeroD').value==''){
-      this.chanceForm.controls.numeroD.setValue(Math.round(Math.random() * (1000 - 9999) + 9999 ));
-      }
-      if(this.chanceForm.get('numeroE').value==null || this.chanceForm.get('numeroE').value==''){
-      this.chanceForm.controls.numeroE.setValue(Math.round(Math.random() * (1000 - 9999) + 9999 ));
-      }
     }
-    else{
-      this.messageService.add(MsjUtil.getMsjError('Debe diligenciar una modalidad'));
-    }
-  }
-  seleccion(i){
-    this.seleccionado=i;
-    this.consultarValoresModalidad();
-  
+   
+    this.consultarValoresModalidad(numero);
   }
 
-  consultarValoresModalidad(){
+
+  consultarValoresModalidad(numero){
     this.valoresModalidades=[];
-      this.productosService.consultarValoresModalidad("CHANCE MILLONARIO",this.seleccionado).subscribe(
+    //SUPER CHANCE
+      this.productosService.consultarValoresModalidad("SUPER CHANCE",numero).subscribe(
         valoresData => {
          this.valoresModalidades=valoresData;
         },
@@ -322,10 +299,6 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
   }
   limpiar(){
     this.chanceForm.controls.numeroA.setValue(null);
-    this.chanceForm.controls.numeroB.setValue(null);
-    this.chanceForm.controls.numeroC.setValue(null);
-    this.chanceForm.controls.numeroD.setValue(null);
-    this.chanceForm.controls.numeroE.setValue(null);
   }
   /**
    * @author Luis Hernandez
@@ -460,20 +433,9 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
     if(this.chanceForm.get('numeroA').value == null || this.chanceForm.get('numeroA').value ==''){
       valida=true;
     }
-    else if(this.chanceForm.get('numeroB').value == null || this.chanceForm.get('numeroB').value ==''){
-      valida=true;
-    }
-    else if(this.chanceForm.get('numeroC').value == null || this.chanceForm.get('numeroC').value ==''){
-      valida=true;
-    }
-    else if(this.chanceForm.get('numeroD').value == null || this.chanceForm.get('numeroD').value ==''){
-      valida=true;
-    }
-    else if(this.chanceForm.get('numeroE').value == null || this.chanceForm.get('numeroE').value ==''){
-      valida=true;
-    }
+    
     if(valida){
-      this.messageService.add(MsjUtil.getMsjError('Debe llenar todas las apuestas'));
+      this.messageService.add(MsjUtil.getMsjError('Debe llenar todas la apuesta'));
       return;
     }
     valida=false;
@@ -491,33 +453,9 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
       if(this.chanceForm.get('numeroA').value.toString().length != 3){
         valida=true;
       }
-      else if(this.chanceForm.get('numeroB').value.toString().length != 3){
-        valida=true;
-      }
-      else if(this.chanceForm.get('numeroC').value.toString().length != 3){
-        valida=true;
-      }
-      else if(this.chanceForm.get('numeroD').value.toString().length != 3){
-        valida=true;
-      }
-      else if(this.chanceForm.get('numeroE').value.toString().length != 3){
-        valida=true;
-      }
     }
     else if(this.seleccionado==4){
       if(this.chanceForm.get('numeroA').value.toString().length != 4){
-        valida=true;
-      }
-      else  if(this.chanceForm.get('numeroB').value.toString().length != 4){
-        valida=true;
-      }
-      else if(this.chanceForm.get('numeroC').value.toString().length != 4){
-        valida=true;
-      }
-      else if(this.chanceForm.get('numeroD').value.toString().length != 4){
-        valida=true;
-      }
-      else if(this.chanceForm.get('numeroE').value.toString().length != 4){
         valida=true;
       }
     }
@@ -527,31 +465,7 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
       return;
     }
 
-    //validar repetidos
-    let numeros=[this.chanceForm.get('numeroA').value.toString(),this.chanceForm.get('numeroB').value.toString(),
-    this.chanceForm.get('numeroC').value.toString(),this.chanceForm.get('numeroD').value.toString(),
-    this.chanceForm.get('numeroE').value.toString()];
-    let uniqs = numeros.filter(function(item, index, array) {
-      return array.indexOf(item) === index;
-    })
-    if(uniqs.length != numeros.length){
-      this.messageService.add(MsjUtil.getMsjError('No se pueden realizar apuestas repetidas'));
-      return;
-    }
-
-    let contadorLoterias=0;
-    this.loterias.forEach(element => {
-    if (element.checked) {
-      contadorLoterias++;
-    }
-    });
-    if(contadorLoterias==2){
-      this.addBetSend();
-    }
-    else{
-      this.messageService.add(MsjUtil.getMsjError('Se deben seleccionar dos loterias'));
-    }
-
+    this.addBetSend();
   }
   /**
    * @author Luis Hernandez
@@ -564,14 +478,15 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
         // lotteries: this.lotteriesSelected,
         _id: 'bet_' + Math.floor(Math.random() * 999999),
         idCustomer: this.idCustomer,
-        modalidad: this.seleccionado==4 ? '4 Cifras' : '3 Cifras',
+        modalidad: null,
+        numeroSuper:this.chanceForm.get('numeroA').value,
         numberPlayed:null,
         valorApostado: this.chanceForm.get('valorApostado').value,
-        apuestaA: this.chanceForm.get('numeroA').value,
-        apuestaB: this.chanceForm.get('numeroB').value,
-        apuestaC: this.chanceForm.get('numeroC').value,
-        apuestaD: this.chanceForm.get('numeroD').value,
-        apuestaE: this.chanceForm.get('numeroE').value,
+        apuestaA: null,
+        apuestaB:null,
+        apuestaC: null,
+        apuestaD: null,
+        apuestaE:null,
         dataPlayed: this.dayBet
       });
       this.cleanInputs();
@@ -599,13 +514,15 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
         _id: this.idEdit,
         documentCustomer: this.chanceForm.get('numeroDocumento').value,
         nameCustomer: this.chanceForm.get('nombreCliente').value,
-        modalidad: this.seleccionado==4 ? '4 Cifras' : '3 Cifras',
+        modalidad: null,
+        numeroSuper:this.chanceForm.get('numeroA').value,
         numberPlayed:null,
-        apuestaA: this.chanceForm.get('numeroA').value,
-        apuestaB: this.chanceForm.get('numeroB').value,
-        apuestaC: this.chanceForm.get('numeroC').value,
-        apuestaD: this.chanceForm.get('numeroD').value,
-        apuestaE: this.chanceForm.get('numeroE').value,
+        valorApostado: this.chanceForm.get('valorApostado').value,
+        apuestaA: null,
+        apuestaB:null,
+        apuestaC: null,
+        apuestaD: null,
+        apuestaE:null,
         dataPlayed: this.dayBet
       });
       this.cleanInputs();
@@ -619,34 +536,7 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
     
   }
 
-  aleatorioLoterias(){
-    let aleatorio= Math.round(Math.random() * (this.loterias.length-1 - 0) + 0);
-    this.loterias[aleatorio].checked=true;
-    aleatorio=aleatorio= Math.round(Math.random() * (this.loterias.length-1 - 0) + 0);
-    this.loterias[aleatorio].checked=true;
-    this.validarCantidad();
-  }
-
-
-  validarCantidad(){
-    let contadorLoterias=0;
-    this.loterias.forEach(element => {
-    if (element.checked) {
-      contadorLoterias++;
-    }
-    });
-    if(contadorLoterias==2){
-      this.addLotteries.emit(this.get_lotteriesSelected());
-      return;
-    }
-    else{
-      this.loterias.forEach(element => {
-        element.checked=false;
-        });
-      this.aleatorioLoterias();
-    }
-  }
-
+  
   /**
    * @author Luis Hernandez
    * @description Metodo que se valida cuales fueron
@@ -683,10 +573,6 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
     this.dayBet = event.dataPlayed;
     this.chanceForm.get('numeroDocumento').setValue(event.documentCustomer);
     this.chanceForm.get('numeroA').setValue(event.apuestaA);
-    this.chanceForm.get('numeroB').setValue(event.apuestaB);
-    this.chanceForm.get('numeroC').setValue(event.apuestaC);
-    this.chanceForm.get('numeroD').setValue(event.apuestaD);
-    this.chanceForm.get('numeroE').setValue(event.apuestaE);
     if (event.nameCustomer) {
       this.chanceForm.get('nombreCliente').setValue(event.nameCustomer);
       this.enabledCustomer = true;
@@ -783,15 +669,10 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
    * @description Metodo que se encarga de limpiar los campos
    */
   cleanInputs(): void {
+    this.selectTodas=null;
     this.chanceForm.get('numeroA').setValue('');
-    this.chanceForm.get('numeroB').setValue('');
-    this.chanceForm.get('numeroC').setValue('');
-    this.chanceForm.get('numeroD').setValue('');
-    this.chanceForm.get('numeroE').setValue('');
     this.valoresModalidades=[];
     this.chanceForm.get('valorApostado').setValue('');
-    this.chanceForm.get('radioUno').setValue(null);
-    this.chanceForm.get('radioDos').setValue(null);
     this.seleccionado=null;
     this.enabledCustomer = false;
     this.enabledCombined = true;
@@ -936,12 +817,11 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
    * @param e
    */
   keyPressNumber(e) {
-    if(this.seleccionado){
+ 
       const key = window.Event ? e.which : e.keyCode;
       e.key.replace(/\D|\-/, '');
       return (key >= 48 && key <= 57);
-    }
-    return false;
+   
     
   }
 
