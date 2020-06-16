@@ -84,7 +84,7 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
   }
 
   ngOnInit(): void {
-    this.selectTodas=null;
+    this.selectTodas=false;
     this.fechaActual=new Date();
     this.numeroSerie="AD123456";
 
@@ -670,7 +670,7 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
    * @description Metodo que se encarga de limpiar los campos
    */
   cleanInputs(): void {
-    this.selectTodas=null;
+    this.selectTodas=false;
     this.chanceForm.get('numeroA').setValue('');
     this.valoresModalidades=[];
     this.chanceForm.get('valorApostado').setValue('');

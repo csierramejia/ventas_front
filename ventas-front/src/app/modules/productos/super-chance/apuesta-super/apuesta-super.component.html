@@ -41,9 +41,9 @@
             class="d-block">
                Seleccione Loterias
             <i class="fa fa-chevron-down"></i>
-            <input type="checkbox" (click)="todas()"  [(ngModel)]="selectTodas" *ngIf="loterias && loterias.length > 0" style="margin-left: 10px"/>
-            <label  *ngIf="loterias && loterias.length > 0" style="margin-left: 10px" class="labelloteria">TODAS</label>
-           
+            <button (click)="todas()" *ngIf="loterias && loterias.length > 0" style="margin-left: 10px" type="button" class="btn btn-random">
+                TODAS
+            </button>
         </a>
     </div>
     
