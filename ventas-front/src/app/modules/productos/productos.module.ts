@@ -14,10 +14,12 @@ import { CrearClienteComponent } from './chance/crear-cliente/crear-cliente.comp
 import { ApuestaMillonariaComponent } from './chance-millonario/apuesta-millonaria/apuesta-millonaria.component';
 import { SuperChanceComponent } from './super-chance/super-chance.component';
 import { ApuestaSuperComponent } from './super-chance/apuesta-super/apuesta-super.component';
+import { SuperAstroComponent } from './super-astro/super-astro.component';
+import { ApuestaSuperAstroComponent } from './super-astro/apuesta-super-astro/apuesta-super-astro.component';
 
 
 @NgModule({
-  declarations: [ChanceComponent,ChanceMillonarioComponent, ApuestaComponent, BolsaComponent, CrearClienteComponent,ApuestaMillonariaComponent,SuperChanceComponent,ApuestaSuperComponent],
+  declarations: [ChanceComponent,ChanceMillonarioComponent, ApuestaComponent, BolsaComponent, CrearClienteComponent,ApuestaMillonariaComponent,SuperChanceComponent,ApuestaSuperComponent,SuperAstroComponent,ApuestaSuperAstroComponent],
   imports: [
     RouterModule.forChild([
       {
@@ -31,6 +33,10 @@ import { ApuestaSuperComponent } from './super-chance/apuesta-super/apuesta-supe
       {
         path: RouterConstant.ROUTER_SUPER_CHANCE,
         component: SuperChanceComponent
+      },
+      {
+        path: RouterConstant.ROUTER_SUPER_ASTRO,
+        component: SuperAstroComponent
       }
     ]),
     SharedModule,

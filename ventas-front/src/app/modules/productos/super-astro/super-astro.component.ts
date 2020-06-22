@@ -1,18 +1,18 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { BolsaComponent } from '../chance/bolsa/bolsa.component';
 import { ApuestaComponent } from '../chance/apuesta/apuesta.component';
-import { ApuestaSuperComponent } from './apuesta-super/apuesta-super.component';
+import { ApuestaSuperAstroComponent } from './apuesta-super-astro/apuesta-super-astro.component';
 
 @Component({
-  selector: 'app-super-chance',
-  templateUrl: './super-chance.component.html',
-  styleUrls: ['./super-chance.component.css']
+  selector: 'app-astro-chance',
+  templateUrl: './super-astro.component.html',
+  styleUrls: ['./super-astro.component.css']
 })
-export class SuperChanceComponent implements OnInit {
+export class SuperAstroComponent implements OnInit {
 
   @ViewChild(BolsaComponent) bolsaChild: BolsaComponent;
   @ViewChild(ApuestaComponent) apuestaChild: ApuestaComponent;
-  @ViewChild(ApuestaSuperComponent) apuestaMillonariaComponent: ApuestaSuperComponent;
+  @ViewChild(ApuestaSuperAstroComponent) apuestaMillonariaComponent: ApuestaSuperAstroComponent;
 
   esMillonaria:boolean;
   constructor() {
@@ -57,7 +57,6 @@ export class SuperChanceComponent implements OnInit {
    */
   editBet(event): void {
       this.apuestaMillonariaComponent.editBetSendEmit(event);
-    
   }
 
 
