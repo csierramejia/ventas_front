@@ -5,9 +5,9 @@
                     <div class="col-11">
                         <div class="row">
                             <b *ngIf="cartItem.numberPlayed" class="numberPlayed">Número Jugado: {{cartItem.numberPlayed}}</b>
-                            <b *ngIf="cartItem.numberPlayed==null && cartItem.modalidad" class="numberPlayed">Modalidad: {{cartItem.modalidad}}</b> <br>
-                            <b *ngIf="cartItem.numberPlayed==null && cartItem.modalidad==null && cartItem.numeroSuper" class="numberPlayed">Número jugado: {{cartItem.numeroSuper}}</b> <br>
-                            <span class="dayDraw">Dia del sorteo: {{cartItem.dataPlayed | date: 'dd/MM/yyyy'}}</span>
+                            <b *ngIf="cartItem.numberPlayed==null && cartItem.modalidad" class="numberPlayed">Modalidad: {{cartItem.modalidad}}</b> 
+                            <b *ngIf="cartItem.numberPlayed==null && cartItem.modalidad==null && cartItem.numeroSuper" class="numberPlayed">Número jugado: {{cartItem.numeroSuper}}</b> 
+                            <b *ngIf="cartItem.numberPlayed==null && cartItem.modalidad==null && cartItem.numeroSuper==null && cartItem.numeroAstro" class="numberPlayed">Número jugado: {{cartItem.numeroAstro}}</b> 
                         </div>
                         <div class="row">
                             <table *ngIf="cartItem.numberPlayed" style="width:100%">
@@ -41,6 +41,16 @@
                                     <td class="textNumberValues" *ngIf="cartItem.valorApostado">Valor: {{cartItem.valorApostado}}</td>
                                 </tr>
                             </table>
+                            <table *ngIf="cartItem.numberPlayed==null && cartItem.modalidad==null && cartItem.numeroSuper==null && cartItem.numeroAstro" style="width:100%">
+                                <tr>
+                                    <td class="textNumberValues" *ngIf="cartItem.valorApostado">Signos: {{cartItem.zignos.length}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="textNumberValues" *ngIf="cartItem.valorApostado">Valor: {{cartItem.valorApostado}}</td>
+                                </tr>
+                            </table>
+
+                            <span class="dayDraw">Dia del sorteo: {{cartItem.dataPlayed | date: 'dd/MM/yyyy'}}</span>
                         </div>
                     </div>
                     <div class="col-1 actions-btns">

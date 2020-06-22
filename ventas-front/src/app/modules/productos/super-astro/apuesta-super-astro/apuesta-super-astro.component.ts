@@ -489,7 +489,8 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
         idCustomer: this.idCustomer,
         modalidad: null,
         zignos:this.chanceForm.get('zignosSeleccionados').value,
-        numeroSuper:this.chanceForm.get('numeroA').value,
+        numeroSuper:null,
+        numeroAstro:this.chanceForm.get('numeroA').value,
         numberPlayed:null,
         valorApostado: this.chanceForm.get('valorApostado').value,
         apuestaA: null,
@@ -525,7 +526,9 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
         documentCustomer: this.chanceForm.get('numeroDocumento').value,
         nameCustomer: this.chanceForm.get('nombreCliente').value,
         modalidad: null,
-        numeroSuper:this.chanceForm.get('numeroA').value,
+        zignos:this.chanceForm.get('zignosSeleccionados').value,
+        numeroAstro:this.chanceForm.get('numeroA').value,
+        numeroSuper:null,
         numberPlayed:null,
         valorApostado: this.chanceForm.get('valorApostado').value,
         apuestaA: null,
@@ -587,6 +590,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
       this.chanceForm.get('nombreCliente').setValue(event.nameCustomer);
       this.enabledCustomer = true;
     }
+    this.chanceForm.get('zignosSeleccionados').setValue(event.zignos);
     this.btnAdd = false;
     this.btnEdit = true;
   }
@@ -684,6 +688,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
     this.valoresModalidades=[];
     this.chanceForm.get('valorApostado').setValue('');
     this.seleccionado=null;
+    this.chanceForm.get('zignosSeleccionados').setValue(''),
     this.enabledCustomer = false;
     this.enabledCombined = true;
     this.enabledThree = true;
