@@ -9,6 +9,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import {InputMaskModule} from 'primeng/inputmask';
 import { KeyFilterModule } from 'primeng/keyfilter';
+import {MultiSelectModule} from 'primeng/multiselect';
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import { KeyFilterModule } from 'primeng/keyfilter';
     CheckboxModule,
     RadioButtonModule,
     InputMaskModule,
-    KeyFilterModule
+    KeyFilterModule,
+    MultiSelectModule
   ],
   exports: [
     TreeTableModule,
@@ -33,7 +35,8 @@ import { KeyFilterModule } from 'primeng/keyfilter';
     CheckboxModule,
     RadioButtonModule,
     KeyFilterModule,
-    InputMaskModule
+    InputMaskModule,
+    MultiSelectModule
   ]
 })
 export class PrimengModule { }

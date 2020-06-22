@@ -30,7 +30,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
   selectUnmarkAllBol = false;
   loterias = [];
   lotteriesSelected = [];
-
+  zignos=[];
   dayBet: Date;
   viewLotteries = false;
   days = [
@@ -61,10 +61,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
     nombreCliente: new FormControl(''),
    // numeroA: new FormControl({value:'',disabled: this.seleccionado==null?true:false}),
    numeroA: new FormControl(''),
-    numeroB: new FormControl(''),
-    numeroC: new FormControl(''),
-    numeroD: new FormControl(''),
-    numeroE: new FormControl(''),
+   zignosSeleccionados: new FormControl(),
     valorApostado:new FormControl(),
     radioUno:new FormControl(),
     radioDos:new FormControl()
@@ -87,6 +84,19 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
     this.selectTodas=false;
     this.fechaActual=new Date();
     this.numeroSerie="AD123456";
+    this.zignos=[
+    {label:'Acuario', value:1},
+    {label:'Piscis', value:2},
+    {label:'Aries', value:3},
+    {label:'Tauro', value:4},
+    {label:'Géminis', value:5},
+    {label:'Cáncer', value:6},
+    {label:'Leo', value:7},
+    {label:'Virgo', value:8},
+    {label:'Libra', value:9},
+    {label:'Escorpio', value:10},
+    {label:'Sagitario', value:11},
+    {label:'Capricornio', value:12}];
 
 
   }
@@ -136,6 +146,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
         loteriasData => {
           const rs: any = loteriasData;
           rs.forEach(element => {
+           // if(element.nombre.toUpperCase().includes("ASTRO")){
             this.loterias.push({
               idLoteria: element.idLoteria,
               codigo: element.codigo,
@@ -148,6 +159,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
               checked: false,
               url:"assets/img/loterias/"+element.nombre.toUpperCase()+".png"
             });
+         // }
           });
         },
         error => {
@@ -443,21 +455,24 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
     }
      //validar longitudes
      valida=false;
-    if(this.seleccionado==3){
-      if(this.chanceForm.get('numeroA').value.toString().length != 3){
-        valida=true;
-      }
-    }
-    else if(this.seleccionado==4){
       if(this.chanceForm.get('numeroA').value.toString().length != 4){
         valida=true;
       }
-    }
 
     if(valida){
-      this.messageService.add(MsjUtil.getMsjError('Sólo se permiten dígitos de 3 y 4 cifras, según la modalidad seleccionada'));
+      this.messageService.add(MsjUtil.getMsjError('El número jugado debe ser de 4 digitos'));
       return;
     }
+        //validar zignos
+        valida=false;
+        if(this.chanceForm.get('zignosSeleccionados') == null || this.chanceForm.get('zignosSeleccionados').value==null){
+          valida=true;
+        }
+  
+      if(valida){
+        this.messageService.add(MsjUtil.getMsjError('Por favor selecciona un signo zodiacal'));
+        return;
+      }
 
     this.addBetSend();
   }
@@ -473,6 +488,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
         _id: 'bet_' + Math.floor(Math.random() * 999999),
         idCustomer: this.idCustomer,
         modalidad: null,
+        zignos:this.chanceForm.get('zignosSeleccionados').value,
         numeroSuper:this.chanceForm.get('numeroA').value,
         numberPlayed:null,
         valorApostado: this.chanceForm.get('valorApostado').value,

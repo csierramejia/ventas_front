@@ -117,7 +117,7 @@
                     <div class="col-md-4">
                         <label class="titleInput" for="aleatorio">NÚMERO A JUGAR</label>
                          <div class="form-group has-feedback" style="display: -webkit-box">
-                            <input type="text" minlength="3" maxlength="4"
+                            <input type="text" minlength="4" maxlength="4"
                              (keypress)="keyPressNumber($event)"  formControlName="numeroA" 
                              class="form-control styleInput">
                             <div class="input-group-append">
@@ -128,16 +128,16 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <label class="titleInput" for="valorDirecto">Valor apuesta</label>
+                        <label class="titleInput" for="valorApostado">Valor apuesta</label>
                         <div class="form-group has-feedback">
                         <i class="fa fa-usd form-control-feedback" aria-hidden="true"></i>
-                        <input type="text" (keypress)="keyPressNumber($event)"  class="form-control styleInput" placeholder="Valor apuesta" formControlName="valorDirecto">
+                        <input type="text" (keypress)="keyPressNumber($event)"  class="form-control styleInput" placeholder="Valor apuesta" formControlName="valorApostado">
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <label class="titleInput" for="identificacion">Signo zodiacal</label>
+                        <label class="titleInput" for="zignosSeleccionados">Signo zodiacal</label>
                         <div class="form-group">
-                         
+                            <p-multiSelect [options]="zignos" formControlName="zignosSeleccionados" ></p-multiSelect>
                         </div>
 
                         <button  (click)="validarLoterias()" type="button" class="btn btn-random botonesApuesta">

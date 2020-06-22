@@ -11,6 +11,25 @@
     font-size: 18px;
 }
 
+.multipleSelect{
+  width: 100px !important;
+  height: 100px !important;
+}
+
+.body .ui-multiselect .ui-multiselect-label {
+  padding: 0.429em !important;
+    padding-right: 8em !important;
+    color: #333333 !important;
+}
+.ui-multiselect .ui-multiselect-label{
+  display: block;
+  padding: .25em 2em .25em .25em;
+  width: 200px!important;;
+  border: 0;
+  cursor: pointer;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
 .numeroserie{
   text-align: left;
   font: Regular 13px/16px Montserrat;
