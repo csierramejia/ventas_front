@@ -57,5 +57,10 @@ export class ProductosAPIConstant {
     'consultarInfoModalidad';
 
 
+        /** URL del recurso para obtener las loterias */
+        static readonly URL_CONSULTAR_SIGNOS: string =
+        AppDomainConstant.APUESTAS +
+        ProductosAPIConstant.MODALIDADES_API +
+        'consultarSignos';
 
 }

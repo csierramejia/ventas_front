@@ -84,19 +84,20 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
     this.selectTodas=false;
     this.fechaActual=new Date();
     this.numeroSerie="AD123456";
-    this.zignos=[
-    {label:'Acuario', value:1},
-    {label:'Piscis', value:2},
-    {label:'Aries', value:3},
-    {label:'Tauro', value:4},
-    {label:'Géminis', value:5},
-    {label:'Cáncer', value:6},
-    {label:'Leo', value:7},
-    {label:'Virgo', value:8},
-    {label:'Libra', value:9},
-    {label:'Escorpio', value:10},
-    {label:'Sagitario', value:11},
-    {label:'Capricornio', value:12}];
+    this.zignos=[];
+    this.productosService.consultarSignos().subscribe(
+      signosData => {
+        const rs: any = signosData;
+        rs.forEach(element => {
+         // if(element.nombre.toUpperCase().includes("ASTRO")){
+          this.loterias.push({label: element.nombre, value:element.idSigno});
+       // }
+        });
+      },
+      error => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
 
 
   }
@@ -146,7 +147,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
         loteriasData => {
           const rs: any = loteriasData;
           rs.forEach(element => {
-           // if(element.nombre.toUpperCase().includes("ASTRO")){
+            if(element.nombre.toUpperCase().includes("ASTRO")){
             this.loterias.push({
               idLoteria: element.idLoteria,
               codigo: element.codigo,
@@ -159,7 +160,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
               checked: false,
               url:"assets/img/loterias/"+element.nombre.toUpperCase()+".png"
             });
-         // }
+           }
           });
         },
         error => {

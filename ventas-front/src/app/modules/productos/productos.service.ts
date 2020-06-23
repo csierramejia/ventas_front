@@ -13,6 +13,7 @@ import { ModalidadesDTO } from 'src/app/dtos/escrutinio/loterias/modalidades.dto
  */
 @Injectable()
 export class ProductosService {
+  
 
   /**
    * @param HTTP para hacer las peticiones a los servicios REST
@@ -27,6 +28,10 @@ export class ProductosService {
   public consultarLoterias(fechaSorteoFilter): Observable<LoteriasDTO[]> {
     const v = encodeURI(JSON.stringify({fechaSorteo: fechaSorteoFilter}));
     return this.http.get<LoteriasDTO[]>(`${ProductosAPIConstant.URL_CONSULTAR_LOTERIAS}/${v}`);
+  }
+
+  public consultarSignos() :Observable<any[]> {
+    return this.http.get<any[]>(`${ProductosAPIConstant.URL_CONSULTAR_SIGNOS}`);
   }
 
   public consultarValoresModalidad(nombreProducto:string, idModalidad:number): Observable<number[]> {
