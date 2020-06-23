@@ -42,6 +42,7 @@ export class SuperChanceComponent implements OnInit {
    */
   addLotteries(event): void {
     this.bolsaChild.setLotteries(event);
+    this.bolsaChild.setProducto("SUPER_CHANCE")
   }
 
 

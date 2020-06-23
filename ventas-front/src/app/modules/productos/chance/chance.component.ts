@@ -42,6 +42,8 @@ export class ChanceComponent implements OnInit {
    */
   addLotteries(event): void {
     this.bolsaChild.setLotteries(event);
+    this.bolsaChild.setProducto("CHANCE")
+
   }
 
 

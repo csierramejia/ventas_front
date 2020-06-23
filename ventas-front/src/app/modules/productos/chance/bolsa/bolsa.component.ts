@@ -26,7 +26,7 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
   valueBetTotal = 0;
   cartItems = [];
   lotteries = [];
-
+  producto=null;
 
   constructor(
     private productosService: ProductosService,
@@ -87,6 +87,10 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
   setLotteries(event): void {
     this.lotteries = event;
     this.get_values_totals();
+  }
+
+  setProducto(event): void {
+    this.producto = event;
   }
 
 
@@ -219,6 +223,8 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
       valueBetTotal : this.valueBetTotal,
       bets: null,
       lotteries : this.lotteries,
+      canal:null,
+      producto:this.producto
     };
 
     this.cartItems.forEach(element => {
@@ -273,7 +279,7 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
     });
 
     paySend.bets = bets;
-
+    paySend.canal="WEB";
     this.productosService.registrarApuesta(paySend).subscribe(
       apuestaData => {
         const responseApuesta: any = apuestaData;

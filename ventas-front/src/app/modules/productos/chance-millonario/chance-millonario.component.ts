@@ -41,6 +41,7 @@ export class ChanceMillonarioComponent implements OnInit {
    */
   addLotteries(event): void {
     this.bolsaChild.setLotteries(event);
+    this.bolsaChild.setProducto("CHANCE_MILLONARIO")
   }
 
 
