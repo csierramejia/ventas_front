@@ -90,7 +90,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
         const rs: any = signosData;
         rs.forEach(element => {
          // if(element.nombre.toUpperCase().includes("ASTRO")){
-          this.loterias.push({label: element.nombre, value:element.idSigno});
+          this.zignos.push({label: element.nombre, value:element.idSigno});
        // }
         });
       },
