@@ -157,6 +157,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
               idEstado: element.idEstado,
               idEmpresa: element.idEmpresa,
               idSorteo: element.idSorteo,
+              idSorteoDetalle: element.idSorteoDetalle,
               checked: false,
               url:"assets/img/loterias/"+element.nombre.toUpperCase()+".png"
             });
@@ -569,6 +570,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
           idEstado: element.idEstado,
           idEmpresa: element.idEmpresa,
           idSorteo: element.idSorteo,
+          idSorteoDetalle : element.idSorteoDetalle
         });
       }
     });
