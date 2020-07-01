@@ -132,6 +132,7 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
    */
   getLotteries(): void {
     this.loterias=[];
+    this.selectTodas=false;
       this.productosService.consultarLoterias(this.dayBet).subscribe(
         loteriasData => {
           const rs: any = loteriasData;
@@ -286,6 +287,9 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
     this.consultarValoresModalidad(numero);
   }
 
+  consultarModalidad(){
+    this.consultarValoresModalidad(this.chanceForm.get('numeroA').value.toString().length);
+  }
 
   consultarValoresModalidad(numero){
     this.valoresModalidades=[];
@@ -451,19 +455,14 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
     }
      //validar longitudes
      valida=false;
-    if(this.seleccionado==3){
-      if(this.chanceForm.get('numeroA').value.toString().length != 3){
+    
+      if(this.chanceForm.get('numeroA').value.toString().length < 3 ||
+      this.chanceForm.get('numeroA').value.toString().length > 4){
         valida=true;
       }
-    }
-    else if(this.seleccionado==4){
-      if(this.chanceForm.get('numeroA').value.toString().length != 4){
-        valida=true;
-      }
-    }
 
     if(valida){
-      this.messageService.add(MsjUtil.getMsjError('Sólo se permiten dígitos de 3 y 4 cifras, según la modalidad seleccionada'));
+      this.messageService.add(MsjUtil.getMsjError('Sólo se permiten juegos de 3 o 4 cifras'));
       return;
     }
 
@@ -672,7 +671,7 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
    * @description Metodo que se encarga de limpiar los campos
    */
   cleanInputs(): void {
-    this.selectTodas=false;
+    
     this.chanceForm.get('numeroA').setValue('');
     this.valoresModalidades=[];
     this.chanceForm.get('valorApostado').setValue('');
@@ -684,10 +683,7 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
     this.enabledOne = true;
     this.btnAdd = true;
     this.btnEdit = false;
-    //selimpia panel loterias
-    this.loterias.forEach(element => {
-        element.checked= false; 
-    });
+   
   }
 
 

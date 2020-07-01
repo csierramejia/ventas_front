@@ -5,4 +5,6 @@ export class BienvenidaRequestDTO {
 
     /** identificador del Usuario autenticado en el sistema */
     public idUsuario: number;
+
+    public idAplicacion: number;
 }

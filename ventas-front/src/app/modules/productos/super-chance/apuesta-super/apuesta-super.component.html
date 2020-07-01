@@ -137,7 +137,7 @@
                         <label class="titleInput" for="aleatorio">NÚMERO A JUGAR</label>
                         <div class="form-group has-feedback" style="display: -webkit-box">
                             <input type="text" minlength="3" maxlength="4"
-                             (keypress)="keyPressNumber($event)"  disabled formControlName="numeroA" 
+                             (keypress)="keyPressNumber($event)"(change)="consultarModalidad()"  formControlName="numeroA" 
                              class="form-control styleInput">
                         </div>
                     </div>

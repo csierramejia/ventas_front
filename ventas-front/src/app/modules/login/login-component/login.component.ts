@@ -57,6 +57,7 @@ export class LoginComponent extends CommonComponent implements OnInit {
           // se procede a obtener lo datos de bienvenida de la app
           const request: BienvenidaRequestDTO = new BienvenidaRequestDTO();
           request.idUsuario = dataAutenticacion.usuario.idUsuario;
+          request.idAplicacion=2;
           this.seguridadService.getDatosBienvenida(request).subscribe(
             dataBienvenida => {
 

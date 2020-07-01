@@ -137,8 +137,11 @@
                     <div class="col-md-4">
                         <label class="titleInput" for="zignosSeleccionados">Signo zodiacal</label>
                         <div class="form-group">
-                            <p-multiSelect [options]="zignos" formControlName="zignosSeleccionados" ></p-multiSelect>
-                        </div>
+                            <select  formControlName="zignosSeleccionados" class="form-control typeIdentification">
+                                <option [value]="item.value" *ngFor="let item of zignos">{{item.label}}</option>
+                            </select>
+                          </div>
+                       
 
                         <button  (click)="validarLoterias()" type="button" class="btn btn-random botonesApuesta">
                             AGREGAR <i class="fa fa-plus" aria-hidden="true"></i>
