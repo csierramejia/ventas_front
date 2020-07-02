@@ -87,16 +87,16 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-3">
-                        <label style="margin-top: -6px;" class="col-form-label">Modalidad</label>
+                        <label  style="margin-top: -6px;" class="col-form-label">Modalidad</label>
                             <div class="form-check">
-                                <input class="form-check-input"  formControlName="radioUno" (change)="seleccion(3)" type="radio"
-                                    name="radioUno" class="radioAzul" value="3">
+                                <input formControlName="radioUno" (change)="seleccion(3)" type="radio"
+                                    name="radioUno" class="radioAzul"  [value]="3">
                                 <label class="form-check-label" for="radioUno">3 Cifras</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" 
+                                <input 
                                     (change)="seleccion(4)" class="radioAzul"  formControlName="radioUno" type="radio" name="radioUno" 
-                                    value="4">
+                                    [value]="4">
                                 <label class="form-check-label" for="radioUno">4 Cifras</label>
                             </div>
 

@@ -307,7 +307,6 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
   seleccion(i){
     this.seleccionado=i;
     this.consultarValoresModalidad();
-  
   }
 
   consultarValoresModalidad(){
@@ -683,7 +682,7 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
   editBetSendEmit(event): void {
     this.idEdit = event._id;
     this.dayBet = event.dataPlayed;
-    this.chanceForm.get('numeroDocumento').setValue(event.documentCustomer);
+    this.chanceForm.get('valorApostado').setValue(event.valorApostado);
     this.chanceForm.get('numeroA').setValue(event.apuestaA);
     this.chanceForm.get('numeroB').setValue(event.apuestaB);
     this.chanceForm.get('numeroC').setValue(event.apuestaC);
@@ -692,6 +691,14 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
     if (event.nameCustomer) {
       this.chanceForm.get('nombreCliente').setValue(event.nameCustomer);
       this.enabledCustomer = true;
+    }
+    if(event.modalidad=='3 Cifras'){
+      this.chanceForm.get('radioUno').setValue(3);
+      this.seleccion(3);
+    }
+    else{
+      this.chanceForm.get('radioUno').setValue(4);
+      this.seleccion(4);
     }
     this.btnAdd = false;
     this.btnEdit = true;

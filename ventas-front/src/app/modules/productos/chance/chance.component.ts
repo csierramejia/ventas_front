@@ -12,8 +12,6 @@ export class ChanceComponent implements OnInit {
 
   @ViewChild(BolsaComponent) bolsaChild: BolsaComponent;
   @ViewChild(ApuestaComponent) apuestaChild: ApuestaComponent;
-  @ViewChild(ApuestaMillonariaComponent) apuestaMillonariaComponent: ApuestaMillonariaComponent;
-
   esMillonaria:boolean;
   constructor() {
 
@@ -58,7 +56,7 @@ export class ChanceComponent implements OnInit {
    * componente chance
    */
   editBet(event): void {
-      this.apuestaMillonariaComponent.editBetSendEmit(event);
+      this.apuestaChild.editBetSendEmit(event);
     
   }
 
@@ -71,7 +69,7 @@ export class ChanceComponent implements OnInit {
    * que la transaccion esta ok
    */
   creatingBet(event): void {
-      this.apuestaMillonariaComponent.createBetSendEmit(event);
+      this.apuestaChild.createBetSendEmit(event);
     
   }
 
