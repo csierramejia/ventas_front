@@ -143,8 +143,11 @@
                           </div>
                        
 
-                        <button  (click)="validarLoterias()" type="button" class="btn btn-random botonesApuesta">
+                          <button *ngIf="btnAdd" (click)="validarLoterias()" type="button" class="btn btn-random botonesApuesta">
                             AGREGAR <i class="fa fa-plus" aria-hidden="true"></i>
+                        </button>
+                        <button *ngIf="btnEdit" (click)="validarLoterias()" type="button" class="btn btn-random botonesApuesta">
+                            ACTUALIZAR <i class="fa fa-plus" aria-hidden="true"></i>
                         </button>
                     </div>
                 </div>

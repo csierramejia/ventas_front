@@ -133,7 +133,7 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
   getLotteries(): void {
     this.loterias=[];
     this.selectTodas=false;
-      this.productosService.consultarLoterias(this.dayBet).subscribe(
+      this.productosService.consultarLoterias(this.dayBet,6).subscribe(
         loteriasData => {
           const rs: any = loteriasData;
           rs.forEach(element => {
@@ -466,7 +466,12 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
       return;
     }
 
-    this.addBetSend();
+    if(this.btnAdd){
+      this.addBetSend();
+    }
+    else if(this.btnEdit){
+      this.editBetSend();
+    }
   }
   /**
    * @author Luis Hernandez
@@ -573,12 +578,18 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
   editBetSendEmit(event): void {
     this.idEdit = event._id;
     this.dayBet = event.dataPlayed;
-    this.chanceForm.get('numeroDocumento').setValue(event.documentCustomer);
-    this.chanceForm.get('numeroA').setValue(event.apuestaA);
+  //  this.chanceForm.get('numeroDocumento').setValue(event.documentCustomer);
+    this.chanceForm.get('numeroA').setValue(event.numeroSuper);
+    this.chanceForm.get('valorApostado').setValue(event.valorApostado);
     if (event.nameCustomer) {
       this.chanceForm.get('nombreCliente').setValue(event.nameCustomer);
       this.enabledCustomer = true;
     }
+    this.consultarValoresModalidad(event.numeroSuper.toString().length);
+    this.lotteriesSelected.forEach(element => {
+      element.checked=false;
+      this.toggleVisibility(element);
+    });
     this.btnAdd = false;
     this.btnEdit = true;
   }

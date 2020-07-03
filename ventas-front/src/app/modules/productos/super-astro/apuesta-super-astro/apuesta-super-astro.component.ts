@@ -143,11 +143,11 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
    */
   getLotteries(): void {
     this.loterias=[];
-      this.productosService.consultarLoterias(this.dayBet).subscribe(
+      this.productosService.consultarLoterias(this.dayBet,7).subscribe(
         loteriasData => {
           const rs: any = loteriasData;
           rs.forEach(element => {
-            if(element.nombre.toUpperCase().includes("ASTRO")){
+          
             this.loterias.push({
               idLoteria: element.idLoteria,
               codigo: element.codigo,
@@ -161,7 +161,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
               checked: false,
               url:"assets/img/loterias/"+element.nombre.toUpperCase()+".png"
             });
-           }
+           
           });
         },
         error => {
@@ -434,7 +434,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
     let valida=false;
     //seleccion
     if(this.loterias==null || this.loterias==undefined || this.loterias.length==0){
-      this.messageService.add(MsjUtil.getMsjError('Debe seleccionar el día para la apuesta'));
+      this.messageService.add(MsjUtil.getMsjError('Debe seleccionar una loteria para la apuesta'));
       return;
     }
     //valida nulos
@@ -467,7 +467,8 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
     }
         //validar zignos
         valida=false;
-        if(this.chanceForm.get('zignosSeleccionados') == null || this.chanceForm.get('zignosSeleccionados').value==null){
+        if(this.chanceForm.get('zignosSeleccionados') == null || this.chanceForm.get('zignosSeleccionados').value==null
+        || this.chanceForm.get('zignosSeleccionados').value==''){
           valida=true;
         }
   
@@ -476,7 +477,12 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
         return;
       }
 
-    this.addBetSend();
+      if(this.btnAdd){
+        this.addBetSend();
+      }
+      else if(this.btnEdit){
+        this.editBetSend();
+      }
   }
   /**
    * @author Luis Hernandez
@@ -587,12 +593,17 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
   editBetSendEmit(event): void {
     this.idEdit = event._id;
     this.dayBet = event.dataPlayed;
-    this.chanceForm.get('numeroDocumento').setValue(event.documentCustomer);
-    this.chanceForm.get('numeroA').setValue(event.apuestaA);
+  //  this.chanceForm.get('numeroDocumento').setValue(event.documentCustomer);
+    this.chanceForm.get('numeroA').setValue(event.numeroAstro);
+    this.chanceForm.get('valorApostado').setValue(event.valorApostado);
     if (event.nameCustomer) {
       this.chanceForm.get('nombreCliente').setValue(event.nameCustomer);
       this.enabledCustomer = true;
     }
+    this.lotteriesSelected.forEach(element => {
+      element.checked=false;
+      this.toggleVisibility(element);
+    });
     this.chanceForm.get('zignosSeleccionados').setValue(event.zignos);
     this.btnAdd = false;
     this.btnEdit = true;

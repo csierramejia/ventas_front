@@ -112,7 +112,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
    */
   getLotteries(): void {
     this.loterias=[];
-      this.productosService.consultarLoterias(this.dayBet).subscribe(
+      this.productosService.consultarLoterias(this.dayBet, 2).subscribe(
         loteriasData => {
           const rs: any = loteriasData;
           rs.forEach(element => {
@@ -433,6 +433,10 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
     // regla de negocio que queda pendiente
     // this.validInputBet();
 
+    this.lotteriesSelected.forEach(element => {
+      element.checked=false;
+      this.toggleVisibility(element);
+    });
     this.btnAdd = false;
     this.btnEdit = true;
   }

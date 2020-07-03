@@ -123,7 +123,7 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
    */
   getLotteries(): void {
     this.loterias=[];
-      this.productosService.consultarLoterias(this.dayBet).subscribe(
+      this.productosService.consultarLoterias(this.dayBet,5).subscribe(
         loteriasData => {
           const rs: any = loteriasData;
           rs.forEach(element => {
@@ -267,38 +267,18 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
   }
   generar(){
     if(this.seleccionado==3){
-      if(this.chanceForm.get('numeroA').value==null || this.chanceForm.get('numeroA').value==''){
       this.chanceForm.controls.numeroA.setValue(Math.round(Math.random() * (100 - 999) + 999 ) );
-      }
-      if(this.chanceForm.get('numeroB').value==null || this.chanceForm.get('numeroB').value==''){
       this.chanceForm.controls.numeroB.setValue(Math.round(Math.random() * (100 - 999) + 999 ) );
-      }
-      if(this.chanceForm.get('numeroC').value==null || this.chanceForm.get('numeroC').value==''){
       this.chanceForm.controls.numeroC.setValue(Math.round(Math.random() * (100 - 999) + 999 ) );
-      }
-      if(this.chanceForm.get('numeroD').value==null || this.chanceForm.get('numeroD').value==''){
       this.chanceForm.controls.numeroD.setValue(Math.round(Math.random() * (100 - 999) + 999 ) );
-      }
-      if(this.chanceForm.get('numeroE').value==null || this.chanceForm.get('numeroE').value==''){
       this.chanceForm.controls.numeroE.setValue(Math.round(Math.random() * (100 - 999) + 999 ) );
       }
-    }
     else if(this.seleccionado==4){
-      if(this.chanceForm.get('numeroA').value==null || this.chanceForm.get('numeroA').value==''){
       this.chanceForm.controls.numeroA.setValue(Math.round(Math.random() * (1000 - 9999) + 9999 ));
-      }
-      if(this.chanceForm.get('numeroB').value==null || this.chanceForm.get('numeroB').value==''){
       this.chanceForm.controls.numeroB.setValue(Math.round(Math.random() * (1000 - 9999) + 9999 ));
-      }
-      if(this.chanceForm.get('numeroC').value==null || this.chanceForm.get('numeroC').value==''){
       this.chanceForm.controls.numeroC.setValue(Math.round(Math.random() * (1000 - 9999) + 9999 ));
-      }
-      if(this.chanceForm.get('numeroD').value==null || this.chanceForm.get('numeroD').value==''){
       this.chanceForm.controls.numeroD.setValue(Math.round(Math.random() * (1000 - 9999) + 9999 ));
-      }
-      if(this.chanceForm.get('numeroE').value==null || this.chanceForm.get('numeroE').value==''){
       this.chanceForm.controls.numeroE.setValue(Math.round(Math.random() * (1000 - 9999) + 9999 ));
-      }
     }
     else{
       this.messageService.add(MsjUtil.getMsjError('Debe diligenciar una modalidad'));
@@ -306,9 +286,15 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
   }
   seleccion(i){
     this.seleccionado=i;
+    this.limpiar();
     this.consultarValoresModalidad();
+    
   }
 
+  seleccionEditar(i){
+    this.seleccionado=i;
+    this.consultarValoresModalidad();
+  }
   consultarValoresModalidad(){
     this.valoresModalidades=[];
       this.productosService.consultarValoresModalidad("CHANCE MILLONARIO",this.seleccionado).subscribe(
@@ -546,7 +532,13 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
     }
     });
     if(contadorLoterias==2){
-      this.addBetSend();
+      if(this.btnAdd){
+        this.addBetSend();
+      }
+      else if(this.btnEdit){
+        this.editBetSend();
+      }
+      
     }
     else{
       this.messageService.add(MsjUtil.getMsjError('Se deben seleccionar dos loterias'));
@@ -694,12 +686,17 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
     }
     if(event.modalidad=='3 Cifras'){
       this.chanceForm.get('radioUno').setValue(3);
-      this.seleccion(3);
+      this.seleccionEditar(3);
     }
     else{
       this.chanceForm.get('radioUno').setValue(4);
-      this.seleccion(4);
+      this.seleccionEditar(4);
     }
+
+    this.lotteriesSelected.forEach(element => {
+      element.checked=false;
+      this.toggleVisibility(element);
+    });
     this.btnAdd = false;
     this.btnEdit = true;
   }

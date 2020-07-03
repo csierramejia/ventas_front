@@ -25,8 +25,8 @@ export class ProductosService {
    * @param fechaSorteoFilter
    * @description Metodo que devuelve las loterias habilitadas para el sorteo de la fecha seleccionada
    */
-  public consultarLoterias(fechaSorteoFilter): Observable<LoteriasDTO[]> {
-    const v = encodeURI(JSON.stringify({fechaSorteo: fechaSorteoFilter}));
+  public consultarLoterias(fechaSorteoFilter, idProducto): Observable<LoteriasDTO[]> {
+    const v = encodeURI(JSON.stringify({fechaSorteo: fechaSorteoFilter,producto:idProducto }));
     return this.http.get<LoteriasDTO[]>(`${ProductosAPIConstant.URL_CONSULTAR_LOTERIAS}/${v}`);
   }
 
