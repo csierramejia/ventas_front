@@ -301,6 +301,47 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
 
 
 
+  nombreSigno(signo){
+    if(signo==1){
+      return "Acuario";
+    }
+   else if(signo==2){
+    return "Piscis";
+    }
+    else if(signo==3){
+      return "Aries";
+    }
+    else if(signo==4){
+      return "Tauro";
+    }
+    else if(signo==5){
+      return "Géminis";
+    }
+    else if(signo==6){
+      return "Cáncer";
+    }
+    else if(signo==7){
+      return "Leo";
+    }
+    else if(signo==8){
+      return "Virgo";
+    }
+    else if(signo==9){
+      return "Libra";
+    }
+    else if(signo==10){
+      return "Escorpio";
+    }
+    else if(signo==11){
+      return "Sagitario";
+    }
+    else if(signo==12){
+      return "Capricornio";
+    }
+    else if(signo==13){
+      return "Todos";
+    }
+  }
   /**
    * @author Luis Hernandez
    * @description Metodo que se encarga

@@ -43,7 +43,7 @@
                             </table>
                             <table *ngIf="cartItem.numberPlayed==null && cartItem.modalidad==null && cartItem.numeroSuper==null && cartItem.numeroAstro" style="width:100%">
                                 <tr>
-                                    <td class="textNumberValues" *ngIf="cartItem.valorApostado">Signos: {{cartItem.zignos.length}}</td>
+                                    <td class="textNumberValues" *ngIf="cartItem.valorApostado">Signos: {{nombreSigno(cartItem.zignos)}}</td>
                                 </tr>
                                 <tr>
                                     <td class="textNumberValues" *ngIf="cartItem.valorApostado">Valor: {{cartItem.valorApostado}}</td>
