@@ -33,6 +33,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
   zignos=[];
   dayBet: Date;
   viewLotteries = false;
+  mostrarSignos:boolean;
   days = [
     { text: 'L', name: 'lun', date: null },
     { text: 'M', name: 'mar', date: null },
@@ -53,6 +54,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
   fechaActual:Date;
   numeroSerie:string;
   seleccionado:number;
+  signoMostrar:string;
   chanceForm = new FormGroup({
     fecha: new FormControl(''),
     numero: new FormControl('', [Validators.required, Validators.maxLength(4)]),
@@ -81,7 +83,9 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
   }
 
   ngOnInit(): void {
+    this.signoMostrar=null;
     this.selectTodas=false;
+    this.mostrarSignos=false;
     this.fechaActual=new Date();
     this.numeroSerie="AD123456";
     this.zignos=[];
@@ -89,9 +93,10 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
       signosData => {
         const rs: any = signosData;
         rs.forEach(element => {
-         // if(element.nombre.toUpperCase().includes("ASTRO")){
-          this.zignos.push({label: element.nombre, value:element.idSigno});
-       // }
+          if(element.nombre != 'Todos'){
+          this.zignos.push({label: element.nombre, value:element.idSigno,
+            url:"assets/img/signos/"+element.nombre.toUpperCase()+".jpg"});
+          }
         });
       },
       error => {
@@ -170,7 +175,24 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
       );
   }
 
+  abrirSignos(){
+     this.mostrarSignos=true;
+  }
 
+  seleccionarSigno(signo){
+   this.signoMostrar=signo.label; 
+  }
+  seleccionarTodos(){
+    this.signoMostrar="Todos"; 
+   }
+
+  aceptarSigno(){
+    this.mostrarSignos=false;
+    //this.chanceForm.get('zignosSeleccionados').value=
+  }
+  cancelarSigno(){
+    this.mostrarSignos=false;
+  }
   /**
    * @author Luis Hernandez
    * @description Metodo que se encarga de validar si
@@ -429,6 +451,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
     this.displayModalCreate = event;
   }
 
+  
 
   validarLoterias(){
     let valida=false;
@@ -604,9 +627,25 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
       element.checked=false;
       this.toggleVisibility(element);
     });
+    if(event.zignos==13){
+      this.signoMostrar="Todos";
+    }
+   else{
+    this.signoMostrar=this.validatSignoNombre(event.zignos);
+   }
     this.chanceForm.get('zignosSeleccionados').setValue(event.zignos);
     this.btnAdd = false;
     this.btnEdit = true;
+  }
+
+  validatSignoNombre(signo){
+    let sig="";
+    this.zignos.forEach(element => {
+      if(element.value==signo){
+        sig=element.label;
+      }
+    });
+    return sig;
   }
 
 
@@ -697,6 +736,8 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
    * @description Metodo que se encarga de limpiar los campos
    */
   cleanInputs(): void {
+    this.signoMostrar=null;
+    this.mostrarSignos=false;
     this.selectTodas=false;
     this.chanceForm.get('numeroA').setValue('');
     this.valoresModalidades=[];

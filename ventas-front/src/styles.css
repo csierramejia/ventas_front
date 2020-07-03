@@ -502,6 +502,16 @@ body {
   color: #212121 !important;
 }
 
+.ui-dialog-titlebar {
+  border-radius: 10px 10px 0px 0px !important;
+  background-color: #0083FE !important;
+  color: white !important;
+  font-family: Times, Times New Roman, serif !important;
+  font-weight: 700 !important;
+  padding: 0.5em !important;
+}
+
+
 .ui-table .ui-table-tbody .ui-state-highlight {
   background-color: #f5a96d !important;
 }

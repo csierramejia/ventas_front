@@ -134,19 +134,26 @@
                         <input type="text" (keypress)="keyPressNumber($event)"  class="form-control styleInput" placeholder="Valor apuesta" formControlName="valorApostado">
                         </div>
                     </div>
+
                     <div class="col-md-4">
-                        <label class="titleInput" for="zignosSeleccionados">Signo zodiacal</label>
-                        <div class="form-group">
-                            <select  formControlName="zignosSeleccionados" class="form-control typeIdentification">
-                                <option [value]="item.value" *ngFor="let item of zignos">{{item.label}}</option>
-                            </select>
+                        <label class="titleInput" >Signo zodiacal</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control styleInputSigno" disabled placeholder="Seleccione" value={{signoMostrar}} >
+                            <span style="    height: 31px;" class="input-group-append">
+                                <button type="button" (click)="abrirSignos()" class="btn-buscar btn btn-info btn-flat">
+                                    <label class="btn-size-admin"><i class="fa fa-search"></i></label>
+                                </button>
+                            </span>
                           </div>
                        
 
-                          <button *ngIf="btnAdd" (click)="validarLoterias()" type="button" class="btn btn-random botonesApuesta">
+                          <button *ngIf="btnAdd" (click)="validarLoterias()" type="button"
+                          style="margin-top: 20px"
+                           class="btn btn-random botonesApuesta">
                             AGREGAR <i class="fa fa-plus" aria-hidden="true"></i>
                         </button>
-                        <button *ngIf="btnEdit" (click)="validarLoterias()" type="button" class="btn btn-random botonesApuesta">
+                        <button *ngIf="btnEdit" (click)="validarLoterias()"  style="margin-top: 20px"
+                        type="button" class="btn btn-random botonesApuesta">
                             ACTUALIZAR <i class="fa fa-plus" aria-hidden="true"></i>
                         </button>
                     </div>
@@ -160,6 +167,62 @@
     </div>
 </div>
 
+<p-dialog  [(visible)]="mostrarSignos" [style]="{width: '800px'}" class="header-productos" class="borde" [baseZIndex]="10000">
+
+    <p-header class="tituloP">
+        Signos zodiacales 
+    </p-header>
+    <div class="container-fluid">
+        <h1 class="tituloModal">SELECCIONA EL SIGNO ZODIACAL A JUGAR</h1>
+        <div class="col-md-4">
+        <input  [value]='13' class="radioAzul" (change)="seleccionarTodos()" type="radio" name="zignosSeleccionados"
+        formControlName="zignosSeleccionados">
+        <label for="zignosSeleccionados" style="text-align: left;
+        font: Regular 15px/19px Montserrat;
+        letter-spacing: 0px;
+        color: #333333;
+        opacity: 1;">Jugar con todos</label>
+        </div>
+        <div id="collapse-example" class="collapse show" aria-labelledby="heading-example">
+            <div class="card-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-2" class="colLot" *ngFor="let s of zignos">
+                            <div class="cubo">
+                            <input  [value]='s.value' class="radioAzul"
+                            (change)="seleccionarSigno(s)" type="radio" name="zignosSeleccionados"
+                              formControlName="zignosSeleccionados">
+                            <label for="zignosSeleccionados" class="labelloteria">{{s.label}}</label>
+                            <br>
+                            <img class="loteriastamanio" [src]="s.url"/>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <hr>
+        </div>
+        <p-footer>
+            <div class="row float-right">
+                <button type="button" (click)="cancelarSigno()"
+                 style="text-align: left;
+                 font: Regular 11px/14px Montserrat;
+                 letter-spacing: 0px;
+                 color: #999999;
+                 opacity: 1;" class="btn" >CANCELAR</button>
+                <button type="button" (click)="aceptarSigno()"
+                 class="btn" style="text-align: left;
+                 font: Regular 11px/14px Montserrat;
+                 letter-spacing: 0px;
+                 color: #0083FE;
+                 opacity: 1;">ACEPTAR</button>
+            </div>
+     </p-footer>
+
+       
+    </div>
+</p-dialog>
 
 </form>
 

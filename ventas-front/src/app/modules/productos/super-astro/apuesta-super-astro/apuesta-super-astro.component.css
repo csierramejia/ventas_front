@@ -21,6 +21,60 @@
     padding-right: 8em !important;
     color: #333333 !important;
 }
+
+.ui-dialog .ui-dialog-titlebar{
+  display: none !important
+}
+.ui-dialog-titlebar {
+  border-radius: 10px 10px 0px 0px !important;
+  background-color: #0083FE !important;
+  color: white !important;
+  font-family: Times, Times New Roman, serif !important;
+  font-weight: 700 !important;
+  padding: 0.5em !important;
+}
+
+
+.styleInputSigno{
+
+  height: 31px;
+  background: #F2F2F2 0% 0% no-repeat padding-box;
+  border-radius: 15px;
+  opacity: 1;
+  font-size: 15px;
+}
+
+.cubo{
+  box-shadow: 0px 3px 6px #00000029;
+  border-radius: 5px;
+  width: 110px;
+  height: 98px;
+  text-align: center
+}
+
+.tituloP{
+  text-align: left;
+  font: Bold 15px/19px Montserrat;
+  letter-spacing: 0px;
+  opacity: 1;
+}
+.tituloModal{
+  margin-top: 20px;
+  text-align: left;
+font: Bold 15px/19px Montserrat;
+letter-spacing: 0px;
+color: #999999;
+opacity: 1;
+}
+
+.buscar{
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  border: 1px solid #0083FE;
+  border-radius: 20px;
+  opacity: 1;
+  width: 46px;
+      height: 34px;
+  }
 .ui-multiselect .ui-multiselect-label{
   display: block;
   padding: .25em 2em .25em .25em;
