@@ -1,5 +1,5 @@
     <aside>
-        <p-card *ngFor="let cartItem of cartItems">
+        <p-card  *ngFor="let cartItem of cartItems">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-11">
@@ -67,13 +67,13 @@
                 <span class="lotteriesCount">Loterias: {{ lotteries.length }}</span>
             </div>
             <div class="row consolidValues">
-                <div class="col-5 columValueBet">
+                <div class="col-6 columValueBet">
                     <b class="textBet">Apostado</b> <br>
-                    <span class="valueBet">$ {{ valueBet  | currency}}</span>
+                    <span class="valueBet">{{ valueBet  | currency}}</span>
                 </div>
-                <div class="col-7 vatBorder">
+                <div class="col-6 vatBorder">
                     <b class="textBet">IVA</b> <br>
-                    <span class="valueBet">$ {{ valueVat  | currency}}</span>
+                    <span class="valueBet"> {{ valueVat  | currency}}</span>
                 </div>
             </div>
             <div class="row footerValueTotal">
