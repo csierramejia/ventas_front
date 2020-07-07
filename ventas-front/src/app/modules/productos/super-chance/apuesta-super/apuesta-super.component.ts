@@ -694,7 +694,10 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
     this.enabledOne = true;
     this.btnAdd = true;
     this.btnEdit = false;
-   
+    //selimpia panel loterias
+    this.loterias.forEach(element => {
+      element.checked= false; 
+  });
   }
 
 

@@ -131,7 +131,9 @@
                         <label class="titleInput" for="valorApostado">Valor apuesta</label>
                         <div class="form-group has-feedback">
                         <i class="fa fa-usd form-control-feedback" aria-hidden="true"></i>
-                        <input type="text" (keypress)="keyPressNumber($event)"  class="form-control styleInput" placeholder="Valor apuesta" formControlName="valorApostado">
+                        <input type="text" (keypress)="keyPressNumber($event)" 
+                         class="form-control styleInput" placeholder="Valor apuesta" 
+                         formControlName="valorApostado">
                         </div>
                     </div>
 
@@ -167,6 +169,12 @@
     </div>
 </div>
 
+
+
+</form>
+
+
+
 <p-dialog  [(visible)]="mostrarSignos" [style]="{width: '800px'}" class="header-productos" class="borde" [baseZIndex]="10000">
 
     <p-header class="tituloP">
@@ -174,14 +182,11 @@
     </p-header>
     <div class="container-fluid">
         <h1 class="tituloModal">SELECCIONA EL SIGNO ZODIACAL A JUGAR</h1>
-        <div class="col-md-4">
-        <input  [value]='13' class="radioAzul" (change)="seleccionarTodos()" type="radio" name="zignosSeleccionados"
-        formControlName="zignosSeleccionados">
-        <label for="zignosSeleccionados" style="text-align: left;
-        font: Regular 15px/19px Montserrat;
-        letter-spacing: 0px;
-        color: #333333;
-        opacity: 1;">Jugar con todos</label>
+        
+        <div class="col-md-4" class="colLot">
+        <input    (change)="seleccionarTodos($event)" type="checkbox" name="zignosSeleccionados"
+        >
+        <label for="zignosSeleccionados" class="labelloteria">Jugar con todos</label>
         </div>
         <div id="collapse-example" class="collapse show" aria-labelledby="heading-example">
             <div class="card-body">
@@ -189,9 +194,10 @@
                     <div class="row">
                         <div class="col-md-2" class="colLot" *ngFor="let s of zignos">
                             <div class="cubo">
-                            <input  [value]='s.value' class="radioAzul"
-                            (change)="seleccionarSigno(s)" type="radio" name="zignosSeleccionados"
-                              formControlName="zignosSeleccionados">
+                            <input  [value]='s.value'  [disabled]="signoMostrar=='Todos'"
+                            
+                            (click)="toggleSigno(s)" [(ngModel)]="s.checked" 
+                            type="checkbox" name="zignosSeleccionados">
                             <label for="zignosSeleccionados" class="labelloteria">{{s.label}}</label>
                             <br>
                             <img class="loteriastamanio" [src]="s.url"/>
@@ -223,12 +229,6 @@
        
     </div>
 </p-dialog>
-
-</form>
-
-
-
-
 
 
 

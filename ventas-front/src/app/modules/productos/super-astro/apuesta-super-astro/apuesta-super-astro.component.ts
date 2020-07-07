@@ -34,6 +34,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
   dayBet: Date;
   viewLotteries = false;
   mostrarSignos:boolean;
+  udpCurrency='currency: "CAD":"symbol-narrow":".2-2"';
   days = [
     { text: 'L', name: 'lun', date: null },
     { text: 'M', name: 'mar', date: null },
@@ -63,7 +64,6 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
     nombreCliente: new FormControl(''),
    // numeroA: new FormControl({value:'',disabled: this.seleccionado==null?true:false}),
    numeroA: new FormControl(''),
-   zignosSeleccionados: new FormControl(),
     valorApostado:new FormControl(),
     radioUno:new FormControl(),
     radioDos:new FormControl()
@@ -95,7 +95,8 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
         rs.forEach(element => {
           if(element.nombre != 'Todos'){
           this.zignos.push({label: element.nombre, value:element.idSigno,
-            url:"assets/img/signos/"+element.nombre.toUpperCase()+".jpg"});
+            url:"assets/img/signos/"+element.nombre.toUpperCase()+".jpg",
+            checked:false});
           }
         });
       },
@@ -180,10 +181,22 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
   }
 
   seleccionarSigno(signo){
-   this.signoMostrar=signo.label; 
+   this.signoMostrar=this.signoMostrar+","+signo.label; 
   }
-  seleccionarTodos(){
-    this.signoMostrar="Todos"; 
+  seleccionarTodos(evento){
+    if(evento.srcElement.checked){
+    this.signoMostrar="Todos";
+    this.zignos.forEach(element => {
+      element.checked=true;
+    });
+  }
+  else{
+    this.signoMostrar="";
+    this.zignos.forEach(element => {
+      element.checked=false;
+    });
+  }
+   // this.chanceForm.controls.zignosSeleccionados.setValue(lista);
    }
 
   aceptarSigno(){
@@ -490,12 +503,14 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
     }
         //validar zignos
         valida=false;
-        if(this.chanceForm.get('zignosSeleccionados') == null || this.chanceForm.get('zignosSeleccionados').value==null
-        || this.chanceForm.get('zignosSeleccionados').value==''){
-          valida=true;
-        }
+        let cont=0;
+       this.zignos.forEach(element => {
+         if(element.checked){
+          cont++;
+         }
+       });
   
-      if(valida){
+      if(cont==0){
         this.messageService.add(MsjUtil.getMsjError('Por favor selecciona un signo zodiacal'));
         return;
       }
@@ -507,6 +522,15 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
         this.editBetSend();
       }
   }
+  consultarSignosSeleccionados(){
+    let arreglo=[];
+    this.zignos.forEach(element => {
+      if(element.checked){
+        arreglo.push(element.value);
+      }
+  });
+  return arreglo;
+}
   /**
    * @author Luis Hernandez
    * @description funcion que se encarga de
@@ -519,7 +543,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
         _id: 'bet_' + Math.floor(Math.random() * 999999),
         idCustomer: this.idCustomer,
         modalidad: null,
-        zignos:this.chanceForm.get('zignosSeleccionados').value,
+        zignos:this.consultarSignosSeleccionados(),
         numeroSuper:null,
         numeroAstro:this.chanceForm.get('numeroA').value,
         numberPlayed:null,
@@ -557,7 +581,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
         documentCustomer: this.chanceForm.get('numeroDocumento').value,
         nameCustomer: this.chanceForm.get('nombreCliente').value,
         modalidad: null,
-        zignos:this.chanceForm.get('zignosSeleccionados').value,
+        zignos:this.consultarSignosSeleccionados(),
         numeroAstro:this.chanceForm.get('numeroA').value,
         numeroSuper:null,
         numberPlayed:null,
@@ -627,25 +651,34 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
       element.checked=false;
       this.toggleVisibility(element);
     });
-    if(event.zignos==13){
+    if(event.zignos.length>=12){
       this.signoMostrar="Todos";
+      this.zignos.forEach(element => {
+        element.checked=true;
+      });
     }
    else{
-    this.signoMostrar=this.validatSignoNombre(event.zignos);
+    event.zignos.forEach(s => {
+      this.zignos.forEach(element => {
+        if(s==element.value){
+          element.checked=true;
+        }
+       });
+     });
+     this.signoMostrar=this.validatSignoNombre();
    }
-    this.chanceForm.get('zignosSeleccionados').setValue(event.zignos);
     this.btnAdd = false;
     this.btnEdit = true;
   }
 
-  validatSignoNombre(signo){
+  validatSignoNombre(){
     let sig="";
     this.zignos.forEach(element => {
-      if(element.value==signo){
-        sig=element.label;
+      if(element.checked){
+       sig=sig+","+element.label;
       }
     });
-    return sig;
+    return sig.substr(1,sig.length);
   }
 
 
@@ -743,7 +776,6 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
     this.valoresModalidades=[];
     this.chanceForm.get('valorApostado').setValue('');
     this.seleccionado=null;
-    this.chanceForm.get('zignosSeleccionados').setValue(''),
     this.enabledCustomer = false;
     this.enabledCombined = true;
     this.enabledThree = true;
@@ -755,6 +787,10 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
     this.loterias.forEach(element => {
         element.checked= false; 
     });
+    this.zignos.forEach(element => {
+        element.checked=false;
+      
+     });
   }
 
 
@@ -879,6 +915,12 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
     }).indexOf(idLoteria);
   }
 
+  getSigno(idSigno) {
+    return this.zignos.map((e) => {
+      return e.value;
+    }).indexOf(idSigno);
+  }
+
 
   /**
    * @author Luis Hernandez
@@ -909,6 +951,30 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
   }
 
 
+
+  toggleSigno(signo): void {
+    const keyResponse = this.getSigno(signo.value);
+    if (this.zignos[keyResponse].checked) {
+      this.zignos[keyResponse].checked = false;
+      this.signoMostrar=this.validatSignoNombre(); 
+    } else {
+      this.zignos[keyResponse].checked = true;
+      this.signoMostrar=this.validatSignoNombre(); 
+    }
+
+    let valid = true;
+    this.zignos.forEach(element => {
+      if (!element.checked) { valid = false; }
+    });
+
+    if (valid) {
+      this.selectUnmarkAllBol = true;
+    } else {
+      this.selectUnmarkAllBol = false;
+    }
+
+    this.addLotteries.emit(this.get_lotteriesSelected());
+  }
   /**
    * @author Luis Hernandez
    * @description Metodo que se encarga de marcar

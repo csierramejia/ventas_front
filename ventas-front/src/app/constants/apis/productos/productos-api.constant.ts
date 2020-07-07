@@ -6,32 +6,32 @@ import { AppDomainConstant } from '../app-domain.constant';
 export class ProductosAPIConstant {
 
   /** Nombre del REST para consultar loterias */
-  static readonly LOTERIAS_API: string = 'apuesta/';
+  static readonly LOTERIAS_API: string = 'apuestas/apuesta/';
   /** Nombre del REST para el modulo Clientes (Productos) */
-  static readonly CLIENTES_API: string = 'clientes/';
+  static readonly CLIENTES_API: string = 'apuestas/clientes/';
   /** Nombre del REST para el modulo impuestos (Productos) */
-  static readonly IMPUESTOS_API: string = 'impuestos/';
+  static readonly IMPUESTOS_API: string = 'apuestas/impuestos/';
 
-  static readonly MODALIDADES_API: string = 'modalidades/';
+  static readonly MODALIDADES_API: string = 'apuestas/modalidades/';
 
 
   /** URL del recurso para obtener las loterias */
   static readonly URL_CONSULTAR_LOTERIAS: string =
-    AppDomainConstant.APUESTAS +
+    AppDomainConstant.URI_GATEWAY +
     ProductosAPIConstant.LOTERIAS_API +
     'consultarLoteriasSorteo';
 
 
   /** URL del recurso para obtener existencia del cliente */
   static readonly URL_CONSULTAR_CLIENTE: string =
-    AppDomainConstant.APUESTAS +
+    AppDomainConstant.URI_GATEWAY +
     ProductosAPIConstant.CLIENTES_API +
     'clienteApuesta';
 
 
   /** URL del recurso para registrar el cliente */
   static readonly URL_REGISTRAR_CLIENTE: string =
-    AppDomainConstant.APUESTAS +
+    AppDomainConstant.URI_GATEWAY +
     ProductosAPIConstant.CLIENTES_API +
     'crearCliente';
 
@@ -39,27 +39,27 @@ export class ProductosAPIConstant {
 
   /** URL del recurso para obtener el iva */
   static readonly URL_IMPUESTO_IVA: string =
-    AppDomainConstant.APUESTAS +
+    AppDomainConstant.URI_GATEWAY +
     ProductosAPIConstant.IMPUESTOS_API +
     'consultarImpuestoNombre';
 
 
   /** URL del recurso para obtener el iva */
   static readonly URL_REGISTRAR_APUESTA: string =
-  AppDomainConstant.APUESTAS +
+  AppDomainConstant.URI_GATEWAY +
   ProductosAPIConstant.LOTERIAS_API +
   'registrarApuesta';
 
     /** URL del recurso para obtener las loterias */
     static readonly URL_CONSULTAR_MODALIDADES_VALORES: string =
-    AppDomainConstant.APUESTAS +
+    AppDomainConstant.URI_GATEWAY +
     ProductosAPIConstant.MODALIDADES_API +
     'consultarInfoModalidad';
 
 
         /** URL del recurso para obtener las loterias */
         static readonly URL_CONSULTAR_SIGNOS: string =
-        AppDomainConstant.APUESTAS +
+        AppDomainConstant.URI_GATEWAY +
         ProductosAPIConstant.MODALIDADES_API +
         'consultarSignos';
 

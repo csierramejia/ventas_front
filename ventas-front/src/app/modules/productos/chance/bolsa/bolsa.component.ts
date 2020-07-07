@@ -27,7 +27,7 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
   cartItems = [];
   lotteries = [];
   producto=null;
-
+  zignos=[];
   constructor(
     private productosService: ProductosService,
     protected messageService: MessageService,
@@ -38,8 +38,26 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
 
   ngOnInit(): void {
     this.get_taxes_vat();
+    this.getSignos();
   }
 
+
+  getSignos(){
+    this.zignos=[];
+    this.productosService.consultarSignos().subscribe(
+      signosData => {
+        const rs: any = signosData;
+        rs.forEach(element => {
+          if(element.nombre != 'Todos'){
+          this.zignos.push(element);
+          }
+        });
+      },
+      error => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
+  }
   /**
    * @author Luis Hernandez
    * @description Metodo que se encarga de traer
@@ -102,7 +120,16 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
     this.cartItems[key].documentCustomer = event.documentCustomer;
     this.cartItems[key].nameCustomer = event.nameCustomer;
     this.cartItems[key].dataPlayed = event.dataPlayed;
-    if(event.numberPlayed ==null){
+    if(event.numeroSuper){
+      this.cartItems[key].numeroSuper=event.numeroSuper;
+      this.cartItems[key].valorApostado=event.valorApostado;
+    }
+    else if(event.numeroAstro){
+      this.cartItems[key].numeroAstro=event.numeroAstro;
+      this.cartItems[key].zignos=event.zignos;
+      this.cartItems[key].valorApostado=event.valorApostado;
+    }
+    else if(event.numberPlayed ==null){
       this.cartItems[key].apuestaA = event.apuestaA;
       this.cartItems[key].apuestaB = event.apuestaB;
       this.cartItems[key].apuestaC = event.apuestaC;
@@ -299,6 +326,25 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
 
   }
 
+
+  validarSignoNombre(signos){
+    let sig="";
+    if(signos.length>=12){
+      sig=",Todos";
+  }
+  else{
+    signos.forEach(s => {
+      this.zignos.forEach(element => {
+        if(s == element.idSigno){
+         sig=sig+","+element.nombre;
+        }
+      });
+    });
+   
+  }
+   
+    return sig.substr(1,sig.length);
+  }
 
 
   nombreSigno(signo){

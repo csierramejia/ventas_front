@@ -6,17 +6,17 @@ import { AppDomainConstant } from '../app-domain.constant';
 export class AutenticacionAPIConstant {
 
   /** Nombre del REST para el modulo AUTENTICACION */
-  static readonly AUTENTICACION_API: string = 'auth/';
+  static readonly AUTENTICACION_API: string = 'seguridad/';
 
   /** URL del recurso para la autenticacion en el sistema */
   static readonly URL_LOGIN: string =
-    AppDomainConstant.SEGURIDAD +
+    AppDomainConstant.URI_GATEWAY +
     AutenticacionAPIConstant.AUTENTICACION_API +
     'login';
 
   /** URL del recurso para obtener los datos de bienvenida */
   static readonly URL_BIENVENIDA: string =
-    AppDomainConstant.SEGURIDAD +
+    AppDomainConstant.URI_GATEWAY +
     AutenticacionAPIConstant.AUTENTICACION_API +
     'bienvenida';
 }
