@@ -180,12 +180,7 @@
                             </label>
                           </div>
                     
-                        <button *ngIf="btnAdd" (click)="validarLoterias()" type="button" class="btn btn-random botonesApuesta">
-                            AGREGAR <i class="fa fa-plus" aria-hidden="true"></i>
-                        </button>
-                        <button *ngIf="btnEdit" (click)="validarLoterias()" type="button" class="btn btn-random botonesApuesta">
-                            ACTUALIZAR <i class="fa fa-plus" aria-hidden="true"></i>
-                        </button>
+                       
                       
                     </div>
                 </div>
@@ -212,11 +207,9 @@
             aria-controls="collapse-example" 
             id="heading-example" 
             class="d-block">
-                Aplicar loterias del día
+            Seleccionar Loterias
             <i class="fa fa-chevron-down"></i>
-            <button (click)="aleatorioLoterias()" *ngIf="loterias && loterias.length > 0" style="margin-left: 10px" type="button" class="btn btn-random">
-                ALEATORIO <i class="fa fa-random" aria-expanded="true"></i>
-            </button>
+           
         </a>
     </div>
     
@@ -236,9 +229,26 @@
         </div>
 
         <hr>
+        <div class="row float-right element-actions-btns" *ngIf="dayBet">
+            <button (click)="selectUnmarkAll()" *ngIf="!selectUnmarkAllBol" type="button" class="btn btn-random">
+                Seleccionar todas <i class="fa fa-plus" aria-hidden="true"></i>
+            </button>
+
+            <button (click)="selectUnmarkAll()" *ngIf="selectUnmarkAllBol" type="button" class="btn btn-random">
+                Desmarcar todas <i class="fa fa-plus" aria-hidden="true"></i>
+            </button>
+
+            <button *ngIf="btnAdd" (click)="validarLoterias()" type="button" class="btn btn-random">
+                AGREGAR <i class="fa fa-plus" aria-hidden="true"></i>
+            </button>
+            <button *ngIf="btnEdit" (click)="validarLoterias()" type="button" class="btn btn-random">
+                ACTUALIZAR <i class="fa fa-plus" aria-hidden="true"></i>
+            </button>
+        </div>
+       
+        
     </div>
 </div>
-
 
 
 
