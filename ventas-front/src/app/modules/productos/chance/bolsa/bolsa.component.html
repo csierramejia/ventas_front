@@ -19,11 +19,11 @@
                                     <th class="headNumberValues" *ngIf="cartItem.oneC">1C</th>
                                 </tr>
                                 <tr>
-                                    <td class="textNumberValues" *ngIf="cartItem.direct">{{cartItem.direct | currency}}</td>
-                                    <td class="textNumberValues" *ngIf="cartItem.combined">{{cartItem.combined | currency}}</td>
-                                    <td class="textNumberValues" *ngIf="cartItem.threeC">{{cartItem.threeC | currency}}</td>
-                                    <td class="textNumberValues" *ngIf="cartItem.twoC">{{cartItem.twoC | currency}}</td>
-                                    <td class="textNumberValues" *ngIf="cartItem.oneC">{{cartItem.oneC | currency}}</td>
+                                    <td class="textNumberValues" *ngIf="cartItem.direct">{{cartItem.direct | currency: "CAD":"symbol-narrow":".0-0"}}</td>
+                                    <td class="textNumberValues" *ngIf="cartItem.combined">{{cartItem.combined | currency: "CAD":"symbol-narrow":".0-0"}}</td>
+                                    <td class="textNumberValues" *ngIf="cartItem.threeC">{{cartItem.threeC | currency: "CAD":"symbol-narrow":".0-0"}}</td>
+                                    <td class="textNumberValues" *ngIf="cartItem.twoC">{{cartItem.twoC | currency: "CAD":"symbol-narrow":".0-0"}}</td>
+                                    <td class="textNumberValues" *ngIf="cartItem.oneC">{{cartItem.oneC | currency: "CAD":"symbol-narrow":".0-0"}}</td>
                                 </tr>
                             </table>
 
@@ -38,7 +38,7 @@
                             </table>
                             <table *ngIf="cartItem.numberPlayed==null && cartItem.modalidad==null && cartItem.numeroSuper" style="width:100%">
                                 <tr>
-                                    <td class="textNumberValues" *ngIf="cartItem.valorApostado">Valor: {{cartItem.valorApostado | currency}}</td>
+                                    <td class="textNumberValues" *ngIf="cartItem.valorApostado">Valor: {{cartItem.valorApostado | currency: "CAD":"symbol-narrow":".0-0"}}</td>
                                 </tr>
                             </table>
                             <table *ngIf="cartItem.numberPlayed==null && cartItem.modalidad==null && cartItem.numeroSuper==null && cartItem.numeroAstro" style="width:100%">
@@ -46,7 +46,7 @@
                                     <td class="textNumberValues" *ngIf="cartItem.valorApostado">Signos: {{validarSignoNombre(cartItem.zignos)}}</td>
                                 </tr>
                                 <tr>
-                                    <td class="textNumberValues" *ngIf="cartItem.valorApostado">Valor: {{cartItem.valorApostado | currency}}</td>
+                                    <td class="textNumberValues" *ngIf="cartItem.valorApostado">Valor: {{cartItem.valorApostado | currency: "CAD":"symbol-narrow":".0-0"}}</td>
                                 </tr>
                             </table>
 
@@ -69,11 +69,11 @@
             <div class="row consolidValues">
                 <div class="col-6 columValueBet">
                     <b class="textBet">Apostado</b> <br>
-                    <span class="valueBet">{{ valueBet  | currency}}</span>
+                    <span class="valueBet">{{ valueBet  | currency: "CAD":"symbol-narrow":".0-0"}}</span>
                 </div>
                 <div class="col-6 vatBorder">
                     <b class="textBet">IVA</b> <br>
-                    <span class="valueBet"> {{ valueVat  | currency}}</span>
+                    <span class="valueBet"> {{ valueVat  | currency: "CAD":"symbol-narrow":".0-0"}}</span>
                 </div>
             </div>
             <div class="row footerValueTotal">
@@ -81,7 +81,7 @@
                     <b class="textBetFooter">Total</b> <br>
                 </div>
                 <div class="col-7">
-                    <b class="textBetFooterValue">{{ valueBetTotal  | currency}}</b> <br>
+                    <b class="textBetFooterValue">{{ valueBetTotal  | currency: "CAD":"symbol-narrow":".0-0"}}</b> <br>
                 </div>
             </div>
             <div class="alinBtn">

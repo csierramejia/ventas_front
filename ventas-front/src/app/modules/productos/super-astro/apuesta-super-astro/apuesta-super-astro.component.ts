@@ -804,10 +804,10 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
       cadena=cadena.substr(1,cadena.length);
       cadena=cadena.substr(0,cadena.indexOf(','))+cadena.slice(cadena.indexOf(',')+1);
       this.chanceForm.controls.valorApostado.setValue(cadena);
-      this.apuestaCurrency=  this.currencyPipe.transform(this.chanceForm.get('valorApostado').value, '$');
+      this.apuestaCurrency=  this.currencyPipe.transform(this.chanceForm.get('valorApostado').value, '$','symbol','.0-0');
     }
     else{
-      this.apuestaCurrency=  this.currencyPipe.transform(this.chanceForm.get('valorApostado').value, '$');
+      this.apuestaCurrency=  this.currencyPipe.transform(this.chanceForm.get('valorApostado').value, '$','symbol','.0-0');
     }
    }
   
