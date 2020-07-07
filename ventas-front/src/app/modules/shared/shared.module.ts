@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { SharedCommonModule } from './shared-common.module';
-import { DatePipe } from '@angular/common';
+import { DatePipe,CurrencyPipe } from '@angular/common';
 import { MaterialModule } from './material.module';
 import { PrimengModule } from './primeng.module';
 
@@ -20,7 +20,8 @@ import { PrimengModule } from './primeng.module';
     PrimengModule
   ],
   providers: [
-    DatePipe
+    DatePipe,
+    CurrencyPipe
   ],
   declarations: [
   ],

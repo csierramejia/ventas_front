@@ -71,35 +71,46 @@
                             <label class="titleInput" for="valorDirecto">Valor Directo</label>
                             <div class="form-group has-feedback">
                             <i class="fa fa-usd form-control-feedback" aria-hidden="true"></i>
-                            <input type="text" (keypress)="keyPressNumber($event)" (change)="chanceNumber(chanceForm.get('numero'))" class="form-control styleInput" placeholder="Directo" formControlName="valorDirecto">
+                            <input type="text" (keypress)="keyPressNumber($event)"
+                            (blur)="transformDirecto()"
+                            value="{{currencyDirecto}}"
+                             (change)="chanceNumber(chanceForm.get('numero'))" class="form-control styleInput" placeholder="Directo" formControlName="valorDirecto">
                             </div>
                         </div>
                         <div class="col-md-3" *ngIf="enabledCombined">
                             <label class="titleInput" for="combinado">Combinado</label>
                             <div class="form-group has-feedback">
                                 <i class="fa fa-usd form-control-feedback" aria-hidden="true"></i>
-                                <input type="text" (keypress)="keyPressNumber($event)" (change)="chanceNumber(chanceForm.get('numero'))" class="form-control styleInput" formControlName="combinado" placeholder="Combinado">
+                                <input type="text" (keypress)="keyPressNumber($event)" 
+                                (blur)="transformCombinado()"
+                                value="{{currencyCombinado}}" (change)="chanceNumber(chanceForm.get('numero'))" class="form-control styleInput" formControlName="combinado" placeholder="Combinado">
                             </div>
                         </div>
                         <div class="col-md-2" *ngIf="enabledThree">
                             <label class="titleInput" for="valorTres">Valor 3 cifras</label>
                             <div class="form-group has-feedback">
                             <i class="fa fa-usd form-control-feedback" aria-hidden="true"></i>
-                            <input type="text" (keypress)="keyPressNumber($event)" class="form-control styleInput" formControlName="tresCifras" placeholder="Valor">
+                            <input type="text" (keypress)="keyPressNumber($event)" 
+                            (blur)="transform3()"
+                            value="{{currency3}}" class="form-control styleInput" formControlName="tresCifras" placeholder="Valor">
                             </div>
                         </div>
                         <div class="col-md-2" *ngIf="enabledTwo">
                             <label class="titleInput" for="valorDos">Valor 2 cifras</label>
                             <div class="form-group has-feedback">
                             <i class="fa fa-usd form-control-feedback" aria-hidden="true"></i>
-                            <input type="text" (keypress)="keyPressNumber($event)" class="form-control styleInput" formControlName="dosCifras" placeholder="Valor">
+                            <input type="text"   (blur)="transform2()"
+                            value="{{currency2}}" 
+                            (keypress)="keyPressNumber($event)" class="form-control styleInput" formControlName="dosCifras" placeholder="Valor">
                             </div>
                         </div>
                         <div class="col-md-2" *ngIf="enabledOne">
                             <label class="titleInput" for="valorDos">Valor 1 cifra</label>
                             <div class="form-group has-feedback">
                             <i class="fa fa-usd form-control-feedback" aria-hidden="true"></i>
-                            <input type="text" (keypress)="keyPressNumber($event)" class="form-control styleInput" formControlName="unaCifra" placeholder="Valor">
+                            <input type="text"    (blur)="transform1()"
+                            value="{{currency1}}"
+                             (keypress)="keyPressNumber($event)" class="form-control styleInput" formControlName="unaCifra" placeholder="Valor">
                             </div>
                         </div>
                     </div>

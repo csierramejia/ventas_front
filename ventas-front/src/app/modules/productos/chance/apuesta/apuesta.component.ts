@@ -7,6 +7,7 @@ import { MsjUtil } from 'src/app/utilities/messages.util';
 import { CommonComponent } from 'src/app/utilities/common.component';
 import { ShellState } from 'src/app/states/shell/shell.state';
 import { CrearClienteComponent } from '../crear-cliente/crear-cliente.component';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-apuesta',
@@ -43,7 +44,11 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
     { text: 'D', name: 'dom', date: null }
   ];
 
-
+  currencyDirecto:string;
+  currencyCombinado:string;
+  currency3:string;
+  currency2:string;
+  currency1:string;
   enabledCustomer = false;
   enabledCombined = true;
   enabledThree = true;
@@ -68,7 +73,8 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
   constructor(
     private productosService: ProductosService,
     protected messageService: MessageService,
-    private shellState: ShellState
+    private shellState: ShellState,
+    private currencyPipe : CurrencyPipe
   ) {
     super();
     // obtemos el esquema de fechas para que el usuario puede saleccionar el dia de la apuesta a realizar
@@ -103,6 +109,67 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
     this.getLotteries();
   }
 
+  transformDirecto(){
+    let cadena=this.chanceForm.get('valorDirecto').value;
+    if(cadena.includes("$")){
+      cadena=cadena.substr(1,cadena.length);
+      cadena=cadena.substr(0,cadena.indexOf(','))+cadena.slice(cadena.indexOf(',')+1);
+      this.chanceForm.controls.valorApostado.setValue(cadena);
+      this.currencyDirecto=  this.currencyPipe.transform(this.chanceForm.get('valorDirecto').value, '$');
+    }
+    else{
+      this.currencyDirecto=  this.currencyPipe.transform(this.chanceForm.get('valorDirecto').value, '$');
+    }
+  }
+  transformCombinado(){
+    let cadena=this.chanceForm.get('combinado').value;
+    if(cadena.includes("$")){
+      cadena=cadena.substr(1,cadena.length);
+      cadena=cadena.substr(0,cadena.indexOf(','))+cadena.slice(cadena.indexOf(',')+1);
+      this.chanceForm.controls.valorApostado.setValue(cadena);
+      this.currencyCombinado=  this.currencyPipe.transform(this.chanceForm.get('combinado').value, '$');
+    }
+    else{
+      this.currencyCombinado=  this.currencyPipe.transform(this.chanceForm.get('combinado').value, '$');
+    }
+  }
+  transform3(){
+    let cadena=this.chanceForm.get('tresCifras').value;
+    if(cadena.includes("$")){
+      cadena=cadena.substr(1,cadena.length);
+      cadena=cadena.substr(0,cadena.indexOf(','))+cadena.slice(cadena.indexOf(',')+1);
+      this.chanceForm.controls.valorApostado.setValue(cadena);
+      this.currency3=  this.currencyPipe.transform(this.chanceForm.get('tresCifras').value, '$');
+    }
+    else{
+      this.currency3=  this.currencyPipe.transform(this.chanceForm.get('tresCifras').value, '$');
+    }
+  }
+  transform2(){
+    let cadena=this.chanceForm.get('dosCifras').value;
+    if(cadena.includes("$")){
+      cadena=cadena.substr(1,cadena.length);
+      cadena=cadena.substr(0,cadena.indexOf(','))+cadena.slice(cadena.indexOf(',')+1);
+      this.chanceForm.controls.valorApostado.setValue(cadena);
+      this.currency2=  this.currencyPipe.transform(this.chanceForm.get('dosCifras').value, '$');
+    }
+    else{
+      this.currency2=  this.currencyPipe.transform(this.chanceForm.get('dosCifras').value, '$');
+    }
+  }
+  transform1(){
+    let cadena=this.chanceForm.get('unaCifra').value;
+    if(cadena.includes("$")){
+      cadena=cadena.substr(1,cadena.length);
+      cadena=cadena.substr(0,cadena.indexOf(','))+cadena.slice(cadena.indexOf(',')+1);
+      this.chanceForm.controls.valorApostado.setValue(cadena);
+      this.currency1=  this.currencyPipe.transform(this.chanceForm.get('unaCifra').value, '$');
+    }
+    else{
+      this.currency1=  this.currencyPipe.transform(this.chanceForm.get('unaCifra').value, '$');
+    }
+  }
+  
 
   /**
    * @author Luis Hernandez
@@ -421,14 +488,27 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
     this.chanceForm.get('numeroDocumento').setValue(event.documentCustomer);
     this.chanceForm.get('numero').setValue(event.numberPlayed);
     this.chanceForm.get('valorDirecto').setValue(event.direct);
+    this.transformDirecto()
     if (event.nameCustomer) {
       this.chanceForm.get('nombreCliente').setValue(event.nameCustomer);
       this.enabledCustomer = true;
     }
-    if (event.combined) {this.chanceForm.get('combinado').setValue(event.combined); }
-    if (event.threeC) {this.chanceForm.get('tresCifras').setValue(event.threeC); }
-    if (event.twoC) {this.chanceForm.get('dosCifras').setValue(event.twoC); }
-    if (event.oneC) {this.chanceForm.get('unaCifra').setValue(event.oneC); }
+    if (event.combined) {
+      this.chanceForm.get('combinado').setValue(event.combined); 
+      this.transformCombinado()
+    }
+    if (event.threeC) {
+      this.chanceForm.get('tresCifras').setValue(event.threeC);
+    this.transform3()
+   }
+    if (event.twoC) {
+      this.chanceForm.get('dosCifras').setValue(event.twoC);
+    this.transform2();
+   }
+    if (event.oneC) {
+      this.chanceForm.get('unaCifra').setValue(event.oneC); 
+    this.transform1();
+  }
 
     // regla de negocio que queda pendiente
     // this.validInputBet();

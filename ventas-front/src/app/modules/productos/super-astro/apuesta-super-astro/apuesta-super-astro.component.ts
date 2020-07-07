@@ -7,6 +7,7 @@ import { MsjUtil } from 'src/app/utilities/messages.util';
 import { CommonComponent } from 'src/app/utilities/common.component';
 import { ShellState } from 'src/app/states/shell/shell.state';
 import { CrearClienteComponent } from '../../chance/crear-cliente/crear-cliente.component';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-apuesta-super-astro',
@@ -21,6 +22,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
 
   @ViewChild(CrearClienteComponent) crearClienteChild: CrearClienteComponent;
 
+  apuestaCurrency:string;
   idCustomer = '';
   displayModalCreate = false;
   btnEdit = false;
@@ -74,7 +76,8 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
   constructor(
     private productosService: ProductosService,
     protected messageService: MessageService,
-    private shellState: ShellState
+    private shellState: ShellState,
+    private currencyPipe : CurrencyPipe
   ) {
     super();
     // obtemos el esquema de fechas para que el usuario puede saleccionar el dia de la apuesta a realizar
@@ -643,6 +646,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
   //  this.chanceForm.get('numeroDocumento').setValue(event.documentCustomer);
     this.chanceForm.get('numeroA').setValue(event.numeroAstro);
     this.chanceForm.get('valorApostado').setValue(event.valorApostado);
+    this.transformAmount();
     if (event.nameCustomer) {
       this.chanceForm.get('nombreCliente').setValue(event.nameCustomer);
       this.enabledCustomer = true;
@@ -769,6 +773,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
    * @description Metodo que se encarga de limpiar los campos
    */
   cleanInputs(): void {
+    this.apuestaCurrency=null;
     this.signoMostrar=null;
     this.mostrarSignos=false;
     this.selectTodas=false;
@@ -793,6 +798,19 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
      });
   }
 
+  transformAmount(){
+    let cadena=this.chanceForm.get('valorApostado').value;
+    if(cadena.includes("$")){
+      cadena=cadena.substr(1,cadena.length);
+      cadena=cadena.substr(0,cadena.indexOf(','))+cadena.slice(cadena.indexOf(',')+1);
+      this.chanceForm.controls.valorApostado.setValue(cadena);
+      this.apuestaCurrency=  this.currencyPipe.transform(this.chanceForm.get('valorApostado').value, '$');
+    }
+    else{
+      this.apuestaCurrency=  this.currencyPipe.transform(this.chanceForm.get('valorApostado').value, '$');
+    }
+   }
+  
 
   /**
    * @author Luis Hernandez

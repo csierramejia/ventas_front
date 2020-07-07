@@ -19,11 +19,11 @@
                                     <th class="headNumberValues" *ngIf="cartItem.oneC">1C</th>
                                 </tr>
                                 <tr>
-                                    <td class="textNumberValues" *ngIf="cartItem.direct">${{cartItem.direct | currency}}</td>
-                                    <td class="textNumberValues" *ngIf="cartItem.combined">${{cartItem.combined | currency}}</td>
-                                    <td class="textNumberValues" *ngIf="cartItem.threeC">${{cartItem.threeC | currency}}</td>
-                                    <td class="textNumberValues" *ngIf="cartItem.twoC">${{cartItem.twoC | currency}}</td>
-                                    <td class="textNumberValues" *ngIf="cartItem.oneC">${{cartItem.oneC | currency}}</td>
+                                    <td class="textNumberValues" *ngIf="cartItem.direct">{{cartItem.direct | currency}}</td>
+                                    <td class="textNumberValues" *ngIf="cartItem.combined">{{cartItem.combined | currency}}</td>
+                                    <td class="textNumberValues" *ngIf="cartItem.threeC">{{cartItem.threeC | currency}}</td>
+                                    <td class="textNumberValues" *ngIf="cartItem.twoC">{{cartItem.twoC | currency}}</td>
+                                    <td class="textNumberValues" *ngIf="cartItem.oneC">{{cartItem.oneC | currency}}</td>
                                 </tr>
                             </table>
 
