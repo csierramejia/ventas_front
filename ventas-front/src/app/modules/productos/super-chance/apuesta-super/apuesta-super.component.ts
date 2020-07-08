@@ -511,7 +511,7 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
   nombresLoterias(){
     let nombres="";
     this.loterias.forEach(l => {
-      nombres=","+nombres+l.nombreCorto;
+      nombres=nombres+","+l.nombreCorto;
     });
     return nombres.substr(1,nombres.length);
   }

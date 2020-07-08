@@ -582,7 +582,7 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
   nombresLoterias(){
     let nombres="";
     this.loterias.forEach(l => {
-      nombres=","+nombres+l.nombreCorto;
+      nombres=nombres+","+l.nombreCorto;
     });
     return nombres.substr(1,nombres.length);
   }
