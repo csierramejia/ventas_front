@@ -390,6 +390,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
         idCustomer: this.idCustomer,
         numberPlayed: this.chanceForm.get('numero').value,
         dataPlayed: this.dayBet,
+        nombresLoteria:this.nombresLoterias(),
         direct: this.chanceForm.get('valorDirecto').value,
         combined: this.chanceForm.get('combinado').value,
         threeC: this.chanceForm.get('tresCifras').value,
@@ -411,7 +412,13 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
     }
   }
 
-
+  nombresLoterias(){
+    let nombres="";
+    this.loterias.forEach(l => {
+      nombres=","+nombres+l.nombreCorto;
+    });
+    return nombres.substr(1,nombres.length);
+  }
   /**
    * @author Luis Hernandez
    * @description Metodo que se encarga
@@ -429,6 +436,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
         nameCustomer: this.chanceForm.get('nombreCliente').value,
         numberPlayed: this.chanceForm.get('numero').value,
         dataPlayed: this.dayBet,
+        nombresLoteria:this.nombresLoterias(),
         direct: this.chanceForm.get('valorDirecto').value,
         combined: this.chanceForm.get('combinado').value,
         threeC: this.chanceForm.get('tresCifras').value,

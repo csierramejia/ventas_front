@@ -564,7 +564,8 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
         apuestaC: this.chanceForm.get('numeroC').value,
         apuestaD: this.chanceForm.get('numeroD').value,
         apuestaE: this.chanceForm.get('numeroE').value,
-        dataPlayed: this.dayBet
+        dataPlayed: this.dayBet,
+        nombresLoteria:this.nombresLoterias()
       });
       this.cleanInputs();
       if(this.idCustomer){
@@ -578,7 +579,13 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
     
   }
 
-
+  nombresLoterias(){
+    let nombres="";
+    this.loterias.forEach(l => {
+      nombres=","+nombres+l.nombreCorto;
+    });
+    return nombres.substr(1,nombres.length);
+  }
   /**
    * @author Luis Hernandez
    * @description Metodo que se encarga
@@ -598,6 +605,7 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
         apuestaC: this.chanceForm.get('numeroC').value,
         apuestaD: this.chanceForm.get('numeroD').value,
         apuestaE: this.chanceForm.get('numeroE').value,
+        nombresLoteria:this.nombresLoterias(),
         dataPlayed: this.dayBet
       });
       this.cleanInputs();

@@ -493,6 +493,7 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
         apuestaC: null,
         apuestaD: null,
         apuestaE:null,
+        nombresLoteria:this.nombresLoterias(),
         dataPlayed: this.dayBet
       });
       this.cleanInputs();
@@ -507,7 +508,13 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
     
   }
 
-
+  nombresLoterias(){
+    let nombres="";
+    this.loterias.forEach(l => {
+      nombres=","+nombres+l.nombreCorto;
+    });
+    return nombres.substr(1,nombres.length);
+  }
   /**
    * @author Luis Hernandez
    * @description Metodo que se encarga
@@ -529,6 +536,7 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
         apuestaC: null,
         apuestaD: null,
         apuestaE:null,
+        nombresLoteria:this.nombresLoterias(),
         dataPlayed: this.dayBet
       });
       this.cleanInputs();

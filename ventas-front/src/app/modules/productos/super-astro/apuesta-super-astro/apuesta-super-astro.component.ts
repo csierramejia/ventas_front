@@ -556,7 +556,8 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
         apuestaC: null,
         apuestaD: null,
         apuestaE:null,
-        dataPlayed: this.dayBet
+        dataPlayed: this.dayBet,
+        nombresLoteria:this.nombresLoterias()
       });
       this.cleanInputs();
       if(this.idCustomer){
@@ -568,6 +569,14 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
      
       this.selectUnmarkAllBol=false;
     
+  }
+
+  nombresLoterias(){
+    let nombres="";
+    this.loterias.forEach(l => {
+      nombres=nombres+","+l.nombreCorto;
+    });
+    return nombres.substr(1,nombres.length);
   }
 
 
@@ -594,7 +603,8 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
         apuestaC: null,
         apuestaD: null,
         apuestaE:null,
-        dataPlayed: this.dayBet
+        dataPlayed: this.dayBet,
+        nombresLoteria:this.nombresLoterias()
       });
       this.cleanInputs();
       if(this.chanceForm.get('nombreCliente').value){
