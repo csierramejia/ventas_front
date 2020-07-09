@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ShellState } from 'src/app/states/shell/shell.state';
 
 /**
  * Es el body del shell de la aplicacion, contiene toda la estructura tales como
@@ -9,4 +10,10 @@ import { Component } from '@angular/core';
   templateUrl: './shell.component.html',
   styleUrls: ['./shell.component.css']
 })
-export class ShellComponent {}
+export class ShellComponent {
+
+  /**
+   * @param shellState, se utiliza para la manipulacion del modal timeout
+   */
+  constructor(public shellState: ShellState) {}
+}

@@ -5,15 +5,14 @@ import { MenuModule } from 'primeng/menu';
 import { SidebarModule } from 'primeng/sidebar';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DialogModule } from 'primeng/dialog';
 import { ToastModule } from 'primeng/toast';
 import { MessagesModule } from 'primeng/messages';
 import { ShellComponent } from './shell/shell.component';
 import { HeaderComponent } from './header/header.component';
-import { UserAccountComponent } from './header/user-account/user-account.component';
 import { MenuComponent } from './menus/menu/menu.component';
 import { ContentComponent } from './content/content.component';
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
-
 
 /**
  * Modulo que contiene todos los componentes y modulos que define
@@ -27,6 +26,7 @@ import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
     PanelMenuModule,
     MessagesModule,
     ConfirmDialogModule,
+    DialogModule,
     ToastModule
   ],
   declarations: [
@@ -34,7 +34,6 @@ import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
     HeaderComponent,
     ContentComponent,
     MenuComponent,
-    UserAccountComponent,
     BreadcrumbComponent
   ],
   exports: [

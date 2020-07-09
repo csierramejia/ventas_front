@@ -10,3 +10,30 @@
 <p-toast #toastLonger id="toastExtraLong" position="bottom-center" key="toastExtraLong"></p-toast>
 <p-toast #toastLonger id="toastLonger" position="bottom-center" key="toastLonger"></p-toast>
 <p-toast #toastMedium id="toastMedium" position="bottom-center" key="toastMedium"></p-toast>
+
+
+<!-- modal timeout -->
+<ng-container *ngIf="shellState.modalTimeOut">
+  <p-dialog
+    [(visible)]="shellState.modalTimeOut.isShowModal"
+    [showHeader]="false"
+    [baseZIndex]="10000"
+    [style]="{ width: '35vw' }"
+    position="top"
+    modal="true">
+    
+    <div class="ui-g">
+      <div class="ui-md-12 mb-3 border-bottom text-center font-weight-bold">
+        <span class="ui-messages-detail font-size-22">Has estado inactivo</span>
+      </div>
+      <div class="ui-md-12 text-center mb-2">
+        <span class="ui-messages-detail font-size-16">Cierre de sesión en <strong>{{ shellState.countdownIdle }} segundos!</strong></span>
+      </div>
+      <div class="ui-g-12 text-center pt-0">
+        <button (click)="shellState.permanecer()" type="button" class="btn btn-sm btn-success w-150-px btn-app">
+          <label class="btn-size-admin"><i class="fa fa-user-circle-o"></i> Permanecer</label>
+        </button>
+      </div>
+    </div>
+  </p-dialog>
+</ng-container>

@@ -9,10 +9,95 @@
 }
 
 .btn-no {
+  box-shadow: 0 3.5px 4px 0 rgba(167, 187, 190, 0.45) !important;
+  border-radius: 15px !important;
   background-color: #6c757d !important;
-  border-color: #6c757d !important;
+  color: #f1f1f1 !important;
+  border: 0px !important;
+  outline: 0px !important;
+  width: 80px !important;
 }
 
 .btn-no:hover {
-  background-color: #5d5f61 !important;
+  background-color: #50585f !important;
+}
+
+.btn-si {
+  box-shadow: 0 3.5px 4px 0 rgba(20, 157, 183, 0.45) !important;
+  border-radius: 15px !important;
+  background-image: linear-gradient(0deg, #0bc9ec, #0083fe) !important;
+  color: #f1f1f1 !important;
+  border: 0px !important;
+  outline: 0px !important;
+  width: 80px !important;
+}
+
+.btn-si:hover {
+  background-image: linear-gradient(0deg, #37cae4, #409cf1) !important;
+}
+
+.btn-app {
+  box-shadow: 0 1.5px 4px 0 rgba(20, 157, 183, 0.45);
+  border-radius: 15px;
+  background-image: linear-gradient(0deg, #0bc9ec, #0083fe);
+  color: #f1f1f1;
+  border: 0px;
+}
+
+:host ::ng-deep #confApp .ui-dialog-content {
+  text-align: center !important;
+}
+
+:host ::ng-deep #confApp .ui-dialog-titlebar {
+  background-color: #f2f2f2 !important;
+  color: #6b6969 !important;
+}
+
+:host ::ng-deep #confApp .ui-dialog-footer {
+  background-color: #fff !important;
+  border: 0px !important;
+  text-align: center !important;
+}
+
+:host ::ng-deep #confApp .ui-dialog-titlebar-icon {
+  color: #6b6969 !important;
+}
+
+:host ::ng-deep #confApp .ui-confirmdialog-icon {
+  color: #6b6969 !important;
+}
+
+:host ::ng-deep .ui-toast .ui-toast-message.ui-toast-message-success {
+  background-color: #23ad44 !important;
+  color: #fff !important;
+  border-radius: 10px !important;
+}
+
+:host ::ng-deep .ui-toast .ui-toast-message.ui-toast-message-success .ui-toast-close-icon {
+  color: #fff !important;
+}
+
+:host ::ng-deep .ui-toast .ui-toast-message.ui-toast-message-error {
+  background-color: #cc1515 !important;
+  color: #fff !important;
+  border-radius: 10px !important;
+}
+
+:host ::ng-deep .ui-toast .ui-toast-message.ui-toast-message-error .ui-toast-close-icon {
+  color: #fff !important;
+}
+
+:host ::ng-deep #toastExtraLong .ui-toast-message {
+  width: 650px !important;
+  left: -90px;
+}
+
+:host ::ng-deep #toastLonger .ui-toast-message {
+  width: 500px !important;
+  left: -90px;
+}
+
+:host ::ng-deep #toastMedium .ui-toast-message {
+  width: 350px !important;
+  left: 0px;
 }
