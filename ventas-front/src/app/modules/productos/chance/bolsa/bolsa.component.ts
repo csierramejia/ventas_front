@@ -312,7 +312,9 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
         const responseApuesta: any = apuestaData;
         if (responseApuesta.exito) {
           this.cleanCartValues();
-          this.messageService.add(MsjUtil.getMsjSuccess('Transacción exitosa'));
+
+              // se muestra el mensaje exitoso
+          this.messageService.add(MsjUtil.getToastSuccessMedium('Transacción exitosa'));
           this.creatingBet.emit(true);
 
         } else {

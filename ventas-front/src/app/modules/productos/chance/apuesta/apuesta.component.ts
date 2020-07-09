@@ -380,6 +380,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
    * emitir la apuesta al componente bolsa
    */
   addBetSend(): void {
+    this.messageService.clear();
     // this.lotteriesSelected = this.get_lotteriesSelected();
 
     if (this.valid()) {
@@ -408,7 +409,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
      
       this.selectUnmarkAllBol=false;
     } else {
-      this.messageService.add(MsjUtil.getMsjError('Usted debe diligenciar los campos requeridos'));
+      this.messageService.add(MsjUtil.getToastErrorMedium('Por favor diligenciar todos los campos'));
     }
   }
 
@@ -426,7 +427,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
    */
   editBetSend() {
     // this.lotteriesSelected = this.get_lotteriesSelected();
-   
+    this.messageService.clear();
     if (this.valid()) {
       this.addBet.emit({
         action: 0,
@@ -453,7 +454,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
       }
       this.selectUnmarkAllBol=false;
     } else {
-      this.messageService.add(MsjUtil.getMsjError('Usted debe diligenciar los campos requeridos'));
+      this.messageService.add(MsjUtil.getToastErrorMedium('Por favor diligenciar todos los campos'));
     }
   }
 

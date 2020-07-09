@@ -429,10 +429,11 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
 
 
   validarLoterias(){
+    this.messageService.clear();
     let valida=false;
     //seleccion
     if(this.loterias==null || this.loterias==undefined || this.loterias.length==0){
-      this.messageService.add(MsjUtil.getMsjError('Debe seleccionar el día para la apuesta'));
+      this.messageService.add(MsjUtil.getToastErrorMedium('Por favor diligenciar todos los campos'));
       return;
     }
     //valida nulos
@@ -441,7 +442,7 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
     }
     
     if(valida){
-      this.messageService.add(MsjUtil.getMsjError('Debe llenar todas la apuesta'));
+      this.messageService.add(MsjUtil.getToastErrorMedium('Por favor diligenciar todos los campos'));
       return;
     }
     valida=false;
@@ -450,7 +451,7 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
     valida=true;
    }
     if(valida){
-      this.messageService.add(MsjUtil.getMsjError('Debe seleccionar un valor para apostar'));
+      this.messageService.add(MsjUtil.getToastErrorMedium('Por favor diligenciar todos los campos'));
       return;
     }
      //validar longitudes
@@ -462,7 +463,7 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
       }
 
     if(valida){
-      this.messageService.add(MsjUtil.getMsjError('Sólo se permiten juegos de 3 o 4 cifras'));
+      this.messageService.add(MsjUtil.getToastErrorMedium('Sólo se permiten juegos de 3 o 4 cifras'));
       return;
     }
 

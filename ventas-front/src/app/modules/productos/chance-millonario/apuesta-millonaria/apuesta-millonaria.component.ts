@@ -436,10 +436,11 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
 
 
   validarLoterias(){
+    this.messageService.clear();
     let valida=false;
     //seleccion
     if(this.loterias==null || this.loterias==undefined || this.loterias.length==0){
-      this.messageService.add(MsjUtil.getMsjError('Debe seleccionar el día para la apuesta'));
+      this.messageService.add(MsjUtil.getToastErrorMedium('Por favor diligenciar todos los campos'));
       return;
     }
     //valida nulos
@@ -459,7 +460,7 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
       valida=true;
     }
     if(valida){
-      this.messageService.add(MsjUtil.getMsjError('Debe llenar todas las apuestas'));
+      this.messageService.add(MsjUtil.getToastErrorMedium('Por favor diligenciar todos los campos'));
       return;
     }
     valida=false;
@@ -468,7 +469,7 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
     valida=true;
    }
     if(valida){
-      this.messageService.add(MsjUtil.getMsjError('Debe seleccionar un valor para apostar'));
+      this.messageService.add(MsjUtil.getToastErrorMedium('Por favor diligenciar todos los campos'));
       return;
     }
      //validar longitudes
@@ -509,7 +510,7 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
     }
 
     if(valida){
-      this.messageService.add(MsjUtil.getMsjError('Sólo se permiten dígitos de 3 y 4 cifras, según la modalidad seleccionada'));
+      this.messageService.add(MsjUtil.getToastErrorMedium('Sólo se permiten dígitos de 3 y 4 cifras, según la modalidad seleccionada'));
       return;
     }
 
@@ -521,7 +522,7 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
       return array.indexOf(item) === index;
     })
     if(uniqs.length != numeros.length){
-      this.messageService.add(MsjUtil.getMsjError('No se pueden realizar apuestas repetidas'));
+      this.messageService.add(MsjUtil.getToastErrorMedium('No se pueden realizar apuestas repetidas'));
       return;
     }
 
@@ -541,7 +542,7 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
       
     }
     else{
-      this.messageService.add(MsjUtil.getMsjError('Se deben seleccionar dos loterias'));
+      this.messageService.add(MsjUtil.getToastErrorMedium('Se deben seleccionar dos loterias'));
     }
 
   }

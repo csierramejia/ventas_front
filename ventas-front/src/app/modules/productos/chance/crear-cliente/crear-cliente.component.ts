@@ -65,6 +65,7 @@ export class CrearClienteComponent extends CommonComponent implements OnInit, On
    * pasar a crear el cliente
    */
   validCreateCustomerE(): void {
+    this.messageService.clear();
     if (
       this.clienteForm.get('tipoDocumento').valid &&
       this.clienteForm.get('tipoDocumento').value !== 'option' &&
@@ -86,7 +87,7 @@ export class CrearClienteComponent extends CommonComponent implements OnInit, On
         };
         this.createCustomerService(clientSend);
     } else {
-      this.messageService.add(MsjUtil.getMsjError('Usted debe de diligenciar los campos obligatorios'));
+      this.messageService.add(MsjUtil.getToastErrorMedium('Por favor diligenciar todos los campos'));
     }
   }
 
@@ -102,15 +103,15 @@ export class CrearClienteComponent extends CommonComponent implements OnInit, On
       clienteData => {
         const responseCliente: any = clienteData;
         if (responseCliente.idPersona) {
-          this.messageService.add(MsjUtil.getMsjSuccess('Cliente Registrado'));
+          this.messageService.add(MsjUtil.getToastSuccessMedium('Cliente Registrado'));
           this.cleanInputs();
           this.createCustomerE(responseCliente);
         } else {
-          this.messageService.add(MsjUtil.getMsjError('Problemas al registrar el cliente'));
+          this.messageService.add(MsjUtil.getToastErrorMedium('Problemas al registrar el cliente'));
         }
       },
       error => {
-        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+        this.messageService.add(MsjUtil.getToastErrorMedium(this.showMensajeError(error)));
       }
     );
   }

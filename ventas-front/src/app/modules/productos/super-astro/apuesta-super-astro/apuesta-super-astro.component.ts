@@ -471,9 +471,10 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
 
   validarLoterias(){
     let valida=false;
+    this.messageService.clear();
     //seleccion
     if(this.loterias==null || this.loterias==undefined || this.loterias.length==0){
-      this.messageService.add(MsjUtil.getMsjError('Debe seleccionar una loteria para la apuesta'));
+      this.messageService.add(MsjUtil.getToastErrorMedium('Por favor diligenciar todos los campos'));
       return;
     }
     //valida nulos
@@ -482,7 +483,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
     }
     
     if(valida){
-      this.messageService.add(MsjUtil.getMsjError('Debe llenar todas la apuesta'));
+      this.messageService.add(MsjUtil.getToastErrorMedium('Por favor diligenciar todos los campos'));
       return;
     }
     valida=false;
@@ -491,7 +492,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
     valida=true;
    }
     if(valida){
-      this.messageService.add(MsjUtil.getMsjError('Debe seleccionar un valor para apostar'));
+      this.messageService.add(MsjUtil.getToastErrorMedium('Por favor diligenciar todos los campos'));
       return;
     }
      //validar longitudes
@@ -501,7 +502,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
       }
 
     if(valida){
-      this.messageService.add(MsjUtil.getMsjError('El número jugado debe ser de 4 digitos'));
+      this.messageService.add(MsjUtil.getToastErrorMedium('El número jugado debe ser de 4 digitos'));
       return;
     }
         //validar zignos
@@ -514,7 +515,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
        });
   
       if(cont==0){
-        this.messageService.add(MsjUtil.getMsjError('Por favor selecciona un signo zodiacal'));
+        this.messageService.add(MsjUtil.getMsjError('Por favor diligenciar todos los campos'));
         return;
       }
 
