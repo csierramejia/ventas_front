@@ -675,6 +675,10 @@ body {
 
 /* font family para admin free */
 
+.font-montse {
+  font-family: Montserrat !important
+}
+
 .font-admin {
   font-family: "Roboto", "Helvetica Neue", sans-serif !important
 }

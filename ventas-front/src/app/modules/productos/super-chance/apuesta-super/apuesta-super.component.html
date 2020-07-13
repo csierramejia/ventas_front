@@ -6,12 +6,12 @@
             </div>
             <div class="col-md-6">
                 <p class="clock-icon">
-                    <label class="diaActual">{{ fechaActual | date: 'dd/MM/yyyy'}}</label>
+                    <label class="diaActual">{{ fechaActual | date: 'dd/MM/yyyy HH:mm:ss'}}</label>
                 </p>
             </div>
         </div>
         <div class="row calendarRow">
-            <div class="col-md-6">
+            <div class="col-md-7">
                 <label class="betDayDate">Seleccione el día del sorteo</label><br>
                 <span 
                     class="badge badge-secondary chipOptionDay" 
@@ -31,7 +31,7 @@
 
 
     <form [formGroup]="chanceForm">
-    <div class="card">
+    <div class="card cardBet">
         <div class="card-header titleBetCard">
         <a 
             data-toggle="collapse" 
@@ -75,19 +75,18 @@
                     </div>
                 </div>
 
-               <br/>
                <hr>
                 <div class="row">
                       <div class="col-md-3">
                         <label class="titleInput" for="aleatorio">JUEGO ALEATORIO</label>  
                         <div class="form-group has-feedback">    
                         <button  (click)="generar(3)" type="button" class="btn btn-random botonesApuesta">
-                            GENERAR 3
+                            GENERAR <span class="badge badge-light numeroInterno">3</span>
                         </button>
                         </div>
                         <div class="form-group has-feedback">    
                             <button  (click)="generar(4)" type="button" class="btn btn-random botonesApuesta">
-                             GENERAR 4
+                             GENERAR <span class="badge badge-light numeroInterno">4</span>
                             </button>
                             </div>
                         <div class="form-group has-feedback">

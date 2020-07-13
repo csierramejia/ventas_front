@@ -53,7 +53,7 @@
 }
 
 :host ::ng-deep #menuUserSettings .ui-menuitem-text {
-  font-family: Times, Times New Roman, serif !important;
+  font-family: Montserrat !important;
   color: #eaeaea;
   font-size: 16px;
 }

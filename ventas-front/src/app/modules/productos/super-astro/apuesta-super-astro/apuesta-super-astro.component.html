@@ -6,12 +6,12 @@
             </div>
             <div class="col-md-6">
                 <p class="clock-icon">
-                    <label class="diaActual">{{ fechaActual | date: 'dd/MM/yyyy'}}</label>
+                    <label class="diaActual">{{ fechaActual | date: 'dd/MM/yyyy HH:mm:ss'}}</label>
                 </p>
             </div>
         </div>
         <div class="row calendarRow">
-            <div class="col-md-6">
+            <div class="col-md-7">
                 <label class="betDayDate">Seleccione el día del sorteo</label><br>
                 <span 
                     class="badge badge-secondary chipOptionDay" 
@@ -31,7 +31,7 @@
 
 
     <form [formGroup]="chanceForm">
-    <div class="card">
+    <div class="card cardBet">
         <div class="card-header titleBetCard">
         <a 
             data-toggle="collapse" 
@@ -75,7 +75,6 @@
                     </div>
                 </div>
 
-               <br/>
                <hr>
                 <div class="row">
                     <div class="col-md-4">
@@ -107,9 +106,9 @@
                         <label class="titleInput" >Signo zodiacal</label>
                         <div class="input-group">
                             <input type="text" class="form-control styleInputSigno" disabled placeholder="Seleccione" value={{signoMostrar}} >
-                            <span style="    height: 31px;" class="input-group-append">
-                                <button type="button" (click)="abrirSignos()" class="btn-buscar btn btn-info btn-flat">
-                                    <label class="btn-size-admin"><i class="fa fa-search"></i></label>
+                            <span style="height: 31px" class="input-group-append">
+                                <button type="button" style="padding-top: 3px" (click)="abrirSignos()" class="btn-buscar btn btn-info btn-flat">
+                                    <label class="btn-size-admin"><i  class="fa fa-search"></i></label>
                                 </button>
                             </span>
                           </div>
@@ -208,7 +207,7 @@
                             type="checkbox" name="zignosSeleccionados">
                             <label for="zignosSeleccionados" class="labelloteria">{{s.label}}</label>
                             <br>
-                            <img class="loteriastamanio" [src]="s.url"/>
+                            <img class="signostamanio" [src]="s.url"/>
                         </div>
                         </div>
                     </div>

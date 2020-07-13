@@ -2,6 +2,16 @@
         <div class="container-fluid">
             <div class="row calendarRow">
                 <div class="col-md-6">
+                    <label class="numeroserie">Número de serie {{numeroSerie}}</label><br>
+                </div>
+                <div class="col-md-6">
+                    <p class="clock-icon">
+                        <label class="diaActual">{{ fechaActual | date: 'dd/MM/yyyy HH:mm:ss'}}</label>
+                    </p>
+                </div>
+            </div>
+            <div class="row calendarRow">
+                <div class="col-md-7">
                     <label class="betDayDate">Seleccione el día del sorteo</label><br>
                     <span 
                         class="badge badge-secondary chipOptionDay" 
@@ -28,10 +38,10 @@
                     <div class="row">
                         <div class="col-md-5 padColLable">
                             <button (click)="getNumberThree()" type="button" class="btn btn-random">
-                                ALEATORIO <span class="badge badge-light">3</span>
+                                ALEATORIO <span class="badge badge-light numeroInterno">3</span>
                             </button>
                             <button (click)="getNumberFour()" type="button" class="btn btn-random btnFour">
-                                ALEATORIO <span class="badge badge-light">4</span>
+                                ALEATORIO <span class="badge badge-light numeroInterno">4</span>
                             </button>
                         </div>
                         <div class="col-md-3">

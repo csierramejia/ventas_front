@@ -15,7 +15,7 @@
   border-bottom: 0px !important;
   min-height: 100vh;
   height: 100%;
-  font-family: Times, Times New Roman, serif !important;
+  font-family: Montserrat !important;
   color: #ffffff;
   position: fixed;
   z-index: 1000;
@@ -31,7 +31,7 @@
   text-align: left;
   padding: 10px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 13px;
 }
 
 .item:hover, .submenu a:hover, .sub-menu:hover {
@@ -62,14 +62,14 @@
   left: auto;
   position: absolute;
   top: 1rem;
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .accordion .menu {
   text-align: left;
   padding: 10px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 13px;
   transition: all 0.4s ease;
   position: relative;
 }
@@ -89,7 +89,7 @@
 
 .submenu {
   overflow: hidden;
-  font-size: 14px;
+  font-size: 13px;
   transition: height 0.4s ease;
   padding-left: 0px;
 }
@@ -100,7 +100,7 @@
   padding: 10px;
   transition: all 0.25s ease-in-out;
   padding-left: 37px;
-  font-size: 15.5px;
+  font-size: 13px;
   cursor: pointer;
 }
 

@@ -29,7 +29,7 @@
   border-radius: 10px 10px 0px 0px !important;
   background-color: #0083FE !important;
   color: white !important;
-  font-family: Times, Times New Roman, serif !important;
+  font-family: Montserrat !important;
   font-weight: 700 !important;
   padding: 0.5em !important;
 }
@@ -90,12 +90,16 @@ opacity: 1;
   letter-spacing: 0px;
   color: #FF6969;
   opacity: 1;
+  background-color: #fff;
+  padding: 3px 10px;
+  border-radius: 15px;
 }
 
 .radioAzul{
   background: #FFFFFF 0% 0% no-repeat padding-box;
 border: 2px solid #0083FE;
 opacity: 1;
+padding-left: 8px;
 }
 .titleValores{
 text-align: left;
@@ -181,6 +185,10 @@ opacity: 1;
   width: 70px;
     height: 60px;
 }
+.signostamanio{
+  width: 60px;
+    height: 60px;
+}
 
 .labelloteria{
   text-align: left;
@@ -248,14 +256,14 @@ opacity: 1;
   padding-top: 25px;
 }
 
-
 .chipOptionDay{
-  border-radius: 20px !important;
+  border-radius: 30px !important;
   font-size: 24px;
-  width: 41px;
-  height: 37px;
-  box-shadow: 0 1.5px 4px 0 rgba(20, 157, 183, 0.48);
+  width: 44px;
+  height: 44px;
+  box-shadow: 0px 3px 8px #149DB77A;
   background-color: #ffffff;
+  line-height: 32px;
   font-family: Montserrat;
   color: #0083fe;
   margin-right: 7px;

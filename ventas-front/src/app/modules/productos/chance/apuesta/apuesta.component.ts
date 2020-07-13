@@ -31,7 +31,8 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
   selectUnmarkAllBol = false;
   loterias = [];
   lotteriesSelected = [];
-
+  fechaActual:Date;
+  numeroSerie:string;
   dayBet: Date;
   viewLotteries = false;
   days = [
@@ -77,6 +78,8 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
     private currencyPipe : CurrencyPipe
   ) {
     super();
+    this.fechaActual=new Date();
+    this.numeroSerie="AD123456";
     // obtemos el esquema de fechas para que el usuario puede saleccionar el dia de la apuesta a realizar
     const dayWeek = this.getDayWeek();
     this.setDays(dayWeek);
