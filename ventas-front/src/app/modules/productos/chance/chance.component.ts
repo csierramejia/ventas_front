@@ -12,13 +12,13 @@ export class ChanceComponent implements OnInit {
 
   @ViewChild(BolsaComponent) bolsaChild: BolsaComponent;
   @ViewChild(ApuestaComponent) apuestaChild: ApuestaComponent;
-  esMillonaria:boolean;
+  esMillonaria: boolean;
   constructor() {
 
    }
 
   ngOnInit(): void {
-    this.esMillonaria=false;
+    this.esMillonaria = false;
   }
 
   /**
@@ -40,7 +40,7 @@ export class ChanceComponent implements OnInit {
    */
   addLotteries(event): void {
     this.bolsaChild.setLotteries(event);
-    this.bolsaChild.setProducto("CHANCE")
+    this.bolsaChild.setProducto('CHANCE');
 
   }
 
@@ -57,7 +57,6 @@ export class ChanceComponent implements OnInit {
    */
   editBet(event): void {
       this.apuestaChild.editBetSendEmit(event);
-    
   }
 
 
@@ -70,7 +69,6 @@ export class ChanceComponent implements OnInit {
    */
   creatingBet(event): void {
       this.apuestaChild.createBetSendEmit(event);
-    
   }
 
 

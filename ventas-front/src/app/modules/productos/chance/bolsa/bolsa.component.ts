@@ -14,8 +14,6 @@ import { MsjUtil } from 'src/app/utilities/messages.util';
 })
 export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy  {
 
-
-
   @Output() editBet: EventEmitter<any> = new EventEmitter();
   @Output() creatingBet: EventEmitter<any> = new EventEmitter();
 
@@ -26,8 +24,8 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
   valueBetTotal = 0;
   cartItems = [];
   lotteries = [];
-  producto=null;
-  zignos=[];
+  producto = null;
+  zignos = [];
   constructor(
     private productosService: ProductosService,
     protected messageService: MessageService,
@@ -42,13 +40,13 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
   }
 
 
-  getSignos(){
-    this.zignos=[];
+  getSignos() {
+    this.zignos = [];
     this.productosService.consultarSignos().subscribe(
       signosData => {
         const rs: any = signosData;
         rs.forEach(element => {
-          if(element.nombre != 'Todos'){
+          if (element.nombre != 'Todos') {
           this.zignos.push(element);
           }
         });
@@ -100,13 +98,19 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
   /**
    * @author Luis Hernandez
    * @param event
-   * @description Metodo que se encarga
+   * @description Metodo que se encarga de obtener las loterias
+   * que el usuarios selecciono y generar los valores totales
    */
   setLotteries(event): void {
     this.lotteries = event;
     this.get_values_totals();
   }
 
+
+  /**
+   * @param event
+   * @description Metodo que obtiene el producto que se va agregar al carrito
+   */
   setProducto(event): void {
     this.producto = event;
   }
@@ -120,29 +124,26 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
     this.cartItems[key].documentCustomer = event.documentCustomer;
     this.cartItems[key].nameCustomer = event.nameCustomer;
     this.cartItems[key].dataPlayed = event.dataPlayed;
-    if(event.numeroSuper){
-      this.cartItems[key].numeroSuper=event.numeroSuper;
-      this.cartItems[key].valorApostado=event.valorApostado;
-    }
-    else if(event.numeroAstro){
-      this.cartItems[key].numeroAstro=event.numeroAstro;
-      this.cartItems[key].zignos=event.zignos;
-      this.cartItems[key].valorApostado=event.valorApostado;
-    }
-    else if(event.numberPlayed ==null){
+    if (event.numeroSuper) {
+      this.cartItems[key].numeroSuper = event.numeroSuper;
+      this.cartItems[key].valorApostado = event.valorApostado;
+    } else if (event.numeroAstro) {
+      this.cartItems[key].numeroAstro = event.numeroAstro;
+      this.cartItems[key].zignos = event.zignos;
+      this.cartItems[key].valorApostado = event.valorApostado;
+    } else if (event.numberPlayed == null) {
       this.cartItems[key].apuestaA = event.apuestaA;
       this.cartItems[key].apuestaB = event.apuestaB;
       this.cartItems[key].apuestaC = event.apuestaC;
       this.cartItems[key].apuestaD = event.apuestaD;
       this.cartItems[key].apuestaE = event.apuestaE;
-    }
-    else{
-    this.cartItems[key].numberPlayed = event.numberPlayed;
-    this.cartItems[key].direct = event.direct;
-    this.cartItems[key].combined = event.combined;
-    this.cartItems[key].threeC = event.threeC;
-    this.cartItems[key].twoC = event.twoC;
-    this.cartItems[key].oneC = event.oneC;
+    } else {
+      this.cartItems[key].numberPlayed = event.numberPlayed;
+      this.cartItems[key].direct = event.direct;
+      this.cartItems[key].combined = event.combined;
+      this.cartItems[key].threeC = event.threeC;
+      this.cartItems[key].twoC = event.twoC;
+      this.cartItems[key].oneC = event.oneC;
     }
     // this.lotteries = event.lotteries;
     this.get_values_totals();
@@ -202,19 +203,15 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
     this.valueBet = 0;
     this.valueVat = 0;
     this.cartItems.forEach(element => {
-      if(element.modalidad && element.numeroSuper==null){
-        if(element.modalidad=="4 Cifras"){
-          this.valueBet =element.valorApostado;
+      if (element.modalidad && element.numeroSuper == null) {
+        if (element.modalidad == '4 Cifras') {
+          this.valueBet = element.valorApostado;
+        } else {
+          this.valueBet = element.valorApostado;
         }
-        else{
-          this.valueBet =element.valorApostado;
-        }
-      
-      }
-      else if(element.modalidad==null && (element.numeroSuper || element.numeroAstro)){
-          this.valueBet =element.valorApostado;
-      }
-      else{
+      } else if (element.modalidad == null && (element.numeroSuper || element.numeroAstro)) {
+          this.valueBet = element.valorApostado;
+      } else {
       // tslint:disable-next-line: radix
       if (element.direct) { this.valueBet = (this.valueBet + parseInt(element.direct)); }
       // tslint:disable-next-line: radix
@@ -250,29 +247,26 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
       valueBetTotal : this.valueBetTotal,
       bets: null,
       lotteries : this.lotteries,
-      canal:null,
-      producto:this.producto
+      canal: null,
+      producto: this.producto
     };
 
     this.cartItems.forEach(element => {
       const bet = [];
-      const betDetail = {numberPlayed: null, apuestaA: null, apuestaB: null, 
-        apuestaC: null, apuestaD: null, apuestaE: null, numeroSuper:null,details: null, numeroAstro:null, zignos:null};
-      if(element.modalidad && element.numeroSuper==null){
-        betDetail.apuestaA=element.apuestaA;
-        betDetail.apuestaB=element.apuestaB;
-        betDetail.apuestaC=element.apuestaC;
-        betDetail.apuestaD=element.apuestaD;
-        betDetail.apuestaE=element.apuestaE;
-      }
-      else if(element.modalidad==null && element.numeroSuper){
-        betDetail.numeroSuper=element.numeroSuper;
-      }
-      else if(element.modalidad==null && element.numeroAstro){
-        betDetail.numeroAstro=element.numeroAstro;
-        betDetail.zignos=element.zignos;
-      }
-      else {
+      const betDetail = {numberPlayed: null, apuestaA: null, apuestaB: null,
+        apuestaC: null, apuestaD: null, apuestaE: null, numeroSuper: null, details: null, numeroAstro: null, zignos: null};
+      if (element.modalidad && element.numeroSuper == null) {
+        betDetail.apuestaA = element.apuestaA;
+        betDetail.apuestaB = element.apuestaB;
+        betDetail.apuestaC = element.apuestaC;
+        betDetail.apuestaD = element.apuestaD;
+        betDetail.apuestaE = element.apuestaE;
+      } else if (element.modalidad == null && element.numeroSuper) {
+        betDetail.numeroSuper = element.numeroSuper;
+      } else if (element.modalidad == null && element.numeroAstro) {
+        betDetail.numeroAstro = element.numeroAstro;
+        betDetail.zignos = element.zignos;
+      } else {
       betDetail.numberPlayed = element.numberPlayed;
       if (String(element.numberPlayed).length === 4) {
 
@@ -294,11 +288,8 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
         if (element.direct) { bet.push({code: 5, valor: element.direct}); }
         if (element.oneC) { bet.push({code: 6, valor: element.oneC}); }
 
-      }
-      else if (String(element.numberPlayed).length === 1) {
-
+      } else if (String(element.numberPlayed).length === 1) {
         if (element.direct) { bet.push({code: 6, valor: element.direct}); }
-
       }
       betDetail.details = bet;
      }
@@ -306,7 +297,9 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
     });
 
     paySend.bets = bets;
-    paySend.canal="WEB";
+    paySend.canal = 'WEB';
+
+
     this.productosService.registrarApuesta(paySend).subscribe(
       apuestaData => {
         const responseApuesta: any = apuestaData;
@@ -330,64 +323,49 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
 
 
   validarSignoNombre(signos){
-    let sig="";
-    if(signos.length>=12){
-      sig=",Todos";
-  }
-  else{
+    let sig = '';
+    if (signos.length >= 12) {
+      sig = ",Todos";
+  } else {
     signos.forEach(s => {
       this.zignos.forEach(element => {
-        if(s == element.idSigno){
-         sig=sig+","+element.nombre;
+        if (s == element.idSigno) {
+         sig = sig + "," + element.nombre;
         }
       });
     });
-   
   }
-   
     return sig.substr(1,sig.length);
   }
 
 
-  nombreSigno(signo){
-    if(signo==1){
-      return "Acuario";
-    }
-   else if(signo==2){
-    return "Piscis";
-    }
-    else if(signo==3){
-      return "Aries";
-    }
-    else if(signo==4){
-      return "Tauro";
-    }
-    else if(signo==5){
-      return "Géminis";
-    }
-    else if(signo==6){
-      return "Cáncer";
-    }
-    else if(signo==7){
-      return "Leo";
-    }
-    else if(signo==8){
-      return "Virgo";
-    }
-    else if(signo==9){
-      return "Libra";
-    }
-    else if(signo==10){
-      return "Escorpio";
-    }
-    else if(signo==11){
-      return "Sagitario";
-    }
-    else if(signo==12){
-      return "Capricornio";
-    }
-    else if(signo==13){
-      return "Todos";
+  nombreSigno(signo) {
+    if (signo == 1) {
+      return 'Acuario';
+    } else if(signo == 2) {
+      return 'Piscis';
+    } else if (signo == 3) {
+      return 'Aries';
+    } else if(signo == 4) {
+      return 'Tauro';
+    } else if(signo == 5) {
+      return 'Géminis';
+    } else if(signo == 6) {
+      return 'Cáncer';
+    } else if(signo == 7) {
+      return 'Leo';
+    } else if(signo == 8) {
+      return 'Virgo';
+    } else if(signo == 9) {
+      return 'Libra';
+    } else if(signo == 10) {
+      return 'Escorpio';
+    } else if(signo == 11) {
+      return 'Sagitario';
+    } else if(signo == 12) {
+      return 'Capricornio';
+    } else if(signo == 13) {
+      return 'Todos';
     }
   }
   /**
