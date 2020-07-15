@@ -54,10 +54,9 @@
 
 :host ::ng-deep #menuUserSettings .ui-menuitem-text {
   font-family: Montserrat !important;
-  color: #eaeaea;
-  font-size: 16px;
+  font-size: 14px;
+  color: #ffffff
 }
-
 :host ::ng-deep #menuUserSettings .ui-menuitem-icon {
   color: #eaeaea;
 }

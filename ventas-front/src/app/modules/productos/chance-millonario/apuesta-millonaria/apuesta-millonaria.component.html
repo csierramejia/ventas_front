@@ -1,196 +1,201 @@
-
-    <div class="container-fluid">
-        <div class="row calendarRow">
-            <div class="col-md-6">
-                <label class="numeroserie">Número de serie {{numeroSerie}}</label><br>
-            </div>
-            <div class="col-md-6">
-                <p class="clock-icon">
-                    <label class="diaActual">{{ fechaActual | date: 'dd/MM/yyyy HH:mm:ss'}}</label>
-                </p>
-            </div>
+<div class="container-fluid">
+    <div class="row calendarRow">
+        <div class="col-md-6">
+            <label class="numeroserie">Número de serie {{numeroSerie}}</label><br>
         </div>
-        <div class="row calendarRow">
-            <div class="col-md-7">
-                <label class="betDayDate">Seleccione el día del sorteo</label><br>
-                <span 
-                    class="badge badge-secondary chipOptionDay" 
-                    *ngFor="let day of days"
-                    [id]="day.name"
-                    (click)="get_date_bet(day)">
-                    {{day.text}}
-                </span>
-            </div>
-            <div class="col-md-6 calendarDate" *ngIf="dayBet">
-                <p class="calendar-icon">
-                    <label class="dayBet">Día del sorteo {{ dayBet | date: 'dd/MM/yyyy'}}</label>
-                </p>
-            </div>
+        <div class="col-md-6">
+            <p class="clock-icon">
+                <label class="diaActual">{{ fechaActual | date: 'dd/MM/yyyy HH:mm:ss'}}</label>
+            </p>
         </div>
     </div>
-
-
-
-    <form [formGroup]="chanceForm">
-    <div class="card cardBet">
-        <div class="card-header titleBetCard">
-        <a 
-            data-toggle="collapse" 
-            href="#collapse-example2" 
-            aria-expanded="true" 
-            aria-controls="collapse-example2" 
-            id="heading-example2" 
-            class="d-block">
-               Juego
-            <i class="fa fa-chevron-down"></i>
-        </a>
-    </div>
-    
-
-    <div id="collapse-example2" class="collapse show" aria-labelledby="heading-example2">
-        <div class="card-body">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-3">
-                        <label  style="margin-top: -6px;" class="col-form-label">Modalidad</label>
-                            <div style="padding-bottom: 5px" class="form-check">
-                                <input formControlName="radioUno" (change)="seleccion(3)" type="radio"
-                                    name="radioUno" class="radioAzul"  [value]="3">
-                                <label class="form-check-label" style="padding-left: 8px" for="radioUno">3 Cifras</label>
-                            </div>
-                            <div class="form-check" >
-                                <input 
-                                    (change)="seleccion(4)" class="radioAzul"  formControlName="radioUno" type="radio" name="radioUno" 
-                                    [value]="4">
-                                <label class="form-check-label" style="padding-left: 8px" for="radioUno">4 Cifras</label>
-                            </div>
-
-                    </div>
-                    <div class="col-md-3">
-                        <label class="titleInput" for="identificacion">Tipo Identificación</label>
-                        <div class="form-group">
-                            <select (change)="validExistClient()" formControlName="tipoDocumento" class="form-control typeIdentification">
-                              <option value="CC">CC</option>
-                              <option value="TI">TI</option>
-                            </select>
-                          </div>
-                    </div>
-                    <div class="col-md-3">
-                        <label class="titleInput" for="identificacion">Identificación</label>
-                        <div class="form-group has-feedback">
-                            <i class="fa fa-user form-control-feedback"></i>
-                            <input type="text" (keypress)="keyPressNumber($event)" (change)="validExistClient()" formControlName="numeroDocumento" class="form-control styleInput" placeholder="Cedula">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 padColLable" *ngIf="enabledCustomer">
-                        <div class="form-group has-feedback elemClient">
-                            <i class="fa fa-check-square inputSuccess"></i>
-                            <input type="text" class="form-control styleInputClient" formControlName="nombreCliente" placeholder="Cliente">
-                        </div>
-                    </div>
-                </div>
-
-               <hr>
-                <div class="row">
-                      <div class="col-md-3">
-                        <label class="titleInput" for="aleatorio">JUEGO ALEATORIO</label>  
-                        <div class="form-group has-feedback">    
-                        <button  (click)="generar()" type="button" class="btn btn-random botonesApuesta">
-                            GENERAR <i class="fa fa-random" aria-hidden="true"></i>
-                        </button>
-                        </div>
-                        <div class="form-group has-feedback">
-                        <button  (click)="limpiar()" type="button" class="btn btn-random botonesApuesta">
-                            LIMPIAR <i class="fa fa-trash" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <label class="titleInput" for="aleatorio">NÚMEROS A JUGAR</label>
-                        <div class="form-group has-feedback" style="display: -webkit-box">
-                            <input type="text" minlength="3" maxlength="4"
-                             (keypress)="keyPressNumber($event)"  formControlName="numeroA" 
-                             class="form-control styleInput">
-                            <div class="input-group-append">
-                                <a  style="margin-left: 5px" (click)="generrarA()">
-                                    <i class="fa fa-random aleatorio"  aria-hidden="true"></i>
-                                  </a>
-                                <a  style="margin-left: 5px" (click)="limpiarA()">
-                                    <i class="fa fa-trash papelera" aria-hidden="true"></i>
-                                  </a>
-                            </div>
-                        </div>
-                       
-                        <div class="form-group has-feedback" style="display: -webkit-box">
-                            <input type="text"  minlength="3" maxlength="4" (keypress)="keyPressNumber($event)"  formControlName="numeroB" class="form-control styleInput">
-                            <div class="input-group-append">
-                                <a  style="margin-left: 5px" (click)="generrarB()">
-                                    <i class="fa fa-random aleatorio" aria-hidden="true"></i>
-                                  </a>
-                                <a  style="margin-left: 5px" (click)="limpiarB()">
-                                    <i class="fa fa-trash papelera" aria-hidden="true"></i>
-                                  </a>
-                            </div>
-                        </div>
-                        <div class="form-group has-feedback" style="display: -webkit-box">
-                            <input type="text"  minlength="3" maxlength="4" (keypress)="keyPressNumber($event)" formControlName="numeroC" class="form-control styleInput">
-                            <div class="input-group-append">
-                                <a  style="margin-left: 5px" (click)="generrarC()">
-                                    <i class="fa fa-random aleatorio" aria-hidden="true"></i>
-                                  </a>
-                                <a  style="margin-left: 5px" (click)="limpiarC()">
-                                    <i class="fa fa-trash papelera" aria-hidden="true"></i>
-                                  </a>
-                            </div>
-                        </div>
-                        <div class="form-group has-feedback" style="display: -webkit-box">
-                            <input type="text"  minlength="3" maxlength="4" (keypress)="keyPressNumber($event)"  formControlName="numeroD" class="form-control styleInput">
-                            <div class="input-group-append">
-                                <a  style="margin-left: 5px" (click)="generrarD()">
-                                    <i class="fa fa-random aleatorio" aria-hidden="true"></i>
-                                  </a>
-                                <a  style="margin-left: 5px" (click)="limpiarD()">
-                                    <i class="fa fa-trash papelera" aria-hidden="true"></i>
-                                  </a>
-                            </div>
-                        </div>
-                        <div class="form-group has-feedback" style="display: -webkit-box">
-                            <input type="text"  minlength="3" maxlength="4" (keypress)="keyPressNumber($event)"  formControlName="numeroE" class="form-control styleInput">
-                            <div class="input-group-append">
-                                <a  style="margin-left: 5px" (click)="generrarE()">
-                                    <i class="fa fa-random aleatorio" aria-hidden="true"></i>
-                                  </a>
-                                <a  style="margin-left: 5px" (click)="limpiarE()">
-                                    <i class="fa fa-trash papelera" aria-hidden="true"></i>
-                                  </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-5 px-5">  
-                        <label class="titleValores" for="aleatorio">CHANCE MILLONARIO</label>
-                        <div *ngFor="let enum of valoresModalidades">
-                            <label for="valorApostado">
-                              <input  [value]='enum' class="radioAzul" type="radio" name="valorApostado"
-                              formControlName="valorApostado" >
-                              {{enum  | currency}}
-                            </label>
-                          </div>
-                    
-                       
-                      
-                    </div>
-                </div>
-
-                
-                <hr>
-            </div>
+    <div class="row calendarRow">
+        <div class="col-md-7">
+            <label class="betDayDate">Seleccione el día del sorteo</label><br>
+            <span class="badge badge-secondary chipOptionDay" *ngFor="let day of days" [id]="day.name"
+                (click)="get_date_bet(day)">
+                {{day.text}}
+            </span>
         </div>
-
+        <div class="col-md-5 calendarDate" *ngIf="dayBet">
+            <p class="calendar-icon">
+                <label class="dayBet">Día del sorteo {{ dayBet | date: 'dd/MM/yyyy'}}</label>
+            </p>
+        </div>
     </div>
 </div>
+
+
+
+<form [formGroup]="chanceForm">
+    <div class="card cardBet">
+        <div class="card-header titleBetCard">
+            <a data-toggle="collapse" href="#collapse-example2" aria-expanded="true" aria-controls="collapse-example2"
+                id="heading-example2" class="d-block">
+                Juego
+                <i class="fa fa-chevron-down"></i>
+            </a>
+        </div>
+
+
+        <div id="collapse-example2" class="collapse show" aria-labelledby="heading-example2">
+            <div class="card-body">
+                <div class="container-fluid">
+
+                    <div class="row">
+                        <div class="row col-md-5">
+                        <div class="col-md-6">
+                            <label class="col-form-label">Modalidad</label>
+                            <div class="form-check">
+                                <label class="form-check-label" style="padding-right: 8px;" for="radioUno">3
+                                    Cifras</label>
+                                <input formControlName="radioUno" (change)="seleccion(3)" type="radio" name="radioUno"
+                                    class="radioAzul radiomodal" [value]="3">
+
+                            </div>
+                        </div>
+                        <div class="col-md-6" style="top: 35px;left: -15px;">
+                            <div class="form-check">
+                                <label class="form-check-label" style="padding-right: 8px;" for="radioUno">4
+                                    Cifras</label>
+                                <input (change)="seleccion(4)" class="radioAzul radiomodal" formControlName="radioUno"
+                                    type="radio" name="radioUno" [value]="4">
+
+                            </div>
+                        </div>
+                    </div>
+                        <div class="col-md-3">
+                            <label class="titleInput" for="identificacion">Tipo Identificación</label>
+                            <div class="form-group">
+                                <select (change)="validExistClient()" formControlName="tipoDocumento"
+                                    class="form-control typeIdentification">
+                                    <option value="CC">CC</option>
+                                    <option value="TI">TI</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="titleInput" for="identificacion">Identificación</label>
+                            <div class="form-group has-feedback">
+                                <i class="fa fa-user form-control-feedback"></i>
+                                <input type="text" (keypress)="keyPressNumber($event)" (change)="validExistClient()"
+                                    formControlName="numeroDocumento" class="form-control styleInput"
+                                    placeholder="Cedula">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 padColLable" *ngIf="enabledCustomer">
+                            <div class="form-group has-feedback elemClient">
+                                <i class="fa fa-check-square inputSuccess"></i>
+                                <input type="text" class="form-control styleInputClient" formControlName="nombreCliente"
+                                    placeholder="Cliente">
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label class="titleInput" for="aleatorio">JUEGO ALEATORIO</label>
+                            <div class="form-group has-feedback">
+                                <button (click)="generar()" type="button" class="btn btn-random botonesApuesta">
+                                    GENERAR <i class="fa fa-random" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <div class="form-group has-feedback">
+                                <button (click)="limpiar()" type="button" class="btn btn-random botonesApuesta">
+                                    LIMPIAR <i class="fa fa-trash" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="titleInput" for="aleatorio">NÚMEROS A JUGAR</label>
+                            <div class="form-group has-feedback" style="display: -webkit-box">
+                                <input type="text" minlength="3" maxlength="4" (keypress)="keyPressNumber($event)"
+                                    formControlName="numeroA" class="form-control styleInput">
+                                <div class="input-group-append">
+                                    <a style="margin-left: 5px" (click)="generrarA()">
+                                        <i class="fa fa-random aleatorio" aria-hidden="true"></i>
+                                    </a>
+                                    <a style="margin-left: 5px" (click)="limpiarA()">
+                                        <i class="fa fa-trash papelera" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="form-group has-feedback" style="display: -webkit-box">
+                                <input type="text" minlength="3" maxlength="4" (keypress)="keyPressNumber($event)"
+                                    formControlName="numeroB" class="form-control styleInput">
+                                <div class="input-group-append">
+                                    <a style="margin-left: 5px" (click)="generrarB()">
+                                        <i class="fa fa-random aleatorio" aria-hidden="true"></i>
+                                    </a>
+                                    <a style="margin-left: 5px" (click)="limpiarB()">
+                                        <i class="fa fa-trash papelera" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="form-group has-feedback" style="display: -webkit-box">
+                                <input type="text" minlength="3" maxlength="4" (keypress)="keyPressNumber($event)"
+                                    formControlName="numeroC" class="form-control styleInput">
+                                <div class="input-group-append">
+                                    <a style="margin-left: 5px" (click)="generrarC()">
+                                        <i class="fa fa-random aleatorio" aria-hidden="true"></i>
+                                    </a>
+                                    <a style="margin-left: 5px" (click)="limpiarC()">
+                                        <i class="fa fa-trash papelera" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="form-group has-feedback" style="display: -webkit-box">
+                                <input type="text" minlength="3" maxlength="4" (keypress)="keyPressNumber($event)"
+                                    formControlName="numeroD" class="form-control styleInput">
+                                <div class="input-group-append">
+                                    <a style="margin-left: 5px" (click)="generrarD()">
+                                        <i class="fa fa-random aleatorio" aria-hidden="true"></i>
+                                    </a>
+                                    <a style="margin-left: 5px" (click)="limpiarD()">
+                                        <i class="fa fa-trash papelera" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="form-group has-feedback" style="display: -webkit-box">
+                                <input type="text" minlength="3" maxlength="4" (keypress)="keyPressNumber($event)"
+                                    formControlName="numeroE" class="form-control styleInput">
+                                <div class="input-group-append">
+                                    <a style="margin-left: 5px" (click)="generrarE()">
+                                        <i class="fa fa-random aleatorio" aria-hidden="true"></i>
+                                    </a>
+                                    <a style="margin-left: 5px" (click)="limpiarE()">
+                                        <i class="fa fa-trash papelera" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5 px-5">
+                            <label class="titleValores" for="aleatorio">CHANCE MILLONARIO</label>
+                            <div *ngFor="let enum of valoresModalidades">
+                                <label for="valorApostado">
+                                    <input [value]='enum' class="radioAzul" type="radio" name="valorApostado"
+                                        formControlName="valorApostado">
+                                    {{enum  | currency}}
+                                </label>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+
+
+                    <hr>
+                </div>
+            </div>
+
+        </div>
+    </div>
 
 
 </form>
@@ -199,29 +204,24 @@
 
 <div class="card">
     <div class="card-header titleBetCard">
-        <a 
-            data-toggle="collapse" 
-            href="#collapse-example" 
-            aria-expanded="true" 
-            aria-controls="collapse-example" 
-            id="heading-example" 
-            class="d-block">
+        <a data-toggle="collapse" href="#collapse-example" aria-expanded="true" aria-controls="collapse-example"
+            id="heading-example" class="d-block">
             Seleccionar Loterias
             <i class="fa fa-chevron-down"></i>
-           
+
         </a>
     </div>
-    
+
 
     <div id="collapse-example" class="collapse show" aria-labelledby="heading-example">
         <div class="card-body">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-2" class="colLot" *ngFor="let loteria of loterias">
-                        <input type="checkbox" (click)="toggleVisibility(loteria)" [(ngModel)]="loteria.checked"/>
+                        <input type="checkbox" (click)="toggleVisibility(loteria)" [(ngModel)]="loteria.checked" />
                         <label class="labelloteria">{{loteria.nombre}}</label>
                         <br>
-                        <img class="loteriastamanio" [src]="loteria.url"/>
+                        <img class="loteriastamanio" [src]="loteria.url" />
                     </div>
                 </div>
             </div>
@@ -244,16 +244,14 @@
                 ACTUALIZAR <i class="fa fa-plus" aria-hidden="true"></i>
             </button>
         </div>
-       
-        
+
+
     </div>
 </div>
 
 
 
 <p-dialog [(visible)]="displayModalCreate" [style]="{width: '464px'}">
-    <app-crear-cliente 
-        (closePopup)="closeModal($event)" 
-        (createCustomer)="createCustomer($event)">
+    <app-crear-cliente (closePopup)="closeModal($event)" (createCustomer)="createCustomer($event)">
     </app-crear-cliente>
 </p-dialog>

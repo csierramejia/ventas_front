@@ -11,6 +11,11 @@
     font-size: 18px;
 }
 
+.radiomodal{  
+   position: relative;
+  top: 2px;
+}
+
 .numeroserie{
   text-align: left;
   font: Regular 13px/16px Montserrat;
