@@ -860,7 +860,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
    */
   setDays(dayWeek): void {
     const hoy = new Date();
-    const dt = new Date(hoy.getMonth() + 1 + ' ' + hoy.getDate() + ', ' + hoy.getFullYear());
+    const dt = new Date();
     switch (dayWeek) {
       case 'lun':
         this.days[0].date = dt;
