@@ -82,7 +82,8 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
     super();
     // obtemos el esquema de fechas para que el usuario puede saleccionar el dia de la apuesta a realizar
     const dayWeek = this.getDayWeek();
-    this.setDays(dayWeek);
+   // this.setDays(dayWeek);
+   this.setDaysServicio();
   }
 
   ngOnInit(): void {
@@ -111,6 +112,41 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
 
   }
 
+  setDaysServicio():void{
+    this.productosService.consultarSemanaServidor().subscribe(
+      dias => {
+        const rs: any = dias;
+        rs.forEach(element => {
+
+         const date= new Date(element.toString())
+          if(date.getDay() == 1){
+            this.days[0].date=element;
+          }
+          else if(date.getDay() == 2){
+            this.days[1].date=element;
+          }
+          else if(date.getDay() == 3){
+            this.days[2].date=element;
+          }
+          else if(date.getDay() == 4){
+            this.days[3].date=element;
+          }
+          else if(date.getDay() == 5){
+            this.days[4].date=element;
+          }
+          else if(date.getDay() == 6){
+            this.days[5].date=element;
+          }
+          else if(date.getDay() == 0){
+            this.days[6].date=element;
+          }
+        });
+      },
+      error => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
+  }
 
   /**
    * @author Luis Hernandez

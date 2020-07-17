@@ -34,6 +34,11 @@ export class ProductosService {
     return this.http.get<any[]>(`${ProductosAPIConstant.URL_CONSULTAR_SIGNOS}`);
   }
 
+
+  public consultarSemanaServidor() :Observable<any[]> {
+    return this.http.get<any[]>(`${ProductosAPIConstant.URL_CONSULTAR_SEMANA}`);
+  }
+
   public consultarValoresModalidad(nombreProducto:string, idModalidad:number): Observable<number[]> {
     return this.http.get<number[]>(`${ProductosAPIConstant.URL_CONSULTAR_MODALIDADES_VALORES}/${nombreProducto}/${idModalidad}`);
   }
