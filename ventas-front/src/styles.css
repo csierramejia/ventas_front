@@ -58,14 +58,14 @@ body {
 }
 
 .ui-panelmenu .ui-panelmenu-header>a {
-  font-family: Times, Times New Roman, serif !important;
+  font-family: Montserrat !important;
   font-size: 16px !important;
   font-weight: 400 !important;
 }
 
 .ui-panelmenu .ui-panelmenu-content .ui-menuitem .ui-menuitem-link {
   padding: 0.514em 0.857em !important;
-  font-family: Times, Times New Roman, serif !important;
+  font-family: Montserrat !important;
   font-size: 15px !important;
   padding-left: 42px !important;
 }
@@ -77,7 +77,7 @@ body {
 /* Estilos para autocomplete */
 
 .ui-autocomplete-panel .ui-autocomplete-items .ui-autocomplete-list-item {
-  font-family: Times, Times New Roman, serif !important;
+  font-family: Montserrat !important;
   font-size: 16px !important;
 }
 
@@ -89,7 +89,7 @@ body {
 
 .down-ad-s .ui-dropdown-label {
   padding: 0px !important;
-  font-family: Times, Times New Roman, serif !important;
+  font-family: Montserrat !important;
   font-size: 14px !important;
   line-height: 21.8px !important;
 }
@@ -100,18 +100,18 @@ body {
 
 .down-ad .ui-dropdown-label {
   padding: 0px !important;
-  font-family: Times, Times New Roman, serif !important;
+  font-family: Montserrat !important;
   font-size: 16px !important;
   line-height: 22.8px !important;
 }
 
 .down-ad .ui-placeholder {
-  font-family: Times, Times New Roman, serif !important;
+  font-family: Montserrat !important;
   font-size: 15px !important;
 }
 
 .ui-dropdown-items {
-  font-family: Times, Times New Roman, serif !important;
+  font-family: Montserrat !important;
   font-size: 16px !important
 }
 
@@ -158,7 +158,7 @@ body {
 
 .ui-datepicker .ui-button-text {
   padding: .25em 1em !important;
-  font-family: Times, Times New Roman, serif !important;
+  font-family: Montserrat !important;
 }
 
 .ui-datepicker {
@@ -268,7 +268,7 @@ body {
 }
 
 .ui-fileupload .ui-fileupload-buttonbar .ui-button {
-  font-family: Times, Times New Roman, serif !important;
+  font-family: Montserrat !important;
 }
 
 .ui-fileupload-content .ui-progressbar {
@@ -467,7 +467,7 @@ body {
 
 .tblhshort .ui-table-thead>tr>th {
   padding: 0.1em !important;
-  font-family: Times, Times New Roman, serif !important;
+  font-family: Montserrat !important;
   font-size: 15px !important;
 }
 
@@ -483,7 +483,7 @@ body {
 }
 
 .tbltitle .ui-table-thead>tr>th {
-  font-family: Times, Times New Roman, serif !important;
+  font-family: Montserrat !important;
   font-size: 15px !important;
 }
 
@@ -506,7 +506,7 @@ body {
   border-radius: 10px 10px 0px 0px !important;
   background-color: #0083FE !important;
   color: white !important;
-  font-family: Times, Times New Roman, serif !important;
+  font-family: Montserrat !important;
   font-weight: 700 !important;
   padding: 0.5em !important;
 }
@@ -525,7 +525,7 @@ body {
 /* font para los valores de los tr de las tablas */
 
 .ui-table .ui-table-tbody>tr {
-  font-family: Times, Times New Roman, serif !important;
+  font-family: Montserrat !important;
   color: #212121 !important;
   font-size: 16px !important;
 }
@@ -554,13 +554,13 @@ body {
 }
 
 .ui-messages-detail {
-  font-family: Times, Times New Roman, serif !important;
+  font-family: Montserrat !important;
 }
 
 .ui-dialog-titlebar {
   background-color: #607a8c !important;
   color: white !important;
-  font-family: Times, Times New Roman, serif !important;
+  font-family: Montserrat !important;
   font-weight: 700 !important;
   padding: 0.5em !important;
 }
@@ -579,7 +579,7 @@ body {
 }
 
 .ui-confirmdialog-message {
-  font-family: Times, Times New Roman, serif !important;
+  font-family: Montserrat !important;
   font-size: 16px !important;
 }
 
@@ -591,7 +591,7 @@ body {
 
 .ui-radiobutton-label {
   margin: 0 0 0 .3em !important;
-  font-family: Times, Times New Roman, serif !important;
+  font-family: Montserrat !important;
   color: #212121 !important;
   font-size: 0.95rem !important;
 }
@@ -668,7 +668,7 @@ body {
 }
 
 .btn-size-admin {
-  font-family: Times, Times New Roman, serif !important;
+  font-family: Montserrat !important;
   margin: 0px !important;
   cursor: pointer;
 }
@@ -684,7 +684,7 @@ body {
 }
 
 .font-new-roman {
-  font-family: Times, Times New Roman, serif !important;
+  font-family: Montserrat !important;
 }
 
 /* circulo redondo btns table */
@@ -809,7 +809,7 @@ body {
 }
 
 .sub-title-page {
-  font-family: Times, Times New Roman, serif !important;
+  font-family: Montserrat !important;
   font-size: 1rem;
   margin: 0px !important;
 }
@@ -829,13 +829,13 @@ body {
   color: #333333 !important;
   font-weight: 700 !important;
   font-size: 15px !important;
-  font-family: Times, Times New Roman, serif !important;
+  font-family: Montserrat !important;
 }
 
 .pnl-basic .ui-panel-titlebar {
   text-align: left !important;
   font-size: 15px !important;
-  font-family: Times, Times New Roman, serif !important;
+  font-family: Montserrat !important;
 }
 
 .cir-red {
@@ -905,7 +905,7 @@ body {
 
 .st {
   font-size: 0.98rem;
-  font-family: Times, Times New Roman, serif;
+  font-family: Montserrat;
 }
 
 .mx-dtl-mdl {
@@ -1048,7 +1048,7 @@ body {
 }
 
 .steps-st {
-  font-family: Times, Times New Roman, serif;
+  font-family: Montserrat;
   font-weight: 700;
   font-size: 15px;
 }
@@ -1075,7 +1075,7 @@ body {
   padding-right: 15px;
   border: 0px;
   outline: medium none;
-  font-family: Times, Times New Roman, serif !important;
+  font-family: Montserrat !important;
 }
 
 .btn-light-dark {
