@@ -1,13 +1,39 @@
 aside{
     top: 100px;
     left: 1086px;
-    width: 240px;
+    width: 100%;
     height: 668px;
     background: #FFFFFF 0% 0% no-repeat padding-box;
     box-shadow: 0px 3px 6px #00000029;
     opacity: 1;
 
 }
+
+.games {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: stretch;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  .box {
+    flex: 0 33%;
+    font-size: 12px;
+    font-family: Montserrat;
+  }
+  
+  .box .title-box{
+    color: #0083FE;
+    margin: 0px;
+  }
+  
+  .dayDraw{
+    font-family: Montserrat;
+    line-height: 1.23;
+    text-align: left;
+    color: #3a3f51;
+  }
 
 ::ng-deep .ui-card-body{
     padding: 5px !important;
@@ -18,8 +44,6 @@ aside{
     border-left: #0083fe 5px solid;
     top: 101px;
     left: 1086px;
-    width: 240px;
-    height: 103px;
     background: #FFFFFF 0% 0% no-repeat padding-box;
     box-shadow: 0px 3px 6px #00000029;
     opacity: 1;

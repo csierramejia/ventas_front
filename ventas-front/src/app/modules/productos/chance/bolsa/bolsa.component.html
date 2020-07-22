@@ -10,24 +10,39 @@
                             <b *ngIf="cartItem.numberPlayed==null && cartItem.modalidad==null && cartItem.numeroSuper==null && cartItem.numeroAstro" class="numberPlayed">Número jugado: {{cartItem.numeroAstro}}</b>
                             <b *ngIf="cartItem.nombresLoteria" class="signosBolsa">Loterias: {{cartItem.nombresLoteria}}</b> 
                         </div>
-                        <div class="row">
-                            <table *ngIf="cartItem.numberPlayed" style="width:100%">
-                                <tr>
-                                    <th class="headNumberValues" *ngIf="cartItem.direct">Directo</th>
-                                    <th class="headNumberValues" *ngIf="cartItem.combined">Combi</th>
-                                    <th class="headNumberValues" *ngIf="cartItem.threeC">3C</th>
-                                    <th class="headNumberValues" *ngIf="cartItem.twoC">2C</th>
-                                    <th class="headNumberValues" *ngIf="cartItem.oneC">1C</th>
-                                </tr>
-                                <tr>
-                                    <td class="textNumberValues" *ngIf="cartItem.direct">{{cartItem.direct | currency: "CAD":"symbol-narrow":".0-0"}}</td>
-                                    <td class="textNumberValues" *ngIf="cartItem.combined">{{cartItem.combined | currency: "CAD":"symbol-narrow":".0-0"}}</td>
-                                    <td class="textNumberValues" *ngIf="cartItem.threeC">{{cartItem.threeC | currency: "CAD":"symbol-narrow":".0-0"}}</td>
-                                    <td class="textNumberValues" *ngIf="cartItem.twoC">{{cartItem.twoC | currency: "CAD":"symbol-narrow":".0-0"}}</td>
-                                    <td class="textNumberValues" *ngIf="cartItem.oneC">{{cartItem.oneC | currency: "CAD":"symbol-narrow":".0-0"}}</td>
-                                </tr>
-                            </table>
+                        <br>
 
+                        <div class="row">
+
+                            <div *ngIf="cartItem.numberPlayed" class="games">
+
+                                <div *ngIf="cartItem.direct" class="box">
+                                  <p class="title-box">Directo</p>
+                                  {{cartItem.direct | currency: "CAD":"symbol-narrow":".0-0"}}
+                                </div>
+                                
+                                <div *ngIf="cartItem.combined" class="box">
+                                  <p class="title-box">Combi</p>
+                                  {{cartItem.combined | currency: "CAD":"symbol-narrow":".0-0"}}
+                                </div>
+                                
+                                <div *ngIf="cartItem.threeC" class="box">
+                                  <p class="title-box">3C</p>
+                                  {{cartItem.threeC | currency: "CAD":"symbol-narrow":".0-0"}}
+                                </div>
+                                
+                                <div *ngIf="cartItem.twoC" class="box">
+                                  <p class="title-box">2C</p>
+                                  {{cartItem.twoC | currency: "CAD":"symbol-narrow":".0-0"}}
+                                </div>
+                                
+                                <div *ngIf="cartItem.oneC" class="box">
+                                  <p class="title-box">1C</p>
+                                  {{cartItem.oneC | currency: "CAD":"symbol-narrow":".0-0"}}
+                                </div>
+                                
+                               </div>
+                             
                             <table *ngIf="cartItem.numberPlayed==null && cartItem.modalidad" style="width:100%">
                                 <tr>
                                     <td class="textNumberValues" *ngIf="cartItem.apuestaA">{{cartItem.apuestaA}}</td>
