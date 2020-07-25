@@ -57,18 +57,11 @@ export class LoginComponent extends CommonComponent implements OnInit {
           // se procede a obtener lo datos de bienvenida de la app
           const request: BienvenidaRequestDTO = new BienvenidaRequestDTO();
           request.idUsuario = dataAutenticacion.usuario.idUsuario;
-          request.idAplicacion=2;
+          request.idAplicacion = 2;
           this.seguridadService.getDatosBienvenida(request).subscribe(
             dataBienvenida => {
-
-              // se cambia el estado de la cuenta a sesion iniciada
-              this.shellState.userAccount.changeStateAutenticado(dataAutenticacion);
-
-              // se construye el menu de la aplicacion
-              this.shellState.menu.initMenu(dataBienvenida.itemsMenu);
-
-              // se redirecciona a la pagina de bienvenida
-              this.router.navigate([RouterConstant.NAVIGATE_BIENVENIDA]);
+              // se indica el shell que hay un nuevo inicio de sesion
+              this.shellState.iniciarSesion(dataBienvenida, dataAutenticacion);
             },
             error => {
               this.showError(error, formLogin);

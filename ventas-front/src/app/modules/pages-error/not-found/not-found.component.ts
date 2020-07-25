@@ -8,9 +8,14 @@ import { RouterConstant } from '../../../constants/router.constant';
  * page not found
  */
 @Component({
-  templateUrl: './not-found.component.html'
+  templateUrl: './not-found.component.html',
+  styleUrls: ['./not-found.component.css']
 })
 export class NotFoundComponent {
+
+  /**
+   * @param router, se utiliza para redireccionar a la pagina de inicio
+   */
   constructor(private router: Router) {}
 
   /**

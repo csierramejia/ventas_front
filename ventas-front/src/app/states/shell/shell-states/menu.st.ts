@@ -27,9 +27,6 @@ export class MenuST {
   /** Contiene la subscripcion del router */
   private subscriptionRouter: Subscription;
 
-  /** Estilo cuando un item del menu es seleccionado */
-  private MENU_ACTIVE = 'menu-active';
-
   /**
    * Cuando se carga la pagina se crea la instancia del estado del menu,
    * se debe tomar los datos del session-store, ya que en este punto son nulos
@@ -79,7 +76,6 @@ export class MenuST {
 
     // se configura los items del menu con su pagina de inicio
     this.modulos = itemsMenu;
-    this.modulos.unshift(this.getItemPaginaInicio());
 
     // se obtiene la suscripcion del router para ser notificado
     this.getSuscribeRouter();
@@ -133,10 +129,20 @@ export class MenuST {
    */
   private notificarItemSeleccionado(url: string): void {
 
-    // miga de pan para administracion de cuenta de usuario
+    // miga de pan para la pagina de inicio
+    if (url.includes(RouterConstant.NAVIGATE_BIENVENIDA)) {
+      this.bread.modulo = LabelsConstant.MENU_PAGINA_INICIO;
+      this.bread.icono = 'fa-home';
+      this.bread.url = null;
+      return;
+    }
+
+    // miga de pan para la pagina de configuracion cuenta
     if (url.includes(RouterConstant.ROUTER_CUENTA_USER)) {
-      this.bread.url = '/' + LabelsConstant.MENU_CUENTA_USER;
+      this.bread.modulo = LabelsConstant.MENU_CUENTA_USER;
       this.bread.icono = 'fa-gear';
+      this.bread.url = null;
+      return;
     }
 
     // programacion defensiva para los modulos
@@ -145,23 +151,13 @@ export class MenuST {
       // se recorre todos los modulos para validar el router de sus items
       let itemFound: MenuItem;
       for (const modulo of this.modulos) {
-        modulo.styleClass = null;
 
-        // el modulo de la pagina inicio no tiene items pero si router
-        if (!modulo.items) {
-          if (modulo.routerLink === url) {
-            this.bread.url = '/' + modulo.label;
-            this.bread.icono = modulo.icon;
-            modulo.styleClass = this.MENU_ACTIVE;
-          }
-        } else {
-
-          // se recorre los items de este modulo validando su router
-          itemFound = this.findItemRecursive(modulo.items as MenuItemDTO[], url);
-          if (itemFound) {
-            this.bread.icono = modulo.icon;
-            this.bread.url = modulo.label + '/' + this.bread.url;
-          }
+        // se recorre los items de este modulo validando su router
+        itemFound = this.findItemRecursive(modulo.items as MenuItemDTO[], url);
+        if (itemFound) {
+          this.bread.icono = modulo.icon;
+          this.bread.modulo = modulo.label;
+          this.bread.url = ' / ' + this.bread.url;
         }
       }
     }
@@ -178,7 +174,6 @@ export class MenuST {
 
     // se recorre todos los items
     for (const item of items) {
-      item.styleClass = null;
 
       // se verifica si este item tiene mas items
       if (item.items) {
@@ -197,24 +192,9 @@ export class MenuST {
       // se verifica si este item fue seleccionado por el user
       if (item.routerLink === url) {
         itemFound = item;
-        itemFound.styleClass = this.MENU_ACTIVE;
         this.bread.url = itemFound.label;
       }
     }
     return itemFound;
-  }
-
-  /**
-   * Metodo que permite construir el Item-Menu de la pagina de inicio
-   */
-  private getItemPaginaInicio(): MenuItemDTO {
-    return {
-      label: LabelsConstant.MENU_PAGINA_INICIO,
-      routerLink: RouterConstant.NAVIGATE_BIENVENIDA,
-      icon: 'fa fa-fw fa-dashboard font-size-20',
-      id: 'fa-dashboard',
-      acciones: null,
-      styleClass: this.MENU_ACTIVE
-    };
   }
 }

@@ -7,10 +7,15 @@ import { RouterConstant } from '../../../constants/router.constant';
  * a una pagina que no tiene privilegios
  */
 @Component({
-  templateUrl: './acces-denied.component.html'
+  templateUrl: './acces-denied.component.html',
+  styleUrls: ['./acces-denied.component.css']
 })
 export class AccesDeniedComponent {
-  constructor(private router: Router) { }
+
+  /**
+   * @param router, se utiliza para redireccionar a la pagina de inicio
+   */
+  constructor(private router: Router) {}
 
   /**
    * Metodo que soporta el evento de ir a la pagina de bienvenida

@@ -12,14 +12,17 @@ export class RouterConstant {
   /** Router para el componente de chance */
   public static readonly ROUTER_CHANCE: string = 'chance';
 
-   /** Router para el componente de chance */
-   public static readonly ROUTER_CHANCE_MILLONARIO: string = 'chance-millonario';
+  /** Router para el componente de chance */
+  public static readonly ROUTER_CHANCE_MILLONARIO: string = 'chance-millonario';
 
-    /** Router para el componente de chance */
-    public static readonly ROUTER_SUPER_CHANCE: string = 'super-chance';
+  /** Router para el componente de chance */
+  public static readonly ROUTER_SUPER_CHANCE: string = 'super-chance';
 
-    /** Router para el componente de chance */
-    public static readonly ROUTER_SUPER_ASTRO: string = 'super-astro';
+  /** Router para el componente de chance */
+  public static readonly ROUTER_SUPER_ASTRO: string = 'super-astro';
+
+  /** Router para el componente de loteria virtual */
+  public static readonly ROUTER_LOTERIA_VIRTUAL: string = 'loteria-virtual';
 
   /** Router para el modulo del PAGINAS DE ERRORES */
   public static readonly ROUTER_ERROR: string = 'error';
@@ -35,9 +38,6 @@ export class RouterConstant {
 
   /** Nombre del Router para la pagina de admin cuenta del user */
   public static readonly ROUTER_CUENTA_USER: string = 'cuentauser';
-
-  /** Router para el modulo de LOTERIAS */
-  // public static readonly ROUTER_CHANCE: string = 'chance';
 
   /** Router para el modulo de ESCRUTINIO */
   public static readonly ROUTER_VENTAS: string = 'ventas';
@@ -56,5 +56,4 @@ export class RouterConstant {
 
   /** Constante para navegar a la pagina de BIENVENIDA */
   public static readonly NAVIGATE_CHANCE: string = `/${RouterConstant.ROUTER_CHANCE}/${RouterConstant.ROUTER_BIENVENIDA}`;
-
-} 
+}
