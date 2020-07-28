@@ -1,1 +1,263 @@
-<p>loteria-virtual works!</p>
+<div class="ui-g">
+
+  <!-- pnl - left -->
+  <div class="ui-g-9 p-0">
+
+    <!-- fecha actual -->
+    <div class="ui-g-12 text-left pb-0 pt-0 pr-0 pl-0">
+      <p class="clock-icon">
+        <label class="hora">{{ fechaActual | date: "dd/MM/yyyy HH:mm:ss" }}</label>
+      </p>
+    </div>
+      
+    <!-- filtro nombre loteria -->
+    <div class="ui-g-12 p-0 pb-2">
+      <div class="inner-addon left-addon">
+        <i class="fa fa-search aico"></i>
+        <input
+          placeholder="Buscar lotería disponibles"
+          id="namefilter"
+          class="in-search"
+          type="text"
+          title="Filtro por el nombre de la lotería"/>
+      </div>
+    </div>
+
+    <!-- loterias -->
+    <div class="ui-g-12 p-0">
+      <p-carousel [value]="loterias" [numVisible]="3">
+        <ng-template let-loteria pTemplate="item">
+
+          <!-- pnl-content -->
+          <div (click)="seleccionarLoteria(loteria)" [ngClass]="{'selected' : (loteriaSeleccionada && loteriaSeleccionada.id === loteria.id)}" class="ui-g-12 content p-1">
+
+            <!-- header -->
+            <div [ngClass]="{'header-selected' : (loteriaSeleccionada && loteriaSeleccionada.id === loteria.id)}" class="ui-g-12 header elevation">
+              <div class="ui-g-12 p-0">
+                <div class="ui-g-1 p-0">
+                  <img src="../../../../assets/img/loterias/RISARALDA.png" width="45" height="48">
+                </div>
+                <div class="ui-g-11 p-0 text-center">
+                  <div class="ui-g-12 p-0">
+                    <span class="lbl-title">RISARALDA</span>
+                  </div>
+                  <div class="ui-g-12 p-0">
+                    <span class="lbl-sub-title">Sorteo: 6543</span>
+                  </div>                
+                </div>
+              </div>
+            </div>
+
+            <!-- body -->
+            <div class="ui-g-12 body elevation">
+
+              <!-- fecha sorteo -->
+              <div class="ui-g-12 p-0 pl-3 pr-3 pb-3">
+                <div class="ui-g-1 p-0 mt-1">
+                  <span class="calendar-icon"></span>
+                </div>
+                <div class="ui-g-11 p-0 text-center">
+                  <div class="ui-g-12 p-0">
+                    <span class="lbl-date">Fecha Sorteo</span>
+                  </div>
+                  <div class="ui-g-12 p-0">
+                    <span class="lbl-date-f">26/03/2020</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- premio mayor -->
+              <div class="ui-g-12 p-0 pl-3 pr-3">
+                <div class="ui-g-1 p-0 mt-1">
+                  <span class="money-icon"></span>
+                </div>
+                <div class="ui-g-11 p-0 text-center">
+                  <div class="ui-g-12 p-0">
+                    <span class="lbl-date">Premio Mayor</span>
+                  </div>
+                  <div class="ui-g-12 p-0">
+                    <span class="lbl-date-f">$500.000.000</span>
+                  </div>
+                </div>
+              </div>            
+            </div>
+
+            <!-- footer -->
+            <div class="ui-g-12 footer elevation">
+              <span class="footer-money">$10.000</span>
+            </div>
+          </div>
+        </ng-template>      
+      </p-carousel>
+    </div>
+
+    <!-- panel juego -->
+    <div class="ui-g-12">
+      <div class="card mat-elevation-z8">
+
+        <!-- header -->
+        <div class="card-header">
+          <div class="ui-g-11">
+            <a data-toggle="collapse"
+              href="#pnl-juego"
+              aria-expanded="true"
+              aria-controls="pnl-juego"
+              class="d-block pnl-header">
+              Juego
+            </a>
+          </div>
+          <div class="ui-g-1 text-right">
+            <a data-toggle="collapse"
+              href="#pnl-juego"
+              aria-expanded="true"
+              aria-controls="pnl-juego"
+              class="d-block pnl-header">
+              <i class="fa fa-chevron-down"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- cuerpo -->
+        <div id="pnl-juego" class="collapse show">
+          <div class="card-body">
+            
+            <!-- tipo identificacion -->
+            <div class="ui-g-4 p-0">
+              <div class="ui-g-12 pb-0">
+                <span class="lbl ml-0">Tipo Identificación</span>
+              </div>
+              <div class="ui-g-12 pt-0">
+                <p-radioButton name="incc" value="CC"></p-radioButton>
+                <span class="lbl-check ml-1 mr-4">CC</span>
+                <p-radioButton name="incc" value="CC"></p-radioButton>
+                <span class="lbl-check ml-1">TI</span>
+              </div>
+            </div>
+
+            <!-- nro identificacion -->
+            <div class="ui-g-4 p-0">
+              <div class="ui-g-12 pb-0">
+                <span class="lbl ml-1">Identificación del Cliente</span>
+              </div>
+              <div class="ui-g-12 pt-0">
+                <div class="inner-addon left-addon-user">
+                  <i class="fa fa-user aico clr"></i>
+                  <input
+                    placeholder="Buscar lotería"
+                    id="namefilter"
+                    class="input-app-sm w-100"
+                    type="text"
+                    title="Filtro por el nombre de la lotería"/>
+                </div>
+              </div>
+            </div>
+
+            <!-- cliente -->
+            <div class="ui-g-4 p-0">
+              <div class="ui-g-12 pb-0">
+                <span class="ml-1"></span>
+              </div>
+              <div class="ui-g-12 pt-0">
+                <i class="fa fa-check-circle icon-success"></i>
+                <input
+                  type="text"
+                  class="form-control styleInputClient">
+              </div>
+            </div>
+            <div class="ui-g-12 barra pt-1"></div>
+
+            <!-- Nro a jugar btns-->
+            <div class="ui-g-12 p-0">
+              <div class="ui-g-12 pb-0">
+                <span class="lbl ml-1">Número a Jugar*</span>
+              </div>
+              <div class="ui-g-6 pt-0">
+                <input
+                  placeholder="Buscar lotería"
+                  id="namefilter"
+                  class="input-app-sm w-100"
+                  type="text"
+                  title="Filtro por el nombre de la lotería"/>
+              </div> 
+              <div class="ui-g-6 pt-0">
+                <button
+                  class="btn-light"
+                  type="button"
+                  title="Oculta el panel de filtros de búsqueda">
+                  <label class="btn-label">CONSULTAR</label>
+                  <i class="fa btn-icon fa-search pl-2"></i>
+                </button>
+                <button
+                  class="btn-light ml-3"
+                  type="button"
+                  title="Oculta el panel de filtros de búsqueda">
+                  <label class="btn-label">ALEATORIO</label>
+                  <i class="fa btn-icon fa-random pl-2"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- serie -->
+            <div class="ui-g-4 pt-3 pb-3 pl-0">
+              <div class="ui-g-12 pb-0">
+                <span class="lbl ml-1">Serie*</span>
+              </div>
+              <div class="ui-g-12 pt-0">
+                <p-dropdown
+                  inputId="loteriasin"
+                  name="loteriasin"
+                  placeholder="Seleccionar"
+                  title="Lotería"
+                  emptyFilterMessage="No hay Loterías"
+                  styleClass="w-100 dropdown-app">
+                </p-dropdown>
+              </div>
+            </div>
+
+            <!-- fraccion -->
+            <div class="ui-g-4 pt-3 pb-3">
+              <div class="ui-g-12 pb-0">
+                <span class="lbl">Fracción*</span>
+              </div>
+              <div class="ui-g-12 pt-0">
+                <p-dropdown
+                  inputId="loteriasin"
+                  name="loteriasin"
+                  placeholder="Seleccionar"
+                  title="Lotería"
+                  emptyFilterMessage="No hay Loterías"
+                  styleClass="w-100 dropdown-app">
+                </p-dropdown>
+              </div>
+            </div>          
+
+            <!-- btn agregar -->
+            <div class="ui-g-4 pr-0 pt-3 pb-3 text-right">
+              <div class="ui-g-12 pb-0">
+                <span class="ml-1"></span>
+              </div>
+              <div class="ui-g-12 pt-0">
+                <button
+                class="btn-light"
+                type="button"
+                title="Oculta el panel de filtros de búsqueda">
+                  <label class="btn-label">AGREGAR</label>
+                  <i class="fa btn-icon fa-plus-circle font-size-18 pl-2"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div> 
+      </div>
+    </div>
+  </div>
+
+  <!-- pnl - right -->
+  <div class="ui-g-3 pr-0 pt-0">
+
+    <div class="ui-g-12 pnl-right">
+
+    </div>
+
+  </div>
+</div>

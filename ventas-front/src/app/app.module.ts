@@ -22,7 +22,7 @@ import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
     SpinnerComponent
   ],
   imports: [
-    RouterModule.forRoot(ROUTES, { preloadingStrategy: SelectivePreload }),
+    RouterModule.forRoot(ROUTES, { preloadingStrategy: SelectivePreload, useHash: true }),
     HttpClientModule,
     BrowserModule,
     BrowserAnimationsModule,

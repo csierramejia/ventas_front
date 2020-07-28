@@ -1,0 +1,242 @@
+.inner-addon {
+  position: relative;
+}
+
+.inner-addon .aico {
+  position: absolute;
+}
+
+.left-addon .aico {
+  left: 96%;
+  padding-top: 7px;
+}
+
+.left-addon input {
+  padding-right: 10px;
+}
+
+.aico {
+  color: rgb(4, 130, 251);
+  z-index: 1;
+  font-size: 20px;
+}
+
+.left-addon-user .aico {
+  left: 92%;
+  padding-top: 5px;
+}
+
+.clr {
+  color: #999999 !important;
+}
+
+.clock-icon {
+  top: 204px;
+  left: 631px;
+  height: 25px;
+  background: transparent url('../../../../assets/img/svg/clock.svg') 0% 0% no-repeat padding-box;
+  opacity: 1;
+  padding-left: 35px;
+  padding-top: 4p;
+  font-family: Montserrat;
+}
+
+.hora {
+  text-align: left;
+  font: Regular 13px/16px Montserrat;
+  letter-spacing: 0px;
+  color: #999999;
+  opacity: 1;
+}
+
+.title {
+  text-align: left;
+  font: Regular 18px/22px Montserrat;
+  letter-spacing: 0px;
+  color: #999999;
+  opacity: 1;
+  font-weight: bold;
+}
+
+.pnl-header {
+  top: 600px;
+  left: 281px;
+  font-size: 17px;
+  height: 22px;
+  font-family: Montserrat;
+  letter-spacing: 0px;
+  color: #999999;
+  opacity: 1;
+  text-decoration: none;
+}
+
+.card-header {
+  padding: 0px !important;
+}
+
+.card-body {
+  padding: 7px !important;
+}
+
+.in-search {
+  border-radius: 20px;
+  background-color: #fff;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border: 0px;
+  outline: medium none;
+  font-family: Montserrat !important;
+  width: 100%;
+}
+
+.icon-success {
+  position: absolute;
+  pointer-events: none;
+  font-size: 30px;
+  color: #0083fe;
+}
+
+.styleInputClient {
+  height: 30px;
+  background: #F2F2F2 0% 0% no-repeat padding-box;
+  border-radius: 15px;
+  opacity: 1;
+  font-size: 14px;
+}
+
+.lbl {
+  text-align: left;
+  font-family: Montserrat;
+  letter-spacing: 0px;
+  color: #333333;
+  opacity: 1;
+  font-size: 14px !important;
+  padding-left: 5px;
+}
+
+.barra {
+  border-bottom: solid 0.5px rgb(206, 204, 204);
+}
+
+.btn-icon {
+  color: #f1f1f1;
+}
+
+.btn-label {
+  font-family: Montserrat;
+  margin: 0px !important;
+  cursor: pointer;
+  color: #f1f1f1;
+}
+
+.lbl-check {
+  text-align: left;
+  font: Regular 18px/22px Montserrat;
+  letter-spacing: 0px;
+  color: #424242;
+  opacity: 1;
+  font-weight: bold;
+}
+
+.details>.p-grid {
+  border-radius: 3px;
+  margin: 0.3em;
+  text-align: center;
+  padding: 2em 0 2.25em 0;
+}
+
+.header {
+  height: 62px;
+  background: #0083FE 0% 0% no-repeat padding-box;
+  border-radius: 5px 5px 0px 0px;
+}
+
+.header-selected {
+  background: #FE007F 0% 0% no-repeat padding-box;
+}
+
+.content {
+  border-radius: 10px 10px 10px 10px;
+  cursor: pointer;
+}
+
+.content:hover, header {
+  background: rgb(204, 204, 204) 0% 0% no-repeat padding-box;
+}
+
+.footer {
+  background: #F2F2F2 0% 0% no-repeat padding-box;
+  border-radius: 0px 0px 5px 5px;
+  height: 35px;
+  text-align: center;
+}
+
+.body {
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  height: 123px;
+}
+
+.elevation {
+  box-shadow: 0px 1px 0px -3px rgba(0, 0, 0, 0.2), 0px 0px 5px 1px rgba(0, 0, 0, 0.14), 0px 2px 1px 1px rgba(0, 0, 0, 0.12);
+}
+
+:host ::ng-deep .ui-carousel-dots-container {
+  display: none !important;
+}
+
+.footer-money {
+  font: Bold 18px/22px Montserrat;
+  letter-spacing: 0px;
+  color: #0083FE;
+}
+
+.calendar-icon {
+  height: 30px;
+  background: transparent url('../../../../assets/img/svg/calendar-blue.svg') 0% 0% no-repeat padding-box;
+  padding-left: 35px;
+  display: inline-block;
+}
+
+.money-icon {
+  height: 30px;
+  background: transparent url('../../../../assets/img/svg/cash.svg') 0% 0% no-repeat padding-box;
+  padding-left: 35px;
+  display: inline-block;
+}
+
+.lbl-date {
+  font: Regular 12px/15px Montserrat;
+  letter-spacing: 0px;
+  color: #333333;
+}
+
+.lbl-date-f {
+  font: Regular 14px/18px Montserrat;
+  letter-spacing: 0px;
+  color: #999999;
+}
+
+.lbl-title {
+  font: Bold 14px/18px Montserrat;
+  letter-spacing: 0px;
+  color: #FFFFFF;
+}
+
+.lbl-sub-title {
+  font: Regular 13px/16px Montserrat;
+  letter-spacing: 0px;
+  color: #FFFFFF;
+}
+
+.selected {
+  cursor: auto !important;
+  pointer-events: none;
+}
+
+.pnl-right {
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #00000029;
+  height: 668px;
+}

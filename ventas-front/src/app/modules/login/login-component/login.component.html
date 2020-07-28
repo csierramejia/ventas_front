@@ -13,7 +13,7 @@
     <form
     #formLogin="ngForm" name="formLogin"
     (ngSubmit)="beforeIniciarSesion() && formLogin.form.valid && iniciarSesion(formLogin)"
-    (keydown.enter)="$event.preventDefault()" novalidate>
+    novalidate>
 
       <!-- panel ingreso informacion -->
       <div class="ui-g container">
