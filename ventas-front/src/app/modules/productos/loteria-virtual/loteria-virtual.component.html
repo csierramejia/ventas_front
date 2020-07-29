@@ -1,3 +1,4 @@
+<!-- pnl principal -->
 <div class="ui-g">
 
   <!-- pnl - left -->
@@ -238,6 +239,7 @@
               </div>
               <div class="ui-g-12 pt-0">
                 <button
+                (click)="agregarLoteria()"
                 class="btn-light"
                 type="button"
                 title="Oculta el panel de filtros de búsqueda">
@@ -255,9 +257,122 @@
   <!-- pnl - right -->
   <div class="ui-g-3 pr-0 pt-0">
 
-    <div class="ui-g-12 pnl-right">
-
+    <!-- pnl loterias agregadas -->
+    <div class="ui-g-12 p-0 pnloteries-right">
+      <ng-container *ngIf="loteriasAgregadas && loteriasAgregadas.length">
+        <ng-container *ngFor="let loteria of loteriasAgregadas; let i = index">
+          <div class="ui-g-12 p-0 pnl-loterias mb-2">
+            <div class="ui-g-10 p-0 pnl-separator height-100">
+              <div class="ui-g-12 p-0">
+                <div class="ui-g-6 p-0 p-left">
+                  <span class="nro-sorteo pr-2">Número: 3242</span>
+                </div>
+                <div class="ui-g-6 p-0 text-center">
+                  <span class="nro-serie">Serie: 12</span>
+                </div> 
+                <div class="ui-g-12 p-0 p-left text-left">
+                  <span class="lbl-loteria">Lotería: Manizales</span>
+                </div>
+                <div class="ui-g-12 p-0 p-left text-left pb-2">
+                  <div class="ui-g-4 p-0">
+                    <span class="lbl-loteria">Fracción:</span>
+                  </div>
+                  <div class="ui-g-8 p-0 text-center">
+                    <span class="pnl-fraccion mb-1">1</span>
+                  </div>
+                </div>
+                <div class="ui-g-12 p-0 p-left text-center">
+                  <span class="nro-serie">Valor: $12.000</span>
+                </div>           
+              </div>
+            </div>
+            <div class="ui-g-2 p-0 text-center vertical-center">
+              <i class="pi pi-pencil btn-edit-played"></i>
+              <i class="pi pi-trash btn-remove-played"></i>
+            </div>
+          </div>
+          <div class="ui-g-12 p-0 pnl-loterias mb-2">
+            <div class="ui-g-10 p-0 pnl-separator height-100">
+              <div class="ui-g-12 p-0">
+                <div class="ui-g-6 p-0 p-left">
+                  <span class="nro-sorteo pr-2">Número: 3242</span>
+                </div>
+                <div class="ui-g-6 p-0 text-center">
+                  <span class="nro-serie">Serie: 12</span>
+                </div> 
+                <div class="ui-g-12 p-0 p-left text-left">
+                  <span class="lbl-loteria">Lotería: Manizales</span>
+                </div>
+                <div class="ui-g-12 p-0 p-left text-left pb-2">
+                  <div class="ui-g-4 p-0">
+                    <span class="lbl-loteria">Fracción:</span>
+                  </div>
+                  <div class="ui-g-8 p-0 text-center">
+                    <span class="pnl-fraccion mb-1">1</span>
+                    <span class="pnl-fraccion mb-1">3</span>
+                    <span class="pnl-fraccion mb-1">4</span>
+                    <span class="pnl-fraccion">Todo el billete</span>
+                  </div>
+                </div>
+                <div class="ui-g-12 p-0 p-left text-center">
+                  <span class="nro-serie">Valor: $12.000</span>
+                </div>           
+              </div>
+            </div>
+            <div class="ui-g-2 p-0 text-center vertical-center">
+              <i class="pi pi-pencil btn-edit-played"></i>
+              <i class="pi pi-trash btn-remove-played"></i>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
     </div>
 
+    <!-- pnl pagar -->
+    <div class="ui-g-12 p-0 pnl-right">
+      <div class="ui-g-12 p-0 sub-pnl-right">
+
+        <!-- apostado -->
+        <div class="ui-g-6 p-0 mt-3 text-center spr">
+          <div class="ui-g-12 p-0">
+            <span class="lbl-pay">Apostado</span>
+          </div>
+          <div class="ui-g-12 p-0 text-center">
+            <span class="lbl-value">$ 35,0000</span>
+          </div>
+        </div>
+
+        <!-- iva -->
+        <div class="ui-g-6 p-0 mt-3 text-center">
+          <div class="ui-g-12 p-0">
+            <span class="lbl-pay">IVA</span>
+          </div>
+          <div class="ui-g-12 p-0 text-center">
+            <span class="lbl-value">$ 25,0000</span>
+          </div>
+        </div>
+
+        <!-- total -->
+        <div class="ui-g-12 p-0 text-center pt-4 pb-4">
+          <span class="lbl-total pr-2">Total</span>
+          <span class="lbl-total">$ 15,0000</span>
+        </div>
+        
+        <!-- btn pagar -->
+        <div class="ui-g-12 p-0">
+          <button
+           class="btn-light-dark btn-pagar w-100"
+           type="button"
+           title="Permite regresar a la lista de roles">
+            <div class="ui-g-11 p-0 text-center">
+              <label class="btn-label-pagar pl-1">PAGAR</label>
+            </div>
+            <div class="ui-g-1 p-0 text-right">
+              <i class="fa fa-chevron-circle-right btn-icon-pagar font-size-24"></i>
+            </div>
+          </button>
+        </div>        
+      </div>
+    </div>
   </div>
 </div>

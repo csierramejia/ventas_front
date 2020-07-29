@@ -22,6 +22,9 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
   /** Es la loteria seleccionada para el proceso */
   public loteriaSeleccionada: LoteriaVirtualConfiguracionDTO;
 
+  /** Son las loterias agregadas para pagar */
+  public loteriasAgregadas: Array<string>;
+
   /**
    * @param messageService, Se utiliza para la visualizacion
    * de los mensajes en la pantalla
@@ -60,6 +63,13 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
   }
 
   /**
+   * Metodo que permite soporta el evento click agregar loterias
+   */
+  public agregarLoteria(): void {
+    this.loteriasAgregadas.push('1');
+  }
+
+  /**
    * Metodo que es invocado al momento de la creacion
    * del componente, donde se procede a consultar los
    * datos iniciales requeridos de la funcionalidad
@@ -86,5 +96,6 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
     this.loterias.push(loteria3);
     this.loterias.push(loteria4);
     this.loterias.push(loteria5);
+    this.loteriasAgregadas = new Array<string>();
   }
 }

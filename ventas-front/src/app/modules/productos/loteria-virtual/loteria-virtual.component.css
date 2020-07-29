@@ -235,8 +235,143 @@
   pointer-events: none;
 }
 
+.pnloteries-right {
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #00000029;
+  min-height: 330px;
+  max-height: 100%;
+}
+
 .pnl-right {
   background: #FFFFFF 0% 0% no-repeat padding-box;
   box-shadow: 0px 3px 6px #00000029;
-  height: 668px;
+  height: 300px;
+}
+
+.sub-pnl-right {
+  background: transparent linear-gradient(180deg, #0083FE 0%, #0BC9EC 100%) 0% 0% no-repeat padding-box;
+  height: 145px;
+}
+
+.lbl-pay {
+  font: Bold 18px/22px Montserrat;
+  font-size: 16px;
+  color: #FFFFFF;
+}
+
+.lbl-total {
+  font: Bold 21px/25px Montserrat;
+  color: #FFFFFF;
+}
+
+.spr {
+  border-right: 2px solid #FFFFFF;
+}
+
+.lbl-value {
+  font: Regular 17px/20px Montserrat;
+  color: #FFFFFF;
+}
+
+.pnl-pagar {
+  position: relative;
+}
+
+.btn-pagar {
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 8px #149DB77A !important;
+  font-weight: bold;
+}
+
+.btn-label-pagar {
+  font-family: Montserrat;
+  margin: 0px !important;
+  cursor: pointer;
+  color: #0083FE;
+  margin-top: 3px !important;
+}
+
+.btn-icon-pagar {
+  color: #0083FE;
+}
+
+.btn-pagar:hover {
+  background: rgb(241, 241, 241);
+}
+
+.pnl-loterias {
+  min-height: 88px;
+  max-height: 100%;
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #00000029;
+  border-left: 4px solid #0083FE;
+  position: relative;
+}
+
+.pnl-separator {
+  border-right: 2px solid #d6d6d6;
+}
+
+.height-100 {
+  height: 100%;
+}
+
+.btn-edit-played {
+  color: #14399e;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.btn-edit-played:hover {
+  color: #071231;
+}
+
+.btn-remove-played {
+  color: #d20202;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.btn-remove-played:hover {
+  color: #660303;
+}
+
+.nro-sorteo {
+  font: Bold 12px/14px Montserrat;
+  color: #3A3F51;
+}
+
+.nro-serie {
+  font: Bold 12px/14px Montserrat;
+  color: #0083FE;
+}
+
+.lbl-loteria {
+  font: Bold 12px/14px Montserrat;
+  color: rgb(146, 147, 153);
+}
+
+.p-left {
+  padding-left: 5px !important;
+}
+
+.pnl-fraccion {
+  background: #0083FE 0% 0% no-repeat padding-box;
+  border-radius: 5px;
+  text-align: center;
+  font: Bold 12px/14px Montserrat;
+  color: #FFFFFF;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  width: 100px;
+  display: inline-block;
+}
+
+.vertical-center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 83%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
