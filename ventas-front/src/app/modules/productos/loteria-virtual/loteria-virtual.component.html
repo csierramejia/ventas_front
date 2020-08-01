@@ -123,47 +123,56 @@
           <div class="card-body">
             
             <!-- tipo identificacion -->
-            <div class="ui-g-4 p-0">
+            <div class="ui-g-6 p-0">
               <div class="ui-g-12 pb-0">
                 <span class="lbl ml-0">Tipo Identificación</span>
               </div>
-              <div class="ui-g-12 pt-0">
-                <p-radioButton name="incc" value="CC"></p-radioButton>
-                <span class="lbl-check ml-1 mr-4">CC</span>
-                <p-radioButton name="incc" value="CC"></p-radioButton>
-                <span class="lbl-check ml-1">TI</span>
+              <div class="ui-g-12 pt-0 pb-0">
+                <p-dropdown
+                  [(ngModel)]="tipoDocumento"
+                  (onChange)="changeTipoNroDocumento()"
+                  [options]="itemsTiposDocumentos"
+                  inputId="tipoin"
+                  name="tipoin"
+                  title="Tipo Identificación"
+                  styleClass="w-100 dropdown-app">
+                </p-dropdown>
               </div>
             </div>
 
             <!-- nro identificacion -->
-            <div class="ui-g-4 p-0">
+            <div class="ui-g-6 p-0">
               <div class="ui-g-12 pb-0">
                 <span class="lbl ml-1">Identificación del Cliente</span>
               </div>
-              <div class="ui-g-12 pt-0">
+              <div class="ui-g-12 pt-0 pb-0">
                 <div class="inner-addon left-addon-user">
                   <i class="fa fa-user aico clr"></i>
                   <input
-                    placeholder="Buscar lotería"
+                    [(ngModel)]="nroDocumento"
+                    (keypress)="keyPressNumber($event)"
+                    (change)="changeTipoNroDocumento()"
                     id="namefilter"
                     class="input-app-sm w-100"
                     type="text"
-                    title="Filtro por el nombre de la lotería"/>
+                    pKeyFilter="pint"
+                    title="Identificación del Cliente"/>
                 </div>
               </div>
             </div>
 
             <!-- cliente -->
-            <div class="ui-g-4 p-0">
-              <div class="ui-g-12 pb-0">
-                <span class="ml-1"></span>
-              </div>
-              <div class="ui-g-12 pt-0">
-                <i class="fa fa-check-circle icon-success"></i>
-                <input
-                  type="text"
-                  class="form-control styleInputClient">
-              </div>
+            <div class="ui-g-12 pb-0 pt-2 pr-2 pl-2">
+              <ng-container *ngIf="cliente">
+                <div class="ui-g-12 p-0">
+                  <i class="fa fa-check-circle icon-success"></i>
+                  <input
+                    [ngModel]="nombreCompleto"
+                    type="text"
+                    maxlength="50"
+                    class="form-control styleInputClient">
+                </div>
+              </ng-container>
             </div>
             <div class="ui-g-12 barra pt-1"></div>
 
@@ -376,3 +385,11 @@
     </div>
   </div>
 </div>
+
+<!-- modal creacion cliente -->
+<p-dialog [(visible)]="showModalCrearCliente" [style]="{width: '464px'}">
+  <app-crear-cliente 
+      (closePopup)="closeModal($event)" 
+      (createCustomer)="createCustomer($event)">
+  </app-crear-cliente>
+</p-dialog>

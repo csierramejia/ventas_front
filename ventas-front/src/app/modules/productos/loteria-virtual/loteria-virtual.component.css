@@ -27,7 +27,7 @@
 }
 
 .clr {
-  color: #999999 !important;
+  color: #5c6063 !important;
 }
 
 .clock-icon {
@@ -96,6 +96,7 @@
   pointer-events: none;
   font-size: 30px;
   color: #0083fe;
+  padding-left: 2px;
 }
 
 .styleInputClient {
@@ -104,6 +105,8 @@
   border-radius: 15px;
   opacity: 1;
   font-size: 14px;
+  padding-left: 30px;
+  pointer-events: none;
 }
 
 .lbl {

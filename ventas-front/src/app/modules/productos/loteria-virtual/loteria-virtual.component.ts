@@ -1,15 +1,21 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { CommonComponent } from 'src/app/utilities/common.component';
-import { MessageService, ConfirmationService } from 'primeng/api';
+import { MessageService, ConfirmationService, SelectItem } from 'primeng/api';
 import { SpinnerState } from 'src/app/states/spinner.state';
 import { LoteriaVirtualConfiguracionDTO } from 'src/app/dtos/productos/loteria-virtual/loteria-virtual-configuracion.dto';
+import { TiposDocumentosConstant } from 'src/app/constants/tipos-documentos.constant';
+import { ClientesDTO } from 'src/app/dtos/productos/chance/clientes.dto';
+import { MsjUtil } from 'src/app/utilities/messages.util';
+import { ProductosService } from '../../../modules/productos/productos.service';
+import { CrearClienteComponent } from '../chance/crear-cliente/crear-cliente.component';
 
 /**
  * Componente para las ventas de las loterias virtual
  */
 @Component({
   templateUrl: './loteria-virtual.component.html',
-  styleUrls: ['./loteria-virtual.component.css']
+  styleUrls: ['./loteria-virtual.component.css'],
+  providers: [ ProductosService ]
 })
 export class LoteriaVirtualComponent extends CommonComponent implements OnInit, OnDestroy {
 
@@ -25,9 +31,33 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
   /** Son las loterias agregadas para pagar */
   public loteriasAgregadas: Array<string>;
 
+  /** lista de items de TIPOS DE DOCUMENTOS */
+  public itemsTiposDocumentos: SelectItem[];
+
+  /** Tipo de documento para la busqueda del cliente */
+  public tipoDocumento: string;
+
+  /** Nro de documento para la busqueda del cliente */
+  public nroDocumento: string;
+
+  /** Es el nombre completo del cliente consultado */
+  public nombreCompleto: string;
+
+  /** Datos del cliente consultado */
+  public cliente: ClientesDTO;
+
+  /** Se utiliza para visualizar el modal de creacion del cliente */
+  public showModalCrearCliente: boolean;
+
+  /** Es el componente modal para la creacion del cliente */
+  @ViewChild(CrearClienteComponent) modalCrearCliente: CrearClienteComponent;
+
   /**
    * @param messageService, Se utiliza para la visualizacion
    * de los mensajes en la pantalla
+   *
+   * @param productosService, Contiene los procesos de negocio
+   * para esta funcionalidad
    *
    * @param confirmationService, se utiliza para mostrar el
    * modal de confirmacion para diferente procesos
@@ -36,6 +66,7 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
    */
   constructor(
     protected messageService: MessageService,
+    private productosService: ProductosService,
     private confirmationService: ConfirmationService,
     private spinnerState: SpinnerState) {
     super();
@@ -53,6 +84,67 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
    */
   ngOnDestroy(): void {
     this.messageService.clear();
+  }
+
+  /**
+   * Funcion que permite validar que solo ingresen datos numericos
+   */
+  public keyPressNumber(e) {
+    const key = window.Event ? e.which : e.keyCode;
+    e.key.replace(/\D|\-/, '');
+    return (key >= 48 && key <= 57);
+  }
+
+  /**
+   * Medoto que soporta el evento onchange del tipo y nro documento
+   */
+  public changeTipoNroDocumento(): void {
+
+    // por si fue consultado con anterioridad
+    this.cliente = null;
+    this.nombreCompleto = null;
+    this.showModalCrearCliente = false;
+
+    // se verifica la nulalidad de nro y tipo doc
+    if (this.tipoDocumento && this.nroDocumento) {
+      const clientesDTO: ClientesDTO = new ClientesDTO();
+      clientesDTO.numeroDocumento = this.nroDocumento;
+      clientesDTO.tipoDocumento = this.tipoDocumento;
+
+      // se procede a consultar el cliente
+      this.productosService.clienteApuesta(clientesDTO).subscribe(
+        data => {
+          const responseCliente: any = data;
+          if (responseCliente.existe) {
+            this.cliente = data;
+            this.nombreCompleto = data.primerNombre + ' ' + data.segundoNombre + ' ' + data.primerApellido + ' ' + data.segundoApellido;
+          } else {
+            this.modalCrearCliente.clienteForm.get('tipoDocumento').setValue(this.tipoDocumento);
+            this.modalCrearCliente.clienteForm.get('numeroDocumento').setValue(this.nroDocumento);
+            this.showModalCrearCliente = true;
+          }
+        },
+        error => {
+          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+        }
+      );
+    }
+  }
+
+  /**
+   * Metodo que es invocado por el modal de crear cliente
+   */
+  public createCustomer(event): void {
+    this.showModalCrearCliente = false;
+    this.cliente = event;
+    this.nombreCompleto = event.primerNombre + ' ' + event.segundoNombre + ' ' + event.primerApellido + ' ' + event.segundoApellido;
+  }
+
+  /**
+   * Metodo que es invocado por el modal de crear cliente
+   */
+  public closeModal(event): void {
+    this.showModalCrearCliente = event;
   }
 
   /**
@@ -97,5 +189,12 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
     this.loterias.push(loteria4);
     this.loterias.push(loteria5);
     this.loteriasAgregadas = new Array<string>();
+
+    // se configura los items para tipo de documentos
+    this.tipoDocumento = TiposDocumentosConstant.CEDULA_CIUDADANIA;
+    this.itemsTiposDocumentos = [
+      { value: TiposDocumentosConstant.CEDULA_CIUDADANIA, label: TiposDocumentosConstant.CEDULA_CIUDADANIA},
+      { value: TiposDocumentosConstant.TARJETA_IDENTIDAD, label: TiposDocumentosConstant.TARJETA_IDENTIDAD}
+    ];
   }
 }
