@@ -13,20 +13,25 @@
       
     <!-- filtro nombre loteria -->
     <div class="ui-g-12 p-0 pb-2">
-      <div class="inner-addon left-addon">
+      <div *ngIf="loteriasOrigen.length > 3" class="inner-addon left-addon">
         <i class="fa fa-search aico"></i>
         <input
-          placeholder="Buscar lotería disponibles"
-          id="namefilter"
-          class="in-search"
+          (keyup)="busquedaLoterias()"
+          [(ngModel)]="filterNombreLoteria"
           type="text"
+          maxlength="50"
+          class="in-search"
+          autocomplete="off"
+          placeholder="Buscar lotería disponibles"
           title="Filtro por el nombre de la lotería"/>
       </div>
     </div>
 
     <!-- loterias -->
     <div class="ui-g-12 p-0">
-      <p-carousel [value]="loterias" [numVisible]="3">
+      
+      <!-- carousel -->
+      <p-carousel [value]="loterias" [numVisible]="carouselNroVisible">
         <ng-template let-loteria pTemplate="item">
 
           <!-- pnl-content -->
@@ -35,12 +40,12 @@
             <!-- header -->
             <div [ngClass]="{'header-selected' : (loteriaSeleccionada && loteriaSeleccionada.id === loteria.id)}" class="ui-g-12 header elevation">
               <div class="ui-g-12 p-0">
-                <div class="ui-g-1 p-0">
+                <div class="position-absolute">
                   <img src="../../../../assets/img/loterias/RISARALDA.png" width="45" height="48">
                 </div>
-                <div class="ui-g-11 p-0 text-center">
+                <div class="ui-g-12 p-0 text-center">
                   <div class="ui-g-12 p-0">
-                    <span class="lbl-title">RISARALDA</span>
+                    <span class="lbl-title">{{loteria.nombreLoteria}}</span>
                   </div>
                   <div class="ui-g-12 p-0">
                     <span class="lbl-sub-title">Sorteo: 6543</span>
@@ -54,14 +59,14 @@
 
               <!-- fecha sorteo -->
               <div class="ui-g-12 p-0 pl-3 pr-3 pb-3">
-                <div class="ui-g-1 p-0 mt-1">
+                <div class="position-absolute p-0 mt-1">
                   <span class="calendar-icon"></span>
                 </div>
-                <div class="ui-g-11 p-0 text-center">
+                <div class="ui-g-12 p-0 text-center">
                   <div class="ui-g-12 p-0">
                     <span class="lbl-date">Fecha Sorteo</span>
                   </div>
-                  <div class="ui-g-12 p-0">
+                  <div class="ui-g-12 p-0 text-center">
                     <span class="lbl-date-f">26/03/2020</span>
                   </div>
                 </div>
@@ -69,10 +74,10 @@
 
               <!-- premio mayor -->
               <div class="ui-g-12 p-0 pl-3 pr-3">
-                <div class="ui-g-1 p-0 mt-1">
+                <div class="position-absolute p-0 mt-1">
                   <span class="money-icon"></span>
                 </div>
-                <div class="ui-g-11 p-0 text-center">
+                <div class="ui-g-12 p-0 text-center">
                   <div class="ui-g-12 p-0">
                     <span class="lbl-date">Premio Mayor</span>
                   </div>
@@ -88,8 +93,18 @@
               <span class="footer-money">$10.000</span>
             </div>
           </div>
-        </ng-template>      
+        </ng-template>       
       </p-carousel>
+      
+      <!-- no hay loterias -->
+      <ng-container *ngIf="loteriasOrigen && loteriasOrigen.length && (!loterias || loterias.length === 0)">
+        <div class="mr-2 ml-2 mt-2 mb-2 ui-messages ui-messages-info ui-corner-all p-2">
+          <span class="ui-messages-icon pi pi-info-circle"></span>
+          <span class="ui-messages-detail font-size-14 mt-1 lbl-date">
+            <strong>No se encontraron LOTERIAS</strong> que coincidan con el nombre de búsqueda ingresado
+          </span>
+        </div>
+      </ng-container>
     </div>
 
     <!-- panel juego -->
@@ -152,7 +167,6 @@
                     [(ngModel)]="nroDocumento"
                     (keypress)="keyPressNumber($event)"
                     (change)="changeTipoNroDocumento()"
-                    id="namefilter"
                     class="input-app-sm w-100"
                     type="text"
                     pKeyFilter="pint"

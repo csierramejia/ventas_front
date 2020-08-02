@@ -7,7 +7,7 @@ export class LoteriaVirtualConfiguracionDTO {
   public id: number;
 
   /** Nombre de la loteria */
-  public loteria: string;
+  public nombreLoteria: string;
 
   /** Identificador de la loteria */
   public idLoteria: number;

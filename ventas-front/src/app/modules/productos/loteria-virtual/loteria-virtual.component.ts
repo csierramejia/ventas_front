@@ -22,8 +22,11 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
   /** Se utiliza para mostrar la fecha-hora actual */
   public fechaActual = new Date();
 
-  /** Son las loterias con sus configuraciones */
+  /** Son las loterias con sus configuraciones a mostrar en pantalla */
   public loterias: Array<LoteriaVirtualConfiguracionDTO>;
+
+  /** Son las loterias con sus configuraciones consultadas */
+  public loteriasOrigen: Array<LoteriaVirtualConfiguracionDTO>;
 
   /** Es la loteria seleccionada para el proceso */
   public loteriaSeleccionada: LoteriaVirtualConfiguracionDTO;
@@ -48,6 +51,12 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
 
   /** Se utiliza para visualizar el modal de creacion del cliente */
   public showModalCrearCliente: boolean;
+
+  /** Es el filter ingresado para la busqueda de loterias */
+  public filterNombreLoteria: string;
+
+  /** Es la cantidad de nro de card que se visualiza en el carousel */
+  public carouselNroVisible = 3;
 
   /** Es el componente modal para la creacion del cliente */
   @ViewChild(CrearClienteComponent) modalCrearCliente: CrearClienteComponent;
@@ -84,6 +93,30 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
    */
   ngOnDestroy(): void {
     this.messageService.clear();
+  }
+
+  /**
+   * Metodo que permite soportar el evento filter por nombre loteria
+   */
+  public busquedaLoterias(): void {
+
+    // el valor del filtro no puede ser indefinido
+    this.carouselNroVisible = 1;
+    if (this.filterNombreLoteria && this.filterNombreLoteria.length) {
+
+      // se crea la instancia de la lista a visualizar
+      this.loterias = new Array<LoteriaVirtualConfiguracionDTO>();
+
+      // se busca la loteria que coincide con el valor
+      for (const loteria of this.loteriasOrigen) {
+        if (loteria.nombreLoteria && loteria.nombreLoteria.toUpperCase().includes(this.filterNombreLoteria.toUpperCase())) {
+          this.loterias.push(loteria);
+        }
+      }
+    } else {
+      this.loterias = this.loteriasOrigen;
+      this.carouselNroVisible = 3;
+    }
   }
 
   /**
@@ -169,25 +202,26 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
   private init(): void {
     this.loterias = new Array<LoteriaVirtualConfiguracionDTO>();
     const loteria1 = new LoteriaVirtualConfiguracionDTO();
-    loteria1.loteria = 'Quindio';
+    loteria1.nombreLoteria = 'Quindio';
     loteria1.id = 1;
     const loteria2 = new LoteriaVirtualConfiguracionDTO();
-    loteria2.loteria = 'Pereira';
+    loteria2.nombreLoteria = 'Pereira';
     loteria2.id = 2;
     const loteria3 = new LoteriaVirtualConfiguracionDTO();
-    loteria3.loteria = 'Manizales';
+    loteria3.nombreLoteria = 'Manizales';
     loteria3.id = 3;
     const loteria4 = new LoteriaVirtualConfiguracionDTO();
-    loteria4.loteria = 'Medellin';
+    loteria4.nombreLoteria = 'Medellin';
     loteria4.id = 4;
     const loteria5 = new LoteriaVirtualConfiguracionDTO();
-    loteria5.loteria = 'Bogota';
+    loteria5.nombreLoteria = 'Bogota';
     loteria5.id = 5;
     this.loterias.push(loteria1);
     this.loterias.push(loteria2);
     this.loterias.push(loteria3);
     this.loterias.push(loteria4);
     this.loterias.push(loteria5);
+    this.loteriasOrigen = this.loterias;
     this.loteriasAgregadas = new Array<string>();
 
     // se configura los items para tipo de documentos
