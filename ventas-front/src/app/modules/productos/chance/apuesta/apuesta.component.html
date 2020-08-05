@@ -98,7 +98,7 @@
                                 value="{{currencyCombinado}}" (change)="chanceNumber(chanceForm.get('numero'))" class="form-control styleInput" formControlName="combinado" placeholder="Combinado">
                             </div>
                         </div>
-                        <div class="col-md-2" *ngIf="enabledThree">
+                        <div class="col-md-3" *ngIf="enabledThree">
                             <label class="titleInput" for="valorTres">Valor 3 cifras</label>
                             <div class="form-group has-feedback">
                             <i class="fa fa-usd form-control-feedback" aria-hidden="true"></i>
@@ -107,7 +107,7 @@
                             value="{{currency3}}" class="form-control styleInput" formControlName="tresCifras" placeholder="Valor">
                             </div>
                         </div>
-                        <div class="col-md-2" *ngIf="enabledTwo">
+                        <div class="col-md-3" *ngIf="enabledTwo">
                             <label class="titleInput" for="valorDos">Valor 2 cifras</label>
                             <div class="form-group has-feedback">
                             <i class="fa fa-usd form-control-feedback" aria-hidden="true"></i>
@@ -116,7 +116,7 @@
                             (keypress)="keyPressNumber($event)" class="form-control styleInput" formControlName="dosCifras" placeholder="Valor">
                             </div>
                         </div>
-                        <div class="col-md-2" *ngIf="enabledOne">
+                        <div class="col-md-3" *ngIf="enabledOne">
                             <label class="titleInput" for="valorDos">Valor 1 cifra</label>
                             <div class="form-group has-feedback">
                             <i class="fa fa-usd form-control-feedback" aria-hidden="true"></i>

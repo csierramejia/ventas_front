@@ -87,7 +87,14 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
   ngOnInit(): void {
     this.selectTodas=false;
     this.fechaActual=new Date();
-    this.numeroSerie="AD123456";
+    this.productosService.consultarNumeroSerieApuesta("SUPER CHANCE").subscribe(
+      numeroSerie => {
+        this.numeroSerie=numeroSerie.codigo;
+      },
+      error => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
 
 
   }
@@ -465,6 +472,11 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
 
   validarLoterias(){
     this.messageService.clear();
+
+    if(new Date(this.dayBet) < new Date()){
+      this.messageService.add(MsjUtil.getToastErrorMedium('No se puede realizar una apuesta con una fecha anterior'));
+      return;
+    }
     let valida=false;
     //seleccion
     if(this.loterias==null || this.loterias==undefined || this.loterias.length==0){
@@ -548,7 +560,7 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
     let nombres="";
     this.loterias.forEach(l => {
       if(l.checked){
-        nombres=nombres+","+l.nombreCorto;
+        nombres=nombres+", "+l.nombreCorto;
         }
     });
     return nombres.substr(1,nombres.length);

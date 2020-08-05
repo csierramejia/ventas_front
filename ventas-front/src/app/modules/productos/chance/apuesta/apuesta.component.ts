@@ -79,7 +79,14 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
   ) {
     super();
     this.fechaActual=new Date();
-    this.numeroSerie="AD123456";
+    this.productosService.consultarNumeroSerieApuesta("CHANCE").subscribe(
+      numeroSerie => {
+        this.numeroSerie=numeroSerie.codigo;
+      },
+      error => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
     // obtemos el esquema de fechas para que el usuario puede saleccionar el dia de la apuesta a realizar
     const dayWeek = this.getDayWeek();
    // this.setDays(dayWeek);
@@ -386,6 +393,11 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
   addBetSend(): void {
     this.messageService.clear();
     // this.lotteriesSelected = this.get_lotteriesSelected();
+    const newDate = new Date();
+    if(new Date(this.dayBet) < new Date()){
+      this.messageService.add(MsjUtil.getToastErrorMedium('No se puede realizar una apuesta con una fecha anterior'));
+      return;
+    }
 
     if (this.valid()) {
       this.addBet.emit({
@@ -421,7 +433,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
     let nombres="";
     this.loterias.forEach(l => {
       if(l.checked){
-      nombres=nombres+","+l.nombreCorto;
+      nombres=nombres+", "+l.nombreCorto;
       }
     });
     return nombres.substr(1,nombres.length);
@@ -434,6 +446,11 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
   editBetSend() {
     // this.lotteriesSelected = this.get_lotteriesSelected();
     this.messageService.clear();
+    const newDate = new Date();
+    if(new Date(this.dayBet) < new Date()){
+      this.messageService.add(MsjUtil.getToastErrorMedium('No se puede realizar una apuesta con una fecha anterior'));
+      return;
+    }
     if (this.valid()) {
       this.addBet.emit({
         action: 0,

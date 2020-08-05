@@ -8,11 +8,16 @@
                             <b *ngIf="cartItem.numberPlayed==null && cartItem.modalidad" class="numberPlayed">Modalidad: {{cartItem.modalidad}}</b> 
                             <b *ngIf="cartItem.numberPlayed==null && cartItem.modalidad==null && cartItem.numeroSuper" class="numberPlayed">Número jugado: {{cartItem.numeroSuper}}</b> 
                             <b *ngIf="cartItem.numberPlayed==null && cartItem.modalidad==null && cartItem.numeroSuper==null && cartItem.numeroAstro" class="numberPlayed">Número jugado: {{cartItem.numeroAstro}}</b>
-                            <b *ngIf="cartItem.nombresLoteria" style="    width: 100%;
-                            height: 60px;
-                            overflow: auto;" class="signosBolsa">Loterias: {{cartItem.nombresLoteria}}</b> 
                         </div>
-                        <br>
+                        <div class="row" *ngIf="cartItem.nombresLoteria && !cartItem.numeroAstro" >
+                            <b *ngIf="cartItem.nombresLoteria" class="signosBolsa">Loterias</b> 
+                            <b *ngIf="cartItem.nombresLoteria" class="loteriasbolsa">{{cartItem.nombresLoteria}}</b> 
+                        </div>
+                        <div class="row" *ngIf="cartItem.nombresLoteria && cartItem.numeroAstro" >
+                            <b *ngIf="cartItem.nombresLoteria" class="signosBolsa">Loterias</b> 
+                            <b *ngIf="cartItem.nombresLoteria" class="signosBolsa">{{cartItem.nombresLoteria}}</b> 
+                        </div>
+
 
                         <div class="row">
 

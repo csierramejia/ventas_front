@@ -91,7 +91,14 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
     this.selectTodas=false;
     this.mostrarSignos=false;
     this.fechaActual=new Date();
-    this.numeroSerie="AD123456";
+    this.productosService.consultarNumeroSerieApuesta("SUPER ASTRO").subscribe(
+      numeroSerie => {
+        this.numeroSerie=numeroSerie.codigo;
+      },
+      error => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
     this.zignos=[];
     this.productosService.consultarSignos().subscribe(
       signosData => {
@@ -508,6 +515,10 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
   validarLoterias(){
     let valida=false;
     this.messageService.clear();
+    if(new Date(this.dayBet) < new Date()){
+      this.messageService.add(MsjUtil.getToastErrorMedium('No se puede realizar una apuesta con una fecha anterior'));
+      return;
+    }
     //seleccion
     if(this.loterias==null || this.loterias==undefined || this.loterias.length==0){
       this.messageService.add(MsjUtil.getToastErrorMedium('Por favor diligenciar todos los campos'));
@@ -612,7 +623,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
     let nombres="";
     this.loterias.forEach(l => {
       if(l.checked){
-        nombres=nombres+","+l.nombreCorto;
+        nombres=nombres+", "+l.nombreCorto;
         }
     });
     return nombres.substr(1,nombres.length);
@@ -728,7 +739,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
     let sig="";
     this.zignos.forEach(element => {
       if(element.checked){
-       sig=sig+","+element.label;
+       sig=sig+", "+element.label;
       }
     });
     return sig.substr(1,sig.length);

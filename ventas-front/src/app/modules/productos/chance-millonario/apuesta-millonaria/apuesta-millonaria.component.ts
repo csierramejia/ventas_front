@@ -86,7 +86,14 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
 
   ngOnInit(): void {
     this.fechaActual=new Date();
-    this.numeroSerie="AD123456";
+    this.productosService.consultarNumeroSerieApuesta("CHANCE MILLONARIO").subscribe(
+      numeroSerie => {
+        this.numeroSerie=numeroSerie.codigo;
+      },
+      error => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
 
 
   }
@@ -472,6 +479,11 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
 
   validarLoterias(){
     this.messageService.clear();
+
+    if(new Date(this.dayBet) < new Date()){
+      this.messageService.add(MsjUtil.getToastErrorMedium('No se puede realizar una apuesta con una fecha anterior'));
+      return;
+    }
     let valida=false;
     //seleccion
     if(this.loterias==null || this.loterias==undefined || this.loterias.length==0){
@@ -619,7 +631,7 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
     let nombres="";
     this.loterias.forEach(l => {
       if(l.checked){
-        nombres=nombres+","+l.nombreCorto;
+        nombres=nombres+", "+l.nombreCorto;
         }
     });
     return nombres.substr(1,nombres.length);
@@ -1048,19 +1060,12 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
    * todos los checkbox
    */
   selectUnmarkAll(): void {
-    if (!this.selectUnmarkAllBol) {
-      // tslint:disable-next-line: prefer-for-of
-      for (let index = 0; index < this.loterias.length; index++) {
-        this.loterias[index].checked = true;
-      }
-      this.selectUnmarkAllBol = true;
-    } else {
       // tslint:disable-next-line: prefer-for-of
       for (let index = 0; index < this.loterias.length; index++) {
         this.loterias[index].checked = false;
       }
       this.selectUnmarkAllBol = false;
-    }
+    
 
     this.addLotteries.emit(this.get_lotteriesSelected());
   }

@@ -330,7 +330,7 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
     signos.forEach(s => {
       this.zignos.forEach(element => {
         if (s == element.idSigno) {
-         sig = sig + "," + element.nombre;
+         sig = sig + ", " + element.nombre;
         }
       });
     });

@@ -229,12 +229,8 @@
 
         <hr>
         <div class="row float-right element-actions-btns" *ngIf="dayBet">
-            <button (click)="selectUnmarkAll()" *ngIf="!selectUnmarkAllBol" type="button" class="btn btn-random">
-                Seleccionar todas <i class="fa fa-plus" aria-hidden="true"></i>
-            </button>
-
-            <button (click)="selectUnmarkAll()" *ngIf="selectUnmarkAllBol" type="button" class="btn btn-random">
-                Desmarcar todas <i class="fa fa-plus" aria-hidden="true"></i>
+           <button (click)="selectUnmarkAll()"  type="button" class="btn btn-random">
+                Limpiar todas <i class="fa fa-plus" aria-hidden="true"></i>
             </button>
 
             <button *ngIf="btnAdd" (click)="validarLoterias()" type="button" class="btn btn-random">

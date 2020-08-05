@@ -13,7 +13,7 @@ import { ModalidadesDTO } from 'src/app/dtos/escrutinio/loterias/modalidades.dto
  */
 @Injectable()
 export class ProductosService {
-  
+
 
   /**
    * @param HTTP para hacer las peticiones a los servicios REST
@@ -32,6 +32,10 @@ export class ProductosService {
 
   public consultarSignos() :Observable<any[]> {
     return this.http.get<any[]>(`${ProductosAPIConstant.URL_CONSULTAR_SIGNOS}`);
+  }
+
+  public consultarNumeroSerieApuesta(nombreProducto:string) :Observable<any> {
+    return this.http.get<any>(`${ProductosAPIConstant.URL_CONSULTAR_SERIE_APUESTAS}/${nombreProducto}`);
   }
 
 

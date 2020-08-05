@@ -64,6 +64,12 @@ export class ProductosAPIConstant {
         'consultarSignos';
 
      /** URL del recurso para obtener las loterias */
+     static readonly URL_CONSULTAR_SERIE_APUESTAS: string =
+     AppDomainConstant.URI_GATEWAY +
+     ProductosAPIConstant.MODALIDADES_API +
+     'consultarSerieApuesta';
+
+     /** URL del recurso para obtener las loterias */
      static readonly URL_CONSULTAR_SEMANA: string =
      AppDomainConstant.URI_GATEWAY +
      ProductosAPIConstant.LOTERIAS_API +
