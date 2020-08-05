@@ -224,9 +224,10 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
       if (element.oneC) { this.valueBet = this.valueBet + parseInt(element.oneC); }
       }
     });
-
+    if(this.cartItems != null && this.cartItems[0] != null &&
+      (this.cartItems[0].modalidad==undefined || this.cartItems[0].modalidad==null)){
     this.valueBet = (this.lotteries.length * this.valueBet);
-
+    }
     this.valueVat = Math.floor(this.valueBet * this.inputVat) / 100;
     this.valueBet = this.valueBet - this.valueVat;
 

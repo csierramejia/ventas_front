@@ -473,7 +473,7 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
   validarLoterias(){
     this.messageService.clear();
 
-    if(new Date(this.dayBet) < new Date()){
+    if(new Date(this.dayBet).getDate() < new Date().getDate()){
       this.messageService.add(MsjUtil.getToastErrorMedium('No se puede realizar una apuesta con una fecha anterior'));
       return;
     }

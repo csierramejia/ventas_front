@@ -515,7 +515,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
   validarLoterias(){
     let valida=false;
     this.messageService.clear();
-    if(new Date(this.dayBet) < new Date()){
+    if(new Date(this.dayBet).getDate() < new Date().getDate()){
       this.messageService.add(MsjUtil.getToastErrorMedium('No se puede realizar una apuesta con una fecha anterior'));
       return;
     }
