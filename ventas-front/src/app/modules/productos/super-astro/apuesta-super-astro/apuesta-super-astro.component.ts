@@ -58,6 +58,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
   numeroSerie:string;
   seleccionado:number;
   signoMostrar:string;
+  rutaServidor:string;
   chanceForm = new FormGroup({
     fecha: new FormControl(''),
     numero: new FormControl('', [Validators.required, Validators.maxLength(4)]),
@@ -84,6 +85,16 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
     const dayWeek = this.getDayWeek();
    // this.setDays(dayWeek);
    this.setDaysServicio();
+   this.productosService.consultarRutaImagenes().subscribe(
+    responseDTO => {
+      if(responseDTO){
+      this.rutaServidor = responseDTO.codigo;
+      }
+    },
+    error => {
+      this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+    }
+  );
   }
 
   ngOnInit(): void {
@@ -211,7 +222,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
               idSorteo: element.idSorteo,
               idSorteoDetalle: element.idSorteoDetalle,
               checked: false,
-              url:"assets/img/loterias/"+element.nombre.toUpperCase()+".png"
+              url:this.rutaServidor+element.nombreImagen
             });
            
           });

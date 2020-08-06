@@ -43,7 +43,7 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
     { text: 'D', name: 'dom', date: null }
   ];
 
-
+  rutaServidor:string;
   enabledCustomer = false;
   enabledCombined = true;
   enabledThree = true;
@@ -82,6 +82,16 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
     const dayWeek = this.getDayWeek();
   //  this.setDays(dayWeek);
   this.setDaysServicio();
+  this.productosService.consultarRutaImagenes().subscribe(
+    responseDTO => {
+      if(responseDTO){
+      this.rutaServidor = responseDTO.codigo;
+      }
+    },
+    error => {
+      this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+    }
+  );
   }
 
   ngOnInit(): void {
@@ -190,7 +200,7 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
               idSorteo: element.idSorteo,
               idSorteoDetalle: element.idSorteoDetalle,
               checked: false,
-              url:"assets/img/loterias/"+element.nombre.toUpperCase()+".png"
+              url:this.rutaServidor+element.nombreImagen
             });
           });
         },

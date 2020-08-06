@@ -75,4 +75,10 @@ export class ProductosAPIConstant {
      ProductosAPIConstant.LOTERIAS_API +
      'consultarSemanaActual';
 
+       /** URL del recurso para obtener las loterias */
+       static readonly URL_CONSULTAR_RUTA_IMAGENES: string =
+       AppDomainConstant.URI_GATEWAY +
+       ProductosAPIConstant.MODALIDADES_API +
+       'consultarRutaServidor';
+
 }

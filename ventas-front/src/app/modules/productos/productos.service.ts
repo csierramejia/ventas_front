@@ -94,4 +94,9 @@ export class ProductosService {
     );
   }
 
+  public consultarRutaImagenes(): Observable<any> {
+    return this.http.get<any>(`${ProductosAPIConstant.URL_CONSULTAR_RUTA_IMAGENES}`);
+  }
+
+
 }
