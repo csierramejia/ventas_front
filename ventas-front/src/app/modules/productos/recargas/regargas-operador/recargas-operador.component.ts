@@ -1038,7 +1038,7 @@ export class RecargasOperadorComponent extends CommonComponent implements OnInit
   clickOperador(o) {
     this.mostrarOperadores = false;
     this.tituloOperador = o.nombre;
-   this.idOperador=o.idOperador;
+   this.idOperador=o.value;
     this.urlOperador = o.url;
     this.validarCampos();
   }
