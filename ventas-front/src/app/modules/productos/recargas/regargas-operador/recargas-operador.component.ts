@@ -1082,6 +1082,7 @@ export class RecargasOperadorComponent extends CommonComponent implements OnInit
         this.messageService.add(MsjUtil.getToastErrorMedium('La recarga es menor al valor minimo permitido'));
         return;
       }
+      if(this.esRecarga){
       const numMinimo=1000;
       const valor=this.chanceForm.get('valorRecarga').value;
       const res=valor%numMinimo;
@@ -1089,6 +1090,7 @@ export class RecargasOperadorComponent extends CommonComponent implements OnInit
         this.messageService.add(MsjUtil.getToastErrorMedium('La recarga debe ser múltiplo de $1.000'));
         return;
       }
+    }
       if (this.btnAdd) {
         this.addBetSend();
       }
