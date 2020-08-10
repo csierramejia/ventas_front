@@ -1,0 +1,16 @@
+<section class="container-fluid">
+    <div class="row">
+        <div class="col-9">
+            <app-recargas-operador
+                (addBet)="addBet($event)"
+                (addLotteries)="addLotteries($event)">
+            </app-recargas-operador>
+        </div>
+        <div class="col-3">
+            <app-bolsa-recargas 
+                (editBet)="editBet($event)"
+                (creatingBet)="creatingBet($event)">
+            </app-bolsa-recargas>
+        </div>
+    </div>
+</section>

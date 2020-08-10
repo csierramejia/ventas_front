@@ -34,6 +34,14 @@ export class ProductosService {
     return this.http.get<any[]>(`${ProductosAPIConstant.URL_CONSULTAR_SIGNOS}`);
   }
 
+  public consultarPaquetes() :Observable<any[]> {
+    return this.http.get<any[]>(`${ProductosAPIConstant.URL_CONSULTAR_PAQUETES}`);
+  }
+
+  public consultarOperadores() :Observable<any[]> {
+    return this.http.get<any[]>(`${ProductosAPIConstant.URL_CONSULTAR_OPERADORES}`);
+  }
+
   public consultarNumeroSerieApuesta(nombreProducto:string) :Observable<any> {
     return this.http.get<any>(`${ProductosAPIConstant.URL_CONSULTAR_SERIE_APUESTAS}/${nombreProducto}`);
   }

@@ -14,6 +14,8 @@ export class ProductosAPIConstant {
 
   static readonly MODALIDADES_API: string = 'apuestas/modalidades/';
 
+  static readonly MODALIDADES_RECARGAS: string = 'apuestas/recargas/';
+
 
   /** URL del recurso para obtener las loterias */
   static readonly URL_CONSULTAR_LOTERIAS: string =
@@ -80,5 +82,15 @@ export class ProductosAPIConstant {
        AppDomainConstant.URI_GATEWAY +
        ProductosAPIConstant.MODALIDADES_API +
        'consultarRutaServidor';
+
+       static readonly URL_CONSULTAR_PAQUETES: string =
+       AppDomainConstant.URI_GATEWAY +
+       ProductosAPIConstant.MODALIDADES_RECARGAS +
+       'consultarPaquetes';
+
+       static readonly URL_CONSULTAR_OPERADORES: string =
+       AppDomainConstant.URI_GATEWAY +
+       ProductosAPIConstant.MODALIDADES_RECARGAS +
+       'consultarOperadores';
 
 }

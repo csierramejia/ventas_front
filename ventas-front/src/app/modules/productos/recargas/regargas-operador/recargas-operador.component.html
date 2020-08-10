@@ -1,0 +1,233 @@
+<div class="container-fluid">
+    <div class="row calendarRow">
+        <div class="col-md-6">
+            <p class="clock-icon">
+                <label class="diaActual">{{ fechaActual | date: 'dd/MM/yyyy HH:mm:ss'}}</label>
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<form [formGroup]="chanceForm">
+    <div class="card cardBet">
+        <div class="card-header titleBetCard">
+            <a data-toggle="collapse" href="#collapse-example2" aria-expanded="true" aria-controls="collapse-example2"
+                id="heading-example2" class="d-block">
+                Recargas
+                <i class="fa fa-chevron-down"></i>
+            </a>
+        </div>
+
+
+        <div id="collapse-example2" class="collapse show" aria-labelledby="heading-example2">
+            <div class="card-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="titleInput" for="identificacion">Tipo Identificación</label>
+                            <div class="form-group">
+                                <p-dropdown formControlName="tipoDocumento" (onChange)="validExistClient()"
+                                    [options]="itemsTiposDocumentos" inputId="tipoin" name="tipoin"
+                                    title="Tipo Identificación" styleClass="w-100 dropdown-app">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="titleInput" for="identificacion">Identificación</label>
+                            <div class="form-group has-feedback">
+                                <i class="fa fa-user form-control-feedback"></i>
+                                <input type="text" (keypress)="keyPressNumber($event)" (change)="validExistClient()"
+                                    formControlName="numeroDocumento" class="form-control styleInput"
+                                    placeholder="Cedula">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 padColLable" *ngIf="enabledCustomer">
+                            <div class="form-group has-feedback elemClient">
+                                <i class="fa fa-check-square inputSuccess"></i>
+                                <input type="text" class="form-control styleInputClient" formControlName="nombreCliente"
+                                    placeholder="Cliente">
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label class="titleInput">Recargas</label>
+                            <div [class]="esRecarga ? 'redondoA' : 'redondoB'">
+                                <img style="margin-top: 16px;" (click)="clickRecarga(true)"
+                                    [src]="esRecarga ? 'assets/img/svg/22-mobileB.svg' : 'assets/img/svg/22-mobile.svg'" />
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="titleInput">Paquetes</label>
+                            <div [class]="esRecarga==false ? 'redondoA' : 'redondoB'">
+                                <img style="margin-top: 16px;" (click)="clickRecarga(false)"
+                                [src]="esRecarga==false ? 'assets/img/svg/XMLID_2128B.svg' : 'assets/img/svg/XMLID_2128_.svg'"  />
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <p-card>
+                                <p-header class="tituloazul">
+                                    NÚMERO A RECARGAR
+                                </p-header>
+                                <input type="text" maxlength="10" style="margin-top: 8px;
+                        margin-left: 8px;" (keypress)="keyPressNumber($event)" formControlName="numeroRecarga"
+                                    class="form-control styleInput" (change)="validarCampos()">
+                                <p-footer>
+
+                                </p-footer>
+                            </p-card>
+                        </div>
+                        <div class="col-md-4">
+                            <p-card>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <img class="operadorestamanio" (click)="abrirOperadores()"
+                                            [src]="urlOperador" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="tituloazuldos">OPERADOR</label>
+                                        <label class="titleInput" (click)="abrirOperadores()">{{tituloOperador}}</label>
+                                    </div>
+                                </div>
+                            </p-card>
+                        </div>
+                        <div class="col-md-4" *ngIf="esRecarga">
+                            <p-card>
+                                <p-header class="tituloazul">
+                                    VALOR A RECARGAR
+                                </p-header>
+                                <div class="form-group has-feedback" style="margin-top: 8px;
+                        margin-left: 8px;">
+                                    <i class="fa fa-usd form-control-feedback" aria-hidden="true"></i>
+                                    <input type="text" (keypress)="keyPressNumber($event)" (blur)="transformAmount()"
+                                        value="{{currencyRecarga}}" class="form-control styleInput"
+                                        (change)="validarCampos()" formControlName="valorRecarga">
+                                </div>
+                            </p-card>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+</form>
+
+<div class="card cardBet" *ngIf="esRecarga==false">
+    <div class="card-header titleBetCard">
+        <a data-toggle="collapse" href="#collapse-example" aria-expanded="true" aria-controls="collapse-example"
+            id="heading-example" class="d-block">
+            Paquetes
+            <i class="fa fa-chevron-down"></i>
+        </a>
+    </div>
+
+
+    <div id="collapse-example" class="collapse show" aria-labelledby="heading-example">
+
+        <div class="card-body">
+            <div class="container-fluid">
+                <!-- carousel -->
+                <p-carousel [value]="paquetes" [numVisible]="carouselNroVisible">
+                    <ng-template let-paquete pTemplate="item">
+
+                        <!-- pnl-content -->
+                        <div (click)="seleccionarPaquete(paquete)"
+                            [ngClass]="{'selected' : (paqueteSeleccionado && paqueteSeleccionado.idPaquete === paquete.idPaquete)}"
+                            class="ui-g-12 content p-1">
+
+                            <!-- header -->
+                            <div [ngClass]="{'header-selected' : (paqueteSeleccionado && paqueteSeleccionado.idPaquete === paquete.idPaquete)}"
+                                class="ui-g-12 header elevation">
+                                <div class="ui-g-12 p-0">
+                                    <div class="ui-g-12 p-0 text-center">
+                                        <div class="ui-g-12 p-0">
+                                            <span class="titulocarrucel">{{paquete.nombre}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- body -->
+                            <div class="ui-g-12 body elevation">
+
+
+                                <div class="col-m-12">
+
+                                    <span class="subcarrucel">{{paquete.descDuracion}}</span>
+
+                                </div>
+
+                                <!-- premio mayor -->
+                                <div class="col-m-12 py-2">
+
+                                    <span class="desccarrucel">{{paquete.descripcion}}</span>
+
+                                </div>
+                            </div>
+
+                            <!-- footer -->
+                            <div class="ui-g-12 footer elevation">
+                                <span class="totalcarrucel">{{paquete.valor | currency: "CAD":"symbol-narrow":".0-0"}}</span>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-carousel>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row float-right element-actions-btns">
+    <button *ngIf="btnAdd" [disabled]="!habilitarBotones" (click)="pagarRecarga()" type="button"
+        class="btn btn-random">
+        AGREGAR <i class="fa fa-plus" aria-hidden="true"></i>
+    </button>
+    <button *ngIf="btnEdit" (click)="pagarRecarga()" type="button"
+        class="btn btn-random">
+        ACTUALIZAR <i class="fa fa-plus" aria-hidden="true"></i>
+    </button>
+</div>
+<p-dialog [(visible)]="mostrarOperadores" [style]="{width: '650px'}" class="header-productos" class="borde"
+    [baseZIndex]="10000">
+
+
+    <div class="container-fluid">
+        <h1 class="tituloModal">SELECCIONA EL OPERADOR</h1>
+
+        <div id="collapse-example" class="collapse show" aria-labelledby="heading-example">
+            <div class="card-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-2" class="colLot" *ngFor="let s of operadores">
+                            <div class="cubo">
+                                <label for="zignosSeleccionados" class="labelloteria">{{s.nombre}}</label>
+                                <br>
+                                <img class="signostamanio" (click)="clickOperador(s)" [src]="s.url" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+        </div>
+    </div>
+</p-dialog>
+
+<p-dialog [(visible)]="displayModalCreate" [style]="{width: '464px'}">
+    <app-crear-cliente (closePopup)="closeModal($event)" (createCustomer)="createCustomer($event)">
+    </app-crear-cliente>
+</p-dialog>

@@ -21,6 +21,8 @@ export class RouterConstant {
   /** Router para el componente de chance */
   public static readonly ROUTER_SUPER_ASTRO: string = 'super-astro';
 
+  public static readonly ROUTER_RECARGAS: string = 'recargas';
+
   /** Router para el componente de loteria virtual */
   public static readonly ROUTER_LOTERIA_VIRTUAL: string = 'loteria-virtual';
 

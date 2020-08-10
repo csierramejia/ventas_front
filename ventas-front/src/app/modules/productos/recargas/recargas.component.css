@@ -1,3 +1,12 @@
+
+.container{
+    display: flex;
+}
+
+.container .main-body{
+    width: 100%;
+}
+
 aside{
     top: 100px;
     left: 1086px;

@@ -1,0 +1,49 @@
+    <aside>
+        <p-card  *ngFor="let cartItem of cartItems">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-11">
+                        <div class="row">
+                            <b *ngIf="cartItem.numeroRecarga" class="numeroRecarga">{{cartItem.numeroRecarga}}</b>
+                            <b *ngIf="cartItem.operador" class="signosBolsa">Operador: {{cartItem.operador}}</b>
+                            <b *ngIf="cartItem.paquete" class="signosBolsa">Paquete: {{cartItem.paquete}}</b> 
+                            <b *ngIf="cartItem.valor" class="valorBolsa">Valor: {{cartItem.valor  | currency: "CAD":"symbol-narrow":".0-0"}}</b> 
+                        </div>
+                    </div>
+                    <div class="col-1 actions-btns">
+                        <i (click)="editBetSend(cartItem)" class="pi pi-pencil btn-edit-played"></i>
+                        <i (click)="deleteBet(cartItem)" class="pi pi-trash btn-remove-played"></i>
+                    </div> 
+                </div>
+            </div>
+        </p-card>
+
+        
+        <div class="totalValues">
+          
+            <div class="row consolidValues">
+                <div class="col-6 columValueBet">
+                    <b class="textBet">Subtotal</b> <br>
+                    <span class="valueBet">{{ valueBet  | currency: "CAD":"symbol-narrow":".0-0"}}</span>
+                </div>
+                <div class="col-6 vatBorder">
+                    <b class="textBet">IVA</b> <br>
+                    <span class="valueBet"> {{ valueVat  | currency: "CAD":"symbol-narrow":".0-0"}}</span>
+                </div>
+            </div>
+            <div class="row footerValueTotal">
+                <div class="col-5 columValueBetFooter">
+                    <b class="textBetFooter">Total</b> <br>
+                </div>
+                <div class="col-7">
+                    <b class="textBetFooterValue">{{ valueBetTotal  | currency: "CAD":"symbol-narrow":".0-0"}}</b> <br>
+                </div>
+            </div>
+            <div class="alinBtn">
+                <button *ngIf="cartItems.length > 0" (click)="payTransaction()" class="btn btn-primary btn-lg payButon">
+                    PAGAR
+                    <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+    </aside>

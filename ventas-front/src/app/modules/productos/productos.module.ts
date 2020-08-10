@@ -17,7 +17,9 @@ import { ApuestaSuperComponent } from './super-chance/apuesta-super/apuesta-supe
 import { SuperAstroComponent } from './super-astro/super-astro.component';
 import { ApuestaSuperAstroComponent } from './super-astro/apuesta-super-astro/apuesta-super-astro.component';
 import { LoteriaVirtualComponent } from './loteria-virtual/loteria-virtual.component';
-
+import { RecargasComponent } from './recargas/recargas.component';
+import { RecargasOperadorComponent } from './recargas/regargas-operador/recargas-operador.component';
+import { BolsaRecargasComponent } from './recargas/bolsa-recargas/bolsa-recargas.component';
 @NgModule({
   declarations: [
     ChanceComponent,
@@ -30,7 +32,10 @@ import { LoteriaVirtualComponent } from './loteria-virtual/loteria-virtual.compo
     ApuestaSuperComponent,
     SuperAstroComponent,
     ApuestaSuperAstroComponent,
-    LoteriaVirtualComponent
+    LoteriaVirtualComponent,
+    RecargasComponent,
+    RecargasOperadorComponent,
+    BolsaRecargasComponent
   ],
   imports: [
     RouterModule.forChild([
@@ -53,7 +58,11 @@ import { LoteriaVirtualComponent } from './loteria-virtual/loteria-virtual.compo
       {
         path: RouterConstant.ROUTER_LOTERIA_VIRTUAL,
         component: LoteriaVirtualComponent
-      }
+      },
+      {
+        path: RouterConstant.ROUTER_RECARGAS,
+        component: RecargasComponent
+      },
     ]),
     SharedModule,
     CardModule,
