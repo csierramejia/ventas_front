@@ -81,6 +81,13 @@ export class ProductosService {
    * @param iva
    * @description Metodo que envia la transacción de pago de apuesta
    */
+  public registrarRecarga(bet): Observable<ResponseDTO> {
+    return this.http.post<ResponseDTO>(
+      ProductosAPIConstant.URL_REGISTRAR_RECARGA,
+      bet
+    );
+  }
+
   public registrarApuesta(bet): Observable<ResponseDTO> {
     return this.http.post<ResponseDTO>(
       ProductosAPIConstant.URL_REGISTRAR_APUESTA,

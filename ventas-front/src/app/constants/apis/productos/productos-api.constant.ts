@@ -14,7 +14,7 @@ export class ProductosAPIConstant {
 
   static readonly MODALIDADES_API: string = 'apuestas/modalidades/';
 
-  static readonly MODALIDADES_RECARGAS: string = 'apuestas/recargas/';
+  static readonly MODALIDADES_RECARGAS: string = 'recargas/recarga/';
 
 
   /** URL del recurso para obtener las loterias */
@@ -51,6 +51,13 @@ export class ProductosAPIConstant {
   AppDomainConstant.URI_GATEWAY +
   ProductosAPIConstant.LOTERIAS_API +
   'registrarApuesta';
+
+
+  /** URL del recurso para obtener el iva */
+  static readonly URL_REGISTRAR_RECARGA: string =
+  AppDomainConstant.URI_GATEWAY +
+  ProductosAPIConstant.MODALIDADES_RECARGAS +
+  'registrarRecarga';
 
     /** URL del recurso para obtener las loterias */
     static readonly URL_CONSULTAR_MODALIDADES_VALORES: string =

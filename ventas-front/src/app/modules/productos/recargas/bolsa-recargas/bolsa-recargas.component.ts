@@ -211,7 +211,7 @@ export class BolsaRecargasComponent extends CommonComponent implements OnInit, O
     });
 
     paySend.recargas=recargas;
-    this.productosService.registrarApuesta(paySend).subscribe(
+    this.productosService.registrarRecarga(paySend).subscribe(
       apuestaData => {
         const responseApuesta: any = apuestaData;
         if (responseApuesta.exito) {
