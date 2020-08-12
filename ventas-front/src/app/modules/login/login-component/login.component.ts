@@ -6,6 +6,7 @@ import { CommonComponent } from 'src/app/utilities/common.component';
 import { ShellState } from 'src/app/states/shell/shell.state';
 import { BienvenidaRequestDTO } from 'src/app/dtos/seguridad/bienvenida/bienvenida-request.dto';
 import { SeguridadService } from '../seguridad.service';
+import { TransversalConstant } from 'src/app/constants/transversal.constant';
 
 /**
  * Componente para la autenticacion del sistema ADMIN
@@ -57,7 +58,7 @@ export class LoginComponent extends CommonComponent implements OnInit {
           // se procede a obtener lo datos de bienvenida de la app
           const request: BienvenidaRequestDTO = new BienvenidaRequestDTO();
           request.idUsuario = dataAutenticacion.usuario.idUsuario;
-          request.idAplicacion = 2;
+          request.idAplicacion = TransversalConstant.ID_APLICACION_VENTAS;
           this.seguridadService.getDatosBienvenida(request).subscribe(
             dataBienvenida => {
               // se indica el shell que hay un nuevo inicio de sesion
