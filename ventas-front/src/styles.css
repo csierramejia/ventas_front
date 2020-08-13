@@ -503,12 +503,12 @@ body {
 }
 
 .ui-dialog-titlebar {
+  font-weight: 700!important;
+  padding: .5em!important;
+  background-color: #2076BD !important;
   border-radius: 10px 10px 0px 0px !important;
-  background-color: #0083FE !important;
   color: white !important;
   font-family: Montserrat !important;
-  font-weight: 700 !important;
-  padding: 0.5em !important;
 }
 
 
@@ -557,13 +557,6 @@ body {
   font-family: Montserrat !important;
 }
 
-.ui-dialog-titlebar {
-  background-color: #607a8c !important;
-  color: white !important;
-  font-family: Montserrat !important;
-  font-weight: 700 !important;
-  padding: 0.5em !important;
-}
 
 .ui-dialog-titlebar-icon {
   color: white !important;

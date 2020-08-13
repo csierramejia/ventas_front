@@ -22,18 +22,15 @@
     color: #333333 !important;
 }
 
-.ui-dialog .ui-dialog-titlebar{
-  display: none !important
-}
+
 .ui-dialog-titlebar {
+  font-weight: 700!important;
+  padding: .5em!important;
+  background-color: #2076BD !important;
   border-radius: 10px 10px 0px 0px !important;
-  background-color: #0083FE !important;
   color: white !important;
   font-family: Montserrat !important;
-  font-weight: 700 !important;
-  padding: 0.5em !important;
 }
-
 
 .styleInputSigno{
 
