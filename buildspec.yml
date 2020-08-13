@@ -1,7 +1,7 @@
 version: 0.2
 env:
   variables:
-    S3_BUCKET: "jerdevventrasfrontend"
+    S3_BUCKET: "pruebas-logiiblue"
 phases:
   install:
     runtime-versions:
