@@ -5,7 +5,7 @@
 .header {
   flex-grow: 1;
   display: flex;
-  background-color: #ffffff;
+  background-color: #2076BD;
   position: fixed;
   z-index: 900;
   width: 100%;

@@ -5,19 +5,19 @@
     <!-- icono hidden menu -->
     <div class="ui-g-3 text-right p-0">
       <div class="hambu" (click)="shellState.menu.toggleMenu()" [@icon-open-close]="(shellState.screen.isBigScreen() && (shellState.menu.isToogleMenuFirstTime || shellState.menu.isMenuOpen)) ? 'icon-open-menu' : ''">
-        <img src="assets/header/back@3x.png" [class]="(shellState.screen.isBigScreen() && (shellState.menu.isToogleMenuFirstTime || shellState.menu.isMenuOpen))  ? '' : 'rotation'" class="back"/>
+        <img src="assets/header/back@3x.svg" [class]="(shellState.screen.isBigScreen() && (shellState.menu.isToogleMenuFirstTime || shellState.menu.isMenuOpen))  ? '' : 'rotation'" class="back"/>
       </div>
     </div>
 
     <!-- nombre user -->
     <div class="ui-g-8 text-right p-0 pr-1">
       <div class="ui-g-12 p-0 pt-2">
-        <span class="font-montse  font-size-13" style="color: #707070;">
+        <span class="font-montse  font-size-13" style="color: #FFFFFF;">
           {{ shellState.userAccount.auth?.usuario?.nombreCompleto }}
         </span>
       </div>
       <div class="ui-g-12 p-0">
-        <span class="font-montse  font-size-13" style="color: #b1b1b1;">
+        <span class="font-montse  font-size-13" style="color: #FFFFFF;">
           {{ shellState.userAccount.auth?.usuario?.roles }}
         </span>
       </div>

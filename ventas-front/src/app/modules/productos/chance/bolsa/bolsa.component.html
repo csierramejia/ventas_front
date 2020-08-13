@@ -58,10 +58,16 @@
                                     <td class="textNumberValues" *ngIf="cartItem.apuestaD">{{cartItem.apuestaD}}</td>
                                     <td class="textNumberValues" *ngIf="cartItem.apuestaE">{{cartItem.apuestaE}}</td>
                                 </tr>
+                                
+                            </table>
+                            <table *ngIf="cartItem.modalidad" style="width:100%">
+                                <tr>
+                                    <td class="colorvalor" *ngIf="cartItem.valorApostado">Valor: {{cartItem.valorApostado | currency: "CAD":"symbol-narrow":".0-0"}}</td>
+                                </tr>
                             </table>
                             <table *ngIf="cartItem.numberPlayed==null && cartItem.modalidad==null && cartItem.numeroSuper" style="width:100%">
                                 <tr>
-                                    <td class="textNumberValues" *ngIf="cartItem.valorApostado">Valor: {{cartItem.valorApostado | currency: "CAD":"symbol-narrow":".0-0"}}</td>
+                                    <td class="colorvalor" *ngIf="cartItem.valorApostado">Valor: {{cartItem.valorApostado | currency: "CAD":"symbol-narrow":".0-0"}}</td>
                                 </tr>
                             </table>
                             <table *ngIf="cartItem.numberPlayed==null && cartItem.modalidad==null && cartItem.numeroSuper==null && cartItem.numeroAstro" style="width:100%">
@@ -69,7 +75,7 @@
                                     <td class="textNumberValues" *ngIf="cartItem.valorApostado">Signos: {{validarSignoNombre(cartItem.zignos)}}</td>
                                 </tr>
                                 <tr>
-                                    <td class="textNumberValues" *ngIf="cartItem.valorApostado">Valor: {{cartItem.valorApostado | currency: "CAD":"symbol-narrow":".0-0"}}</td>
+                                    <td class="colorvalor" *ngIf="cartItem.valorApostado">Valor: {{cartItem.valorApostado | currency: "CAD":"symbol-narrow":".0-0"}}</td>
                                 </tr>
                             </table>
                             
@@ -86,9 +92,7 @@
 
         
         <div class="totalValues">
-            <div class="bd-example-container-body-lotteries">
-                <span class="lotteriesCount">Loterias: {{ lotteries.length }}</span>
-            </div>
+       
             <div class="row consolidValues">
                 <div class="col-6 columValueBet">
                     <b class="textBet">Apostado</b> <br>
