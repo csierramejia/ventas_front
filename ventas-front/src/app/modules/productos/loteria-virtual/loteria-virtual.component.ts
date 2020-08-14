@@ -2,12 +2,13 @@ import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { CommonComponent } from 'src/app/utilities/common.component';
 import { MessageService, ConfirmationService, SelectItem } from 'primeng/api';
 import { SpinnerState } from 'src/app/states/spinner.state';
-import { LoteriaVirtualConfiguracionDTO } from 'src/app/dtos/productos/loteria-virtual/loteria-virtual-configuracion.dto';
 import { TiposDocumentosConstant } from 'src/app/constants/tipos-documentos.constant';
 import { ClientesDTO } from 'src/app/dtos/productos/chance/clientes.dto';
 import { MsjUtil } from 'src/app/utilities/messages.util';
 import { ProductosService } from '../../../modules/productos/productos.service';
 import { CrearClienteComponent } from '../chance/crear-cliente/crear-cliente.component';
+import { LoteriaVirtualDTO } from 'src/app/dtos/productos/loteria-virtual/loteria-virtual.dto';
+import { FiltroBusquedaDTO } from 'src/app/dtos/transversal/filtro-busqueda.dto';
 
 /**
  * Componente para las ventas de las loterias virtual
@@ -19,17 +20,20 @@ import { CrearClienteComponent } from '../chance/crear-cliente/crear-cliente.com
 })
 export class LoteriaVirtualComponent extends CommonComponent implements OnInit, OnDestroy {
 
+  /** Son las loterias habilitadas para su respectiva venta */
+  public loterias: Array<LoteriaVirtualDTO>;
+
+  /** DTO para encapsular los valores de los filtros de busqueda */
+  public filtro: FiltroBusquedaDTO;
+
+  /** Bandera que se utiliza para identificar si hay filtro busqueda aplicado */
+  public hayFiltroAplicado: boolean;
+
   /** Se utiliza para mostrar la fecha-hora actual */
   public fechaActual = new Date();
 
-  /** Son las loterias con sus configuraciones a mostrar en pantalla */
-  public loterias: Array<LoteriaVirtualConfiguracionDTO>;
-
-  /** Son las loterias con sus configuraciones consultadas */
-  public loteriasOrigen: Array<LoteriaVirtualConfiguracionDTO>;
-
   /** Es la loteria seleccionada para el proceso */
-  public loteriaSeleccionada: LoteriaVirtualConfiguracionDTO;
+  public loteriaSeleccionada: LoteriaVirtualDTO;
 
   /** Son las loterias agregadas para pagar */
   public loteriasAgregadas: Array<string>;
@@ -37,23 +41,11 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
   /** lista de items de TIPOS DE DOCUMENTOS */
   public itemsTiposDocumentos: SelectItem[];
 
-  /** Tipo de documento para la busqueda del cliente */
-  public tipoDocumento: string;
-
-  /** Nro de documento para la busqueda del cliente */
-  public nroDocumento: string;
-
-  /** Es el nombre completo del cliente consultado */
-  public nombreCompleto: string;
-
   /** Datos del cliente consultado */
   public cliente: ClientesDTO;
 
   /** Se utiliza para visualizar el modal de creacion del cliente */
   public showModalCrearCliente: boolean;
-
-  /** Es el filter ingresado para la busqueda de loterias */
-  public filterNombreLoteria: string;
 
   /** Es la cantidad de nro de card que se visualiza en el carousel */
   public carouselNroVisible = 3;
@@ -96,64 +88,64 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
   }
 
   /**
-   * Metodo que permite soportar el evento filter por nombre loteria
+   * Metodo que permite obtener las loterias habilitadas para su venta
    */
-  public busquedaLoterias(): void {
+  public getLoteriasVirtual(): void {
 
-    // el valor del filtro no puede ser indefinido
-    this.carouselNroVisible = 1;
-    if (this.filterNombreLoteria && this.filterNombreLoteria.length) {
+    // se limpia por si hay consultas anteriores
+    this.loterias = null;
 
-      // se crea la instancia de la lista a visualizar
-      this.loterias = new Array<LoteriaVirtualConfiguracionDTO>();
+    // se limpia los espacios en blanco para el filtro nombre
+    this.filtro.nombre = this.setTrimFilter(this.filtro.nombre);
 
-      // se busca la loteria que coincide con el valor
-      for (const loteria of this.loteriasOrigen) {
-        if (loteria.nombreLoteria && loteria.nombreLoteria.toUpperCase().includes(this.filterNombreLoteria.toUpperCase())) {
-          this.loterias.push(loteria);
+    // se procede a consultar las loterias con sorteos disponibles
+    this.productosService.getLoteriasVirtual(this.filtro).subscribe(
+      data => {
+
+        // se configura las loterias consultadas
+        this.loterias = data;
+
+        // se verifica si hay filtro aplicado
+        this.hayFiltroAplicado = false;
+        if (this.filtro.nombre) {
+          this.hayFiltroAplicado = true;
         }
+
+        // se configura el nro de card a visualizar en el carousel
+        this.carouselNroVisible = 1;
+        if (this.loterias && this.loterias.length === 2) {
+          this.carouselNroVisible = 2;
+        } else if (this.loterias && this.loterias.length > 2) {
+          this.carouselNroVisible = 3;
+        }
+      },
+      error => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
       }
-    } else {
-      this.loterias = this.loteriasOrigen;
-      this.carouselNroVisible = 3;
-    }
+    );
   }
 
   /**
-   * Funcion que permite validar que solo ingresen datos numericos
-   */
-  public keyPressNumber(e) {
-    const key = window.Event ? e.which : e.keyCode;
-    e.key.replace(/\D|\-/, '');
-    return (key >= 48 && key <= 57);
-  }
-
-  /**
-   * Medoto que soporta el evento onchange del tipo y nro documento
+   * Metodo que soporta el evento onchange del tipo y nro documento
    */
   public changeTipoNroDocumento(): void {
 
     // por si fue consultado con anterioridad
-    this.cliente = null;
-    this.nombreCompleto = null;
     this.showModalCrearCliente = false;
+    this.cliente.idCliente = null;
 
     // se verifica la nulalidad de nro y tipo doc
-    if (this.tipoDocumento && this.nroDocumento) {
-      const clientesDTO: ClientesDTO = new ClientesDTO();
-      clientesDTO.numeroDocumento = this.nroDocumento;
-      clientesDTO.tipoDocumento = this.tipoDocumento;
+    if (this.cliente.tipoDocumento && this.cliente.numeroDocumento) {
 
       // se procede a consultar el cliente
-      this.productosService.clienteApuesta(clientesDTO).subscribe(
+      this.productosService.clienteApuesta(this.cliente).subscribe(
         data => {
           const responseCliente: any = data;
           if (responseCliente.existe) {
             this.cliente = data;
-            this.nombreCompleto = data.primerNombre + ' ' + data.segundoNombre + ' ' + data.primerApellido + ' ' + data.segundoApellido;
           } else {
-            this.modalCrearCliente.clienteForm.get('tipoDocumento').setValue(this.tipoDocumento);
-            this.modalCrearCliente.clienteForm.get('numeroDocumento').setValue(this.nroDocumento);
+            this.modalCrearCliente.clienteForm.get('tipoDocumento').setValue(this.cliente.tipoDocumento);
+            this.modalCrearCliente.clienteForm.get('numeroDocumento').setValue(this.cliente.numeroDocumento);
             this.showModalCrearCliente = true;
           }
         },
@@ -169,8 +161,11 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
    */
   public createCustomer(event): void {
     this.showModalCrearCliente = false;
-    this.cliente = event;
-    this.nombreCompleto = event.primerNombre + ' ' + event.segundoNombre + ' ' + event.primerApellido + ' ' + event.segundoApellido;
+    this.cliente.primerNombre = event.primerNombre;
+    this.cliente.segundoNombre = event.segundoNombre;
+    this.cliente.primerApellido = event.primerApellido;
+    this.cliente.segundoApellido = event.segundoApellido;
+    this.cliente.idCliente = event.idPersona;
   }
 
   /**
@@ -183,8 +178,12 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
   /**
    * Metodo que permite soporta el evento click de las loteria a seleccionar
    */
-  public seleccionarLoteria(loteria: LoteriaVirtualConfiguracionDTO): void {
-    this.loteriaSeleccionada = loteria;
+  public seleccionarLoteria(loteria: LoteriaVirtualDTO): void {
+    this.spinnerState.displaySpinner();
+    setTimeout(() => {
+      this.loteriaSeleccionada = loteria;
+      this.spinnerState.hideSpinner();
+    }, 200);
   }
 
   /**
@@ -200,35 +199,24 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
    * datos iniciales requeridos de la funcionalidad
    */
   private init(): void {
-    this.loterias = new Array<LoteriaVirtualConfiguracionDTO>();
-    const loteria1 = new LoteriaVirtualConfiguracionDTO();
-    loteria1.nombreLoteria = 'Quindio';
-    loteria1.id = 1;
-    const loteria2 = new LoteriaVirtualConfiguracionDTO();
-    loteria2.nombreLoteria = 'Pereira';
-    loteria2.id = 2;
-    const loteria3 = new LoteriaVirtualConfiguracionDTO();
-    loteria3.nombreLoteria = 'Manizales';
-    loteria3.id = 3;
-    const loteria4 = new LoteriaVirtualConfiguracionDTO();
-    loteria4.nombreLoteria = 'Medellin';
-    loteria4.id = 4;
-    const loteria5 = new LoteriaVirtualConfiguracionDTO();
-    loteria5.nombreLoteria = 'Bogota';
-    loteria5.id = 5;
-    this.loterias.push(loteria1);
-    this.loterias.push(loteria2);
-    this.loterias.push(loteria3);
-    this.loterias.push(loteria4);
-    this.loterias.push(loteria5);
-    this.loteriasOrigen = this.loterias;
+
+    // lista de fracciones agregados para su venta
     this.loteriasAgregadas = new Array<string>();
 
+    // se utiliza para el filtro de busqueda de nombre
+    this.filtro = new FiltroBusquedaDTO();
+
+    // datos del cliente a comprar las fracciones
+    this.cliente = new ClientesDTO();
+    this.cliente.tipoDocumento = TiposDocumentosConstant.CEDULA_CIUDADANIA;
+
     // se configura los items para tipo de documentos
-    this.tipoDocumento = TiposDocumentosConstant.CEDULA_CIUDADANIA;
     this.itemsTiposDocumentos = [
       { value: TiposDocumentosConstant.CEDULA_CIUDADANIA, label: TiposDocumentosConstant.CEDULA_CIUDADANIA},
       { value: TiposDocumentosConstant.TARJETA_IDENTIDAD, label: TiposDocumentosConstant.TARJETA_IDENTIDAD}
     ];
+
+    // se obtiene las loterias habilitadas para su venta
+    this.getLoteriasVirtual();
   }
 }

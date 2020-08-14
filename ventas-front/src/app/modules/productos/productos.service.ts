@@ -7,7 +7,8 @@ import { PersonaDTO } from 'src/app/dtos/productos/chance/persona.dto';
 import { ImpuestosDTO } from 'src/app/dtos/productos/chance/impuestos.dto';
 import { ProductosAPIConstant } from 'src/app/constants/apis/productos/productos-api.constant';
 import { ResponseDTO } from 'src/app/dtos/productos/chance/response.dto';
-import { ModalidadesDTO } from 'src/app/dtos/escrutinio/loterias/modalidades.dto';
+import { FiltroBusquedaDTO } from 'src/app/dtos/transversal/filtro-busqueda.dto';
+import { LoteriaVirtualDTO } from 'src/app/dtos/productos/loteria-virtual/loteria-virtual.dto';
 /**
  * Service que contiene los procesos de negocio para la Loterias en el sistema
  */
@@ -113,5 +114,11 @@ export class ProductosService {
     return this.http.get<any>(`${ProductosAPIConstant.URL_CONSULTAR_RUTA_IMAGENES}`);
   }
 
-
+  /**
+   * Servicio que permite consultar las loterias virtual
+   * que estan habilitados para su respectiva venta
+   */
+  public getLoteriasVirtual(filtro: FiltroBusquedaDTO): Observable<Array<LoteriaVirtualDTO>> {
+    return this.http.post<Array<LoteriaVirtualDTO>>(ProductosAPIConstant.URL_GET_LOTERIAS_VIRTUAL, filtro);
+  }
 }

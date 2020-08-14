@@ -6,102 +6,119 @@
 
     <!-- fecha actual -->
     <div class="ui-g-12 text-left pb-0 pt-0 pr-0 pl-0">
-      <p class="clock-icon">
-        <label class="hora">{{ fechaActual | date: "dd/MM/yyyy HH:mm:ss" }}</label>
+      <p class="clock-icon mb-0">
+        <label class="hora">{{ fechaActual | date: "dd/MM/yyyy HH:mm:ss" }}</label>        
       </p>
     </div>
       
-    <!-- filtro nombre loteria -->
-    <div class="ui-g-12 p-0 pb-2">
-      <div *ngIf="loteriasOrigen.length > 3" class="inner-addon left-addon">
+    <!-- pnl filtro -->
+    <div class="ui-g-12 p-0 pb-1 pt-1">
+      <div class="inner-addon left-addon">
         <i class="fa fa-search aico"></i>
         <input
-          (keyup)="busquedaLoterias()"
-          [(ngModel)]="filterNombreLoteria"
+          [(ngModel)]="filtro.nombre"
           type="text"
           maxlength="50"
           class="in-search"
           autocomplete="off"
-          placeholder="Buscar lotería disponibles"
+          placeholder="Buscar lotería con sorteos disponibles"
           title="Filtro por el nombre de la lotería"/>
       </div>
+      <button
+        (click)="getLoteriasVirtual()"
+        class="btn-light-dark btn-filter"
+        type="button"
+        title="Filtra las loterías con sorteos disponibles">
+          <label class="btn-label"> Filtrar</label>
+          <i class="fa fa-filter btn-icon pl-1"></i>
+          <i *ngIf="hayFiltroAplicado" class="fa fa-asterisk font-size-9 pl-1"></i>
+      </button>
     </div>
 
     <!-- loterias -->
     <div class="ui-g-12 p-0">
       
       <!-- carousel -->
-      <p-carousel [value]="loterias" [numVisible]="carouselNroVisible">
-        <ng-template let-loteria pTemplate="item">
-
-          <!-- pnl-content -->
-          <div (click)="seleccionarLoteria(loteria)" [ngClass]="{'selected' : (loteriaSeleccionada && loteriaSeleccionada.id === loteria.id)}" class="ui-g-12 content p-1">
-
-            <!-- header -->
-            <div [ngClass]="{'header-selected' : (loteriaSeleccionada && loteriaSeleccionada.id === loteria.id)}" class="ui-g-12 header elevation">
-              <div class="ui-g-12 p-0">
-                <div class="position-absolute">
-                  <img src="../../../../assets/img/loterias/RISARALDA.png" width="45" height="48">
-                </div>
-                <div class="ui-g-12 p-0 text-center">
-                  <div class="ui-g-12 p-0">
-                    <span class="lbl-title">{{loteria.nombreLoteria}}</span>
+      <div [ngClass]="{ 'd-none': !(loterias && loterias.length)}" class="ui-g-12 ml-2 mr-2">
+        <p-carousel [value]="loterias" [numVisible]="carouselNroVisible">
+          <ng-template let-loteria pTemplate="item">
+  
+            <!-- pnl-content -->
+            <div (click)="seleccionarLoteria(loteria)" [ngClass]="{'selected' : (loteriaSeleccionada && loteriaSeleccionada.idLoteriaVirtual === loteria.idLoteriaVirtual)}" class="ui-g-12 content p-1">
+  
+              <!-- header -->
+              <div [ngClass]="{'header-selected' : (loteriaSeleccionada && loteriaSeleccionada.idLoteriaVirtual === loteria.idLoteriaVirtual)}" class="ui-g-12 header elevation">
+                <div class="ui-g-12 p-0">
+                  <div class="position-absolute">
+                    <img src="../../../../assets/img/loterias/RISARALDA.png" width="45" height="48">
                   </div>
-                  <div class="ui-g-12 p-0">
-                    <span class="lbl-sub-title">Sorteo: 6543</span>
-                  </div>                
+                  <div class="ui-g-12 p-0 text-center pt-1">
+                    <div class="ui-g-12 p-0">
+                      <span class="lbl-title">{{loteria.nombreLoteria}}</span>
+                    </div>
+                    <div class="ui-g-12 p-0">
+                      <span class="lbl-sub-title">Sorteo: {{loteria.numeroSorteo}}</span>
+                    </div>                
+                  </div>
                 </div>
               </div>
-            </div>
-
-            <!-- body -->
-            <div class="ui-g-12 body elevation">
-
-              <!-- fecha sorteo -->
-              <div class="ui-g-12 p-0 pl-3 pr-3 pb-3">
-                <div class="position-absolute p-0 mt-1">
-                  <span class="calendar-icon"></span>
-                </div>
-                <div class="ui-g-12 p-0 text-center">
-                  <div class="ui-g-12 p-0">
-                    <span class="lbl-date">Fecha Sorteo</span>
+  
+              <!-- body -->
+              <div class="ui-g-12 body elevation">
+  
+                <!-- fecha sorteo -->
+                <div class="ui-g-12 p-0 pl-3 pr-3 pb-3">
+                  <div class="position-absolute p-0 mt-1">
+                    <span class="calendar-icon"></span>
                   </div>
                   <div class="ui-g-12 p-0 text-center">
-                    <span class="lbl-date-f">26/03/2020</span>
+                    <div class="ui-g-12 p-0">
+                      <span class="lbl-date">Fecha Sorteo</span>
+                    </div>
+                    <div class="ui-g-12 p-0 text-center">
+                      <span class="lbl-date-f">{{loteria.fechaSorteo | date:'dd-MMM-yyyy'}}</span>
+                    </div>
+                  </div>
+                </div>
+  
+                <!-- premio mayor -->
+                <div class="ui-g-12 p-0 pl-3 pr-3">
+                  <div class="position-absolute p-0 mt-1">
+                    <span class="money-icon"></span>
+                  </div>
+                  <div class="ui-g-12 p-0 text-center">
+                    <div class="ui-g-12 p-0">
+                      <span class="lbl-date">Premio Mayor</span>
+                    </div>
+                    <div class="ui-g-12 p-0">
+                      <span class="lbl-date-f">{{loteria.premioMayor | currency}}</span>
+                    </div>
+                  </div>
+                </div>            
+              </div>
+  
+              <!-- footer -->
+              <div class="ui-g-12 p-0 footer elevation">
+                <div class="ui-g-12 p-0 text-center">
+                  <div class="ui-g-12 p-0">
+                    <span class="lbl-date">Valor Fracción</span>
+                  </div>
+                  <div class="ui-g-12 p-0">
+                    <span class="footer-money">{{loteria.valorFraccion | currency}}</span>
                   </div>
                 </div>
               </div>
-
-              <!-- premio mayor -->
-              <div class="ui-g-12 p-0 pl-3 pr-3">
-                <div class="position-absolute p-0 mt-1">
-                  <span class="money-icon"></span>
-                </div>
-                <div class="ui-g-12 p-0 text-center">
-                  <div class="ui-g-12 p-0">
-                    <span class="lbl-date">Premio Mayor</span>
-                  </div>
-                  <div class="ui-g-12 p-0">
-                    <span class="lbl-date-f">$500.000.000</span>
-                  </div>
-                </div>
-              </div>            
             </div>
+          </ng-template>       
+        </p-carousel>
+      </div>
 
-            <!-- footer -->
-            <div class="ui-g-12 footer elevation">
-              <span class="footer-money">$10.000</span>
-            </div>
-          </div>
-        </ng-template>       
-      </p-carousel>
-      
-      <!-- no hay loterias -->
-      <ng-container *ngIf="loteriasOrigen && loteriasOrigen.length && (!loterias || loterias.length === 0)">
+      <!-- no hay sorteos disponibles -->
+      <ng-container *ngIf="!(loterias && loterias.length)">
         <div class="mr-2 ml-2 mt-2 mb-2 ui-messages ui-messages-info ui-corner-all p-2">
           <span class="ui-messages-icon pi pi-info-circle"></span>
           <span class="ui-messages-detail font-size-14 mt-1 lbl-date">
-            <strong>No se encontraron LOTERIAS</strong> que coincidan con el nombre de búsqueda ingresado
+            <strong>No se encontraron LOTERÍAS</strong> con sorteos disponibles
           </span>
         </div>
       </ng-container>
@@ -144,7 +161,7 @@
               </div>
               <div class="ui-g-12 pt-0 pb-0">
                 <p-dropdown
-                  [(ngModel)]="tipoDocumento"
+                  [(ngModel)]="cliente.tipoDocumento"
                   (onChange)="changeTipoNroDocumento()"
                   [options]="itemsTiposDocumentos"
                   inputId="tipoin"
@@ -164,8 +181,7 @@
                 <div class="inner-addon left-addon-user">
                   <i class="fa fa-user aico clr"></i>
                   <input
-                    [(ngModel)]="nroDocumento"
-                    (keypress)="keyPressNumber($event)"
+                    [(ngModel)]="cliente.numeroDocumento"
                     (change)="changeTipoNroDocumento()"
                     class="input-app-sm w-100"
                     type="text"
@@ -177,14 +193,10 @@
 
             <!-- cliente -->
             <div class="ui-g-12 pb-0 pt-2 pr-2 pl-2">
-              <ng-container *ngIf="cliente">
+              <ng-container *ngIf="cliente && cliente.idCliente">
                 <div class="ui-g-12 p-0">
                   <i class="fa fa-check-circle icon-success"></i>
-                  <input
-                    [ngModel]="nombreCompleto"
-                    type="text"
-                    maxlength="50"
-                    class="form-control styleInputClient">
+                  <div class="no-sorteos">{{ cliente.primerNombre }} {{ cliente.segundoNombre }} {{ cliente.primerApellido }} {{ cliente.segundoApellido }}</div>
                 </div>
               </ng-container>
             </div>

@@ -16,6 +16,14 @@ export class ProductosAPIConstant {
 
   static readonly MODALIDADES_RECARGAS: string = 'recargas/recarga/';
 
+  /** Nombre del REST para la administracion de loterias virtual */
+  static readonly LOTERIAS_VIRTUAL: string = 'loteria/virtual/';
+
+  /** URL del recurso para para obtener las loterias virtual */
+  static readonly URL_GET_LOTERIAS_VIRTUAL: string =
+    AppDomainConstant.URI_GATEWAY +
+    ProductosAPIConstant.LOTERIAS_VIRTUAL +
+    'getLoteriasVirtual';
 
   /** URL del recurso para obtener las loterias */
   static readonly URL_CONSULTAR_LOTERIAS: string =
