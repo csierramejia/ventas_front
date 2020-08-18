@@ -4,6 +4,9 @@
  */
 export class ItemFiltroDTO {
 
+  /** Filtro por algun IDENTIFICADOR */
+  public id: number;
+
   /** Filtro por el nombre del item */
   public nombre: string;
 

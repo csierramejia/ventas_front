@@ -35,4 +35,7 @@ export class TipoItemConstant {
 
   /** tipo de item para la tabla IMPUESTOS */
   public static readonly IMPUESTOS = 11;
+
+  /** tipo de item para la tabla PARAMETROS */
+  public static readonly PARAMETROS = 12;
 }

@@ -227,21 +227,27 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
     // se obtiene las loterias habilitadas para su venta
     this.getLoteriasVirtual();
 
-    // Se consulta el valor del porcentaje IVA
-    this.getPorcentajeIVA();
+    // Se consulta las constantes parametrizado en el sistema
+    this.getParametros();
   }
 
   /**
    * Metodo que permite consultar el porcentaje IVA
    */
-  private getPorcentajeIVA(): void {
-    const filtro: ItemFiltroDTO = new ItemFiltroDTO();
+  private getParametros(): void {
+
+    // lista que contiene todos los parametros
+    const params: Array<ItemParamDTO> = new Array<ItemParamDTO>();
+
+    // parametros para obtener el IVA
+    const filtro = new ItemFiltroDTO();
     filtro.nombre = 'IVA';
     const paramImpuesto: ItemParamDTO = new ItemParamDTO();
     paramImpuesto.tipoItem = TipoItemConstant.IMPUESTOS;
     paramImpuesto.filtro = filtro;
-    const params: Array<ItemParamDTO> = new Array<ItemParamDTO>();
     params.push(paramImpuesto);
+
+    // se hace el llamado al servicio
     this.commonService.getSelectItems(params).subscribe(
       (data) => {
 

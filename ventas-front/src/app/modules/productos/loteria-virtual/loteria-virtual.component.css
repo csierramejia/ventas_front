@@ -131,7 +131,13 @@
 }
 
 .header-selected {
-  background: #FE007F 0% 0% no-repeat padding-box;
+  background: #BF3A42 0% 0% no-repeat padding-box;
+}
+
+.clr-selected {
+ font: Bold 18px/22px Montserrat;
+ letter-spacing: 0px;
+ color: #BF3A42;
 }
 
 .content {

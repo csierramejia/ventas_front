@@ -42,4 +42,7 @@ export class LoteriaVirtualDTO {
 
   /** Hora en la que finaliza la venta */
   public horaCierreVenta: string;
+
+  /** Es el nombre de la imagen de la loteria */
+  public imagenLoteria: string;
 }

@@ -50,7 +50,7 @@
               <div [ngClass]="{'header-selected' : (loteriaSeleccionada && loteriaSeleccionada.idSorteo === loteria.idSorteo)}" class="ui-g-12 header elevation">
                 <div class="ui-g-12 p-0">
                   <div class="position-absolute">
-                    <img src="../../../../assets/img/loterias/RISARALDA.png" width="45" height="48">
+                    <img src="{{loteria.imagenLoteria}}" width="45" height="48" alt="not working">
                   </div>
                   <div class="ui-g-12 p-0 text-center pt-1">
                     <div class="ui-g-12 p-0">
@@ -104,7 +104,7 @@
                     <span class="lbl-date">Valor Fracción</span>
                   </div>
                   <div class="ui-g-12 p-0">
-                    <span class="footer-money">{{loteria.valorFraccion | currency}}</span>
+                    <span [class]="(loteriaSeleccionada && loteriaSeleccionada.idSorteo === loteria.idSorteo) ? 'clr-selected' : 'footer-money'">{{loteria.valorFraccion | currency}}</span>
                   </div>
                 </div>
               </div>
