@@ -877,6 +877,7 @@ export class RecargasOperadorComponent extends CommonComponent implements OnInit
     this.chanceForm.get('numeroRecargaRepetido').setValue('');
     this.tituloOperador=null;
     this.idOperador=null;
+    this.numerosIguales=false;
     this.seleccionado = null;
     this.enabledCustomer = false;
     this.enabledCombined = true;
