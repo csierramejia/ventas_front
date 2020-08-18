@@ -59,12 +59,12 @@
 
 .header {
   height: 62px;
-  background: #0083FE 0% 0% no-repeat padding-box;
+  background: #2076BD 0% 0% no-repeat padding-box;
   border-radius: 5px 5px 0px 0px;
 }
 
 .header-selected {
-  background: #FE007F 0% 0% no-repeat padding-box;
+  background: #BE1E42 0% 0% no-repeat padding-box;
 }
 
 .content {
@@ -114,11 +114,40 @@ opacity: 1;
   text-align: left;
 font: Bold 18px/22px Montserrat;
 letter-spacing: 0px;
-color: #0083FE;
+color: #2076BD;
+opacity: 1;
+}
+.totalcarrucelrojo{
+  text-align: left;
+font: Bold 18px/22px Montserrat;
+letter-spacing: 0px;
+color: #BE1E42;
 opacity: 1;
 }
 .elevation {
   box-shadow: 0px 1px 0px -3px rgba(0, 0, 0, 0.2), 0px 0px 5px 1px rgba(0, 0, 0, 0.14), 0px 2px 1px 1px rgba(0, 0, 0, 0.12);
+}
+
+.classnumeros{
+  background: var(--unnamed-color-2076bd) 0% 0% no-repeat padding-box;
+background: #2076BD 0% 0% no-repeat padding-box;
+box-shadow: 0px 3px 6px #00000029;
+border-radius: 10px;
+opacity: 1;
+}
+.textnumero{
+  text-align: left;
+font: normal normal bold 20px/24px Montserrat;
+letter-spacing: 0px;
+color: #333333;
+opacity: 1;
+}
+
+.body .ui-card{
+  background-color: #2076BD !important;
+}
+.azul{
+  background-color: #2076BD !important;
 }
 
 .lbl-total {
@@ -136,7 +165,7 @@ height: 100px !important;
 }
 
 .header-selected {
-  background: #FE007F 0% 0% no-repeat padding-box;
+  background: #BE1E42 0% 0% no-repeat padding-box;
 }
 
 .body .ui-multiselect .ui-multiselect-label {
@@ -175,13 +204,22 @@ text-align: center
   background-color: #FFFFFF;
 }
 
+.redondoRojo{
+  box-shadow: 0px 3px 6px #00000029;
+  border-radius: 110px;
+  width: 80px;
+  height: 76px;
+  text-align: center;
+  background-color: #BE1E42;
+  }
+
 .redondoA{
   box-shadow: 0px 3px 6px #00000029;
   border-radius: 110px;
   width: 80px;
   height: 76px;
   text-align: center;
-  background-color: #0083FE;
+  background-color: #2076BD;
   }
   .redondoB{
     box-shadow: 0px 3px 6px #00000029;
@@ -538,6 +576,18 @@ letter-spacing: 0px;
 color: #0083FE;
 opacity: 1;
 position: relative;
+top: 5px;
+
+}
+
+.tituloblanco{
+  text-align: left;
+font: Regular 15px/19px Montserrat;
+letter-spacing: 0px;
+color: #FFFFFF;
+opacity: 1;
+position: relative;
+left: 24px;
 top: 5px;
 
 }
