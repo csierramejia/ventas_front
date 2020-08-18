@@ -25,12 +25,29 @@ export class ProductosAPIConstant {
     ProductosAPIConstant.LOTERIAS_VIRTUAL +
     'getLoteriasVirtual';
 
+  /** URL del recurso para obtener fracciones disponibles */
+  static readonly URL_GET_FRACCIONES_DISPONIBLES: string =
+    AppDomainConstant.URI_GATEWAY +
+    ProductosAPIConstant.LOTERIAS_VIRTUAL +
+    'getFraccionesDisponiblesNumeroLoteria';
+
+  /** URL del recurso para obtener un numero loteria aleatorio */
+  static readonly URL_GET_NUMERO_ALEATORIO: string =
+    AppDomainConstant.URI_GATEWAY +
+    ProductosAPIConstant.LOTERIAS_VIRTUAL +
+    'getSerieNumeroAleatorio';
+
+  /** URL del recurso para comprar loteria virtual */
+  static readonly URL_GET_COMPRAR_LOTERIA_VIRTUAL: string =
+    AppDomainConstant.URI_GATEWAY +
+    ProductosAPIConstant.LOTERIAS_VIRTUAL +
+    'comprarLoteriaVirtual';
+
   /** URL del recurso para obtener las loterias */
   static readonly URL_CONSULTAR_LOTERIAS: string =
     AppDomainConstant.URI_GATEWAY +
     ProductosAPIConstant.LOTERIAS_API +
     'consultarLoteriasSorteo';
-
 
   /** URL del recurso para obtener existencia del cliente */
   static readonly URL_CONSULTAR_CLIENTE: string =

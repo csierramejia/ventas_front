@@ -9,6 +9,10 @@ import { ProductosService } from '../../../modules/productos/productos.service';
 import { CrearClienteComponent } from '../chance/crear-cliente/crear-cliente.component';
 import { LoteriaVirtualDTO } from 'src/app/dtos/productos/loteria-virtual/loteria-virtual.dto';
 import { FiltroBusquedaDTO } from 'src/app/dtos/transversal/filtro-busqueda.dto';
+import { CommonService } from 'src/app/utilities/common.service';
+import { ItemParamDTO } from 'src/app/dtos/transversal/item-param.dto';
+import { ItemFiltroDTO } from 'src/app/dtos/transversal/item-filtro.dto';
+import { TipoItemConstant } from 'src/app/constants/tipo-item.constant';
 
 /**
  * Componente para las ventas de las loterias virtual
@@ -16,7 +20,7 @@ import { FiltroBusquedaDTO } from 'src/app/dtos/transversal/filtro-busqueda.dto'
 @Component({
   templateUrl: './loteria-virtual.component.html',
   styleUrls: ['./loteria-virtual.component.css'],
-  providers: [ ProductosService ]
+  providers: [ ProductosService, CommonService ]
 })
 export class LoteriaVirtualComponent extends CommonComponent implements OnInit, OnDestroy {
 
@@ -50,6 +54,9 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
   /** Es la cantidad de nro de card que se visualiza en el carousel */
   public carouselNroVisible = 3;
 
+  /** Es el porcentaje del IVA a cobrar */
+  public PORCENTAJE_IVA: number;
+
   /** Es el componente modal para la creacion del cliente */
   @ViewChild(CrearClienteComponent) modalCrearCliente: CrearClienteComponent;
 
@@ -68,6 +75,7 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
   constructor(
     protected messageService: MessageService,
     private productosService: ProductosService,
+    private commonService: CommonService,
     private confirmationService: ConfirmationService,
     private spinnerState: SpinnerState) {
     super();
@@ -218,5 +226,44 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
 
     // se obtiene las loterias habilitadas para su venta
     this.getLoteriasVirtual();
+
+    // Se consulta el valor del porcentaje IVA
+    this.getPorcentajeIVA();
+  }
+
+  /**
+   * Metodo que permite consultar el porcentaje IVA
+   */
+  private getPorcentajeIVA(): void {
+    const filtro: ItemFiltroDTO = new ItemFiltroDTO();
+    filtro.nombre = 'IVA';
+    const paramImpuesto: ItemParamDTO = new ItemParamDTO();
+    paramImpuesto.tipoItem = TipoItemConstant.IMPUESTOS;
+    paramImpuesto.filtro = filtro;
+    const params: Array<ItemParamDTO> = new Array<ItemParamDTO>();
+    params.push(paramImpuesto);
+    this.commonService.getSelectItems(params).subscribe(
+      (data) => {
+
+        // se verifica si el servicio retorno algun valor
+        if (data && data.length) {
+
+          // se recorre cada item consultado
+          for (const item of data) {
+
+            // se verifica que tipo de selecitem se debe configurar
+            switch (item.tipoItem) {
+              case TipoItemConstant.IMPUESTOS: {
+                this.PORCENTAJE_IVA = +item.items[0].label;
+                break;
+              }
+            }
+          }
+        }
+      },
+      (error) => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
   }
 }
