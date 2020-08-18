@@ -128,6 +128,51 @@ opacity: 1;
   box-shadow: 0px 1px 0px -3px rgba(0, 0, 0, 0.2), 0px 0px 5px 1px rgba(0, 0, 0, 0.14), 0px 2px 1px 1px rgba(0, 0, 0, 0.12);
 }
 
+.inner-addon {
+  position: relative;
+}
+
+.inner-addon .aico {
+  position: absolute;
+}
+
+.inner-addon .aico2 {
+  position: absolute;
+}
+
+.left-addon .aico {
+  left: 81%;
+  padding-top: 7px;
+}
+.left-addon .aico2 {
+  left: 81%;
+  padding-top: 7px;
+}
+
+.left-addon input {
+  padding-right: 10px;
+}
+
+.aico {
+  color: #BE1E42;
+  z-index: 1;
+  font-size: 20px;
+}
+
+.aico2 {
+  color: #0DAA21;
+  z-index: 1;
+  font-size: 20px;
+}
+
+.left-addon-user .aico {
+  left: 75%;
+  padding-top: 5px;
+}
+.left-addon-user .aico2 {
+  left: 75%;
+  padding-top: 5px;
+}
 .classnumeros{
   background: var(--unnamed-color-2076bd) 0% 0% no-repeat padding-box;
 background: #2076BD 0% 0% no-repeat padding-box;
@@ -305,6 +350,8 @@ opacity: 1;
 padding-left: 35px;
 padding-top: 4p
 }
+
+
 
 .btn-random {
   border-radius: 30px;

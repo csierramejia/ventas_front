@@ -75,18 +75,24 @@
                                 <div class="col-md-6">
                                     <label class="tituloblanco" style="margin-left: -12px;
                                     margin-top: 10px;">NÚMERO A RECARGAR</label>
+                                     <div class="inner-addon left-addon-user">
+                                        <i class="fa fa-check aico2 clr"></i>
                                     <input type="text" maxlength="10" style="margin-top: 8px;
                                     margin-left: 8px;" (keypress)="keyPressNumber($event)"
                                         formControlName="numeroRecarga" class="form-control styleInput textnumero"
                                         (change)="validarCampos()">
+                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="tituloblanco" style="margin-left: -9px;
                                     margin-top: 10px;">REPETIR NÚMERO</label>
+                                      <div class="inner-addon left-addon-user">
+                                        <i class="{{numerosIguales ? 'fa fa-check aico2 clr' : 'fa fa-close aico clr'}}"></i>
                                     <input type="text" maxlength="10" style="margin-top: 8px;
                                       margin-left: 8px;" (keypress)="keyPressNumber($event)"
                                         formControlName="numeroRecargaRepetido"
                                         class="form-control styleInput textnumero" (change)="validarCampos()">
+                                    </div>
                                 </div>
                             </div>
 

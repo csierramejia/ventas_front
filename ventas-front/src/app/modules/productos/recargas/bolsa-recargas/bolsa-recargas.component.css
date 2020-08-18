@@ -15,6 +15,38 @@ letter-spacing: 0px;
 color: #BE1E42;
 opacity: 1;
 }
+
+.inner-addon {
+    position: relative;
+  }
+  
+  .inner-addon .aico {
+    position: absolute;
+  }
+  
+  .left-addon .aico {
+    left: 81%;
+    padding-top: 7px;
+  }
+  
+  .left-addon input {
+    padding-right: 10px;
+  }
+  
+  .aico {
+    color: rgb(4, 130, 251);
+    z-index: 1;
+    font-size: 20px;
+  }
+  
+  .left-addon-user .aico {
+    left: 92%;
+    padding-top: 5px;
+  }
+  
+  .clr {
+    color: #5c6063 !important;
+  }
 .numeroRecarga{
     color: var(--unnamed-color-3a3f51);
     text-align: left;

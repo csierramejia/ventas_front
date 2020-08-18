@@ -85,6 +85,7 @@ export class RecargasOperadorComponent extends CommonComponent implements OnInit
   operadores: any[];
   esRecarga: boolean;
   habilitarBotones: boolean;
+  numerosIguales: boolean;
   /** lista de items de TIPOS DE DOCUMENTOS */
   public itemsTiposDocumentos: SelectItem[];
   constructor(
@@ -100,6 +101,7 @@ export class RecargasOperadorComponent extends CommonComponent implements OnInit
 
   ngOnInit(): void {
     this.habilitarBotones = false;
+    this.numerosIguales=false;
     this.tituloOperador = "Seleccione";
     this.idOperador=null;
     this.signoMostrar = null;
@@ -146,6 +148,7 @@ export class RecargasOperadorComponent extends CommonComponent implements OnInit
 
   validarCampos() {
     this.habilitarBotones = false;
+    this.numerosIguales=false;
     if (this.esRecarga) {
       if (this.chanceForm.get('numeroRecarga').value != null &&
         this.chanceForm.get('numeroRecarga').value != undefined &&
@@ -177,13 +180,17 @@ export class RecargasOperadorComponent extends CommonComponent implements OnInit
     this.chanceForm.get('numeroRecarga').value != '' &&
     this.chanceForm.get('numeroRecargaRepetido').value != null &&
     this.chanceForm.get('numeroRecargaRepetido').value != undefined &&
-    this.chanceForm.get('numeroRecargaRepetido').value != '' &&
-    this.chanceForm.get('numeroRecarga').value != this.chanceForm.get('numeroRecargaRepetido').value){
-      this.habilitarBotones = false;
-      this.messageService.add(MsjUtil.getToastErrorMedium('El número a recargar no coincide'));
+    this.chanceForm.get('numeroRecargaRepetido').value != ''){
+      if(this.chanceForm.get('numeroRecarga').value != this.chanceForm.get('numeroRecargaRepetido').value){
+        this.habilitarBotones = false;
+        this.numerosIguales=false;
+        this.messageService.add(MsjUtil.getToastErrorMedium('El número a recargar no coincide'));
+      }
+      else{
+        this.numerosIguales=true;
+      }
     }
   }
-
   seleccionarPaquete(paquete) {
     this.paqueteSeleccionado = paquete;
     this.chanceForm.get('valorRecarga').setValue(paquete.valor);
