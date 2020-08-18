@@ -891,6 +891,13 @@ export class RecargasOperadorComponent extends CommonComponent implements OnInit
     this.habilitarBotones=false;
   }
 
+  validarVacio(numero){
+    let valida=false;
+    if(numero == null || numero==undefined || numero==''){
+      valida= true;
+    }
+    return valida;
+  }
   transformAmount() {
     let cadena = this.chanceForm.get('valorRecarga').value;
     if (cadena && cadena.includes("$")) {
