@@ -128,6 +128,24 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
       header: MsjFrontConstant.CONFIRMACION,
       accept: () => {
 
+        // se procede a realizar la venta
+        this.venta.idCliente = this.cliente.idCliente;
+        this.productosService.comprarLoteriaVirtual(this.venta).subscribe(
+          data => {
+              // se muestra el mensaje exitoso
+              this.messageService.add(MsjUtil.getToastSuccessMedium('La compra fue registrada exitosamente'));
+
+              // se inicializa los datos de la venta
+              this.venta = new LoteriaVirtualVentaDTO();
+              this.venta.valorTotal = 0;
+              this.venta.valorTotalIVA = 0;
+              this.venta.detalles = new Array<LoteriaVirtualVentaDetalleDTO>();
+              this.detalleVenta = new LoteriaVirtualVentaDetalleDTO();
+            },
+            error => {
+              this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+            }
+          );
         }
       });
     }
@@ -169,128 +187,6 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
       }
     );
-  }
-
-  /**
-   * Metodo que soporta el evento onchange del tipo y nro documento
-   */
-  public changeTipoNroDocumento(): void {
-
-    // por si fue consultado con anterioridad
-    this.showModalCrearCliente = false;
-    this.cliente.idCliente = null;
-
-    // se verifica la nulalidad de nro y tipo doc
-    if (this.cliente.tipoDocumento && this.cliente.numeroDocumento) {
-
-      // se procede a consultar el cliente
-      this.productosService.clienteApuesta(this.cliente).subscribe(
-        data => {
-          const responseCliente: any = data;
-          if (responseCliente.existe) {
-            this.cliente = data;
-          } else {
-            this.modalCrearCliente.clienteForm.get('tipoDocumento').setValue(this.cliente.tipoDocumento);
-            this.modalCrearCliente.clienteForm.get('numeroDocumento').setValue(this.cliente.numeroDocumento);
-            this.showModalCrearCliente = true;
-          }
-        },
-        error => {
-          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
-        }
-      );
-    }
-  }
-
-  /**
-   * Metodo que es invocado por el modal de crear cliente
-   */
-  public createCustomer(event): void {
-    this.showModalCrearCliente = false;
-    this.cliente.primerNombre = event.primerNombre;
-    this.cliente.segundoNombre = event.segundoNombre;
-    this.cliente.primerApellido = event.primerApellido;
-    this.cliente.segundoApellido = event.segundoApellido;
-    this.cliente.idCliente = event.idPersona;
-  }
-
-  /**
-   * Metodo que es invocado por el modal de crear cliente
-   */
-  public closeModal(event): void {
-    this.showModalCrearCliente = event;
-  }
-
-  /**
-   * Metodo que permite soporta el evento click para seleccionar el sorteo
-   */
-  public seleccionarSorteo(sorteo: LoteriaVirtualDTO): void {
-    this.spinnerState.displaySpinner();
-    setTimeout(() => {
-      this.sorteoSeleccionado = sorteo;
-      this.detalleVenta.idSorteo = sorteo.idSorteo;
-      this.fraccionesDisponible = null;
-      this.detalleVenta.fracciones = null;
-      this.spinnerState.hideSpinner();
-    }, 200);
-  }
-
-  /**
-   * Metodo que permite agregar la apuesta al carrito de compra
-   */
-  public agregarApuestaCarritoCompra(): void {
-
-    // se verifica si se ya seleccionaron las fracciones
-    if (this.detalleVenta.fracciones && this.detalleVenta.fracciones > 0) {
-
-      // se verifica que la serie y el nro no esten en el carrito venta
-      if (this.venta.detalles.length) {
-        for (const detalle of this.venta.detalles) {
-          if (detalle.idSorteo === this.detalleVenta.idSorteo &&
-              detalle.serie === this.detalleVenta.serie &&
-              detalle.numero === this.detalleVenta.numero) {
-            this.messageService.add(MsjUtil.getToastErrorLng('La serie y el número ya se encuentran agregado al carrito'));
-            return;
-          }
-        }
-      }
-
-      // se muestra el mensaje de confirmacion
-      this.confirmationService.confirm({
-        message: '¿Está seguro de agregar el número al carrito?',
-        header: MsjFrontConstant.CONFIRMACION,
-        accept: () => {
-
-          // se configuran los valores de la venta
-          this.detalleVenta.nombreLoteria = this.sorteoSeleccionado.nombreLoteria;
-          this.detalleVenta.numeroSorteo = this.sorteoSeleccionado.numeroSorteo;
-          this.detalleVenta.valor = this.detalleVenta.fracciones * this.sorteoSeleccionado.valorFraccion;
-          this.venta.valorTotal = this.venta.valorTotal + this.detalleVenta.valor;
-          this.venta.valorTotalIVA = (this.venta.valorTotal * this.PORCENTAJE_IVA) / 100;
-          this.detalleVenta.todoBillete = false;
-          if (this.sorteoSeleccionado.cantidadFraccion === this.detalleVenta.fracciones) {
-            this.detalleVenta.todoBillete = true;
-          }
-
-          // se agrega el detalle a la venta
-          this.venta.detalles.push(this.detalleVenta);
-
-          // se limpia las variable del detalle
-          this.detalleVenta = new LoteriaVirtualVentaDetalleDTO();
-          this.fraccionesDisponible = null;
-          this.sorteoSeleccionado = null;
-
-          // se reinicio el submit
-          this.isSubmit = false;
-          this.spinnerState.displaySpinner();
-          setTimeout(() => {
-            this.spinnerState.hideSpinner();
-          }, 100);
-        }
-      });
-    } else {
-      this.messageService.add(MsjUtil.getToastErrorLng('Seleccione la cantidad de fracciones a jugar'));
-    }
   }
 
   /**
@@ -411,6 +307,147 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
   }
 
   /**
+   * Metodo que soporta el evento onchange del tipo y nro documento
+   */
+  public changeTipoNroDocumento(): void {
+
+    // por si fue consultado con anterioridad
+    this.showModalCrearCliente = false;
+    this.cliente.idCliente = null;
+
+    // se verifica la nulalidad de nro y tipo doc
+    if (this.cliente.tipoDocumento && this.cliente.numeroDocumento) {
+
+      // se procede a consultar el cliente
+      this.productosService.clienteApuesta(this.cliente).subscribe(
+        data => {
+          const responseCliente: any = data;
+          if (responseCliente.existe) {
+            this.cliente = data;
+          } else {
+            this.modalCrearCliente.clienteForm.get('tipoDocumento').setValue(this.cliente.tipoDocumento);
+            this.modalCrearCliente.clienteForm.get('numeroDocumento').setValue(this.cliente.numeroDocumento);
+            this.showModalCrearCliente = true;
+          }
+        },
+        error => {
+          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+        }
+      );
+    }
+  }
+
+  /**
+   * Metodo que es invocado por el modal de crear cliente
+   */
+  public createCustomer(event): void {
+    this.showModalCrearCliente = false;
+    this.cliente.primerNombre = event.primerNombre;
+    this.cliente.segundoNombre = event.segundoNombre;
+    this.cliente.primerApellido = event.primerApellido;
+    this.cliente.segundoApellido = event.segundoApellido;
+    this.cliente.idCliente = event.idPersona;
+  }
+
+  /**
+   * Metodo que es invocado por el modal de crear cliente
+   */
+  public closeModal(event): void {
+    this.showModalCrearCliente = event;
+  }
+
+  /**
+   * Metodo que permite soporta el evento click para seleccionar el sorteo
+   */
+  public seleccionarSorteo(sorteo: LoteriaVirtualDTO): void {
+    this.spinnerState.displaySpinner();
+    setTimeout(() => {
+
+      // por si hay datos consultados con anterioridad
+      this.fraccionesDisponible = null;
+      this.detalleVenta.fracciones = null;
+
+      // se configura los datos del sorteo seleccionado
+      this.sorteoSeleccionado = sorteo;
+      this.detalleVenta.idSorteo = sorteo.idSorteo;
+
+      // se configura el rango inicial y final
+      let inicial = sorteo.rangoInicialSerie.toString();
+      if (inicial.length === 1) {
+        inicial = '00' + inicial;
+      } else if (inicial.length === 2) {
+        inicial = '0' + inicial;
+      }
+      let final = sorteo.rangoFinalSerie.toString();
+      if (final.length === 1) {
+        final = '00' + final;
+      } else if (final.length === 2) {
+        final = '0' + final;
+      }
+      this.sorteoSeleccionado.rangoSerie = '( ' + inicial + ' - ' + final + ' )';
+      this.spinnerState.hideSpinner();
+    }, 200);
+  }
+
+  /**
+   * Metodo que permite agregar la apuesta al carrito de compra
+   */
+  public agregarApuestaCarritoCompra(): void {
+
+    // se verifica si se ya seleccionaron las fracciones
+    if (this.detalleVenta.fracciones && this.detalleVenta.fracciones > 0) {
+
+      // se verifica que la serie y el nro no esten en el carrito venta
+      if (this.venta.detalles.length) {
+        for (const detalle of this.venta.detalles) {
+          if (detalle.idSorteo === this.detalleVenta.idSorteo &&
+              detalle.serie === this.detalleVenta.serie &&
+              detalle.numero === this.detalleVenta.numero) {
+            this.messageService.add(MsjUtil.getToastErrorLng('La serie y el número ya se encuentran agregado al carrito'));
+            return;
+          }
+        }
+      }
+
+      // se muestra el mensaje de confirmacion
+      this.confirmationService.confirm({
+        message: '¿Está seguro de agregar el número al carrito?',
+        header: MsjFrontConstant.CONFIRMACION,
+        accept: () => {
+
+          // se configuran los valores de la venta
+          this.detalleVenta.nombreLoteria = this.sorteoSeleccionado.nombreLoteria;
+          this.detalleVenta.numeroSorteo = this.sorteoSeleccionado.numeroSorteo;
+          this.detalleVenta.valor = this.detalleVenta.fracciones * this.sorteoSeleccionado.valorFraccion;
+          this.venta.valorTotal = this.venta.valorTotal + this.detalleVenta.valor;
+          this.venta.valorTotalIVA = (this.venta.valorTotal * this.PORCENTAJE_IVA) / 100;
+          this.detalleVenta.todoBillete = false;
+          if (this.sorteoSeleccionado.cantidadFraccion === this.detalleVenta.fracciones) {
+            this.detalleVenta.todoBillete = true;
+          }
+
+          // se agrega el detalle a la venta
+          this.venta.detalles.push(this.detalleVenta);
+
+          // se limpia las variable del detalle
+          this.detalleVenta = new LoteriaVirtualVentaDetalleDTO();
+          this.fraccionesDisponible = null;
+          this.sorteoSeleccionado = null;
+
+          // se reinicio el submit
+          this.isSubmit = false;
+          this.spinnerState.displaySpinner();
+          setTimeout(() => {
+            this.spinnerState.hideSpinner();
+          }, 100);
+        }
+      });
+    } else {
+      this.messageService.add(MsjUtil.getToastErrorLng('Seleccione la cantidad de fracciones a jugar'));
+    }
+  }
+
+  /**
    * Metodo que es invocado cuando cambian el valor de la serie y nro
    */
   public changeSerieNumero(): void {
@@ -427,6 +464,34 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
       this.detalleVenta.fracciones = cantidad;
       this.spinnerState.hideSpinner();
     }, 100);
+  }
+
+  /**
+   * Metodo que soporta el evento click de las fracciones
+   */
+  public eliminarNumeroCarrito(detalle: LoteriaVirtualVentaDetalleDTO): void {
+
+    // se muestra la ventana de confirmacion
+    this.confirmationService.confirm({
+      message: '¿Está seguro de eliminar el número:' + detalle.numero + '?',
+      header: MsjFrontConstant.CONFIRMACION,
+      accept: () => {
+
+        // se elimina el detalle de la venta
+        const i = this.venta.detalles.indexOf(detalle, 0);
+        if (i > -1) {
+          this.venta.detalles.splice(i, 1);
+        }
+
+        // se calculan los valores de la venta
+        this.venta.valorTotal = this.venta.valorTotal - detalle.valor;
+        this.venta.valorTotalIVA = (this.venta.valorTotal * this.PORCENTAJE_IVA) / 100;
+        this.spinnerState.displaySpinner();
+        setTimeout(() => {
+          this.spinnerState.hideSpinner();
+        }, 100);
+      }
+    });
   }
 
   /**

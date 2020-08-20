@@ -45,4 +45,7 @@ export class LoteriaVirtualDTO {
 
   /** Es el nombre de la imagen de la loteria */
   public imagenLoteria: string;
+
+  /** Es el rango serie a mostrar en pantalla */
+  public rangoSerie: string;
 }

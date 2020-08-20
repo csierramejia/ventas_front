@@ -215,6 +215,7 @@
               <div class="ui-g-3 p-0">
                 <div class="ui-g-12 pb-0">
                   <label for="seriein" class="lbl ml-1 mb-0">Serie*</label>
+                  <label *ngIf="sorteoSeleccionado" for="seriein" class="nro-serie ml-1 mb-0">{{sorteoSeleccionado.rangoSerie}}</label>
                 </div>
                 <div class="ui-g-12 pt-0">
                   <input
@@ -356,7 +357,7 @@
             </div>
             <div class="ui-g-2 p-0 text-center vertical-center">
               <i title="Permite editar este número" class="pi pi-pencil btn-edit-played"></i>
-              <i title="Permite eliminar este número del carrito" class="pi pi-trash btn-remove-played"></i>
+              <i (click)="eliminarNumeroCarrito(sorteo)" title="Permite eliminar este número del carrito" class="pi pi-trash btn-remove-played"></i>
             </div>
           </div>
         </ng-container>
