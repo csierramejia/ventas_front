@@ -785,6 +785,10 @@ body {
   width: 180px !important
 }
 
+.w-150-px {
+  width: 150px !important
+}
+
 .w-185-px {
   width: 185px !important
 }
@@ -1085,6 +1089,11 @@ body {
   background-color: rgb(38, 132, 209);
 }
 
+.btn-light-dark:disabled {
+  opacity: 50%;
+  pointer-events: none;
+}
+
 .btn-light {
   box-shadow: 0 1.5px 4px 0 rgba(20, 157, 183, 0.45) !important;
   border-radius: 15px;
@@ -1142,4 +1151,8 @@ body {
 
 .dropdown-app:not(.ui-state-disabled).ui-state-focus {
   box-shadow: 0 0 0 0.2em #fff !important;
+}
+
+.ui-dialog .ui-dialog-titlebar {
+  border: 0px solid !important;
 }

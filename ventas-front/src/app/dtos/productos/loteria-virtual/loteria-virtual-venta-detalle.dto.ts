@@ -27,6 +27,15 @@ export class LoteriaVirtualVentaDetalleDTO {
   /** Son las fracciones vendidas */
   public fraccionesVendidas: number;
 
+  /** Son las fracciones disponibles */
+  public fraccionesDisponibles: number;
+
   /** Indica si se agrego todo el billete */
   public todoBillete: boolean;
+
+  /** Es el valor de la fraccion */
+  public valorFraccion: number;
+
+  /** Es la cantidad de fracciones que tiene el sorteo */
+  public cantidadFracciones: number;
 }

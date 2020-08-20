@@ -17,6 +17,7 @@ import { LoteriaVirtualVentaDTO } from 'src/app/dtos/productos/loteria-virtual/l
 import { LoteriaVirtualVentaDetalleDTO } from 'src/app/dtos/productos/loteria-virtual/loteria-virtual-venta-detalle.dto';
 import { MsjFrontConstant } from 'src/app/constants/messages-frontend.constant';
 import { RegexUtil } from 'src/app/utilities/regex-util';
+import { VentanaModalModel } from 'src/app/model-component/ventana-modal.model';
 
 /**
  * Componente para las ventas de las loterias virtual
@@ -66,6 +67,15 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
 
   /** Son las fracciones disponible del sorteo a jugar */
   public fraccionesDisponible: Array<number>;
+
+  /** Son las fracciones disponible para la edicion */
+  public fraccionesDisponibleEdicion: Array<number>;
+
+  /** Se utiliza para visualizar el modal de edicion */
+  public modalEdicion: VentanaModalModel;
+
+  /** Es la cantidad de fracciones a editar */
+  public fraccionesEdicion: number;
 
   /** Es el porcentaje del IVA a cobrar */
   private PORCENTAJE_IVA: number;
@@ -251,6 +261,7 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
 
             // se configura las fracciones vendidas para la serie y el numero
             this.detalleVenta.fraccionesVendidas = data.fraccionesVendidas;
+            this.detalleVenta.fraccionesDisponibles = data.fracciones;
           } else {
             this.messageService.add(MsjUtil.getToastErrorLng('La serie y el número son invalidos para el sorteo seleccionado'));
           }
@@ -296,6 +307,7 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
           this.detalleVenta.fraccionesVendidas = data.fraccionesVendidas;
           this.detalleVenta.serie = data.serie;
           this.detalleVenta.numero = data.numero;
+          this.detalleVenta.fraccionesDisponibles = data.fracciones;
         } else {
           this.messageService.add(MsjUtil.getToastErrorLng('No hay números habilitados para el sorteo seleccionado'));
         }
@@ -418,6 +430,8 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
           // se configuran los valores de la venta
           this.detalleVenta.nombreLoteria = this.sorteoSeleccionado.nombreLoteria;
           this.detalleVenta.numeroSorteo = this.sorteoSeleccionado.numeroSorteo;
+          this.detalleVenta.valorFraccion = this.sorteoSeleccionado.valorFraccion;
+          this.detalleVenta.cantidadFracciones = this.sorteoSeleccionado.cantidadFraccion;
           this.detalleVenta.valor = this.detalleVenta.fracciones * this.sorteoSeleccionado.valorFraccion;
           this.venta.valorTotal = this.venta.valorTotal + this.detalleVenta.valor;
           this.venta.valorTotalIVA = (this.venta.valorTotal * this.PORCENTAJE_IVA) / 100;
@@ -469,6 +483,17 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
   /**
    * Metodo que soporta el evento click de las fracciones
    */
+  public setCantidadFraccionesEdicion(cantidad: number): void {
+    this.spinnerState.displaySpinner();
+    setTimeout(() => {
+      this.fraccionesEdicion = cantidad;
+      this.spinnerState.hideSpinner();
+    }, 100);
+  }
+
+  /**
+   * Metodo que soporta el evento click de las fracciones
+   */
   public eliminarNumeroCarrito(detalle: LoteriaVirtualVentaDetalleDTO): void {
 
     // se muestra la ventana de confirmacion
@@ -492,6 +517,77 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
         }, 100);
       }
     });
+  }
+
+  /**
+   * Metodo que soporte el evento click del boton edicion
+   */
+  public showModalEdicion(detalle: LoteriaVirtualVentaDetalleDTO): void {
+
+    // se visualiza el modal
+    if (!this.modalEdicion) {
+      this.modalEdicion = new VentanaModalModel();
+    }
+    this.modalEdicion.showModal(detalle);
+
+    // se configura las fracciones disponible
+    this.fraccionesEdicion = detalle.fracciones;
+    this.fraccionesDisponibleEdicion = new Array<number>();
+    let i = 1;
+    while (i <= detalle.fraccionesDisponibles) {
+      this.fraccionesDisponibleEdicion.push(i);
+      i++;
+    }
+  }
+
+  /**
+   * Metodo que permite aplicar los cambios del modal edicion
+   */
+  public aplicarCambios(): void {
+
+    // solo aplica si hay cambios
+    if (this.hayCambiosAplicados()) {
+      this.spinnerState.displaySpinner();
+      setTimeout(() => {
+
+        // se descuenta el valor anterior
+        this.venta.valorTotal = this.venta.valorTotal - this.modalEdicion.data.valor;
+
+        // se configura la nueva fracciones
+        this.modalEdicion.data.fracciones = this.fraccionesEdicion;
+
+        // se calcula el nuevo valor
+        this.modalEdicion.data.valor = this.modalEdicion.data.fracciones * this.modalEdicion.data.valorFraccion;
+
+        // se calcula el valor total del IVA
+        this.venta.valorTotal = this.venta.valorTotal + this.modalEdicion.data.valor;
+        this.venta.valorTotalIVA = (this.venta.valorTotal * this.PORCENTAJE_IVA) / 100;
+
+        // se verifica si escogieron todo el billete
+        this.modalEdicion.data.todoBillete = false;
+        if (this.modalEdicion.data.cantidadFracciones === this.fraccionesEdicion) {
+          this.modalEdicion.data.todoBillete = true;
+        }
+
+        // se limpia las variabes globales
+        this.modalEdicion.closeModal();
+        this.fraccionesEdicion = null;
+        this.fraccionesDisponibleEdicion = null;
+        this.spinnerState.hideSpinner();
+      }, 100);
+    }
+  }
+
+  /**
+   * Metodo que permite validar si hay cambios aplicados
+   */
+  public hayCambiosAplicados(): boolean {
+    if (this.modalEdicion &&
+        this.modalEdicion.data &&
+        this.modalEdicion.data.fracciones !== this.fraccionesEdicion) {
+      return true;
+    }
+    return false;
   }
 
   /**

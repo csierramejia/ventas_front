@@ -398,7 +398,7 @@
   cursor: pointer;
 }
 
-.fraccion:hover, .all:hover {
+.fraccion:hover, .all:hover, .all-e:hover, .fraccion-e:hover {
   background-color: #eeecec;
 }
 
@@ -417,7 +417,45 @@
 }
 
 .fraccion-selected {
-  background-color: rgb(190, 30, 66);
-  color: #FFFFFF;
-  pointer-events: none;
+  background-color: rgb(190, 30, 66) !important;
+  color: #FFFFFF !important;
+  pointer-events: none !important;
+}
+
+.nro-sorteo-e {
+  font: Bold 14px/16px Montserrat;
+  color: #3A3F51;
+}
+
+.nro-serie-e {
+  font: Bold 14px/16px Montserrat;
+  color: #0083FE;
+}
+
+.fraccion-e {
+  border-radius: 30px !important;
+  font-size: 16px;
+  width: 30px;
+  height: 30px;
+  box-shadow: 0px 3px 8px #149DB77A;
+  background-color: #ffffff;
+  line-height: 24px;
+  font-family: Montserrat;
+  color: #BE1E42;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.all-e {
+  border-radius: 30px !important;
+  font-size: 16px;
+  width: 140px;
+  height: 30px;
+  box-shadow: 0px 3px 8px #149DB77A;
+  background-color: #ffffff;
+  line-height: 24px;
+  font-family: Montserrat;
+  color: #BE1E42;
+  margin-right: 15px;
+  cursor: pointer;
 }

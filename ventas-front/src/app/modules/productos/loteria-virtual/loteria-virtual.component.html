@@ -356,7 +356,7 @@
               </div>
             </div>
             <div class="ui-g-2 p-0 text-center vertical-center">
-              <i title="Permite editar este número" class="pi pi-pencil btn-edit-played"></i>
+              <i (click)="showModalEdicion(sorteo)" title="Permite editar este número" class="pi pi-pencil btn-edit-played"></i>
               <i (click)="eliminarNumeroCarrito(sorteo)" title="Permite eliminar este número del carrito" class="pi pi-trash btn-remove-played"></i>
             </div>
           </div>
@@ -422,3 +422,94 @@
       (createCustomer)="createCustomer($event)">
   </app-crear-cliente>
 </p-dialog>
+
+<!-- modal edicion -->
+<ng-container *ngIf="modalEdicion && modalEdicion.data">
+  <p-dialog
+    header="VENTANA DE EDICIÓN"
+    modal="true"
+    [(visible)]="modalEdicion.isShowModal"
+    (onHide)="modalEdicion.closeModal()"
+    [style]="{ width: '40vw' }">
+    <div class="ui-g">
+
+      <!-- datos generales -->
+      <div class="ui-g-12 p-0">
+        <div class="ui-g-3 p-0">
+          <div class="ui-g-12 p-0">
+            <span class="nro-sorteo-e pr-2">Serie:</span>
+          </div>
+          <div class="ui-g-12 p-0">
+            <span class="nro-serie-e">{{modalEdicion.data.serie}}</span>
+          </div>
+        </div>
+
+        <div class="ui-g-3 p-0">
+          <div class="ui-g-12 p-0">
+            <span class="nro-sorteo-e pr-2">Número:</span>
+          </div>
+          <div class="ui-g-12 p-0">
+            <span class="nro-serie-e">{{modalEdicion.data.numero}}</span>
+          </div>
+        </div>
+
+        <div class="ui-g-3 p-0">
+          <div class="ui-g-12 p-0">
+            <span class="nro-sorteo-e pr-2">Sorteo:</span>
+          </div>
+          <div class="ui-g-12 p-0">
+            <span class="nro-serie-e">{{modalEdicion.data.numeroSorteo}}</span>
+          </div>
+        </div>
+
+        <div class="ui-g-3 p-0">
+          <div class="ui-g-12 p-0">
+            <span class="nro-sorteo-e pr-2">Lotería:</span>
+          </div>
+          <div class="ui-g-12 p-0">
+            <span class="nro-serie-e">{{modalEdicion.data.nombreLoteria}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="ui-g-12 barra pt-1"></div>
+
+      <!-- fracciones -->
+      <div class="ui-g-12 pt-3 text-center">
+        <span
+          (click)="setCantidadFraccionesEdicion(fraccion)"
+          *ngFor="let fraccion of fraccionesDisponibleEdicion"
+          class="badge badge-secondary fraccion-e"
+          [class]="fraccionesEdicion === fraccion ? 'fraccion-selected' : ''">
+          {{fraccion}}
+        </span>
+        <span
+          (click)="setCantidadFraccionesEdicion(fraccionesDisponibleEdicion.length)"
+          *ngIf="modalEdicion.data.fraccionesVendidas === 0"
+          class="badge badge-secondary all-e"
+          [class]="fraccionesEdicion === fraccionesDisponibleEdicion.length ? 'fraccion-selected' : ''">
+          Todo el billete
+        </span>
+      </div>
+      <div class="ui-g-12 barra pt-1"></div>
+
+      <!-- btns cerrar-aplicar -->
+      <div class="ui-g-12 p-0 pt-3 text-center">
+        <button
+          (click)="modalEdicion.closeModal()"
+          type="button"
+          class="btn-less mr-3 w-150-px"
+          title="Permite cerrar esta ventana">
+            <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
+        </button>
+        <button
+          (click)="aplicarCambios()"
+          [disabled]="!hayCambiosAplicados()"
+          type="button"
+          class="btn-light-dark"
+          title="Permite aplicar los cambios">
+            <label class="btn-size-admin"><i class="fa fa-pencil"></i> Aplicar cambios</label>
+        </button>
+      </div>
+    </div>
+  </p-dialog>
+</ng-container>
