@@ -7,7 +7,7 @@
 }
 
 .left-addon .aico {
-  left: 81%;
+  left: 95%;
   padding-top: 7px;
 }
 
@@ -88,7 +88,7 @@
   border: 0px;
   outline: medium none;
   font-family: Montserrat !important;
-  width: 85%;
+  width: 100%;
 }
 
 .icon-success {
@@ -135,9 +135,9 @@
 }
 
 .clr-selected {
- font: Bold 18px/22px Montserrat;
- letter-spacing: 0px;
- color: #BF3A42;
+  font: Bold 18px/22px Montserrat;
+  letter-spacing: 0px;
+  color: #BF3A42;
 }
 
 .content {
@@ -252,7 +252,7 @@
 }
 
 .lbl-value {
-  font: Regular 17px/20px Montserrat;
+  font: Bold 15px/20px Montserrat;
   color: #FFFFFF;
 }
 
@@ -342,7 +342,7 @@
   color: #FFFFFF;
   padding-top: 3px;
   padding-bottom: 3px;
-  width: 100px;
+  width: 120px;
   display: inline-block;
 }
 
@@ -355,12 +355,6 @@
   transform: translateY(-50%);
 }
 
-.btn-filter {
-  position: absolute !important;
-  left: 72%;
-  top: 145px;
-}
-
 .no-sorteos {
   height: 30px;
   text-align: left;
@@ -368,4 +362,62 @@
   background-color: #F2F2F2;
   padding-top: 4px;
   padding-left: 32px;
+}
+
+.pt-n {
+  padding-top: 25px !important;
+}
+
+.btn-label-add {
+  font-family: Montserrat;
+  margin: 0px !important;
+  cursor: pointer;
+  color: #fff;
+}
+
+.btn-light:disabled {
+  opacity: 50%;
+  pointer-events: none;
+}
+
+:host ::ng-deep .requerido {
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(169, 68, 66, .6) !important;
+}
+
+.fraccion {
+  border-radius: 30px !important;
+  font-size: 24px;
+  width: 44px;
+  height: 44px;
+  box-shadow: 0px 3px 8px #149DB77A;
+  background-color: #ffffff;
+  line-height: 32px;
+  font-family: Montserrat;
+  color: #BE1E42;
+  margin-right: 15px;
+  cursor: pointer;
+}
+
+.fraccion:hover, .all:hover {
+  background-color: #eeecec;
+}
+
+.all {
+  border-radius: 30px !important;
+  font-size: 17px;
+  width: 200px;
+  height: 38px;
+  box-shadow: 0px 3px 8px #149DB77A;
+  background-color: #ffffff;
+  line-height: 32px;
+  font-family: Montserrat;
+  color: #BE1E42;
+  margin-right: 15px;
+  cursor: pointer;
+}
+
+.fraccion-selected {
+  background-color: rgb(190, 30, 66);
+  color: #FFFFFF;
+  pointer-events: none;
 }

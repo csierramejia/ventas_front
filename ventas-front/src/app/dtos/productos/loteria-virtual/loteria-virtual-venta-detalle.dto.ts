@@ -26,4 +26,7 @@ export class LoteriaVirtualVentaDetalleDTO {
 
   /** Son las fracciones vendidas */
   public fraccionesVendidas: number;
+
+  /** Indica si se agrego todo el billete */
+  public todoBillete: boolean;
 }
