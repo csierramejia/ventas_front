@@ -18,6 +18,7 @@ import { LoteriaVirtualVentaDetalleDTO } from 'src/app/dtos/productos/loteria-vi
 import { MsjFrontConstant } from 'src/app/constants/messages-frontend.constant';
 import { RegexUtil } from 'src/app/utilities/regex-util';
 import { VentanaModalModel } from 'src/app/model-component/ventana-modal.model';
+import { FechaUtil } from 'src/app/utilities/fecha-util';
 
 /**
  * Componente para las ventas de las loterias virtual
@@ -191,6 +192,13 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
           this.carouselNroVisible = 2;
         } else if (this.sorteos && this.sorteos.length > 2) {
           this.carouselNroVisible = 3;
+        }
+
+        // se configura la fecha del sorteo formato colombiano
+        if (this.sorteos && this.sorteos.length) {
+          for (const sorteo of this.sorteos) {
+            sorteo.fechaSorteo = FechaUtil.stringToDate(sorteo.fechaSorteo.toString());
+          }
         }
       },
       error => {
