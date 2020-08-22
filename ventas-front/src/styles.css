@@ -503,12 +503,12 @@ body {
 }
 
 .ui-dialog-titlebar {
+  font-weight: 700!important;
+  padding: .5em!important;
+  background-color: #2076BD !important;
   border-radius: 10px 10px 0px 0px !important;
-  background-color: #0083FE !important;
   color: white !important;
   font-family: Montserrat !important;
-  font-weight: 700 !important;
-  padding: 0.5em !important;
 }
 
 
@@ -557,13 +557,6 @@ body {
   font-family: Montserrat !important;
 }
 
-.ui-dialog-titlebar {
-  background-color: #607a8c !important;
-  color: white !important;
-  font-family: Montserrat !important;
-  font-weight: 700 !important;
-  padding: 0.5em !important;
-}
 
 .ui-dialog-titlebar-icon {
   color: white !important;
@@ -580,7 +573,7 @@ body {
 
 .ui-confirmdialog-message {
   font-family: Montserrat !important;
-  font-size: 16px !important;
+  font-size: 15px !important;
 }
 
 .ui-confirmdialog.ui-dialog .ui-dialog-content {
@@ -790,6 +783,10 @@ body {
 
 .w-180-px {
   width: 180px !important
+}
+
+.w-150-px {
+  width: 150px !important
 }
 
 .w-185-px {
@@ -1079,9 +1076,9 @@ body {
 }
 
 .btn-light-dark {
-  box-shadow: 0 3.5px 4px 0 rgba(20, 157, 183, 0.45);
+  box-shadow: 0 1.5px 4px 0 rgba(20, 157, 183, 0.45);
   border-radius: 15px;
-  background-color: #0bc9ec;
+  background-color: #2076BD;
   color: #f1f1f1;
   padding: .30rem .8rem;
   border: 0px;
@@ -1089,13 +1086,18 @@ body {
 }
 
 .btn-light-dark:hover {
-  background-color: #1ec2df;
+  background-color: rgb(38, 132, 209);
+}
+
+.btn-light-dark:disabled {
+  opacity: 50%;
+  pointer-events: none;
 }
 
 .btn-light {
-  box-shadow: 0 3.5px 4px 0 rgba(20, 157, 183, 0.45);
+  box-shadow: 0 1.5px 4px 0 rgba(20, 157, 183, 0.45) !important;
   border-radius: 15px;
-  background-image: linear-gradient(0deg, #0bc9ec, #0083fe);
+  background-color: #2076BD !important;
   color: #f1f1f1;
   padding: .30rem .8rem;
   border: 0px;
@@ -1103,7 +1105,7 @@ body {
 }
 
 .btn-light:hover {
-  background-image: linear-gradient(0deg, #37cae4, #409cf1);
+  background-color: rgb(38, 132, 209) !important;
 }
 
 .btn-less {
@@ -1160,4 +1162,8 @@ body {
   padding-left: 15px !important;
   padding-right: 15px !important;
   background-color: #f2f2f2 !important;
+}}
+
+.ui-dialog .ui-dialog-titlebar {
+  border: 0px solid !important;
 }

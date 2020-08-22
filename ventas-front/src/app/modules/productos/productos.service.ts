@@ -7,7 +7,11 @@ import { PersonaDTO } from 'src/app/dtos/productos/chance/persona.dto';
 import { ImpuestosDTO } from 'src/app/dtos/productos/chance/impuestos.dto';
 import { ProductosAPIConstant } from 'src/app/constants/apis/productos/productos-api.constant';
 import { ResponseDTO } from 'src/app/dtos/productos/chance/response.dto';
-import { ModalidadesDTO } from 'src/app/dtos/escrutinio/loterias/modalidades.dto';
+import { FiltroBusquedaDTO } from 'src/app/dtos/transversal/filtro-busqueda.dto';
+import { LoteriaVirtualDTO } from 'src/app/dtos/productos/loteria-virtual/loteria-virtual.dto';
+import { LoteriaVirtualVentaDetalleDTO } from 'src/app/dtos/productos/loteria-virtual/loteria-virtual-venta-detalle.dto';
+import { MessageResponseDTO } from 'src/app/dtos/transversal/message-response.dto';
+import { LoteriaVirtualVentaDTO } from 'src/app/dtos/productos/loteria-virtual/loteria-virtual-venta.dto';
 /**
  * Service que contiene los procesos de negocio para la Loterias en el sistema
  */
@@ -113,5 +117,33 @@ export class ProductosService {
     return this.http.get<any>(`${ProductosAPIConstant.URL_CONSULTAR_RUTA_IMAGENES}`);
   }
 
+  /**
+   * Servicio que permite consultar las loterias virtual
+   * que estan habilitados para su respectiva venta
+   */
+  public getLoteriasVirtual(filtro: FiltroBusquedaDTO): Observable<Array<LoteriaVirtualDTO>> {
+    return this.http.post<Array<LoteriaVirtualDTO>>(ProductosAPIConstant.URL_GET_LOTERIAS_VIRTUAL, filtro);
+  }
 
+  /**
+   * Servicio que permite obtener la cantidad de fracciones disponibles
+   * para la venta de un numero + serie de la loteria virtual
+   */
+  public getFraccionesDisponiblesNumeroLoteria(venta: LoteriaVirtualVentaDetalleDTO): Observable<LoteriaVirtualVentaDetalleDTO> {
+    return this.http.post<LoteriaVirtualVentaDetalleDTO>(ProductosAPIConstant.URL_GET_FRACCIONES_DISPONIBLES, venta);
+  }
+
+  /**
+   * Servicio que permite consultar una serie + numero aleatorio que este disponible
+   */
+  public getSerieNumeroAleatorio(venta: LoteriaVirtualVentaDetalleDTO): Observable<LoteriaVirtualVentaDetalleDTO> {
+    return this.http.post<LoteriaVirtualVentaDetalleDTO>(ProductosAPIConstant.URL_GET_NUMERO_ALEATORIO, venta);
+  }
+
+  /**
+   * Servicio que permite realizar la compra de una loteria virtual
+   */
+  public comprarLoteriaVirtual(venta: LoteriaVirtualVentaDTO): Observable<MessageResponseDTO> {
+    return this.http.post<MessageResponseDTO>(ProductosAPIConstant.URL_GET_COMPRAR_LOTERIA_VIRTUAL, venta);
+  }
 }

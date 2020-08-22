@@ -177,12 +177,12 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
     this.days.forEach(element => {
       if (element.name === day.name) {
         const chip = document.getElementById(day.name);
-        chip.style.backgroundColor = '#0083FE';
+        chip.style.backgroundColor = '#BE1E42';
         chip.style.color = '#fff';
       } else {
         const chip = document.getElementById(element.name);
         chip.style.backgroundColor = '#FFFFFF';
-        chip.style.color = '#0083FE';
+        chip.style.color = '#BE1E42';
       }
     });
     // llamamos el metodo que se encarga de consultar las loterias

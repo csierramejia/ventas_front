@@ -5,7 +5,7 @@
 .header {
   flex-grow: 1;
   display: flex;
-  background-color: #ffffff;
+  background-color: #2076BD;
   position: fixed;
   z-index: 900;
   width: 100%;
@@ -21,18 +21,14 @@
   height: 100%;
 }
 
-.hambu:hover {
-  background-color: rgb(250, 249, 249);
+.hambu:hover, .pad:hover  {
+  background-color: rgb(51, 137, 207);
 }
 
 .pad {
   text-align: center;
   cursor: pointer;
   line-height: 40px;
-}
-
-.pad:hover {
-  background-color: rgb(250, 249, 249);
 }
 
 .back {
@@ -47,7 +43,7 @@
 }
 
 :host ::ng-deep #menuUserSettings .ui-menu {
-  background-image: linear-gradient(0deg, #0bc9ec, #0083fe);
+  background-color: #2076BD;
   color: #eaeaea;
   width: 18em;
 }

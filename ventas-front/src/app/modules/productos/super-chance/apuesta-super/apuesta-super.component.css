@@ -58,7 +58,7 @@ opacity: 1;
 .btn-random {
     border-radius: 30px;
     box-shadow: 0 1.5px 4px 0 rgba(20, 157, 183, 0.45);
-    background-image: linear-gradient(to bottom, #0083fe, #0bc9ec);
+    background-color: #2076BD;
     font-size: 12px;
     font-family: Montserrat;
     font-weight: normal;
@@ -192,7 +192,7 @@ opacity: 1;
 .btn-random {
     border-radius: 15px;
     box-shadow: 0px 3px 8px #149DB773;
-    background-image: linear-gradient(to bottom, #0083fe, #0bc9ec);
+   background-color: #2076BD;
     font-size: 12px;
     padding: 0 .30rem 0 .6500rem;
     font-family: Montserrat;
@@ -215,7 +215,7 @@ opacity: 1;
   background-color: #ffffff;
   line-height: 32px;
   font-family: Montserrat;
-  color: #0083fe;
+  color: #BE1E42;
   margin-right: 7px;
   cursor: pointer;
 }
@@ -227,8 +227,8 @@ opacity: 1;
 .calendar-icon{
   top: 204px;
   left: 631px;
-  height: 25px;
-  background: transparent url('../../../../../assets/img/svg/calendar.svg') 0% 0% no-repeat padding-box;
+  height: 30px;
+  background: transparent url('../../../../../assets/img/svg/calendar-blue.svg') 0% 0% no-repeat padding-box;
   opacity: 1;
   padding-left: 35px;
   padding-top: 4p

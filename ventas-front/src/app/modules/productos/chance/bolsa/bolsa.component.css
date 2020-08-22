@@ -30,7 +30,7 @@ aside{
   .loteriasbolsa{
     height: 60px;
     width: 190px;
-    background: #0083fe;
+    background: #2076BD;
     border-radius: 5px;
     color: white;
     text-align: left;
@@ -139,6 +139,13 @@ aside{
     opacity: 1;
 }
 
+.colorvalor{
+    text-align: left;
+font: Bold 12px/15px Montserrat;
+letter-spacing: 0px;
+color: #BE1E42;
+opacity: 1;
+}
 .textNumberValues {
     font-family: 'Montserrat';
     font-size: 12px;
@@ -162,7 +169,7 @@ aside{
     top: 380px;
     left: 1086px;
     height: 143px;
-    background: transparent linear-gradient(180deg, #0083FE 0%, #0BC9EC 100%) 0% 0% no-repeat padding-box;
+  background-color: #BE1E42;
     opacity: 1;
     position: sticky;
 }
@@ -259,8 +266,7 @@ aside{
     left: 1099px;
     width: 100%;
     height: 40px;
-    background: #FFFFFF 0% 0% no-repeat padding-box;
-    box-shadow: 0px 3px 8px #149DB77A;
+    background-color: #BE1E42;
     border-radius: 20px;
     opacity: 1;
     margin-top: 15px;
@@ -269,12 +275,12 @@ aside{
     text-align: center;
     font-size: 16px;
     letter-spacing: 0px;
-    color: #0083FE;
     opacity: 1;
 }
 
 
 .alinBtn{
+    margin-top: 50px;
     position: sticky;
     text-align: center;
 }

@@ -6,24 +6,37 @@
 
     <!-- fecha actual -->
     <div class="ui-g-12 text-left pb-0 pt-0 pr-0 pl-0">
-      <p class="clock-icon">
-        <label class="hora">{{ fechaActual | date: "dd/MM/yyyy HH:mm:ss" }}</label>
+      <p class="clock-icon mb-0">
+        <label class="hora">{{ fechaActual | date: "dd/MM/yyyy HH:mm:ss" }}</label>        
       </p>
     </div>
       
-    <!-- filtro nombre loteria -->
-    <div class="ui-g-12 p-0 pb-2">
-      <div *ngIf="loteriasOrigen.length > 3" class="inner-addon left-addon">
-        <i class="fa fa-search aico"></i>
-        <input
-          (keyup)="busquedaLoterias()"
-          [(ngModel)]="filterNombreLoteria"
-          type="text"
-          maxlength="50"
-          class="in-search"
-          autocomplete="off"
-          placeholder="Buscar lotería disponibles"
-          title="Filtro por el nombre de la lotería"/>
+    <!-- pnl filtro -->
+    <div class="ui-g-12 p-0 pb-1 pt-1">
+
+      <div class="ui-g-10 p-0">
+        <div class="inner-addon left-addon">
+          <i class="fa fa-search aico"></i>
+          <input
+            [(ngModel)]="filtro.nombre"
+            type="text"
+            maxlength="50"
+            class="in-search"
+            autocomplete="off"
+            placeholder="Buscar loterías con sorteos disponibles"
+            title="Filtro por el nombre de la lotería"/>
+        </div>
+      </div>
+      <div class="ui-g-2 p-0 text-left pt-1 pl-2">
+        <button
+          (click)="getLoteriasVirtual()"
+          class="btn-light-dark"
+          type="button"
+          title="Filtra los sorteos disponibles para la venta">
+          <i *ngIf="hayFiltroAplicado" class="fa fa-asterisk font-size-9 pr-1"></i>
+          <label class="btn-label"> Filtrar</label>          
+          <i class="fa fa-filter btn-icon pl-1"></i>
+        </button>
       </div>
     </div>
 
@@ -31,77 +44,86 @@
     <div class="ui-g-12 p-0">
       
       <!-- carousel -->
-      <p-carousel [value]="loterias" [numVisible]="carouselNroVisible">
-        <ng-template let-loteria pTemplate="item">
-
-          <!-- pnl-content -->
-          <div (click)="seleccionarLoteria(loteria)" [ngClass]="{'selected' : (loteriaSeleccionada && loteriaSeleccionada.id === loteria.id)}" class="ui-g-12 content p-1">
-
-            <!-- header -->
-            <div [ngClass]="{'header-selected' : (loteriaSeleccionada && loteriaSeleccionada.id === loteria.id)}" class="ui-g-12 header elevation">
-              <div class="ui-g-12 p-0">
-                <div class="position-absolute">
-                  <img src="../../../../assets/img/loterias/RISARALDA.png" width="45" height="48">
-                </div>
-                <div class="ui-g-12 p-0 text-center">
-                  <div class="ui-g-12 p-0">
-                    <span class="lbl-title">{{loteria.nombreLoteria}}</span>
+      <div [ngClass]="{ 'd-none': !(sorteos && sorteos.length)}" class="ui-g-12 ml-2 mr-2">
+        <p-carousel [value]="sorteos" [numVisible]="carouselNroVisible">
+          <ng-template let-sorteo pTemplate="item">
+  
+            <!-- pnl-content -->
+            <div (click)="seleccionarSorteo(sorteo)" [ngClass]="{'selected' : (sorteoSeleccionado && sorteoSeleccionado.idSorteo === sorteo.idSorteo)}" class="ui-g-12 content p-1">
+  
+              <!-- header -->
+              <div [ngClass]="{'header-selected' : (sorteoSeleccionado && sorteoSeleccionado.idSorteo === sorteo.idSorteo)}" class="ui-g-12 header elevation">
+                <div class="ui-g-12 p-0">
+                  <div class="position-absolute">
+                    <img src="{{sorteo.imagenLoteria}}" width="45" height="48" alt="not working">
                   </div>
-                  <div class="ui-g-12 p-0">
-                    <span class="lbl-sub-title">Sorteo: 6543</span>
-                  </div>                
+                  <div class="ui-g-12 p-0 text-center pt-1">
+                    <div class="ui-g-12 p-0">
+                      <span class="lbl-title">{{sorteo.nombreLoteria}}</span>
+                    </div>
+                    <div class="ui-g-12 p-0">
+                      <span class="lbl-sub-title">Sorteo: {{sorteo.numeroSorteo}}</span>
+                    </div>                
+                  </div>
                 </div>
               </div>
-            </div>
-
-            <!-- body -->
-            <div class="ui-g-12 body elevation">
-
-              <!-- fecha sorteo -->
-              <div class="ui-g-12 p-0 pl-3 pr-3 pb-3">
-                <div class="position-absolute p-0 mt-1">
-                  <span class="calendar-icon"></span>
-                </div>
-                <div class="ui-g-12 p-0 text-center">
-                  <div class="ui-g-12 p-0">
-                    <span class="lbl-date">Fecha Sorteo</span>
+  
+              <!-- body -->
+              <div class="ui-g-12 body elevation">
+  
+                <!-- fecha sorteo -->
+                <div class="ui-g-12 p-0 pl-3 pr-3 pb-3">
+                  <div class="position-absolute p-0 mt-1">
+                    <span class="calendar-icon"></span>
                   </div>
                   <div class="ui-g-12 p-0 text-center">
-                    <span class="lbl-date-f">26/03/2020</span>
+                    <div class="ui-g-12 p-0">
+                      <span class="lbl-date">Fecha Sorteo</span>
+                    </div>
+                    <div class="ui-g-12 p-0 text-center">
+                      <span class="lbl-date-f">{{sorteo.fechaSorteo | date:'dd-MMM-yyyy'}}</span>
+                    </div>
+                  </div>
+                </div>
+  
+                <!-- premio mayor -->
+                <div class="ui-g-12 p-0 pl-3 pr-3">
+                  <div class="position-absolute p-0 mt-1">
+                    <span class="money-icon"></span>
+                  </div>
+                  <div class="ui-g-12 p-0 text-center">
+                    <div class="ui-g-12 p-0">
+                      <span class="lbl-date">Premio Mayor</span>
+                    </div>
+                    <div class="ui-g-12 p-0">
+                      <span class="lbl-date-f">{{sorteo.premioMayor | currency}}</span>
+                    </div>
+                  </div>
+                </div>            
+              </div>
+  
+              <!-- footer -->
+              <div class="ui-g-12 p-0 footer elevation">
+                <div class="ui-g-12 p-0 text-center">
+                  <div class="ui-g-12 p-0">
+                    <span class="lbl-date">Valor Fracción</span>
+                  </div>
+                  <div class="ui-g-12 p-0">
+                    <span [class]="(sorteoSeleccionado && sorteoSeleccionado.idSorteo === sorteo.idSorteo) ? 'clr-selected' : 'footer-money'">{{sorteo.valorFraccion | currency}}</span>
                   </div>
                 </div>
               </div>
-
-              <!-- premio mayor -->
-              <div class="ui-g-12 p-0 pl-3 pr-3">
-                <div class="position-absolute p-0 mt-1">
-                  <span class="money-icon"></span>
-                </div>
-                <div class="ui-g-12 p-0 text-center">
-                  <div class="ui-g-12 p-0">
-                    <span class="lbl-date">Premio Mayor</span>
-                  </div>
-                  <div class="ui-g-12 p-0">
-                    <span class="lbl-date-f">$500.000.000</span>
-                  </div>
-                </div>
-              </div>            
             </div>
+          </ng-template>       
+        </p-carousel>
+      </div>
 
-            <!-- footer -->
-            <div class="ui-g-12 footer elevation">
-              <span class="footer-money">$10.000</span>
-            </div>
-          </div>
-        </ng-template>       
-      </p-carousel>
-      
-      <!-- no hay loterias -->
-      <ng-container *ngIf="loteriasOrigen && loteriasOrigen.length && (!loterias || loterias.length === 0)">
+      <!-- no hay sorteos disponibles -->
+      <ng-container *ngIf="!(sorteos && sorteos.length)">
         <div class="mr-2 ml-2 mt-2 mb-2 ui-messages ui-messages-info ui-corner-all p-2">
           <span class="ui-messages-icon pi pi-info-circle"></span>
           <span class="ui-messages-detail font-size-14 mt-1 lbl-date">
-            <strong>No se encontraron LOTERIAS</strong> que coincidan con el nombre de búsqueda ingresado
+            <strong>No se encontraron LOTERÍAS</strong> con sorteos disponibles
           </span>
         </div>
       </ng-container>
@@ -140,16 +162,16 @@
             <!-- tipo identificacion -->
             <div class="ui-g-6 p-0">
               <div class="ui-g-12 pb-0">
-                <span class="lbl ml-0">Tipo Identificación</span>
+                <label for="tipoin" class="lbl ml-0 mb-0">Tipo de Identificación</label>
               </div>
               <div class="ui-g-12 pt-0 pb-0">
                 <p-dropdown
-                  [(ngModel)]="tipoDocumento"
+                  [(ngModel)]="cliente.tipoDocumento"
                   (onChange)="changeTipoNroDocumento()"
                   [options]="itemsTiposDocumentos"
                   inputId="tipoin"
                   name="tipoin"
-                  title="Tipo Identificación"
+                  title="Tipo de Identificación"
                   styleClass="w-100 dropdown-app">
                 </p-dropdown>
               </div>
@@ -158,14 +180,14 @@
             <!-- nro identificacion -->
             <div class="ui-g-6 p-0">
               <div class="ui-g-12 pb-0">
-                <span class="lbl ml-1">Identificación del Cliente</span>
+                <label for="nrodocu" class="lbl ml-1 mb-0">Identificación del Cliente</label>
               </div>
               <div class="ui-g-12 pt-0 pb-0">
                 <div class="inner-addon left-addon-user">
                   <i class="fa fa-user aico clr"></i>
                   <input
-                    [(ngModel)]="nroDocumento"
-                    (keypress)="keyPressNumber($event)"
+                    id="nrodocu"
+                    [(ngModel)]="cliente.numeroDocumento"
                     (change)="changeTipoNroDocumento()"
                     class="input-app-sm w-100"
                     type="text"
@@ -177,100 +199,123 @@
 
             <!-- cliente -->
             <div class="ui-g-12 pb-0 pt-2 pr-2 pl-2">
-              <ng-container *ngIf="cliente">
+              <ng-container *ngIf="cliente && cliente.idCliente">
                 <div class="ui-g-12 p-0">
                   <i class="fa fa-check-circle icon-success"></i>
-                  <input
-                    [ngModel]="nombreCompleto"
-                    type="text"
-                    maxlength="50"
-                    class="form-control styleInputClient">
+                  <div class="no-sorteos">{{ cliente.primerNombre }} {{ cliente.segundoNombre }} {{ cliente.primerApellido }} {{ cliente.segundoApellido }}</div>
                 </div>
               </ng-container>
             </div>
             <div class="ui-g-12 barra pt-1"></div>
 
-            <!-- Nro a jugar btns-->
+            <!-- serie-nro-btns-->
             <div class="ui-g-12 p-0">
-              <div class="ui-g-12 pb-0">
-                <span class="lbl ml-1">Número a Jugar*</span>
+
+              <!-- serie -->
+              <div class="ui-g-3 p-0">
+                <div class="ui-g-12 pb-0">
+                  <label for="seriein" class="lbl ml-1 mb-0">Serie*</label>
+                  <label *ngIf="sorteoSeleccionado" for="seriein" class="nro-serie ml-1 mb-0">{{sorteoSeleccionado.rangoSerie}}</label>
+                </div>
+                <div class="ui-g-12 pt-0">
+                  <input
+                    [(ngModel)]="detalleVenta.serie"
+                    (change)="changeSerieNumero()"
+                    id="seriein"
+                    class="input-app-sm w-100"
+                    type="text"
+                    maxlength="3"
+                    pKeyFilter="pint"
+                    title="Serie apostar"
+                    [ngClass]="{'requerido' : (isSubmit && !detalleVenta.serie)}"/>
+                </div>
               </div>
-              <div class="ui-g-6 pt-0">
-                <input
-                  placeholder="Buscar lotería"
-                  id="namefilter"
-                  class="input-app-sm w-100"
-                  type="text"
-                  title="Filtro por el nombre de la lotería"/>
-              </div> 
-              <div class="ui-g-6 pt-0">
+
+              <!-- nro -->
+              <div class="ui-g-4 p-0">
+                <div class="ui-g-12 pb-0">
+                  <label for="nroin" class="lbl ml-1 mb-0">Número*</label>
+                </div>
+                <div class="ui-g-12 pt-0">
+                  <input
+                    [(ngModel)]="detalleVenta.numero"
+                    (change)="changeSerieNumero()"
+                    id="nroin"
+                    class="input-app-sm w-100"
+                    type="text"
+                    maxlength="4"
+                    pKeyFilter="pint"
+                    title="Número apostar"
+                    [ngClass]="{'requerido' : (isSubmit && !detalleVenta.numero)}"/>
+                </div> 
+              </div>
+
+              <!-- btns consultar - aleatorio -->
+              <div class="ui-g-5 p-0 text-right">
+                <div class="ui-g-12 pb-0"><span class="lbl ml-1"></span></div>
                 <button
+                  (click)="validarSerieNroDisponible()"
                   class="btn-light"
                   type="button"
-                  title="Oculta el panel de filtros de búsqueda">
+                  title="Permite validar si la serie y el número están disponible">
                   <label class="btn-label">CONSULTAR</label>
                   <i class="fa btn-icon fa-search pl-2"></i>
                 </button>
                 <button
-                  class="btn-light ml-3"
+                  (click)="generarNumeroAleatorio()"
+                  class="btn-light ml-2"
                   type="button"
-                  title="Oculta el panel de filtros de búsqueda">
+                  title="Permite generar una serie y número aleatorio">
                   <label class="btn-label">ALEATORIO</label>
                   <i class="fa btn-icon fa-random pl-2"></i>
                 </button>
               </div>
             </div>
+            <div *ngIf="fraccionesDisponible && fraccionesDisponible.length" class="ui-g-12 barra pt-1"></div>
 
-            <!-- serie -->
-            <div class="ui-g-4 pt-3 pb-3 pl-0">
-              <div class="ui-g-12 pb-0">
-                <span class="lbl ml-1">Serie*</span>
-              </div>
-              <div class="ui-g-12 pt-0">
-                <p-dropdown
-                  inputId="loteriasin"
-                  name="loteriasin"
-                  placeholder="Seleccionar"
-                  title="Lotería"
-                  emptyFilterMessage="No hay Loterías"
-                  styleClass="w-100 dropdown-app">
-                </p-dropdown>
-              </div>
-            </div>
+            <!-- fracciones btn agregar-->
+            <ng-container *ngIf="fraccionesDisponible && fraccionesDisponible.length">
 
-            <!-- fraccion -->
-            <div class="ui-g-4 pt-3 pb-3">
-              <div class="ui-g-12 pb-0">
-                <span class="lbl">Fracción*</span>
+              <!-- fracciones-->
+              <div class="ui-g-12 p-0 pt-0">
+                <div class="ui-g-12 pb-0">
+                  <label class="lbl mb-0">Seleccione la cantidad de fracciones</label>
+                </div>
+                <div class="ui-g-12 pt-0">
+                  <span
+                    (click)="setCantidadFracciones(fraccion)"
+                    *ngFor="let fraccion of fraccionesDisponible"
+                    class="badge badge-secondary fraccion"
+                    [class]="detalleVenta.fracciones === fraccion ? 'fraccion-selected' : ''">
+                    {{fraccion}}
+                  </span>
+                  <span
+                    (click)="setCantidadFracciones(fraccionesDisponible.length)"
+                    *ngIf="detalleVenta && detalleVenta.fraccionesVendidas === 0"
+                    class="badge badge-secondary all"
+                    [class]="detalleVenta.fracciones === fraccionesDisponible.length ? 'fraccion-selected' : ''">
+                    Todo el billete
+                  </span>
+                </div>
               </div>
-              <div class="ui-g-12 pt-0">
-                <p-dropdown
-                  inputId="loteriasin"
-                  name="loteriasin"
-                  placeholder="Seleccionar"
-                  title="Lotería"
-                  emptyFilterMessage="No hay Loterías"
-                  styleClass="w-100 dropdown-app">
-                </p-dropdown>
-              </div>
-            </div>          
 
-            <!-- btn agregar -->
-            <div class="ui-g-4 pr-0 pt-3 pb-3 text-right">
-              <div class="ui-g-12 pb-0">
-                <span class="ml-1"></span>
-              </div>
-              <div class="ui-g-12 pt-0">
+              <!-- btn agregar-->
+              <div class="ui-g-12 pr-0 pt-0 pb-2 text-right">
                 <button
-                (click)="agregarLoteria()"
-                class="btn-light"
-                type="button"
-                title="Oculta el panel de filtros de búsqueda">
-                  <label class="btn-label">AGREGAR</label>
-                  <i class="fa btn-icon fa-plus-circle font-size-18 pl-2"></i>
+                  (click)="agregarApuestaCarritoCompra()"
+                  [disabled]="!(detalleVenta.fracciones)"
+                  class="btn-light w-25"
+                  type="button"
+                  title="Permite agregar el número al carrito de compra">
+                  <div class="ui-g-11 p-0 text-center">
+                    <label class="btn-label-add pl-1 mt-0">AGREGAR</label>
+                  </div>
+                  <div class="ui-g-1 p-0 text-left">
+                    <i class="fa fa-plus-circle btn-icon-pagar font-size-20"></i>
+                  </div>
                 </button>
               </div>
-            </div>
+            </ng-container>
           </div>
         </div> 
       </div>
@@ -280,71 +325,39 @@
   <!-- pnl - right -->
   <div class="ui-g-3 pr-0 pt-0">
 
-    <!-- pnl loterias agregadas -->
+    <!-- pnl sorteos vender -->
     <div class="ui-g-12 p-0 pnloteries-right">
-      <ng-container *ngIf="loteriasAgregadas && loteriasAgregadas.length">
-        <ng-container *ngFor="let loteria of loteriasAgregadas; let i = index">
+      <ng-container *ngIf="venta.detalles && venta.detalles.length">
+        <ng-container *ngFor="let sorteo of venta.detalles; let i = index">
           <div class="ui-g-12 p-0 pnl-loterias mb-2">
             <div class="ui-g-10 p-0 pnl-separator height-100">
               <div class="ui-g-12 p-0">
                 <div class="ui-g-6 p-0 p-left">
-                  <span class="nro-sorteo pr-2">Número: 3242</span>
+                  <span class="nro-sorteo pr-2">Número: {{sorteo.numero}}</span>
                 </div>
                 <div class="ui-g-6 p-0 text-center">
-                  <span class="nro-serie">Serie: 12</span>
+                  <span class="nro-serie">Serie: {{sorteo.serie}}</span>
                 </div> 
                 <div class="ui-g-12 p-0 p-left text-left">
-                  <span class="lbl-loteria">Lotería: Manizales</span>
+                  <span class="lbl-loteria">Lotería: {{sorteo.nombreLoteria}} - {{sorteo.numeroSorteo}}</span>
                 </div>
                 <div class="ui-g-12 p-0 p-left text-left pb-2">
                   <div class="ui-g-4 p-0">
-                    <span class="lbl-loteria">Fracción:</span>
+                    <span class="lbl-loteria">Fracciones:</span>
                   </div>
                   <div class="ui-g-8 p-0 text-center">
-                    <span class="pnl-fraccion mb-1">1</span>
+                    <span *ngIf="!(sorteo.todoBillete)" class="pnl-fraccion mb-1">{{sorteo.fracciones}}</span>
+                    <span *ngIf="sorteo.todoBillete" class="pnl-fraccion">{{sorteo.fracciones}} - Todo el billete</span>
                   </div>
                 </div>
                 <div class="ui-g-12 p-0 p-left text-center">
-                  <span class="nro-serie">Valor: $12.000</span>
+                  <span class="nro-serie">Valor: {{sorteo.valor | currency}}</span>
                 </div>           
               </div>
             </div>
             <div class="ui-g-2 p-0 text-center vertical-center">
-              <i class="pi pi-pencil btn-edit-played"></i>
-              <i class="pi pi-trash btn-remove-played"></i>
-            </div>
-          </div>
-          <div class="ui-g-12 p-0 pnl-loterias mb-2">
-            <div class="ui-g-10 p-0 pnl-separator height-100">
-              <div class="ui-g-12 p-0">
-                <div class="ui-g-6 p-0 p-left">
-                  <span class="nro-sorteo pr-2">Número: 3242</span>
-                </div>
-                <div class="ui-g-6 p-0 text-center">
-                  <span class="nro-serie">Serie: 12</span>
-                </div> 
-                <div class="ui-g-12 p-0 p-left text-left">
-                  <span class="lbl-loteria">Lotería: Manizales</span>
-                </div>
-                <div class="ui-g-12 p-0 p-left text-left pb-2">
-                  <div class="ui-g-4 p-0">
-                    <span class="lbl-loteria">Fracción:</span>
-                  </div>
-                  <div class="ui-g-8 p-0 text-center">
-                    <span class="pnl-fraccion mb-1">1</span>
-                    <span class="pnl-fraccion mb-1">3</span>
-                    <span class="pnl-fraccion mb-1">4</span>
-                    <span class="pnl-fraccion">Todo el billete</span>
-                  </div>
-                </div>
-                <div class="ui-g-12 p-0 p-left text-center">
-                  <span class="nro-serie">Valor: $12.000</span>
-                </div>           
-              </div>
-            </div>
-            <div class="ui-g-2 p-0 text-center vertical-center">
-              <i class="pi pi-pencil btn-edit-played"></i>
-              <i class="pi pi-trash btn-remove-played"></i>
+              <i (click)="showModalEdicion(sorteo)" title="Permite editar este número" class="pi pi-pencil btn-edit-played"></i>
+              <i (click)="eliminarNumeroCarrito(sorteo)" title="Permite eliminar este número del carrito" class="pi pi-trash btn-remove-played"></i>
             </div>
           </div>
         </ng-container>
@@ -361,7 +374,7 @@
             <span class="lbl-pay">Apostado</span>
           </div>
           <div class="ui-g-12 p-0 text-center">
-            <span class="lbl-value">$ 35,0000</span>
+            <span class="lbl-value">{{(venta.valorTotal - venta.valorTotalIVA) | currency}}</span>
           </div>
         </div>
 
@@ -371,22 +384,24 @@
             <span class="lbl-pay">IVA</span>
           </div>
           <div class="ui-g-12 p-0 text-center">
-            <span class="lbl-value">$ 25,0000</span>
+            <span class="lbl-value">{{venta.valorTotalIVA | currency}}</span>
           </div>
         </div>
 
         <!-- total -->
         <div class="ui-g-12 p-0 text-center pt-4 pb-4">
           <span class="lbl-total pr-2">Total</span>
-          <span class="lbl-total">$ 15,0000</span>
+          <span class="lbl-total">{{venta.valorTotal | currency}}</span>
         </div>
         
         <!-- btn pagar -->
-        <div class="ui-g-12 p-0">
+        <div class="ui-g-12 p-0 pt-n">
           <button
+           (click)="comprarLoteriaVirtual()"
+           *ngIf="venta && venta.detalles && venta.detalles.length"
            class="btn-light-dark btn-pagar w-100"
            type="button"
-           title="Permite regresar a la lista de roles">
+           title="Permite realizar la compra de la lotería virtual">
             <div class="ui-g-11 p-0 text-center">
               <label class="btn-label-pagar pl-1">PAGAR</label>
             </div>
@@ -407,3 +422,94 @@
       (createCustomer)="createCustomer($event)">
   </app-crear-cliente>
 </p-dialog>
+
+<!-- modal edicion -->
+<ng-container *ngIf="modalEdicion && modalEdicion.data">
+  <p-dialog
+    header="VENTANA DE EDICIÓN"
+    modal="true"
+    [(visible)]="modalEdicion.isShowModal"
+    (onHide)="modalEdicion.closeModal()"
+    [style]="{ width: '40vw' }">
+    <div class="ui-g">
+
+      <!-- datos generales -->
+      <div class="ui-g-12 p-0">
+        <div class="ui-g-3 p-0">
+          <div class="ui-g-12 p-0">
+            <span class="nro-sorteo-e pr-2">Serie:</span>
+          </div>
+          <div class="ui-g-12 p-0">
+            <span class="nro-serie-e">{{modalEdicion.data.serie}}</span>
+          </div>
+        </div>
+
+        <div class="ui-g-3 p-0">
+          <div class="ui-g-12 p-0">
+            <span class="nro-sorteo-e pr-2">Número:</span>
+          </div>
+          <div class="ui-g-12 p-0">
+            <span class="nro-serie-e">{{modalEdicion.data.numero}}</span>
+          </div>
+        </div>
+
+        <div class="ui-g-3 p-0">
+          <div class="ui-g-12 p-0">
+            <span class="nro-sorteo-e pr-2">Sorteo:</span>
+          </div>
+          <div class="ui-g-12 p-0">
+            <span class="nro-serie-e">{{modalEdicion.data.numeroSorteo}}</span>
+          </div>
+        </div>
+
+        <div class="ui-g-3 p-0">
+          <div class="ui-g-12 p-0">
+            <span class="nro-sorteo-e pr-2">Lotería:</span>
+          </div>
+          <div class="ui-g-12 p-0">
+            <span class="nro-serie-e">{{modalEdicion.data.nombreLoteria}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="ui-g-12 barra pt-1"></div>
+
+      <!-- fracciones -->
+      <div class="ui-g-12 pt-3 text-center">
+        <span
+          (click)="setCantidadFraccionesEdicion(fraccion)"
+          *ngFor="let fraccion of fraccionesDisponibleEdicion"
+          class="badge badge-secondary fraccion-e"
+          [class]="fraccionesEdicion === fraccion ? 'fraccion-selected' : ''">
+          {{fraccion}}
+        </span>
+        <span
+          (click)="setCantidadFraccionesEdicion(fraccionesDisponibleEdicion.length)"
+          *ngIf="modalEdicion.data.fraccionesVendidas === 0"
+          class="badge badge-secondary all-e"
+          [class]="fraccionesEdicion === fraccionesDisponibleEdicion.length ? 'fraccion-selected' : ''">
+          Todo el billete
+        </span>
+      </div>
+      <div class="ui-g-12 barra pt-1"></div>
+
+      <!-- btns cerrar-aplicar -->
+      <div class="ui-g-12 p-0 pt-3 text-center">
+        <button
+          (click)="modalEdicion.closeModal()"
+          type="button"
+          class="btn-less mr-3 w-150-px"
+          title="Permite cerrar esta ventana">
+            <label class="btn-size-admin"><i class="fa fa-times"></i> Salir</label>
+        </button>
+        <button
+          (click)="aplicarCambios()"
+          [disabled]="!hayCambiosAplicados()"
+          type="button"
+          class="btn-light-dark"
+          title="Permite aplicar los cambios">
+            <label class="btn-size-admin"><i class="fa fa-pencil"></i> Aplicar cambios</label>
+        </button>
+      </div>
+    </div>
+  </p-dialog>
+</ng-container>

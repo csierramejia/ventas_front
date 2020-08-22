@@ -59,12 +59,12 @@
 
 .header {
   height: 62px;
-  background: #0083FE 0% 0% no-repeat padding-box;
+  background: #2076BD 0% 0% no-repeat padding-box;
   border-radius: 5px 5px 0px 0px;
 }
 
 .header-selected {
-  background: #FE007F 0% 0% no-repeat padding-box;
+  background: #BE1E42 0% 0% no-repeat padding-box;
 }
 
 .content {
@@ -114,11 +114,85 @@ opacity: 1;
   text-align: left;
 font: Bold 18px/22px Montserrat;
 letter-spacing: 0px;
-color: #0083FE;
+color: #2076BD;
+opacity: 1;
+}
+.totalcarrucelrojo{
+  text-align: left;
+font: Bold 18px/22px Montserrat;
+letter-spacing: 0px;
+color: #BE1E42;
 opacity: 1;
 }
 .elevation {
   box-shadow: 0px 1px 0px -3px rgba(0, 0, 0, 0.2), 0px 0px 5px 1px rgba(0, 0, 0, 0.14), 0px 2px 1px 1px rgba(0, 0, 0, 0.12);
+}
+
+.inner-addon {
+  position: relative;
+}
+
+.inner-addon .aico {
+  position: absolute;
+}
+
+.inner-addon .aico2 {
+  position: absolute;
+}
+
+.left-addon .aico {
+  left: 81%;
+  padding-top: 7px;
+}
+.left-addon .aico2 {
+  left: 81%;
+  padding-top: 7px;
+}
+
+.left-addon input {
+  padding-right: 10px;
+}
+
+.aico {
+  color: #BE1E42;
+  z-index: 1;
+  font-size: 20px;
+}
+
+.aico2 {
+  color: #0DAA21;
+  z-index: 1;
+  font-size: 20px;
+}
+
+.left-addon-user .aico {
+  left: 75%;
+  padding-top: 5px;
+}
+.left-addon-user .aico2 {
+  left: 75%;
+  padding-top: 5px;
+}
+.classnumeros{
+  background: var(--unnamed-color-2076bd) 0% 0% no-repeat padding-box;
+background: #2076BD 0% 0% no-repeat padding-box;
+box-shadow: 0px 3px 6px #00000029;
+border-radius: 10px;
+opacity: 1;
+}
+.textnumero{
+  text-align: left;
+font: normal normal bold 20px/24px Montserrat;
+letter-spacing: 0px;
+color: #333333;
+opacity: 1;
+}
+
+.body .ui-card{
+  background-color: #2076BD !important;
+}
+.azul{
+  background-color: #2076BD !important;
 }
 
 .lbl-total {
@@ -136,7 +210,7 @@ height: 100px !important;
 }
 
 .header-selected {
-  background: #FE007F 0% 0% no-repeat padding-box;
+  background: #BE1E42 0% 0% no-repeat padding-box;
 }
 
 .body .ui-multiselect .ui-multiselect-label {
@@ -145,17 +219,7 @@ padding: 0.429em !important;
   color: #333333 !important;
 }
 
-.ui-dialog .ui-dialog-titlebar{
-display: none !important
-}
-.ui-dialog-titlebar {
-border-radius: 10px 10px 0px 0px !important;
-background-color: #0083FE !important;
-color: white !important;
-font-family: Montserrat !important;
-font-weight: 700 !important;
-padding: 0.5em !important;
-}
+
 
 
 .styleInputSigno{
@@ -185,13 +249,22 @@ text-align: center
   background-color: #FFFFFF;
 }
 
+.redondoRojo{
+  box-shadow: 0px 3px 6px #00000029;
+  border-radius: 110px;
+  width: 80px;
+  height: 76px;
+  text-align: center;
+  background-color: #BE1E42;
+  }
+
 .redondoA{
   box-shadow: 0px 3px 6px #00000029;
   border-radius: 110px;
   width: 80px;
   height: 76px;
   text-align: center;
-  background-color: #0083FE;
+  background-color: #2076BD;
   }
   .redondoB{
     box-shadow: 0px 3px 6px #00000029;
@@ -278,10 +351,12 @@ padding-left: 35px;
 padding-top: 4p
 }
 
+
+
 .btn-random {
   border-radius: 30px;
   box-shadow: 0 1.5px 4px 0 rgba(20, 157, 183, 0.45);
-  background-image: linear-gradient(to bottom, #0083fe, #0bc9ec);
+  background-color: #2076BD;
   font-size: 12px;
   font-family: Montserrat;
   font-weight: normal;
@@ -420,7 +495,7 @@ box-shadow: 0px 3px 8px #149DB77A;
 background-color: #ffffff;
 line-height: 32px;
 font-family: Montserrat;
-color: #0083fe;
+color: #BE1E42;
 margin-right: 7px;
 cursor: pointer;
 }
@@ -432,8 +507,8 @@ margin-top: 35px;
 .calendar-icon{
 top: 204px;
 left: 631px;
-height: 25px;
-background: transparent url('../../../../../assets/img/svg/calendar.svg') 0% 0% no-repeat padding-box;
+height: 30px;
+background: transparent url('../../../../../assets/img/svg/calendar-blue.svg') 0% 0% no-repeat padding-box;
 opacity: 1;
 padding-left: 35px;
 padding-top: 4p
@@ -548,6 +623,18 @@ letter-spacing: 0px;
 color: #0083FE;
 opacity: 1;
 position: relative;
+top: 5px;
+
+}
+
+.tituloblanco{
+  text-align: left;
+font: Regular 15px/19px Montserrat;
+letter-spacing: 0px;
+color: #FFFFFF;
+opacity: 1;
+position: relative;
+left: 24px;
 top: 5px;
 
 }

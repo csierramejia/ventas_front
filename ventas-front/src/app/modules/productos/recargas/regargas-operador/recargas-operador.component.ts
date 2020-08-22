@@ -75,7 +75,8 @@ export class RecargasOperadorComponent extends CommonComponent implements OnInit
     numeroRecarga: new FormControl(''),
     valorApostado: new FormControl(),
     radioUno: new FormControl(),
-    radioDos: new FormControl()
+    radioDos: new FormControl(),
+    numeroRecargaRepetido: new FormControl(''),
   });
   currencyRecarga: string;
   valoresModalidades: any;
@@ -84,6 +85,7 @@ export class RecargasOperadorComponent extends CommonComponent implements OnInit
   operadores: any[];
   esRecarga: boolean;
   habilitarBotones: boolean;
+  numerosIguales: boolean;
   /** lista de items de TIPOS DE DOCUMENTOS */
   public itemsTiposDocumentos: SelectItem[];
   constructor(
@@ -99,6 +101,7 @@ export class RecargasOperadorComponent extends CommonComponent implements OnInit
 
   ngOnInit(): void {
     this.habilitarBotones = false;
+    this.numerosIguales=false;
     this.tituloOperador = "Seleccione";
     this.idOperador=null;
     this.signoMostrar = null;
@@ -145,6 +148,7 @@ export class RecargasOperadorComponent extends CommonComponent implements OnInit
 
   validarCampos() {
     this.habilitarBotones = false;
+    this.numerosIguales=false;
     if (this.esRecarga) {
       if (this.chanceForm.get('numeroRecarga').value != null &&
         this.chanceForm.get('numeroRecarga').value != undefined &&
@@ -152,6 +156,9 @@ export class RecargasOperadorComponent extends CommonComponent implements OnInit
         this.tituloOperador != null && this.tituloOperador != "Seleccione" &&
         this.chanceForm.get('valorRecarga').value != null &&
         this.chanceForm.get('valorRecarga').value != undefined &&
+        this.chanceForm.get('numeroRecargaRepetido').value != null &&
+        this.chanceForm.get('numeroRecargaRepetido').value != undefined &&
+        this.chanceForm.get('numeroRecargaRepetido').value != '' &&
         this.chanceForm.get('valorRecarga').value != '') {
         this.habilitarBotones = true;
       }
@@ -160,13 +167,30 @@ export class RecargasOperadorComponent extends CommonComponent implements OnInit
       if (this.chanceForm.get('numeroRecarga').value != null &&
         this.chanceForm.get('numeroRecarga').value != undefined &&
         this.chanceForm.get('numeroRecarga').value != '' &&
+        this.chanceForm.get('numeroRecargaRepetido').value != null &&
+        this.chanceForm.get('numeroRecargaRepetido').value != undefined &&
+        this.chanceForm.get('numeroRecargaRepetido').value != '' &&
         this.tituloOperador != null && this.tituloOperador != "Seleccione" &&
         this.paqueteSeleccionado != null && this.paqueteSeleccionado.idPaquete != null) {
         this.habilitarBotones = true;
       }
     }
+    if(this.chanceForm.get('numeroRecarga').value != null &&
+    this.chanceForm.get('numeroRecarga').value != undefined &&
+    this.chanceForm.get('numeroRecarga').value != '' &&
+    this.chanceForm.get('numeroRecargaRepetido').value != null &&
+    this.chanceForm.get('numeroRecargaRepetido').value != undefined &&
+    this.chanceForm.get('numeroRecargaRepetido').value != ''){
+      if(this.chanceForm.get('numeroRecarga').value != this.chanceForm.get('numeroRecargaRepetido').value){
+        this.habilitarBotones = false;
+        this.numerosIguales=false;
+        this.messageService.add(MsjUtil.getToastErrorMedium('El número a recargar no coincide'));
+      }
+      else{
+        this.numerosIguales=true;
+      }
+    }
   }
-
   seleccionarPaquete(paquete) {
     this.paqueteSeleccionado = paquete;
     this.chanceForm.get('valorRecarga').setValue(paquete.valor);
@@ -220,12 +244,12 @@ export class RecargasOperadorComponent extends CommonComponent implements OnInit
     this.days.forEach(element => {
       if (element.name === day.name) {
         const chip = document.getElementById(day.name);
-        chip.style.backgroundColor = '#0083FE';
+        chip.style.backgroundColor = '#BE1E42';
         chip.style.color = '#fff';
       } else {
         const chip = document.getElementById(element.name);
         chip.style.backgroundColor = '#FFFFFF';
-        chip.style.color = '#0083FE';
+        chip.style.color = '#BE1E42';
       }
     });
     // llamamos el metodo que se encarga de consultar las loterias
@@ -733,6 +757,7 @@ export class RecargasOperadorComponent extends CommonComponent implements OnInit
     this.dayBet = event.dataPlayed;
     //  this.chanceForm.get('numeroDocumento').setValue(event.documentCustomer);
     this.chanceForm.get('numeroRecarga').setValue(event.numeroRecarga);
+    this.chanceForm.get('numeroRecargaRepetido').setValue(event.numeroRecarga);
     this.chanceForm.get('valorRecarga').setValue(event.valor);
     this.transformAmount();
     if (event.nameCustomer) {
@@ -849,8 +874,10 @@ export class RecargasOperadorComponent extends CommonComponent implements OnInit
     this.chanceForm.get('valorRecarga').setValue('');
     this.valoresModalidades = [];
     this.chanceForm.get('numeroRecarga').setValue('');
+    this.chanceForm.get('numeroRecargaRepetido').setValue('');
     this.tituloOperador=null;
     this.idOperador=null;
+    this.numerosIguales=false;
     this.seleccionado = null;
     this.enabledCustomer = false;
     this.enabledCombined = true;
@@ -864,6 +891,13 @@ export class RecargasOperadorComponent extends CommonComponent implements OnInit
     this.habilitarBotones=false;
   }
 
+  validarVacio(numero){
+    let valida=false;
+    if(numero == null || numero==undefined || numero==''){
+      valida= true;
+    }
+    return valida;
+  }
   transformAmount() {
     let cadena = this.chanceForm.get('valorRecarga').value;
     if (cadena && cadena.includes("$")) {

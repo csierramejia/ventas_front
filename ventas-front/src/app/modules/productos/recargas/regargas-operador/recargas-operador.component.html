@@ -56,7 +56,7 @@
                     <div class="row">
                         <div class="col-md-2">
                             <label class="titleInput">Recargas</label>
-                            <div [class]="esRecarga ? 'redondoA' : 'redondoB'">
+                            <div [class]="esRecarga ? 'redondoRojo' : 'redondoB'">
                                 <img style="margin-top: 16px;" (click)="clickRecarga(true)"
                                     [src]="esRecarga ? 'assets/img/svg/22-mobileB.svg' : 'assets/img/svg/22-mobile.svg'" />
                             </div>
@@ -65,27 +65,43 @@
                             <label class="titleInput">Paquetes</label>
                             <div [class]="esRecarga==false ? 'redondoA' : 'redondoB'">
                                 <img style="margin-top: 16px;" (click)="clickRecarga(false)"
-                                [src]="esRecarga==false ? 'assets/img/svg/XMLID_2128B.svg' : 'assets/img/svg/XMLID_2128_.svg'"  />
+                                    [src]="esRecarga==false ? 'assets/img/svg/XMLID_2128B.svg' : 'assets/img/svg/XMLID_2128_.svg'" />
                             </div>
                         </div>
+                        <div class="col-md-8 classnumeros">
 
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label class="tituloblanco" style="margin-left: -12px;
+                                    margin-top: 10px;">NÚMERO A RECARGAR</label>
+                                     <div class="inner-addon left-addon-user">
+                                        <i class="{{validarVacio(chanceForm.get('numeroRecarga').value) ? 'aico2 clr' : 'fa fa-check aico2 clr' }}"></i>
+                                    <input type="text" maxlength="10" style="margin-top: 8px;
+                                    margin-left: 8px;" (keypress)="keyPressNumber($event)"
+                                        formControlName="numeroRecarga" class="form-control styleInput textnumero"
+                                        (change)="validarCampos()">
+                                     </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="tituloblanco" style="margin-left: -9px;
+                                    margin-top: 10px;">REPETIR NÚMERO</label>
+                                      <div class="inner-addon left-addon-user">
+                                        <i class="{{validarVacio(chanceForm.get('numeroRecargaRepetido').value) ? 'aico2 clr' : numerosIguales ? 'fa fa-check aico2 clr' : 'fa fa-close aico clr'}}"></i>
+                                    <input type="text" maxlength="10" style="margin-top: 8px;
+                                      margin-left: 8px;" (keypress)="keyPressNumber($event)"
+                                        formControlName="numeroRecargaRepetido"
+                                        class="form-control styleInput textnumero" (change)="validarCampos()">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
 
                     </div>
                     <br>
                     <div class="row">
-                        <div class="col-md-4">
-                            <p-card>
-                                <p-header class="tituloazul">
-                                    NÚMERO A RECARGAR
-                                </p-header>
-                                <input type="text" maxlength="10" style="margin-top: 8px;
-                        margin-left: 8px;" (keypress)="keyPressNumber($event)" formControlName="numeroRecarga"
-                                    class="form-control styleInput" (change)="validarCampos()">
-                                <p-footer>
-
-                                </p-footer>
-                            </p-card>
-                        </div>
                         <div class="col-md-4">
                             <p-card>
                                 <div class="row">
@@ -106,7 +122,7 @@
                                     VALOR A RECARGAR
                                 </p-header>
                                 <div class="form-group has-feedback" style="margin-top: 8px;
-                        margin-left: 8px;">
+                                     margin-left: 8px;">
                                     <i class="fa fa-usd form-control-feedback" aria-hidden="true"></i>
                                     <input type="text" (keypress)="keyPressNumber($event)" (blur)="transformAmount()"
                                         value="{{currencyRecarga}}" class="form-control styleInput"
@@ -181,7 +197,8 @@
 
                             <!-- footer -->
                             <div class="ui-g-12 footer elevation">
-                                <span class="totalcarrucel">{{paquete.valor | currency: "CAD":"symbol-narrow":".0-0"}}</span>
+                                <span
+                                    class="{{paqueteSeleccionado && paqueteSeleccionado.idPaquete === paquete.idPaquete ? 'totalcarrucelrojo' : 'totalcarrucel'}}">{{paquete.valor | currency: "CAD":"symbol-narrow":".0-0"}}</span>
                             </div>
                         </div>
                     </ng-template>
@@ -191,12 +208,10 @@
     </div>
 </div>
 <div class="row float-right element-actions-btns">
-    <button *ngIf="btnAdd" [disabled]="!habilitarBotones" (click)="pagarRecarga()" type="button"
-        class="btn btn-random">
+    <button *ngIf="btnAdd" [disabled]="!habilitarBotones" (click)="pagarRecarga()" type="button" class="btn btn-random">
         AGREGAR <i class="fa fa-plus" aria-hidden="true"></i>
     </button>
-    <button *ngIf="btnEdit" (click)="pagarRecarga()" type="button"
-        class="btn btn-random">
+    <button *ngIf="btnEdit" (click)="pagarRecarga()" type="button" class="btn btn-random">
         ACTUALIZAR <i class="fa fa-plus" aria-hidden="true"></i>
     </button>
 </div>
