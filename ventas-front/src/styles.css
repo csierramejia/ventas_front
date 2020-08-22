@@ -1150,3 +1150,14 @@ body {
 .dropdown-app:not(.ui-state-disabled).ui-state-focus {
   box-shadow: 0 0 0 0.2em #fff !important;
 }
+
+.calendar-app-sm {
+  border-radius: 15px !important;
+  border: 0px !important;
+  width: 100% !important;
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+  background-color: #f2f2f2 !important;
+}

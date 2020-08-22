@@ -20,6 +20,7 @@ import { LoteriaVirtualComponent } from './loteria-virtual/loteria-virtual.compo
 import { RecargasComponent } from './recargas/recargas.component';
 import { RecargasOperadorComponent } from './recargas/regargas-operador/recargas-operador.component';
 import { BolsaRecargasComponent } from './recargas/bolsa-recargas/bolsa-recargas.component';
+
 @NgModule({
   declarations: [
     ChanceComponent,

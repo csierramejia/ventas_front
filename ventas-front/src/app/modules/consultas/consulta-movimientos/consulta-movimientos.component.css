@@ -1,0 +1,248 @@
+.pnl1 {
+    border-radius: 10px;
+    background-color: #ffffff;
+  }
+  
+  .head {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    height: 40px;
+    background-color: #f6f8f8;
+    padding: 10px;
+    font-weight: bold;
+  }
+  
+  .title {
+    color: #999999;
+    font-size: 16px;
+    font-family: Montserrat !important;
+  }
+  
+  .barra {
+    border-bottom: solid 0.5px #0bc9ec;
+  }
+  
+  .btn-label {
+    font-family: Montserrat !important;
+    font-weight: bold;
+    margin: 0px !important;
+    cursor: pointer;
+    color: #f1f1f1;
+  }
+
+  .btn-label-limpiar {
+    font-family: Montserrat !important;
+    font-weight: bold;
+    font-size: 11;
+    margin: 0px !important;
+    cursor: pointer;
+    color: #6A6A6A;
+  }
+  
+  .btn-icon {
+    color: #f1f1f1;
+  }
+  .btn-icon-limpiar {
+    color: #6A6A6A;
+  }
+  .icon-edit {
+    color: #0083fe;
+    font-size: 25px;
+    height: 100%;
+    line-height: 100%;
+  }
+  
+  .icon-edit:hover {
+    text-align: left;
+    color: #E9527C;
+    cursor: pointer;
+  }
+  
+  .lbl-state {
+    font-family: Montserrat !important;
+    font-size: 15px !important;
+    color: #66676A;
+    margin-right: 5px;
+  }
+  
+  .lbl-ver {
+    font-family: Montserrat !important;
+    font-size: 15px !important;
+    color: #E9527C;
+    cursor: pointer;
+  }
+  
+  .lbl-ver:hover {
+    color: rgb(194, 10, 62);
+    text-decoration: underline;
+  }
+  
+  .lbl-registro {
+    font-family: Montserrat !important;
+  }
+  
+  .bor-bottom {
+    border-bottom: 1px solid #a6a6a6!important;
+  }
+  
+  .bor-bottom:hover {
+    background-color: #e7e7e7;
+  }
+  
+  .content {
+    width: 400px;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+  
+  .lbl-inf {
+    font-family: Montserrat !important;
+    color: #808080;
+    font-size: 18px !important;
+  }
+  
+  .lbl-title {
+    font-family: Montserrat !important;
+    font-size: 15px;
+  }
+  
+  :host ::ng-deep .ui-multiselect .ui-multiselect-label {
+    font-family: Montserrat !important;
+  }
+  
+  :host ::ng-deep .ui-multiselect {
+    border-radius: 15px;
+    background-color: #f2f2f2;
+    padding-left: 10px;
+    border: 0px;
+    outline: medium none;
+    font-family: Montserrat !important;
+  }
+  
+  :host ::ng-deep .ui-multiselect .ui-multiselect-trigger {
+    background-color: #f2f2f2;
+    border-radius: 15px;
+  }
+  
+  .r-header {
+    background-color: #f2f2f2;
+    height: 30px;
+    border-radius: 15px;
+    cursor: pointer;
+  }
+  
+  .r-header:hover {
+    background-color: #e7e7e7;
+  }
+  
+  .r-head-lbl {
+    height: 100%;
+    line-height: 100%;
+  }
+  
+  .r-head-title {
+    font-family: Montserrat !important;
+    font-size: 16px;
+    color: #6b6969;
+  }
+  
+  .trash {
+    color: #ec0b83;
+  }
+  
+  .trash-lbl {
+    font-size: 14px;
+    font-family: Montserrat !important;
+    padding-right: 5px;
+    cursor: pointer;
+  }
+  
+  .trash-lbl:hover {
+    color: #ec0b83;
+    text-decoration: underline;
+  }
+  
+  .plus {
+    color: #0083fe;
+  }
+  
+  .plus-lbl {
+    font-size: 14px;
+    font-family: Montserrat !important;
+    padding-right: 5px;
+    cursor: pointer;
+  }
+  
+  .plus-lbl:hover {
+    color: #066fd1;
+    text-decoration: underline;
+  }
+  
+  .close-pnl {
+    cursor: pointer;
+  }
+  
+  .close-pnl:hover {
+    color: #575656;
+  }
+  
+  .lbl-estado {
+    font-size: 14px;
+    font-family: Montserrat !important;
+    color: #6b6969;
+  }
+  
+  :host ::ng-deep .requerido {
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(169, 68, 66, .6) !important;
+  }
+  
+  .hd-requerido {
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(169, 68, 66, .6);
+  }
+  
+  .over {
+    overflow: hidden;
+  }
+  
+  .lbl {
+    color: #7c7b7b;
+    font-size: 15px;
+    font-family: Montserrat !important;
+    font-weight: 700 !important;
+  }
+  
+  .btn-light-dark-movimientos {
+    box-shadow: 0 3.5px 4px 0 rgba(20, 157, 183, 0.45);
+    border-radius: 15px;
+    background-color: #2076BD;
+    padding: .30rem .8rem;
+    border: 0px;
+    outline: 0px !important;
+  }
+
+  .btn-less-movimientos {
+    box-shadow: 0 3.5px 4px 0 rgba(167, 187, 190, 0.45);
+    border-radius: 15px;
+    background-color: #F2F2F2;
+    padding: .30rem .8rem;
+    border: 0px;
+    outline: 0px !important;
+  }
+
+  .inner-addon {
+    position: relative;
+  }
+
+  .inner-addon .aico, .aico-eye {
+    position: absolute;
+  }
+  
+  .left-addon .aico, .aico-eye {
+    left: 91%;
+    padding-top: 8px;
+  }  
+
+  .aico {
+    color: #999999;
+    z-index: 1;
+  }

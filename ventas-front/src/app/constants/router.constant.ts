@@ -26,6 +26,12 @@ export class RouterConstant {
   /** Router para el componente de loteria virtual */
   public static readonly ROUTER_LOTERIA_VIRTUAL: string = 'loteria-virtual';
 
+  /** Router para el modulo del consultas */
+  public static readonly ROUTER_CONSULTAS: string = 'consultas';
+
+  /** Router para el componente de consulta movimientos */
+  public static readonly ROUTER_CONSULTA_MOVIMIENTOS: string = 'consulta-movimientos';
+
   /** Router para el modulo del PAGINAS DE ERRORES */
   public static readonly ROUTER_ERROR: string = 'error';
 

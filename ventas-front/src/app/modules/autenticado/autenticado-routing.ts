@@ -24,6 +24,12 @@ export const ROUTES: Routes = [
         data: { preload: true},
         loadChildren: () => import('../productos/productos.module').then(m => m.ProductosModule)
       },
+      {
+        path: RouterConstant.ROUTER_CONSULTAS,
+        canActivate: [PrivilegiosGuard],
+        data: { preload: true},
+        loadChildren: () => import('../consultas/consultas.module').then(m => m.ConsultasModule)
+      },
     ]
   }
 ];
