@@ -3,17 +3,6 @@
  */
 export class TipoItemConstant {
 
-    /** tipo de item para la tabla EMPRESAS */
-    public static readonly PRODUCTOS: number = 11;
-  
-
-  }
-  
-/**
- * Constante para los estados del sistema
- */
-export class TipoItemConstant {
-
   /** tipo de item para la tabla EMPRESAS */
   public static readonly EMPRESAS: number = 1;
 
@@ -49,4 +38,7 @@ export class TipoItemConstant {
 
   /** tipo de item para la tabla PARAMETROS */
   public static readonly PARAMETROS = 12;
+
+    /** tipo de item para la tabla PRODUCTOS */
+    public static readonly PRODUCTOS: number = 13;
 }
