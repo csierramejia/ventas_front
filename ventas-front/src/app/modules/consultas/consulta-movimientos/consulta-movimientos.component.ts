@@ -24,39 +24,39 @@ import { AutenticacionResponseDTO } from 'src/app/dtos/seguridad/autenticacion/a
   selector: 'app-consulta-movimientos',
   templateUrl: './consulta-movimientos.component.html',
   styleUrls: ['./consulta-movimientos.component.css'],
-  providers: [ConsultasService, CommonService ],
+  providers: [ConsultasService, CommonService],
 })
-export class ConsultaMovimientosComponent extends CommonComponent implements OnInit, OnDestroy {
+export class ConsultaMovimientosComponent extends CommonComponent
+  implements OnInit, OnDestroy {
+  /** constante para el idioma espaniol para los calendar */
+  public CALENDAR_SPANISH = LabelsConstant.CALENDAR_SPANISH;
 
- /** constante para el idioma espaniol para los calendar */
- public CALENDAR_SPANISH = LabelsConstant.CALENDAR_SPANISH;
+  /** Modelo del paginador con los datos de los ROLES del sistema */
+  public movimientos: PaginadorModel;
 
- /** Modelo del paginador con los datos de los ROLES del sistema */
- public movimientos: PaginadorModel;
+  /** DTO para encapsular los valores de los filtros de busqueda */
+  public filtro: FiltroBusquedaDTO;
 
- /** DTO para encapsular los valores de los filtros de busqueda */
- public filtro: FiltroBusquedaDTO;
-
- /** DTO para encapsular los valores de los filtros de busqueda ingresados */
- public filtroClone: FiltroBusquedaDTO;
+  /** DTO para encapsular los valores de los filtros de busqueda ingresados */
+  public filtroClone: FiltroBusquedaDTO;
 
   /** Bandera que indica si el panel del filtro esta visible */
- public isShowFilter: boolean;
+  public isShowFilter: boolean;
 
- /** Bandera que se utiliza para identificar si hay filtro busqueda aplicado */
- public hayFiltroAplicado: boolean;
+  /** Bandera que se utiliza para identificar si hay filtro busqueda aplicado */
+  public hayFiltroAplicado: boolean;
 
- /** Bandera que se utiliza para identificar si hay un primer filtro aplicado  */
- public hayPrimerFiltro: boolean;
+  /** Bandera que se utiliza para identificar si hay un primer filtro aplicado  */
+  public hayPrimerFiltro: boolean;
 
- /** lista de items de EMPRESAS */
- public itemsProductos: SelectItem[];
+  /** lista de items de EMPRESAS */
+  public itemsProductos: SelectItem[];
 
   /** lista de items de EMPRESAS */
   public itemsTiposReporte: SelectItem[];
 
-    /** Dto que contiene los datos de la autenticacion */
-    private auth: AutenticacionResponseDTO;
+  /** Dto que contiene los datos de la autenticacion */
+  private auth: AutenticacionResponseDTO;
 
   /** Se utiliza para resetear la tabla de roles cuando aplican un filtro */
   @ViewChild('tblmovimientos') tblmovimientos: Table;
@@ -66,44 +66,41 @@ export class ConsultaMovimientosComponent extends CommonComponent implements OnI
     private consultasService: ConsultasService,
     private confirmationService: ConfirmationService,
     private spinnerState: SpinnerState,
-    private commonService: CommonService,
+    private commonService: CommonService
   ) {
     super();
   }
 
   ngOnInit(): void {
-      // bandera para visualizar el panel de filtro
-      this.isShowFilter = true;
+    // bandera para visualizar el panel de filtro
+    this.isShowFilter = true;
 
-      // se configura el modelo del paginador de los ROLES
-      this.movimientos = new PaginadorModel(this);
+    // se configura el modelo del paginador de los ROLES
+    this.movimientos = new PaginadorModel(this);
 
-      // se configuran los atributos que soporta el proceso de filtros busqueda
-      this.hayPrimerFiltro = false;
-      this.filtroClone = new FiltroBusquedaDTO();
-      this.filtro = new FiltroBusquedaDTO();
+    // se configuran los atributos que soporta el proceso de filtros busqueda
+    this.hayPrimerFiltro = false;
+    this.filtroClone = new FiltroBusquedaDTO();
+    this.filtro = new FiltroBusquedaDTO();
 
-      // se obtiene los datos de la autenticacion
-      this.auth = SessionStoreUtil.auth(TipoEventoConstant.GET);
+    // se obtiene los datos de la autenticacion
+    this.auth = SessionStoreUtil.auth(TipoEventoConstant.GET);
 
-      // se procede a consultar los items de productos y tipos reporte
-      this.getSelectItems();
+    // se procede a consultar los items de productos y tipos reporte
+    this.getSelectItems();
   }
 
-  ngOnDestroy(): void {
-  }
-
+  ngOnDestroy(): void {}
 
   /**
    * Metodo que permite consultar todos los selectItems para esta funcionalidad
    */
   private getSelectItems(): void {
-
     // se crea las instancias de cada selectitem
     this.itemsProductos = [];
     this.itemsTiposReporte = [
-      { value: 'Detallado', label: 'Detallado'},
-      { value: 'Agrupado', label: 'Agrupado'}
+      { value: 'Detallado', label: 'Detallado' },
+      { value: 'Agrupado', label: 'Agrupado' },
     ];
 
     // contiene todos los parametros de cada selectitems a consultar
@@ -114,18 +111,13 @@ export class ConsultaMovimientosComponent extends CommonComponent implements OnI
     paramTiposProductos.tipoItem = TipoItemConstant.PRODUCTOS;
     params.push(paramTiposProductos);
 
-
-
     // se procede a invocar el servicio para obtener todos los items
     this.commonService.getSelectItems(params).subscribe(
       (data) => {
-
         // se verifica si el servicio retorno algun valor
         if (data && data.length) {
-
           // se recorre cada item consultado
           for (const item of data) {
-
             //se verifica que tipo de selecitem se debe configurar
             switch (item.tipoItem) {
               case TipoItemConstant.PRODUCTOS: {
@@ -162,32 +154,30 @@ export class ConsultaMovimientosComponent extends CommonComponent implements OnI
    * Metodo que permite soportar el evento click del boton filtrar
    */
   public filtrar(): void {
-
     // se verifica si hay un nuevo filtro de busqueda ingresado
-    // if (this.isNuevoFiltroBusqueda()) {
+    if (this.isNuevoFiltroBusqueda()) {
+      // se hace el backup de los datos del paginador esto por si hay errores
+      this.filtro.paginador = this.movimientos.filtroBefore();
 
-    //   // se hace el backup de los datos del paginador esto por si hay errores
-    //   this.filtro.paginador = this.roles.filtroBefore();
+      // se consultan las empresas de acuerdo a los filtros ingresados
+      this.consultasService.consultaMovimientos(this.filtro).subscribe(
+        (data) => {
+          // se configuran los empresas consultados
+          this.movimientos.filtroExitoso(this.tblmovimientos, data);
 
-    //   // se consultan los roles de acuerdo a los filtros ingresados
-    //   this.administracionService.getRoles(this.filtro).subscribe(
-    //     (data) => {
-    //       // se configuran los roles consultados
-    //       this.roles.filtroExitoso(this.tblroles, data);
+          // se debe clonar los filtros asi evitar solicitudes si no hay nuevos criterios
+          this.filtroClone = JSON.parse(JSON.stringify(this.filtro));
 
-    //       // se debe clonar los filtros asi evitar solicitudes si no hay nuevos criterios
-    //       this.filtroClone = JSON.parse(JSON.stringify(this.filtro));
-
-    //       // se verifica si hay filtro aplicado
-    //       this.validarSiHayFiltroAplicado();
-    //     },
-    //     (error) => {
-    //       this.messageService.add(
-    //         MsjUtil.getMsjError(this.showMensajeError(error))
-    //       );
-    //     }
-    //   );
-    // }
+          // se verifica si hay filtro aplicado
+          this.validarSiHayFiltroAplicado();
+        },
+        (error) => {
+          this.messageService.add(
+            MsjUtil.getMsjError(this.showMensajeError(error))
+          );
+        }
+      );
+    }
   }
 
   /**
@@ -200,6 +190,29 @@ export class ConsultaMovimientosComponent extends CommonComponent implements OnI
     //     (this.filtroClone.estado !== null && this.filtroClone.estado !== undefined)) {
     //     this.hayFiltroAplicado = true;
     // }
+  }
+
+  /**
+   * Permite identificar si hay nuevo un criterio de busqueda ingresado
+   */
+  private isNuevoFiltroBusqueda(): boolean {
+    // se verifica si es el primer filtro procesado
+    if (!this.hayPrimerFiltro) {
+      this.hayPrimerFiltro = true;
+      return true;
+    }
+
+    // se valida cada criterio si hay alguna modificacion
+    this.filtro.fecha = this.setTrim(this.filtro.fecha);
+    this.filtro.tipoReporte = this.setTrim(this.filtro.tipoReporte);
+    if (
+      this.filtro.idProductos !== this.filtroClone.idProductos ||
+      this.filtro.fecha !== this.filtroClone.fecha ||
+      this.filtro.tipoReporte !== this.filtroClone.tipoReporte
+    ) {
+      return true;
+    }
+    return false;
   }
 
 }
