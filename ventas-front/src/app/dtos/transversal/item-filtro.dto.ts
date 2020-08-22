@@ -4,6 +4,12 @@
  */
 export class ItemFiltroDTO {
 
+    /** Filtro por algun IDENTIFICADOR */
+    public id: number;
+
+    /** Filtro por el nombre del item */
+    public nombre: string;
+
     /** Filtro por estado del item */
     public estado: string;
 
@@ -24,4 +30,5 @@ export class ItemFiltroDTO {
 
     /** Filtro por tipos de fabricantes, ids tipos fabricantes separados por coma 1,2 */
     public tiposFabricantes: string;
+
   }

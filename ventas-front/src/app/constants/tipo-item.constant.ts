@@ -39,6 +39,6 @@ export class TipoItemConstant {
   /** tipo de item para la tabla PARAMETROS */
   public static readonly PARAMETROS = 12;
 
-    /** tipo de item para la tabla PRODUCTOS */
-    public static readonly PRODUCTOS: number = 13;
+  /** tipo de item para la tabla PRODUCTOS */
+  public static readonly PRODUCTOS: number = 13;
 }
