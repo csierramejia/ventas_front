@@ -127,12 +127,6 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
     // se verifica que si hay venta para la compra
     if (this.venta && this.venta.detalles && this.venta.detalles.length) {
 
-      // se verifica si el cliente fue seleccionado
-      if (!this.cliente || !this.cliente.idCliente) {
-        this.messageService.add(MsjUtil.getToastErrorMedium('Seleccione el cliente quién hace la compra'));
-        return;
-      }
-
       // se muestra la ventan de confirmacion
       this.confirmationService.confirm({
       message: '¿Está seguro que desea hacer la compra?',
@@ -154,7 +148,8 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
               this.detalleVenta = new LoteriaVirtualVentaDetalleDTO();
             },
             error => {
-              this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+              this.messageService.add(MsjUtil.getMsjError(error.error.mensaje));
+              this.messageService.add(MsjUtil.getToastErrorLng(error.error.mensaje));
             }
           );
         }
