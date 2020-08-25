@@ -526,10 +526,12 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
   validarLoterias(){
     let valida=false;
     this.messageService.clear();
-    if(new Date(this.dayBet).getDate() < new Date().getDate()){
-      this.messageService.add(MsjUtil.getToastErrorMedium('No se puede realizar una apuesta con una fecha anterior'));
-      return;
+    let fechaJuego=new Date(this.dayBet);
+    if(fechaJuego.getDate() < new Date().getDate()){
+      fechaJuego.setDate(fechaJuego.getDate() + 7);
+      this.dayBet=fechaJuego;
     }
+
     //seleccion
     if(this.loterias==null || this.loterias==undefined || this.loterias.length==0){
       this.messageService.add(MsjUtil.getToastErrorMedium('Por favor diligenciar todos los campos'));
