@@ -537,6 +537,16 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
       this.messageService.add(MsjUtil.getToastErrorMedium('Por favor diligenciar todos los campos'));
       return;
     }
+    let valid = true;
+    this.loterias.forEach(element => {
+      if (element.checked) {
+         valid = false; 
+       }
+    });
+    if(valid){
+      this.messageService.add(MsjUtil.getToastErrorMedium('Por seleccionar una loteria'));
+      return;
+    }
     //valida nulos
     if(this.chanceForm.get('numeroA').value == null || this.chanceForm.get('numeroA').value ==''){
       valida=true;
