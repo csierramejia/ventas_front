@@ -403,10 +403,10 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
   addBetSend(): void {
     this.messageService.clear();
     // this.lotteriesSelected = this.get_lotteriesSelected();
-   
-    if(new Date(this.dayBet).getDate() < new Date().getDate()){
-      this.messageService.add(MsjUtil.getToastErrorMedium('No se puede realizar una apuesta con una fecha anterior'));
-      return;
+   let fechaJuego=new Date(this.dayBet);
+    if(fechaJuego.getDate() < new Date().getDate()){
+      fechaJuego.setDate(fechaJuego.getDate() + 7);
+      this.dayBet=fechaJuego;
     }
 
     if (this.valid()) {
@@ -456,9 +456,10 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
   editBetSend() {
     // this.lotteriesSelected = this.get_lotteriesSelected();
     this.messageService.clear();
-    if(new Date(this.dayBet).getDate() < new Date().getDate()){
-      this.messageService.add(MsjUtil.getToastErrorMedium('No se puede realizar una apuesta con una fecha anterior'));
-      return;
+    let fechaJuego=new Date(this.dayBet);
+    if(fechaJuego.getDate() < new Date().getDate()){
+      fechaJuego.setDate(fechaJuego.getDate() + 7);
+      this.dayBet=fechaJuego;
     }
     if (this.valid()) {
       this.addBet.emit({

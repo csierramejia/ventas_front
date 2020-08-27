@@ -579,10 +579,7 @@ export class RecargasOperadorComponent extends CommonComponent implements OnInit
   validarLoterias() {
     let valida = false;
     this.messageService.clear();
-    if (new Date(this.dayBet).getDate() < new Date().getDate()) {
-      this.messageService.add(MsjUtil.getToastErrorMedium('No se puede realizar una apuesta con una fecha anterior'));
-      return;
-    }
+
     //seleccion
     if (this.loterias == null || this.loterias == undefined || this.loterias.length == 0) {
       this.messageService.add(MsjUtil.getToastErrorMedium('Por favor diligenciar todos los campos'));

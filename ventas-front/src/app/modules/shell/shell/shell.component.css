@@ -16,6 +16,7 @@
   border: 0px !important;
   outline: 0px !important;
   width: 80px !important;
+  cursor: pointer !important;
 }
 
 .btn-no:hover {
@@ -30,6 +31,7 @@
   border: 0px !important;
   outline: 0px !important;
   width: 80px !important;
+  cursor: pointer !important;
 }
 
 .btn-si:hover {
@@ -46,25 +48,32 @@
 
 :host ::ng-deep #confApp .ui-dialog-content {
   text-align: center !important;
+  height: 6em;
 }
 
 :host ::ng-deep #confApp .ui-dialog-titlebar {
-  background-color: #f2f2f2 !important;
-  color: #6b6969 !important;
+  background-color: #2075BD !important;
+  color: #fff !important;
 }
 
 :host ::ng-deep #confApp .ui-dialog-footer {
-  background-color: #fff !important;
+  background-color: #F2F2F2 !important;
   border: 0px !important;
-  text-align: center !important;
+  text-align: right !important;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
 }
 
 :host ::ng-deep #confApp .ui-dialog-titlebar-icon {
-  color: #6b6969 !important;
+  color: #fff !important;
 }
 
 :host ::ng-deep #confApp .ui-confirmdialog-icon {
   color: #6b6969 !important;
+}
+
+:host ::ng-deep #confApp .ui-confirmdialog {
+  width: 40em;  
 }
 
 :host ::ng-deep .ui-toast .ui-toast-message.ui-toast-message-success {
