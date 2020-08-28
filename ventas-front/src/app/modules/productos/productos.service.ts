@@ -122,6 +122,7 @@ export class ProductosService {
    * que estan habilitados para su respectiva venta
    */
   public getLoteriasVirtual(filtro: FiltroBusquedaDTO): Observable<Array<LoteriaVirtualDTO>> {
+    console.log(ProductosAPIConstant.URL_GET_LOTERIAS_VIRTUAL);
     return this.http.post<Array<LoteriaVirtualDTO>>(ProductosAPIConstant.URL_GET_LOTERIAS_VIRTUAL, filtro);
   }
 
