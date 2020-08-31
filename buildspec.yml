@@ -10,10 +10,10 @@ phases:
     commands:
       - echo Installing source NPM dependencies...
       - cd ventas-front
-   #   - rm -rf node_modules
+      - rm -rf node_modules
    #   - rm -rf package-lock.json
    #   - rm -rf dist
-   #  - npm install
+     - npm install
    #   - npm install -g @angular/cli
   build:
     commands:
