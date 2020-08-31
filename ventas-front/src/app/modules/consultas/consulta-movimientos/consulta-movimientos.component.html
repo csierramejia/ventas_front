@@ -37,13 +37,12 @@
   
           <!-- filtro por fecha -->
           <div class="ui-g-3 pb-0">
-              <div class="ui-g-12">
                   <div class="inner-addon left-addon">
-                    <i (click)="filtro.fechaInicio = null"
-                      [ngClass]="filtroClone.fechaInicio ? 'text-dark' : 'i-slight'"
+                    <i (click)="filtro.fecha = null"
+                      [ngClass]="filtroClone.fecha ? 'text-dark' : 'i-slight'"
                       class="fa fa-times font-size-16 aico copy"></i>
                     <p-calendar
-                      [(ngModel)]="filtro.fechaInicio"
+                      [(ngModel)]="filtro.fecha"
                       name="finit"
                       inputId="finit"
                       [locale]="CALENDAR_SPANISH"
@@ -58,7 +57,6 @@
                       placeholder="Fecha">
                     </p-calendar>
                   </div>
-                </div>
           </div>
   
           <!-- filtro por tipo -->
@@ -68,7 +66,6 @@
               [options]="itemsTiposReporte"
               [filter]="itemsTiposReporte && itemsTiposReporte.length > 6"
               name="ftiporeporte"
-              placeholder="Tipos reporte"
               [showClear]="true"
               emptyFilterMessage="No hay tipos de reporte"
               title="Filtro por tipo de reporte"
@@ -94,7 +91,6 @@
               title="Filtra los movimientos de acuerdo a los criterios">
                 <label class="btn-label"> Filtrar</label>
                 <i class="fa fa-search btn-icon pl-1"></i>
-                <i *ngIf="hayFiltroAplicado" class="fa fa-asterisk font-size-9 pl-1"></i>
             </button>
           </div>
         </div>
@@ -115,30 +111,39 @@
           [responsive]="true"
           [paginator]="true"
           [lazy]="true"
-          styleClass="tbl-app"
           [showCurrentPageReport]="true"
-          currentPageReportTemplate="{{ movimientos.pageReport }}">
+          [scrollable]="true" scrollHeight="350px"
+          currentPageReportTemplate="{{ movimientos.pageReport }}"
+          styleClass="table-style">
   
           <ng-template pTemplate="header">
             <tr class="text-center">
-              <th style="width: 20%;"></th>
-              <th style="width: 40%;">Transacción</th>
-              <th style="width: 13%;">Fecha</th>
-              <th style="width: 12%;">Hora</th>
-              <th style="width: 10%;">Valor</th>
+              <th style="width: 30%;"></th>
+              <th style="width: 30%;">Transacción</th>
+              <th style="width: 15%;">Fecha</th>
+              <th style="width: 10%;">Hora</th>
+              <th style="width: 15%;">Valor</th>
             </tr>
           </ng-template>
   
           <ng-template pTemplate="body" let-trans>
             <tr>
-              <td class="text-left">{{ trans.nombreProducto }}</td>
-              <td class="text-left">{{ trans.codigoTransaccion }}</td>
-              <td class="text-left">{{ trans.fecha }}</td>
-              <td class="text-left">{{ trans.hora }}</td>
-              <td class="text-left">{{ trans.valorTransaccion }}</td>
+              <td class="text-left" style="width: 30%;">{{ trans.nombreProducto }}</td>
+              <td class="text-left" style="width: 30%;">{{ trans.codigoTransaccion }}</td>
+              <td class="text-left" style="width: 15%;">{{ trans.fecha}}</td>
+              <td class="text-left" style="width: 10%;">{{ trans.hora | hora24}}</td>
+              <td class="text-left" style="width: 15%;">{{ trans.valorTransaccion| currency: "CAD":"symbol-narrow":".0-0" }}</td>
             </tr>
           </ng-template>
-  
+          <ng-template pTemplate="footer">
+            <tr>
+              <td style="width: 30%; background-color: #F8F9FA; border: none;"></td>
+              <td style="width: 30%; background-color: #F8F9FA; border: none;"></td>
+              <td style="width: 15%; background-color: #F8F9FA; border: none;"></td>
+              <td style="width: 10%; background-color: #F8F9FA; border: none;">Total</td>
+              <td style="width: 15%; background-color: #F8F9FA; border: none;">{{ sumValTotal| currency: "CAD":"symbol-narrow":".0-0" }}</td>
+            </tr>
+        </ng-template>
           <ng-template pTemplate="emptymessage">
             <tr>
               <td [attr.colspan]="6">

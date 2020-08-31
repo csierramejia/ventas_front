@@ -1,4 +1,3 @@
-
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { ConsultasService } from './../consultas.service';
 import { CommonComponent } from 'src/app/utilities/common.component';
@@ -18,6 +17,7 @@ import { EstadosConstant } from './../../../constants/estados.constant';
 import { ItemFiltroDTO } from './../../../dtos/transversal/item-filtro.dto';
 import { ItemParamDTO } from './../../../dtos/transversal/item-param.dto';
 import { AutenticacionResponseDTO } from 'src/app/dtos/seguridad/autenticacion/autenticacion-response.dto';
+import { FechaUtil } from 'src/app/utilities/fecha-util';
 
 
 @Component({
@@ -43,9 +43,6 @@ export class ConsultaMovimientosComponent extends CommonComponent
   /** Bandera que indica si el panel del filtro esta visible */
   public isShowFilter: boolean;
 
-  /** Bandera que se utiliza para identificar si hay filtro busqueda aplicado */
-  public hayFiltroAplicado: boolean;
-
   /** Bandera que se utiliza para identificar si hay un primer filtro aplicado  */
   public hayPrimerFiltro: boolean;
 
@@ -55,8 +52,12 @@ export class ConsultaMovimientosComponent extends CommonComponent
   /** lista de items de EMPRESAS */
   public itemsTiposReporte: SelectItem[];
 
+    /** variable que almacena el valor de la suma de los movimientos */
+    public sumValTotal: number;
+
   /** Dto que contiene los datos de la autenticacion */
   private auth: AutenticacionResponseDTO;
+
 
   /** Se utiliza para resetear la tabla de roles cuando aplican un filtro */
   @ViewChild('tblmovimientos') tblmovimientos: Table;
@@ -103,6 +104,7 @@ export class ConsultaMovimientosComponent extends CommonComponent
       { value: 'Agrupado', label: 'Agrupado' },
     ];
 
+   // this.filtro.tipoReporte = 'Detallado';
     // contiene todos los parametros de cada selectitems a consultar
     const params: Array<ItemParamDTO> = new Array<ItemParamDTO>();
 
@@ -155,21 +157,19 @@ export class ConsultaMovimientosComponent extends CommonComponent
    */
   public filtrar(): void {
     // se verifica si hay un nuevo filtro de busqueda ingresado
+    this.filtro.id = this.auth.usuario.idUsuario;
     if (this.isNuevoFiltroBusqueda()) {
       // se hace el backup de los datos del paginador esto por si hay errores
       this.filtro.paginador = this.movimientos.filtroBefore();
-
+      this.sumValTotal = 0;
       // se consultan las empresas de acuerdo a los filtros ingresados
       this.consultasService.consultaMovimientos(this.filtro).subscribe(
         (data) => {
           // se configuran los empresas consultados
           this.movimientos.filtroExitoso(this.tblmovimientos, data);
-
+          this.calcularTolalValor();
           // se debe clonar los filtros asi evitar solicitudes si no hay nuevos criterios
           this.filtroClone = JSON.parse(JSON.stringify(this.filtro));
-
-          // se verifica si hay filtro aplicado
-          this.validarSiHayFiltroAplicado();
         },
         (error) => {
           this.messageService.add(
@@ -181,18 +181,6 @@ export class ConsultaMovimientosComponent extends CommonComponent
   }
 
   /**
-   * Permite validar si hay filtro aplicado
-   */
-  private validarSiHayFiltroAplicado(): void {
-    // this.hayFiltroAplicado = false;
-    // if (this.filtroClone.nombre ||
-    //     this.filtroClone.idEmpresa ||
-    //     (this.filtroClone.estado !== null && this.filtroClone.estado !== undefined)) {
-    //     this.hayFiltroAplicado = true;
-    // }
-  }
-
-  /**
    * Permite identificar si hay nuevo un criterio de busqueda ingresado
    */
   private isNuevoFiltroBusqueda(): boolean {
@@ -201,18 +189,55 @@ export class ConsultaMovimientosComponent extends CommonComponent
       this.hayPrimerFiltro = true;
       return true;
     }
-
     // se valida cada criterio si hay alguna modificacion
-    this.filtro.fecha = this.setTrim(this.filtro.fecha);
     this.filtro.tipoReporte = this.setTrim(this.filtro.tipoReporte);
     if (
       this.filtro.idProductos !== this.filtroClone.idProductos ||
-      this.filtro.fecha !== this.filtroClone.fecha ||
+      !FechaUtil.iqualsDateFilter(this.filtroClone.fecha, this.filtro.fecha) ||
       this.filtro.tipoReporte !== this.filtroClone.tipoReporte
     ) {
       return true;
     }
     return false;
   }
+
+  /**
+   * Metodo que es invocado por el paginador de la tabla
+   */
+  public paginar(): void {
+    // se limpia los mensajes anteriores
+    this.messageService.clear();
+    this.sumValTotal = 0;
+    // se configura el paginador dado que puede cambiar el skip o rowsperpage
+    this.filtroClone.paginador = this.movimientos.datos;
+
+    // se procede a consultar los empresas
+    this.consultasService.consultaMovimientos(this.filtroClone)
+      .subscribe(
+        (data) => {
+          this.movimientos.configurarRegistros(data);
+          this.calcularTolalValor();
+        },
+        (error) => {
+          this.messageService.add(
+            MsjUtil.getMsjError(this.showMensajeError(error))
+          );
+        }
+      );
+  }
+
+  /**
+   * Metodo para calcular el valor total de las ventas
+   */
+  calcularTolalValor() {
+    let total = 0;
+    if (this.movimientos.registros != null && this.movimientos.registros !== undefined) {
+      for (const movimiento of this.movimientos.registros) {
+          total += movimiento.valorTransaccion;
+      }
+    }
+
+    this.sumValTotal = total;
+}
 
 }

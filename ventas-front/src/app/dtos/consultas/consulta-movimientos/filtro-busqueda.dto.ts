@@ -17,7 +17,7 @@ export class FiltroBusquedaDTO {
   public fechaInicio: Date;
 
   /** Fecha de final de la solicitud */
-  public fecha: string;
+  public fecha: Date;
 
   /** filtro indica que tipo de reporte mostrar detallado/agrupado */
   public tipoReporte: string;

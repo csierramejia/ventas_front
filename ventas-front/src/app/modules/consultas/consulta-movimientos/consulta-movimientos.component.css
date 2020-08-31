@@ -246,3 +246,7 @@
     color: #999999;
     z-index: 1;
   }
+
+  .table-style {
+    border: 0px;
+  }
