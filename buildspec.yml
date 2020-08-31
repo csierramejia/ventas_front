@@ -11,6 +11,7 @@ phases:
       - echo Installing source NPM dependencies...
       - cd ventas-front
       - rm -rf node_modules
+      - rm -rf dist
       - npm install
   build:
     commands:
