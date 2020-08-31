@@ -381,6 +381,9 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
       // por si hay datos consultados con anterioridad
       this.fraccionesDisponible = null;
       this.detalleVenta.fracciones = null;
+      this.detalleVenta.serie = null;
+      this.detalleVenta.numero = null;
+      this.isSubmit = false;
 
       // se configura los datos del sorteo seleccionado
       this.sorteoSeleccionado = sorteo;
