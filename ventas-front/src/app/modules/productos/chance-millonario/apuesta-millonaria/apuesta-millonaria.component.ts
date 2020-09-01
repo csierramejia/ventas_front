@@ -150,6 +150,20 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
    */
   get_date_bet(day) {
     this.dayBet = day.date;
+    let fecha=new Date();
+
+    let fechaA=new Date(fecha.getFullYear(),
+    fecha.getMonth(),
+    fecha.getDate());
+
+    fecha=new Date(this.dayBet);
+    let fechaB=new Date(fecha.getFullYear(),
+    fecha.getMonth(),
+    fecha.getDate());
+    if(fechaB <fechaA){
+      fechaB.setDate(fechaB.getDate() + 7);
+      this.dayBet=fechaB;
+    }
     // colocamos color al dia seleccionamos y le quitamos a los demas
     this.days.forEach(element => {
       if (element.name === day.name) {
@@ -490,11 +504,6 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
   validarLoterias(){
     this.messageService.clear();
 
-    let fechaJuego=new Date(this.dayBet);
-    if(fechaJuego.getDate() < new Date().getDate()){
-      fechaJuego.setDate(fechaJuego.getDate() + 7);
-      this.dayBet=fechaJuego;
-    }
 
     let valida=false;
     //seleccion

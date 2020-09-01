@@ -114,6 +114,21 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
    */
   get_date_bet(day) {
     this.dayBet = day.date;
+   
+    let fecha=new Date();
+
+    let fechaA=new Date(fecha.getFullYear(),
+    fecha.getMonth(),
+    fecha.getDate());
+
+    fecha=new Date(this.dayBet);
+    let fechaB=new Date(fecha.getFullYear(),
+    fecha.getMonth(),
+    fecha.getDate());
+    if(fechaB <fechaA){
+      fechaB.setDate(fechaB.getDate() + 7);
+      this.dayBet=fechaB;
+    }
     // colocamos color al dia seleccionamos y le quitamos a los demas
     this.days.forEach(element => {
       if (element.name === day.name) {
@@ -403,11 +418,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
   addBetSend(): void {
     this.messageService.clear();
     // this.lotteriesSelected = this.get_lotteriesSelected();
-   let fechaJuego=new Date(this.dayBet);
-    if(fechaJuego.getDate() < new Date().getDate()){
-      fechaJuego.setDate(fechaJuego.getDate() + 7);
-      this.dayBet=fechaJuego;
-    }
+  
 
     if (this.valid()) {
       this.addBet.emit({
@@ -456,11 +467,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
   editBetSend() {
     // this.lotteriesSelected = this.get_lotteriesSelected();
     this.messageService.clear();
-    let fechaJuego=new Date(this.dayBet);
-    if(fechaJuego.getDate() < new Date().getDate()){
-      fechaJuego.setDate(fechaJuego.getDate() + 7);
-      this.dayBet=fechaJuego;
-    }
+   
     if (this.valid()) {
       this.addBet.emit({
         action: 0,

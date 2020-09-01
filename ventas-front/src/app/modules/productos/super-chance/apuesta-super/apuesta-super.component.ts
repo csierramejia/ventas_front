@@ -151,6 +151,20 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
    */
   get_date_bet(day) {
     this.dayBet = day.date;
+    let fecha=new Date();
+
+    let fechaA=new Date(fecha.getFullYear(),
+    fecha.getMonth(),
+    fecha.getDate());
+
+    fecha=new Date(this.dayBet);
+    let fechaB=new Date(fecha.getFullYear(),
+    fecha.getMonth(),
+    fecha.getDate());
+    if(fechaB <fechaA){
+      fechaB.setDate(fechaB.getDate() + 7);
+      this.dayBet=fechaB;
+    }
     // colocamos color al dia seleccionamos y le quitamos a los demas
     this.days.forEach(element => {
       if (element.name === day.name) {
