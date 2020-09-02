@@ -205,12 +205,12 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
     this.cartItems.forEach(element => {
       if (element.modalidad && element.numeroSuper == null) {
         if (element.modalidad == '4 Cifras') {
-          this.valueBet = element.valorApostado;
+          this.valueBet = this.valueBet +element.valorApostado;
         } else {
-          this.valueBet = element.valorApostado;
+          this.valueBet =this.valueBet + element.valorApostado;
         }
       } else if (element.modalidad == null && (element.numeroSuper || element.numeroAstro)) {
-          this.valueBet = element.valorApostado;
+          this.valueBet = this.valueBet + element.valorApostado;
       } else {
       // tslint:disable-next-line: radix
       if (element.direct) { this.valueBet = (this.valueBet + parseInt(element.direct)); }
