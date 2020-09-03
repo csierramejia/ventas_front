@@ -52,12 +52,11 @@ export class ConsultaMovimientosComponent extends CommonComponent
   /** lista de items de EMPRESAS */
   public itemsTiposReporte: SelectItem[];
 
-    /** variable que almacena el valor de la suma de los movimientos */
-    public sumValTotal: number;
+  /** variable que almacena el valor de la suma de los movimientos */
+  public sumValTotal: number;
 
   /** Dto que contiene los datos de la autenticacion */
   private auth: AutenticacionResponseDTO;
-
 
   /** Se utiliza para resetear la tabla de roles cuando aplican un filtro */
   @ViewChild('tblmovimientos') tblmovimientos: Table;
