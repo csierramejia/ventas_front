@@ -4,8 +4,7 @@ import { ShellState } from 'src/app/states/shell/shell.state';
 import { MessageService } from 'primeng/api';
 import { ProductosService } from '../../productos.service';
 import { MsjUtil } from 'src/app/utilities/messages.util';
-
-
+import { NotificacionSoportePagoDTO } from 'src/app/dtos/correos/notificacion-soporte-pago.dto';
 @Component({
   selector: 'app-bolsa',
   templateUrl: './bolsa.component.html',
@@ -305,6 +304,19 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
       apuestaData => {
         const responseApuesta: any = apuestaData;
         if (responseApuesta.exito) {
+
+          // se procede enviar la notificacion solo si el cliente existe y tiene correo
+          if (this.cartItems[0].correoCustomer) {
+            const data: NotificacionSoportePagoDTO = new NotificacionSoportePagoDTO();
+            data.sportePagoPDF = null;
+            data.totalPagado = this.valueBetTotal;
+            data.nroTransaccion = responseApuesta.idTransaccion;
+            data.correoDestino = this.cartItems[0].correoCustomer;
+            data.idUsuario = this.shellState.userAccount.auth.usuario.idUsuario;
+            this.enviarNotificacionSoportePago(data);
+          }
+
+          // se limpia la data ingresada
           this.cleanCartValues();
 
               // se muestra el mensaje exitoso
@@ -395,5 +407,13 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
     this.messageService.clear();
   }
 
-
+  /**
+   * Permite enviar la notificacion de soporte de pago
+   */
+  private enviarNotificacionSoportePago(data: NotificacionSoportePagoDTO): void {
+    this.productosService.enviarNotificacionSoportePagoChance(data).subscribe(
+      (response) => {},
+      (error) => { this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error))); }
+    );
+  }
 }

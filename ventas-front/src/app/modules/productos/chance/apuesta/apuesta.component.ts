@@ -35,6 +35,9 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
   numeroSerie:string;
   dayBet: Date;
   viewLotteries = false;
+
+  /** Es el correo del cliente quien hace la compra */
+  private correoCustomer: string;
   days = [
     { text: 'L', name: 'lun', date: null },
     { text: 'M', name: 'mar', date: null },
@@ -261,6 +264,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
           if (responseCliente.existe) {
             const name = responseCliente.primerNombre + ' ' + responseCliente.segundoNombre + ' ' + responseCliente.primerApellido;
             this.idCustomer = responseCliente.idCliente;
+            this.correoCustomer = responseCliente.correo;
             this.chanceForm.controls.nombreCliente.setValue(name);
             this.enabledCustomer = true;
           } else {
@@ -426,6 +430,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
         // lotteries: this.lotteriesSelected,
         _id: 'bet_' + Math.floor(Math.random() * 999999),
         idCustomer: this.idCustomer,
+        correoCustomer: this.correoCustomer,
         numberPlayed: this.chanceForm.get('numero').value,
         dataPlayed: this.dayBet,
         nombresLoteria:this.nombresLoterias(),
@@ -688,6 +693,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
     this.displayModalCreate = false;
     const name = event.primerNombre + ' ' + event.segundoNombre + ' ' + event.primerApellido;
     this.idCustomer = event.idPersona;
+    this.correoCustomer = event.correo;
     this.chanceForm.controls.nombreCliente.setValue(name);
     this.enabledCustomer = true;
   }
