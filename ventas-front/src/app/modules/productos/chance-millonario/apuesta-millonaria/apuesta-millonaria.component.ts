@@ -33,6 +33,10 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
 
   dayBet: Date;
   viewLotteries = false;
+
+  /** Es el correo del cliente quien hace la compra */
+  private correoCustomer: string;
+
   days = [
     { text: 'L', name: 'lun', date: null },
     { text: 'M', name: 'mar', date: null },
@@ -235,6 +239,7 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
           if (responseCliente.existe) {
             const name = responseCliente.primerNombre + ' ' + responseCliente.segundoNombre + ' ' + responseCliente.primerApellido;
             this.idCustomer = responseCliente.idCliente;
+            this.correoCustomer = responseCliente.correo;
             this.chanceForm.controls.nombreCliente.setValue(name);
             this.enabledCustomer = true;
           } else {
@@ -625,6 +630,7 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
         // lotteries: this.lotteriesSelected,
         _id: 'bet_' + Math.floor(Math.random() * 999999),
         idCustomer: this.idCustomer,
+        correoCustomer: this.correoCustomer,
         modalidad: this.seleccionado==4 ? '4 Cifras' : '3 Cifras',
         numberPlayed:null,
         valorApostado: this.chanceForm.get('valorApostado').value,
@@ -902,6 +908,7 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
     this.displayModalCreate = false;
     const name = event.primerNombre + ' ' + event.segundoNombre + ' ' + event.primerApellido;
     this.idCustomer = event.idPersona;
+    this.correoCustomer = event.correo;
     this.chanceForm.controls.nombreCliente.setValue(name);
     this.enabledCustomer = true;
   }
