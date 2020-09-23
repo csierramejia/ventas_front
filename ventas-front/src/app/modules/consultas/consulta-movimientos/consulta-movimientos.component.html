@@ -12,7 +12,7 @@
         <div class="mt-3 ml-3 mb-0 mr-0">
           <button
             (click)="toogleShowFilter()"
-            class="btn-light-dark w-130-px"
+            class="btn-light-dark-ver-filtro w-130-px"
             type="button"
             title="Oculta el panel de filtros de búsqueda">
               <label class="btn-label"> Ver Filtros</label>
@@ -106,33 +106,33 @@
           (onPage)="movimientos.scrollerListener($event)"
           [totalRecords]="movimientos.datos.cantidadTotal"
           alwaysShowPaginator="true"
-          [rowsPerPageOptions]="movimientos.rowsPerPageOptions"
+          [rowsPerPageOptions]="movimientos.rowsPerPageOptionsMovimientos"
           [rows]="movimientos.rowsDefault"
           [responsive]="true"
           [paginator]="true"
           [lazy]="true"
           [showCurrentPageReport]="true"
-          [scrollable]="true" scrollHeight="350px"
+         
           currentPageReportTemplate="{{ movimientos.pageReport }}"
-          styleClass="table-style">
+          styleClass="tbl-app">
   
           <ng-template pTemplate="header">
             <tr class="text-center">
-              <th style="width: 30%;"></th>
-              <th style="width: 30%;">Transacción</th>
-              <th style="width: 15%;">Fecha</th>
-              <th style="width: 10%;">Hora</th>
-              <th style="width: 15%;">Valor</th>
+              <th style="width: 30%; border: none; background-color: #F8F9FA;">Producto</th>
+              <th style="width: 30%; border: none; background-color: #F8F9FA;">Transacción</th>
+              <th style="width: 15%; border: none; background-color: #F8F9FA;">Fecha</th>
+              <th style="width: 10%; border: none; background-color: #F8F9FA;">Hora</th>
+              <th style="width: 15%; border: none; background-color: #F8F9FA;">Valor</th>
             </tr>
           </ng-template>
   
           <ng-template pTemplate="body" let-trans>
             <tr>
-              <td class="text-left" style="width: 30%;">{{ trans.nombreProducto }}</td>
-              <td class="text-left" style="width: 30%;">{{ trans.codigoTransaccion }}</td>
-              <td class="text-left" style="width: 15%;">{{ trans.fecha}}</td>
-              <td class="text-left" style="width: 10%;">{{ trans.hora | hora24}}</td>
-              <td class="text-left" style="width: 15%;">{{ trans.valorTransaccion| currency: "CAD":"symbol-narrow":".0-0" }}</td>
+              <td class="text-left" style="width: 30%; background-color: #ffffff; border: none;  border-bottom: 1px solid #ccc;">{{ trans.nombreProducto }}</td>
+              <td class="text-left" style="width: 30%; background-color: #ffffff; border: none;  border-bottom: 1px solid #ccc; text-align-last: center">{{ trans.codigoTransaccion }}</td>
+              <td class="text-left" style="width: 15%; background-color: #ffffff; border: none;  border-bottom: 1px solid #ccc; text-align-last: center">{{ trans.fecha}}</td>
+              <td class="text-left" style="width: 10%; background-color: #ffffff; border: none;  border-bottom: 1px solid #ccc; text-align-last: center">{{ trans.hora | hora24}}</td>
+              <td class="text-left" style="width: 15%; background-color: #ffffff; border: none;  border-bottom: 1px solid #ccc; text-align-last: center">{{ trans.valorTransaccion| currency: "CAD":"symbol-narrow":".0-0" }}</td>
             </tr>
           </ng-template>
           <ng-template pTemplate="footer">

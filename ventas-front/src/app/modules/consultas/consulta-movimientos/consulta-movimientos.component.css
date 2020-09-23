@@ -219,6 +219,16 @@
     border: 0px;
     outline: 0px !important;
   }
+  .btn-light-dark-ver-filtro {
+    border-radius: 15px;
+    padding: .30rem .8rem;
+    border: 0px;
+    outline: 0px !important;
+    background: #0BC9EC 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 8px #149DB773;
+    opacity: 1;
+  }
+  
 
   .btn-less-movimientos {
     box-shadow: 0 3.5px 4px 0 rgba(167, 187, 190, 0.45);
@@ -245,8 +255,4 @@
   .aico {
     color: #999999;
     z-index: 1;
-  }
-
-  .table-style {
-    border: 0px;
   }

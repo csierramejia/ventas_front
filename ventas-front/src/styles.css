@@ -115,14 +115,17 @@ body {
   font-size: 16px !important
 }
 
+.tbl-app .ui-paginator {
+  background-color: #fff;
+  border: 0px;
+}
+
 .ui-paginator .ui-dropdown .ui-dropdown-label {
-  color: #333333 !important;
-  background-color: #f4f4f4 !important;
+  background-color: #fff !important;
 }
 
 .ui-paginator .ui-dropdown-trigger {
-  color: #333333 !important;
-  background-color: #f4f4f4 !important;
+  background-color: #fff !important;
 }
 
 .ui-paginator .ui-dropdown {
@@ -498,8 +501,7 @@ body {
 /* circulo redondo paginador */
 
 .ui-paginator-page.ui-state-active {
-  background-color: #f5a96d !important;
-  color: #212121 !important;
+  background-color: #BE1E42 !important;
 }
 
 .ui-dialog-titlebar {
@@ -513,13 +515,17 @@ body {
 
 
 .ui-table .ui-table-tbody .ui-state-highlight {
-  background-color: #f5a96d !important;
+  background-color: #BE1E42 !important;
 }
 
 .ui-paginator .ui-paginator-pages .ui-paginator-page {
   border-radius: 50% !important;
   -moz-border-radius: 50% !important;
   -webkit-border-radius: 50% !important;
+}
+
+.ui-paginator-first,.ui-paginator-prev, .ui-paginator-next,.ui-paginator-last {
+  color: #0083FE !important;
 }
 
 /* font para los valores de los tr de las tablas */
@@ -1166,4 +1172,9 @@ body {
 
 .ui-dialog .ui-dialog-titlebar {
   border: 0px solid !important;
+}
+.ui-table-scrollable-header, .ui-table-scrollable-footer {
+  overflow: hidden;
+  border: 0 none;
+  background-color: #F8F9FA;
 }

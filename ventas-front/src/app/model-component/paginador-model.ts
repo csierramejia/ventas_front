@@ -23,6 +23,9 @@ export class PaginadorModel {
          /** son las opciones para el tamanio de cada pagina (10,20,30,40,50) */
          public rowsPerPageOptions: Array<number>;
 
+         /** son las opciones para el tamanio de cada pagina (10,50,100,150,200) */
+         public rowsPerPageOptionsMovimientos: Array<number>;
+
          /** Es la parte inferior que se muestra del paginador (1-10 de 300) */
          public pageReport: string;
 
@@ -42,6 +45,9 @@ export class PaginadorModel {
 
            // se configura las opciones que tiene el paginador
            this.rowsPerPageOptions = PaginadorConstant.ROWS_PER_PAGE_OPTIONS;
+
+           // se configura las opciones que tiene el paginador
+           this.rowsPerPageOptionsMovimientos = PaginadorConstant.ROWS_PER_PAGE_OPTIONS_MOVIENTOS;
          }
 
          /**
