@@ -640,7 +640,8 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
         apuestaD: this.chanceForm.get('numeroD').value,
         apuestaE: this.chanceForm.get('numeroE').value,
         dataPlayed: this.dayBet,
-        nombresLoteria:this.nombresLoterias()
+        nombresLoteria:this.nombresLoterias(),
+        loterias:this.lotteriesSelected
       });
       this.cleanInputs();
       if(this.idCustomer){
@@ -683,7 +684,8 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
         apuestaD: this.chanceForm.get('numeroD').value,
         apuestaE: this.chanceForm.get('numeroE').value,
         nombresLoteria:this.nombresLoterias(),
-        dataPlayed: this.dayBet
+        dataPlayed: this.dayBet,
+        loterias:this.lotteriesSelected
       });
       this.cleanInputs();
       if(this.chanceForm.get('nombreCliente').value){

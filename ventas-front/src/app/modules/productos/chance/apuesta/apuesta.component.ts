@@ -439,6 +439,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
         threeC: this.chanceForm.get('tresCifras').value,
         twoC: this.chanceForm.get('dosCifras').value,
         oneC: this.chanceForm.get('unaCifra').value,
+        loterias:this.lotteriesSelected
       });
       this.cleanInputs();
       if(this.idCustomer == null || this.idCustomer==undefined ||
@@ -488,6 +489,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
         threeC: this.chanceForm.get('tresCifras').value,
         twoC: this.chanceForm.get('dosCifras').value,
         oneC: this.chanceForm.get('unaCifra').value,
+        loterias:this.lotteriesSelected
       });
       this.cleanInputs();
       if(this.chanceForm.get('nombreCliente').value == null || this.chanceForm.get('nombreCliente').value==undefined ||

@@ -637,7 +637,8 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
         apuestaD: null,
         apuestaE:null,
         dataPlayed: this.dayBet,
-        nombresLoteria:this.nombresLoterias()
+        nombresLoteria:this.nombresLoterias(),
+        loterias:this.lotteriesSelected
       });
       this.cleanInputs();
       if(this.idCustomer){
@@ -686,7 +687,8 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
         apuestaD: null,
         apuestaE:null,
         dataPlayed: this.dayBet,
-        nombresLoteria:this.nombresLoterias()
+        nombresLoteria:this.nombresLoterias(),
+        loterias:this.lotteriesSelected
       });
       this.cleanInputs();
       if(this.chanceForm.get('nombreCliente').value){

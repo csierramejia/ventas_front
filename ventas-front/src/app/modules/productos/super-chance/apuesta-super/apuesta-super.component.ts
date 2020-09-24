@@ -578,7 +578,8 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
         apuestaD: null,
         apuestaE:null,
         nombresLoteria:this.nombresLoterias(),
-        dataPlayed: this.dayBet
+        dataPlayed: this.dayBet,
+        loterias:this.lotteriesSelected
       });
       this.cleanInputs();
       if(this.idCustomer){
@@ -623,7 +624,8 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
         apuestaD: null,
         apuestaE:null,
         nombresLoteria:this.nombresLoterias(),
-        dataPlayed: this.dayBet
+        dataPlayed: this.dayBet,
+        loterias:this.lotteriesSelected
       });
       this.cleanInputs();
       if(this.chanceForm.get('nombreCliente').value){

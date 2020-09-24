@@ -201,7 +201,12 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
   get_values_totals(): void {
     this.valueBet = 0;
     this.valueVat = 0;
+    let loterias=[];
+    let valorSumado=0;
     this.cartItems.forEach(element => {
+         loterias=[];
+         valorSumado=0;
+   //   this.valueBet=0;
       if (element.modalidad && element.numeroSuper == null) {
         if (element.modalidad == '4 Cifras') {
           this.valueBet = this.valueBet +element.valorApostado;
@@ -210,23 +215,22 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
         }
       } else if (element.modalidad == null && (element.numeroSuper || element.numeroAstro)) {
           this.valueBet = this.valueBet + element.valorApostado;
+          this.valueBet = (this.lotteries.length * this.valueBet);
       } else {
       // tslint:disable-next-line: radix
-      if (element.direct) { this.valueBet = (this.valueBet + parseInt(element.direct)); }
+      if (element.direct) { valorSumado = (valorSumado + parseInt(element.direct)); }
       // tslint:disable-next-line: radix
-      if (element.combined) { this.valueBet = (this.valueBet + parseInt(element.combined)); }
+      if (element.combined) { valorSumado= (valorSumado + parseInt(element.combined)); }
       // tslint:disable-next-line: radix
-      if (element.threeC) { this.valueBet = (this.valueBet + parseInt(element.threeC)); }
+      if (element.threeC) { valorSumado= (valorSumado + parseInt(element.threeC)); }
       // tslint:disable-next-line: radix
-      if (element.twoC) { this.valueBet = (this.valueBet + parseInt(element.twoC)); }
+      if (element.twoC) { valorSumado = (valorSumado+ parseInt(element.twoC)); }
       // tslint:disable-next-line: radix
-      if (element.oneC) { this.valueBet = this.valueBet + parseInt(element.oneC); }
+      if (element.oneC) { valorSumado = valorSumado+ parseInt(element.oneC); }
+      this.valueBet =this.valueBet+ (element.loterias.length * valorSumado);
       }
     });
-    if(this.cartItems != null && this.cartItems[0] != null &&
-      (this.cartItems[0].modalidad==undefined || this.cartItems[0].modalidad==null)){
-    this.valueBet = (this.lotteries.length * this.valueBet);
-    }
+   
     this.valueVat = Math.floor(this.valueBet * this.inputVat) / 100;
     this.valueBet = this.valueBet - this.valueVat;
 
@@ -254,7 +258,7 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
     this.cartItems.forEach(element => {
       const bet = [];
       const betDetail = {numberPlayed: null, apuestaA: null, apuestaB: null,
-        apuestaC: null, apuestaD: null, apuestaE: null, numeroSuper: null, details: null, numeroAstro: null, zignos: null};
+        apuestaC: null, apuestaD: null, apuestaE: null, numeroSuper: null, details: null, numeroAstro: null, zignos: null, lotteries:null};
       if (element.modalidad && element.numeroSuper == null) {
         betDetail.apuestaA = element.apuestaA;
         betDetail.apuestaB = element.apuestaB;
@@ -293,6 +297,8 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
       }
       betDetail.details = bet;
      }
+   
+      betDetail.lotteries=element.loterias;
       bets.push(betDetail);
     });
 
