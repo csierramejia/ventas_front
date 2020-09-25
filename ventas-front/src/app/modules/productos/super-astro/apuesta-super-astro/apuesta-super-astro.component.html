@@ -95,7 +95,7 @@
                         <div class="form-group has-feedback">
                         <i class="fa fa-usd form-control-feedback" aria-hidden="true"></i>
                         <input type="text" (keypress)="keyPressNumber($event)" 
-                        (blur)="transformAmount()"
+                        (blur)="transformAmount()" maxlength="6"
                         value="{{apuestaCurrency}}"
                          class="form-control styleInput" placeholder="Valor apuesta" 
                          formControlName="valorApostado">

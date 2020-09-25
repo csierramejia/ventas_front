@@ -85,7 +85,7 @@
                             <i class="fa fa-usd form-control-feedback" aria-hidden="true"></i>
                             <input type="text" (keypress)="keyPressNumber($event)"
                             (blur)="transformDirecto()"
-                            value="{{currencyDirecto}}"
+                            value="{{currencyDirecto}}" maxlength="6"
                              (change)="chanceNumber(chanceForm.get('numero'))" class="form-control styleInput" placeholder="Directo" formControlName="valorDirecto">
                             </div>
                         </div>
@@ -94,7 +94,7 @@
                             <div class="form-group has-feedback">
                                 <i class="fa fa-usd form-control-feedback" aria-hidden="true"></i>
                                 <input type="text" (keypress)="keyPressNumber($event)" 
-                                (blur)="transformCombinado()"
+                                (blur)="transformCombinado()" maxlength="6"
                                 value="{{currencyCombinado}}" (change)="chanceNumber(chanceForm.get('numero'))" class="form-control styleInput" formControlName="combinado" placeholder="Combinado">
                             </div>
                         </div>
@@ -103,7 +103,7 @@
                             <div class="form-group has-feedback">
                             <i class="fa fa-usd form-control-feedback" aria-hidden="true"></i>
                             <input type="text" (keypress)="keyPressNumber($event)" 
-                            (blur)="transform3()"
+                            (blur)="transform3()" maxlength="6"
                             value="{{currency3}}" class="form-control styleInput" formControlName="tresCifras" placeholder="Valor">
                             </div>
                         </div>
@@ -112,7 +112,7 @@
                             <div class="form-group has-feedback">
                             <i class="fa fa-usd form-control-feedback" aria-hidden="true"></i>
                             <input type="text"   (blur)="transform2()"
-                            value="{{currency2}}" 
+                            value="{{currency2}}"  maxlength="6"
                             (keypress)="keyPressNumber($event)" class="form-control styleInput" formControlName="dosCifras" placeholder="Valor">
                             </div>
                         </div>
@@ -121,7 +121,7 @@
                             <div class="form-group has-feedback">
                             <i class="fa fa-usd form-control-feedback" aria-hidden="true"></i>
                             <input type="text"    (blur)="transform1()"
-                            value="{{currency1}}"
+                            value="{{currency1}}" maxlength="6"
                              (keypress)="keyPressNumber($event)" class="form-control styleInput" formControlName="unaCifra" placeholder="Valor">
                             </div>
                         </div>
