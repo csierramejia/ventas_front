@@ -19,6 +19,10 @@ import { MsjFrontConstant } from 'src/app/constants/messages-frontend.constant';
 import { RegexUtil } from 'src/app/utilities/regex-util';
 import { VentanaModalModel } from 'src/app/model-component/ventana-modal.model';
 import { FechaUtil } from 'src/app/utilities/fecha-util';
+import { NotificacionSoportePagoDTO } from 'src/app/dtos/correos/notificacion-soporte-pago.dto';
+import { AutenticacionResponseDTO } from 'src/app/dtos/seguridad/autenticacion/autenticacion-response.dto';
+import { SessionStoreUtil } from 'src/app/utilities/session-store.util';
+import { TipoEventoConstant } from 'src/app/constants/tipo-evento.constant';
 
 /**
  * Componente para las ventas de las loterias virtual
@@ -81,6 +85,9 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
   /** Es el porcentaje del IVA a cobrar */
   private PORCENTAJE_IVA: number;
 
+  /** Dto que contiene los datos de la autenticacion */
+  private auth: AutenticacionResponseDTO;
+
   /** Es el componente modal para la creacion del cliente */
   @ViewChild(CrearClienteComponent) modalCrearCliente: CrearClienteComponent;
 
@@ -139,6 +146,17 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
           data => {
               // se muestra el mensaje exitoso
               this.messageService.add(MsjUtil.getToastSuccessMedium('La compra fue registrada exitosamente'));
+
+              // se procede a enviar el soporte de pago
+              if (this.cliente && this.cliente.correo) {
+                const notificacion = new NotificacionSoportePagoDTO();
+                notificacion.idUsuario = this.auth.usuario.idUsuario;
+                notificacion.correoDestino = this.cliente.correo;
+                notificacion.nroTransaccion = data.nroTransaccion;
+                notificacion.sportePagoPDF = data.sportePagoPDF;
+                notificacion.totalPagado = this.venta.valorTotal;
+                this.enviarNotificacionSoportePago(notificacion);
+              }
 
               // se inicializa los datos de la venta
               this.venta = new LoteriaVirtualVentaDTO();
@@ -362,6 +380,7 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
     this.cliente.primerApellido = event.primerApellido;
     this.cliente.segundoApellido = event.segundoApellido;
     this.cliente.idCliente = event.idPersona;
+    this.cliente.correo = event.correo;
   }
 
   /**
@@ -603,6 +622,9 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
    */
   private init(): void {
 
+    // se obtiene los datos de la autenticacion
+    this.auth = SessionStoreUtil.auth(TipoEventoConstant.GET);
+
     // DTO que contiene todos los datos de la venta
     this.venta = new LoteriaVirtualVentaDTO();
     this.venta.valorTotal = 0;
@@ -671,6 +693,16 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
       (error) => {
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
       }
+    );
+  }
+
+  /**
+   * Permite enviar la notificacion de soporte de pago
+   */
+  private enviarNotificacionSoportePago(data: NotificacionSoportePagoDTO): void {
+    this.productosService.enviarNotificacionSoportePagoChance(data).subscribe(
+      (response) => {},
+      (error) => { this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error))); }
     );
   }
 }

@@ -14,6 +14,7 @@ import { MessageResponseDTO } from 'src/app/dtos/transversal/message-response.dt
 import { LoteriaVirtualVentaDTO } from 'src/app/dtos/productos/loteria-virtual/loteria-virtual-venta.dto';
 import { NotificacionSoportePagoDTO } from 'src/app/dtos/correos/notificacion-soporte-pago.dto';
 import { CorreosAPIConstant } from 'src/app/constants/apis/correos/correos-api-constant';
+import { LoteriaVirtualVentaResponseDTO } from 'src/app/dtos/productos/loteria-virtual/loteria-virtual-venta-response.dto';
 
 /**
  * Service que contiene los procesos de negocio para la Loterias en el sistema
@@ -146,8 +147,8 @@ export class ProductosService {
   /**
    * Servicio que permite realizar la compra de una loteria virtual
    */
-  public comprarLoteriaVirtual(venta: LoteriaVirtualVentaDTO): Observable<MessageResponseDTO> {
-    return this.http.post<MessageResponseDTO>(ProductosAPIConstant.URL_GET_COMPRAR_LOTERIA_VIRTUAL, venta);
+  public comprarLoteriaVirtual(venta: LoteriaVirtualVentaDTO): Observable<LoteriaVirtualVentaResponseDTO> {
+    return this.http.post<LoteriaVirtualVentaResponseDTO>(ProductosAPIConstant.URL_GET_COMPRAR_LOTERIA_VIRTUAL, venta);
   }
 
   /**
