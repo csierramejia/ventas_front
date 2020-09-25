@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  serverApiUrl: 'http://gateway.logiiblue.com:8181/'
+  serverApiUrl: 'https://gateway2.logiiblue.com/'
 };
