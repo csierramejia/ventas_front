@@ -5,7 +5,7 @@
 export class MessagesBackendKeyConstant {
 
   /** 400 - El Usuario y la Contraseña que ingresó no ha sido reconocido. */
-  static readonly KEY_AUTENTICACION_FALLIDA: string = '0001';
+  static readonly KEY_AUTENTICACION_FALLIDA: string = 'security-0001';
 
   /** 400 - Las credenciales para la autenticación son incorrectos. */
   static readonly KEY_CREDENCIALES_INCORRECTOS: string = '0002';
