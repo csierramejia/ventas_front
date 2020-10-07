@@ -5,6 +5,9 @@ import { LoteriaVirtualVentaDetalleDTO } from './loteria-virtual-venta-detalle.d
  */
 export class LoteriaVirtualVentaDTO {
 
+  /** Identificador del usuario que hace la compra */
+  public idUsuario: number;
+
   /** Identificador del cliente que hace la compra */
   public idCliente: number;
 
@@ -13,6 +16,9 @@ export class LoteriaVirtualVentaDTO {
 
   /** Es el valor total del IVA */
   public valorTotalIVA: number;
+
+  /** Es el canal donde se hace la venta */
+  public canal: number;
 
   /** Es el detalle de la venta */
   public detalles: Array<LoteriaVirtualVentaDetalleDTO>;

@@ -142,6 +142,8 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
 
         // se procede a realizar la venta
         this.venta.idCliente = this.cliente.idCliente;
+        this.venta.idUsuario = this.auth.usuario.idUsuario;
+        this.venta.canal = 1;
         this.productosService.comprarLoteriaVirtual(this.venta).subscribe(
           data => {
               // se muestra el mensaje exitoso
