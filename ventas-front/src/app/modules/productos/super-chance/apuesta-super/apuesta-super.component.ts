@@ -161,9 +161,7 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
     fecha=new Date(this.dayBet);
     let fechaB=new Date(fecha.getFullYear(),
     fecha.getMonth(),
-    fecha.getDate();
-
-    
+    fecha.getDate());
     if(fechaB <fechaA){
       fechaB.setDate(fechaB.getDate() + 7);
       this.dayBet=fechaB;

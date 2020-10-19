@@ -183,11 +183,12 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
     let fechaB=new Date(fecha.getFullYear(),
     fecha.getMonth(),
     fecha.getDate());
+
+
     if(fechaB <fechaA){
       fechaB.setDate(fechaB.getDate() + 7);
       this.dayBet=fechaB;
     }
-    // colocamos color al dia seleccionamos y le quitamos a los demas
     this.days.forEach(element => {
       if (element.name === day.name) {
         const chip = document.getElementById(day.name);
