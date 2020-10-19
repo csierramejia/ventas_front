@@ -115,7 +115,8 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
         const rs: any = dias;
         rs.forEach(element => {
 
-         const date= new Date(element.toString())
+          const dd= new Date(element.toString())
+        const date = new Date(dd.getFullYear(), dd.getMonth(),dd.getDate());
           if(date.getDay() == 1){
             this.days[0].date=element;
           }
@@ -160,7 +161,9 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
     fecha=new Date(this.dayBet);
     let fechaB=new Date(fecha.getFullYear(),
     fecha.getMonth(),
-    fecha.getDate());
+    fecha.getDate();
+
+    
     if(fechaB <fechaA){
       fechaB.setDate(fechaB.getDate() + 7);
       this.dayBet=fechaB;

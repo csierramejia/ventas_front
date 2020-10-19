@@ -202,8 +202,8 @@ export class RecargasOperadorComponent extends CommonComponent implements OnInit
       dias => {
         const rs: any = dias;
         rs.forEach(element => {
-
-          const date = new Date(element.toString())
+          const dd= new Date(element.toString())
+          const date = new Date(dd.getFullYear(), dd.getMonth(),dd.getDate());
           if (date.getDay() == 1) {
             this.days[0].date = element;
           }
