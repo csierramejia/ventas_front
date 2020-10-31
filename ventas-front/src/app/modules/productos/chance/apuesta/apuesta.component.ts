@@ -8,6 +8,7 @@ import { CommonComponent } from 'src/app/utilities/common.component';
 import { ShellState } from 'src/app/states/shell/shell.state';
 import { CrearClienteComponent } from '../crear-cliente/crear-cliente.component';
 import { CurrencyPipe } from '@angular/common';
+import { FechaUtil } from 'src/app/utilities/fecha-util';
 
 @Component({
   selector: 'app-apuesta',
@@ -117,8 +118,8 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
    */
   get_date_bet(day) {
     this.dayBet = day.date;
-   
-    let fecha=new Date();
+
+    let fecha = FechaUtil.stringToDate(new Date().toString());
 
     let fechaA=new Date(fecha.getFullYear(),
     fecha.getMonth(),
