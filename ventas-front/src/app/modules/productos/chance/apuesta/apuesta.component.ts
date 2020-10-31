@@ -120,15 +120,9 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
     this.dayBet = day.date;
 
     let fecha = FechaUtil.stringToDate(new Date().toString());
-    console.log(fecha);
-    let fechaA=new Date(fecha.getFullYear(),
-    fecha.getMonth(),
-    fecha.getDate());
-
-    fecha=new Date(this.dayBet);
-    let fechaB=new Date(fecha.getFullYear(),
-    fecha.getMonth(),
-    fecha.getDate());
+    let fechaA = FechaUtil.stringToDate(new Date(fecha.getFullYear(), fecha.getMonth(),fecha.getDate()).toString());
+    fecha = FechaUtil.stringToDate(new Date(this.dayBet).toString());
+    let fechaB = FechaUtil.stringToDate(new Date(fecha.getFullYear(), fecha.getMonth(), fecha.getDate()).toString());
     if(fechaB <fechaA){
       fechaB.setDate(fechaB.getDate() + 7);
       this.dayBet=fechaB;
