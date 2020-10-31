@@ -120,7 +120,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
     this.dayBet = day.date;
 
     let fecha = FechaUtil.stringToDate(new Date().toString());
-
+    console.log(fecha);
     let fechaA=new Date(fecha.getFullYear(),
     fecha.getMonth(),
     fecha.getDate());
@@ -146,6 +146,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
       }
     });
     // llamamos el metodo que se encarga de consultar las loterias
+    console.log(this.dayBet);
     this.getLotteries();
   }
 
