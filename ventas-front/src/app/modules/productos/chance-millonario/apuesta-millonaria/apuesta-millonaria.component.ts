@@ -55,6 +55,7 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
   enabledOne = true;
   rutaServidor:string;
   fechaActual:Date;
+  fechaMostrar:Date;
   numeroSerie:string;
   seleccionado:number;
   chanceForm = new FormGroup({
@@ -86,6 +87,7 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
     const dayWeek = this.getDayWeek();
   //  this.setDays(dayWeek);
   this.setDaysServicio();
+  this.fechaMostrar=new Date();
   this.productosService.consultarRutaImagenes().subscribe(
     responseDTO => {
       if(responseDTO){

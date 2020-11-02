@@ -33,6 +33,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
   loterias = [];
   lotteriesSelected = [];
   fechaActual:Date;
+  fechaMostrar:Date;
   numeroSerie:string;
   dayBet: Date;
   viewLotteries = false;
@@ -82,6 +83,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
     private currencyPipe : CurrencyPipe
   ) {
     super();
+    this.fechaMostrar=new Date();
     this.fechaActual=null;
     this.productosService.consultarNumeroSerieApuesta("CHANCE").subscribe(
       numeroSerie => {

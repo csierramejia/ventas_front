@@ -71,13 +71,14 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
   });
 
   valoresModalidades:any;
-
+  fechaMostrar:Date;
   constructor(
     private productosService: ProductosService,
     protected messageService: MessageService,
     private shellState: ShellState
   ) {
     super();
+    this.fechaMostrar=new Date();
     // obtemos el esquema de fechas para que el usuario puede saleccionar el dia de la apuesta a realizar
     const dayWeek = this.getDayWeek();
   //  this.setDays(dayWeek);

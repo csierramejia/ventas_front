@@ -34,6 +34,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
   lotteriesSelected = [];
   zignos=[];
   dayBet: Date;
+  
   viewLotteries = false;
   mostrarSignos:boolean;
   udpCurrency='currency: "CAD":"symbol-narrow":".2-2"';
@@ -53,7 +54,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
   enabledThree = true;
   enabledTwo = true;
   enabledOne = true;
-
+  fechaMostrar:Date;
   fechaActual:Date;
   numeroSerie:string;
   seleccionado:number;
@@ -84,6 +85,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
     // obtemos el esquema de fechas para que el usuario puede saleccionar el dia de la apuesta a realizar
     const dayWeek = this.getDayWeek();
    // this.setDays(dayWeek);
+   this.fechaMostrar=new Date();
    this.setDaysServicio();
    this.productosService.consultarRutaImagenes().subscribe(
     responseDTO => {
