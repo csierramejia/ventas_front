@@ -7,7 +7,7 @@ import { MsjUtil } from 'src/app/utilities/messages.util';
 import { CommonComponent } from 'src/app/utilities/common.component';
 import { ShellState } from 'src/app/states/shell/shell.state';
 import { CrearClienteComponent } from '../../chance/crear-cliente/crear-cliente.component';
-
+import { FechaUtil } from 'src/app/utilities/fecha-util';
 @Component({
   selector: 'app-apuesta-millonaria',
   templateUrl: './apuesta-millonaria.component.html',
@@ -115,9 +115,16 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
     this.productosService.consultarSemanaServidor().subscribe(
       dias => {
         const rs: any = dias;
+        this.fechaActual=FechaUtil.stringToDate(rs[7].toString());
+        console.log("Semea seridor: "+dias);
+        let contador=0;
         rs.forEach(element => {
-          const dd= new Date(element.toString())
-          const date = new Date(dd.getFullYear(), dd.getMonth(),dd.getDate());
+          if(contador>=7){
+            return;
+          }
+          contador++;
+        const date=FechaUtil.stringToDate(element.toString());
+        console.log("new Date 1: "+date);
           if(date.getDay() == 1){
             this.days[0].date=element;
           }
@@ -154,21 +161,21 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
    */
   get_date_bet(day) {
     this.dayBet = day.date;
-    let fecha=new Date();
+    console.log("new Date 2: "+this.dayBet);
 
-    let fechaA=new Date(fecha.getFullYear(),
-    fecha.getMonth(),
-    fecha.getDate());
 
-    fecha=new Date(this.dayBet);
-    let fechaB=new Date(fecha.getFullYear(),
-    fecha.getMonth(),
-    fecha.getDate());
+    let fechaA=this.fechaActual;
+    console.log("new Date 3: "+fechaA);
+    this.fechaActual=this.dayBet;
+    console.log("new Date 4: "+this.fechaActual);
+    let fechaB=this.fechaActual;
+    console.log("new Date 5: "+fechaB);
     if(fechaB <fechaA){
       fechaB.setDate(fechaB.getDate() + 7);
       this.dayBet=fechaB;
     }
-    // colocamos color al dia seleccionamos y le quitamos a los demas
+    console.log("fecha cuando acaba el if: "+this.dayBet);
+        // colocamos color al dia seleccionamos y le quitamos a los demas
     this.days.forEach(element => {
       if (element.name === day.name) {
         const chip = document.getElementById(day.name);
