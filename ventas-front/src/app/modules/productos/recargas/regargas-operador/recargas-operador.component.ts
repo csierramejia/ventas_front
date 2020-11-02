@@ -239,7 +239,8 @@ export class RecargasOperadorComponent extends CommonComponent implements OnInit
    * @param day
    */
   get_date_bet(day) {
-    this.dayBet = day.date;
+    const arr=day.date.split('T');
+        this.dayBet = arr[0];
     // colocamos color al dia seleccionamos y le quitamos a los demas
     this.days.forEach(element => {
       if (element.name === day.name) {

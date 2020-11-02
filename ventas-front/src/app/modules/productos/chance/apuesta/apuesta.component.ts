@@ -119,7 +119,9 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
    * @param day
    */
   get_date_bet(day) {
-    this.dayBet = day.date;
+    const arr=day.date.split('T');
+        this.dayBet = arr[0];
+   // this.dayBet = day.date;
     console.log("new Date 2: "+this.dayBet);
 
 

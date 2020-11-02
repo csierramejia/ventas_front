@@ -162,7 +162,8 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
    * @param day
    */
   get_date_bet(day) {
-    this.dayBet = day.date;
+    const arr=day.date.split('T');
+    this.dayBet = arr[0];
     console.log("new Date 2: "+this.dayBet);
 
 
