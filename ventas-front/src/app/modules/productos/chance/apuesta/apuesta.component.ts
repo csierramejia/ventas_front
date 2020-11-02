@@ -118,7 +118,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
    */
   get_date_bet(day) {
     this.dayBet = day.date;
-
+    console.log("new Date 2: "+this.dayBet);
     let fecha = new Date();
 
     let fechaA=new Date(fecha.getFullYear(),
@@ -126,9 +126,11 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
     fecha.getDate());
 
     fecha=new Date(this.dayBet);
+    console.log("new Date 4: "+fecha);
     let fechaB=new Date(fecha.getFullYear(),
     fecha.getMonth(),
     fecha.getDate());
+    console.log("new Date 5: "+fechaB);
     if(fechaB <fechaA){
       fechaB.setDate(fechaB.getDate() + 7);
       this.dayBet=fechaB;
@@ -219,6 +221,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
    */
   getLotteries(): void {
     this.loterias=[];
+    console.log("new Date 6: "+this.dayBet);
       this.productosService.consultarLoterias(this.dayBet, 2).subscribe(
         loteriasData => {
           const rs: any = loteriasData;
@@ -718,9 +721,12 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
     this.productosService.consultarSemanaServidor().subscribe(
       dias => {
         const rs: any = dias;
+        console.log("Semea seridor: "+dias);
         rs.forEach(element => {
-        const dd= new Date(element.toString())
+        const dd= new Date(element.toString());
+        console.log("new Date 1: "+dd);
         const date = new Date(dd.getFullYear(), dd.getMonth(),dd.getDate());
+        console.log("new Date 2: "+date);
           if(date.getDay() == 1){
             this.days[0].date=element;
           }
