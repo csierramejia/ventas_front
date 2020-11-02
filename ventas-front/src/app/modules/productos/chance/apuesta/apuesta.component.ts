@@ -82,7 +82,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
     private currencyPipe : CurrencyPipe
   ) {
     super();
-    this.fechaActual=new Date();
+    this.fechaActual=null;
     this.productosService.consultarNumeroSerieApuesta("CHANCE").subscribe(
       numeroSerie => {
         this.numeroSerie=numeroSerie.codigo;
@@ -119,22 +119,19 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
   get_date_bet(day) {
     this.dayBet = day.date;
     console.log("new Date 2: "+this.dayBet);
-    let fecha = new Date();
 
-    let fechaA=new Date(fecha.getFullYear(),
-    fecha.getMonth(),
-    fecha.getDate());
 
-    fecha=new Date(this.dayBet);
-    console.log("new Date 4: "+fecha);
-    let fechaB=new Date(fecha.getFullYear(),
-    fecha.getMonth(),
-    fecha.getDate());
+    let fechaA=this.fechaActual;
+    console.log("new Date 3: "+fechaA);
+    this.fechaActual=this.dayBet;
+    console.log("new Date 4: "+this.fechaActual);
+    let fechaB=this.fechaActual;
     console.log("new Date 5: "+fechaB);
     if(fechaB <fechaA){
       fechaB.setDate(fechaB.getDate() + 7);
       this.dayBet=fechaB;
     }
+    console.log("fecha cuando acaba el if: "+this.dayBet);
     // colocamos color al dia seleccionamos y le quitamos a los demas
     this.days.forEach(element => {
       if (element.name === day.name) {
@@ -721,12 +718,16 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
     this.productosService.consultarSemanaServidor().subscribe(
       dias => {
         const rs: any = dias;
+        this.fechaActual=FechaUtil.stringToDate(rs[7].toString());
         console.log("Semea seridor: "+dias);
+        let contador=0;
         rs.forEach(element => {
-        const dd= new Date(element.toString());
-        console.log("new Date 1: "+dd);
-        const date = new Date(dd.getFullYear(), dd.getMonth(),dd.getDate());
-        console.log("new Date 2: "+date);
+          if(contador>=7){
+            return;
+          }
+          contador++;
+        const date=FechaUtil.stringToDate(element.toString());
+        console.log("new Date 1: "+date);
           if(date.getDay() == 1){
             this.days[0].date=element;
           }
