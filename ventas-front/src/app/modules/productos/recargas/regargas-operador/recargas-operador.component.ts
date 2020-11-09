@@ -737,7 +737,8 @@ export class RecargasOperadorComponent extends CommonComponent implements OnInit
           idEstado: element.idEstado,
           idEmpresa: element.idEmpresa,
           idSorteo: element.idSorteo,
-          idSorteoDetalle: element.idSorteoDetalle
+          idSorteoDetalle: element.idSorteoDetalle,
+          horaSorteo:element.horaSorteo
         });
       }
     });

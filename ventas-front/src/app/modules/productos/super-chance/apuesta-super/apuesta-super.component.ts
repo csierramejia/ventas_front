@@ -667,7 +667,8 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
           idEstado: element.idEstado,
           idEmpresa: element.idEmpresa,
           idSorteo: element.idSorteo,
-          idSorteoDetalle: element.idSorteoDetalle
+          idSorteoDetalle: element.idSorteoDetalle,
+          horaSorteo:element.horaSorteo
         });
       }
     });

@@ -730,7 +730,8 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
           idEstado: element.idEstado,
           idEmpresa: element.idEmpresa,
           idSorteo: element.idSorteo,
-          idSorteoDetalle : element.idSorteoDetalle
+          idSorteoDetalle : element.idSorteoDetalle,
+          horaSorteo:element.horaSorteo
         });
       }
     });
