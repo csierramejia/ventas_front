@@ -331,14 +331,14 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
 
         } 
         else if(responseApuesta.mensaje){
-          this.messageService.add(MsjUtil.getMsjError(responseApuesta.mensaje));
+          this.messageService.add(MsjUtil.getToastErrorMedium(responseApuesta.mensaje));
         }
         else {
-          this.messageService.add(MsjUtil.getMsjError('Problemas con la transacción'));
+          this.messageService.add(MsjUtil.getToastErrorMedium('Problemas con la transacción'));
         }
       },
       error => {
-        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+        this.messageService.add(MsjUtil.getToastErrorMedium(this.showMensajeError(error)));
       }
     );
 
