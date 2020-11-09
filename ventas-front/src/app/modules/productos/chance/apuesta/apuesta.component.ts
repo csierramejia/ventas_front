@@ -530,7 +530,8 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
           idEstado: element.idEstado,
           idEmpresa: element.idEmpresa,
           idSorteo: element.idSorteo,
-          idSorteoDetalle: element.idSorteoDetalle
+          idSorteoDetalle: element.idSorteoDetalle,
+          horaSorteo:element.horaSorteo
         });
       }
     });
