@@ -245,7 +245,8 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
               idSorteo: element.idSorteo,
               idSorteoDetalle: element.idSorteoDetalle,
               checked: false,
-              url:this.rutaServidor+element.nombreImagen
+              url:this.rutaServidor+element.nombreImagen,
+              horaSorteo:element.horaSorteo
             });
            
           });
