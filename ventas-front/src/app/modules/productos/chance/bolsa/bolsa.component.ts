@@ -239,7 +239,7 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
 
 
   payTransaction(): void {
-
+this.messageService.clear();
     const bets = [];
 
     const paySend = {

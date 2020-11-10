@@ -181,20 +181,17 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
    * @param day
    */
   get_date_bet(day) {
-    const arr=day.date.split('T');
-    this.dayBet = arr[0];
-    console.log("new Date 2: "+this.dayBet);
-
+    this.dayBet = day.date;
 
     let fechaA=this.fechaActual;
-    console.log("new Date 3: "+fechaA);
-    this.fechaActual=this.dayBet;
-    console.log("new Date 4: "+this.fechaActual);
-    let fechaB=this.fechaActual;
-    console.log("new Date 5: "+fechaB);
+    let fechaB=FechaUtil.stringToDate(this.dayBet.toString());
     if(fechaB <fechaA){
       fechaB.setDate(fechaB.getDate() + 7);
       this.dayBet=fechaB;
+    }
+    else{
+   //  const dat= this.dayBet.toString().split('T');
+     this.dayBet=FechaUtil.stringToDate(this.dayBet.toString());
     }
     console.log("fecha cuando acaba el if: "+this.dayBet);
     this.days.forEach(element => {
