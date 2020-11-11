@@ -74,6 +74,12 @@ aside{
 
 
 .btn-edit-played {
+    color: #14399e;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.btn-dupli-played {
     padding-top: 18px;
     color: #14399e;
     font-size: 25px;
