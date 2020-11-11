@@ -30,7 +30,7 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
   selectUnmarkAllBol = false;
   loterias = [];
   lotteriesSelected = [];
-
+  esDuplicado:boolean;
   dayBet: Date;
   viewLotteries = false;
   days = [
@@ -96,6 +96,7 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
   }
 
   ngOnInit(): void {
+    this.esDuplicado=false;
     this.selectTodas=false;
     this.fechaActual=new Date();
     this.productosService.consultarNumeroSerieApuesta("SUPER CHANCE").subscribe(
@@ -616,9 +617,8 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
    */
   editBetSend() {
       this.addBet.emit({
-        action: 0,
-        // lotteries: this.lotteriesSelected,
-        _id: this.idEdit,
+        action:this.esDuplicado ? 1 : 0,
+        _id: this.esDuplicado ? 'bet_' + Math.floor(Math.random() * 999999) : this.idEdit,
         documentCustomer: this.chanceForm.get('numeroDocumento').value,
         nameCustomer: this.chanceForm.get('nombreCliente').value,
         modalidad: null,
@@ -680,6 +680,7 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
    * de recibir los datos a editar y hace set
    */
   editBetSendEmit(event): void {
+    this.esDuplicado=event.repetirApuesta;
     this.idEdit = event._id;
     this.dayBet = event.dataPlayed;
   //  this.chanceForm.get('numeroDocumento').setValue(event.documentCustomer);
@@ -690,6 +691,7 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
       this.enabledCustomer = true;
     }
     this.consultarValoresModalidad(event.numeroSuper.toString().length);
+    this.lotteriesSelected=event.loterias;
     this.lotteriesSelected.forEach(element => {
       element.checked=false;
       this.toggleVisibility(element);

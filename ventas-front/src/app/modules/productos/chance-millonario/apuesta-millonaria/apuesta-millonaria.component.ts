@@ -46,7 +46,7 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
     { text: 'S', name: 'sab', date: null },
     { text: 'D', name: 'dom', date: null }
   ];
-
+  esDuplicado:false;
 
   enabledCustomer = false;
   enabledCombined = true;
@@ -101,6 +101,7 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
   }
 
   ngOnInit(): void {
+    this.esDuplicado=false;
     this.fechaActual=new Date();
     this.productosService.consultarNumeroSerieApuesta("CHANCE MILLONARIO").subscribe(
       numeroSerie => {
@@ -679,15 +680,15 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
    */
   editBetSend() {
       this.addBet.emit({
-        action: 0,
-        // lotteries: this.lotteriesSelected,
-        _id: this.idEdit,
+        action:this.esDuplicado ? 1 : 0,
+        _id: this.esDuplicado ? 'bet_' + Math.floor(Math.random() * 999999) : this.idEdit,
         documentCustomer: this.chanceForm.get('numeroDocumento').value,
         nameCustomer: this.chanceForm.get('nombreCliente').value,
         modalidad: this.seleccionado==4 ? '4 Cifras' : '3 Cifras',
         numberPlayed:null,
         apuestaA: this.chanceForm.get('numeroA').value,
         apuestaB: this.chanceForm.get('numeroB').value,
+        valorApostado: this.chanceForm.get('valorApostado').value,
         apuestaC: this.chanceForm.get('numeroC').value,
         apuestaD: this.chanceForm.get('numeroD').value,
         apuestaE: this.chanceForm.get('numeroE').value,
@@ -769,6 +770,7 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
    */
   editBetSendEmit(event): void {
     this.idEdit = event._id;
+    this.esDuplicado=event.repetirApuesta;
     this.dayBet = event.dataPlayed;
     this.chanceForm.get('valorApostado').setValue(event.valorApostado);
     this.chanceForm.get('numeroA').setValue(event.apuestaA);
@@ -788,7 +790,7 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
       this.chanceForm.get('radioUno').setValue(4);
       this.seleccionEditar(4);
     }
-
+    this.lotteriesSelected=event.loterias;
     this.lotteriesSelected.forEach(element => {
       element.checked=false;
       this.toggleVisibility(element);

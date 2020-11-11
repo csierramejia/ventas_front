@@ -28,7 +28,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
   btnEdit = false;
   btnAdd  = true;
   idEdit: any;
-
+  esDuplicado:false;
   selectUnmarkAllBol = false;
   loterias = [];
   lotteriesSelected = [];
@@ -109,6 +109,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
   }
 
   ngOnInit(): void {
+    this.esDuplicado=false;
   }
 
 
@@ -477,9 +478,9 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
    
     if (this.valid()) {
       this.addBet.emit({
-        action: 0,
+        action: this.esDuplicado ? 1 : 0,
         // lotteries: this.lotteriesSelected,
-        _id: this.idEdit,
+        _id: this.esDuplicado ? 'bet_' + Math.floor(Math.random() * 999999) : this.idEdit,
         documentCustomer: this.chanceForm.get('numeroDocumento').value,
         nameCustomer: this.chanceForm.get('nombreCliente').value,
         numberPlayed: this.chanceForm.get('numero').value,
@@ -513,7 +514,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
    * las loterias seleccionadas y las manda para el carrito
    */
   get_lotteriesSelected() {
-    this.lotteriesSelected = [];
+       this.lotteriesSelected = [];
     this.loterias.forEach(element => {
       if (element.checked) {
         this.lotteriesSelected.push({
@@ -542,6 +543,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
    */
   editBetSendEmit(event): void {
     this.idEdit = event._id;
+    this.esDuplicado=event.repetirApuesta;
     this.dayBet = event.dataPlayed;
     this.chanceForm.get('numeroDocumento').setValue(event.documentCustomer);
     this.chanceForm.get('numero').setValue(event.numberPlayed);
@@ -567,7 +569,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
       this.chanceForm.get('unaCifra').setValue(event.oneC); 
     this.transform1();
   }
-
+   this.lotteriesSelected=event.loterias;
     // regla de negocio que queda pendiente
     // this.validInputBet();
 

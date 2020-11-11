@@ -83,7 +83,8 @@
                         </div>
                     </div>
                     <div class="col-1 actions-btns">
-                        <i (click)="editBetSend(cartItem)" class="pi pi-pencil btn-edit-played"></i>
+                        <i (click)="editBetSend(cartItem, true)" class="pi pi-pencil btn-edit-played"></i>
+                        <i (click)="editBetSend(cartItem,false)" class="pi pi-pencil btn-edit-played"></i>
                         <i (click)="deleteBet(cartItem)" class="pi pi-trash btn-remove-played"></i>
                     </div> 
                 </div>

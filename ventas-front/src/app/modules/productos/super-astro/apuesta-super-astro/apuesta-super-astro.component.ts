@@ -56,6 +56,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
   enabledOne = true;
   fechaMostrar:Date;
   fechaActual:Date;
+  esDuplicado:false;
   numeroSerie:string;
   seleccionado:number;
   signoMostrar:string;
@@ -100,6 +101,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
   }
 
   ngOnInit(): void {
+    this.esDuplicado=false;
     this.signoMostrar=null;
     this.selectTodas=false;
     this.mostrarSignos=false;
@@ -677,9 +679,8 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
    */
   editBetSend() {
       this.addBet.emit({
-        action: 0,
-        // lotteries: this.lotteriesSelected,
-        _id: this.idEdit,
+        action:this.esDuplicado ? 1 : 0,
+        _id: this.esDuplicado ? 'bet_' + Math.floor(Math.random() * 999999) : this.idEdit,
         documentCustomer: this.chanceForm.get('numeroDocumento').value,
         nameCustomer: this.chanceForm.get('nombreCliente').value,
         modalidad: null,
@@ -744,6 +745,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
    */
   editBetSendEmit(event): void {
     this.idEdit = event._id;
+    this.esDuplicado=event.repetirApuesta;
     this.dayBet = event.dataPlayed;
   //  this.chanceForm.get('numeroDocumento').setValue(event.documentCustomer);
     this.chanceForm.get('numeroA').setValue(event.numeroAstro);
@@ -753,6 +755,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
       this.chanceForm.get('nombreCliente').setValue(event.nameCustomer);
       this.enabledCustomer = true;
     }
+    this.lotteriesSelected=event.loterias;
     this.lotteriesSelected.forEach(element => {
       element.checked=false;
       this.toggleVisibility(element);

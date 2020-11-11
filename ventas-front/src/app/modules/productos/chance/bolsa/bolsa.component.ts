@@ -123,6 +123,8 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
     this.cartItems[key].documentCustomer = event.documentCustomer;
     this.cartItems[key].nameCustomer = event.nameCustomer;
     this.cartItems[key].dataPlayed = event.dataPlayed;
+    this.cartItems[key].nombresLoteria = event.nombresLoteria;
+    this.cartItems[key].loterias = event.loterias;
     if (event.numeroSuper) {
       this.cartItems[key].numeroSuper = event.numeroSuper;
       this.cartItems[key].valorApostado = event.valorApostado;
@@ -157,7 +159,8 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
    * la información de la apuesta que
    * se desea modificar
    */
-  editBetSend(element): void {
+  editBetSend(element, repetirApuesta): void {
+    element.repetirApuesta=repetirApuesta;
     this.editBet.emit(element);
   }
 
@@ -209,13 +212,13 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
    //   this.valueBet=0;
       if (element.modalidad && element.numeroSuper == null) {
         if (element.modalidad == '4 Cifras') {
-          this.valueBet = this.valueBet +element.valorApostado;
+          this.valueBet = this.valueBet +parseInt(element.valorApostado);
         } else {
-          this.valueBet =this.valueBet + element.valorApostado;
+          this.valueBet =this.valueBet + parseInt(element.valorApostado);
         }
       } else if (element.modalidad == null && (element.numeroSuper || element.numeroAstro)) {
-          this.valueBet = this.valueBet + element.valorApostado;
-          this.valueBet = (this.lotteries.length * this.valueBet);
+          this.valueBet = this.valueBet + parseInt(element.valorApostado);
+          this.valueBet = element.loterias.length * this.valueBet;
       } else {
       // tslint:disable-next-line: radix
       if (element.direct) { valorSumado = (valorSumado + parseInt(element.direct)); }
