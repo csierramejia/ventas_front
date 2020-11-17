@@ -4,6 +4,7 @@
                 <div class="row">
                     <div class="col-11">
                         <div class="row">
+                            <b  class="numberPlayed">{{consultarTipoAPuesta(cartItem)}}</b>
                             <b *ngIf="cartItem.numberPlayed" class="numberPlayed">Número Jugado: {{cartItem.numberPlayed}}</b>
                             <b *ngIf="cartItem.numberPlayed==null && cartItem.modalidad" class="numberPlayed">Modalidad: {{cartItem.modalidad}}</b> 
                             <b *ngIf="cartItem.numberPlayed==null && cartItem.modalidad==null && cartItem.numeroSuper" class="numberPlayed">Número jugado: {{cartItem.numeroSuper}}</b> 
@@ -83,7 +84,6 @@
                         </div>
                     </div>
                     <div class="col-1 actions-btns">
-                        <i (click)="editBetSend(cartItem, true)" class="pi pi-replay btn-dupli-played"></i>
                         <i (click)="editBetSend(cartItem,false)" class="pi pi-pencil btn-edit-played"></i>
                         <i (click)="deleteBet(cartItem)" class="pi pi-trash btn-remove-played"></i>
                     </div> 

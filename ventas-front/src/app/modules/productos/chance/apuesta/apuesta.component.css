@@ -108,7 +108,7 @@
 .labelloteria{
   text-align: left;
   font-family: Montserrat;
-  font-size: 14px;
+  font-size: 16px;
   letter-spacing: 0px;
   color: #58666E;
   opacity: 1;
@@ -118,8 +118,8 @@
 
 }
 .loteriastamanio{
-  width: 70px;
-    height: 60px;
+  width: 90px;
+    height: 80px;
 }
 .styleInput{
   top: 471px;

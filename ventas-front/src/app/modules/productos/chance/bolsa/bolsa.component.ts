@@ -240,6 +240,25 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
     this.valueBetTotal = Math.floor(this.valueBet + this.valueVat);
   }
 
+  consultarTipoAPuesta(cartItem){
+    let tipoApuesta="";
+    if(cartItem.numeroAstro){
+      tipoApuesta="Super astro";
+    }
+    else   if(cartItem.numberPlayed){
+      tipoApuesta="Chance";
+    }
+    else   if(cartItem.apuestaA){
+      tipoApuesta="Chance millonario";
+    }
+    else   if(cartItem.numeroSuper){
+      tipoApuesta="Super astro";
+    }
+
+
+    return tipoApuesta;
+  }
+
 
   payTransaction(): void {
 this.messageService.clear();
