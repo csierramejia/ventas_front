@@ -23,6 +23,7 @@ import { NotificacionSoportePagoDTO } from 'src/app/dtos/correos/notificacion-so
 import { AutenticacionResponseDTO } from 'src/app/dtos/seguridad/autenticacion/autenticacion-response.dto';
 import { SessionStoreUtil } from 'src/app/utilities/session-store.util';
 import { TipoEventoConstant } from 'src/app/constants/tipo-evento.constant';
+import { TipoTransaccionConstants } from 'src/app/constants/tipo-transaccion-constants';
 
 /**
  * Componente para las ventas de las loterias virtual
@@ -155,8 +156,10 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
                 notificacion.idUsuario = this.auth.usuario.idUsuario;
                 notificacion.correoDestino = this.cliente.correo;
                 notificacion.nroTransaccion = data.nroTransaccion;
-                notificacion.sportePagoPDF = data.sportePagoPDF;
-                notificacion.totalPagado = this.venta.valorTotal;
+                notificacion.informacionSoportePago = data.informacionSoportePago;
+                notificacion.tipoTransaccion = TipoTransaccionConstants.LOTERIA_VIRTUAL;
+                notificacion.totalPagadoSinIva = this.venta.valorTotal;
+                notificacion.valorTotalIVA = this.venta.valorTotalIVA;
                 this.enviarNotificacionSoportePago(notificacion);
               }
 

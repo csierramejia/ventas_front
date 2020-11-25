@@ -9,6 +9,7 @@ import {
   HttpEvent,
   HttpResponse
 } from '@angular/common/http';
+import { CorreosAPIConstant } from '../constants/apis/correos/correos-api-constant';
 
 /**
  * Interceptor que permite configurar la seguridad y el spinner para
@@ -32,6 +33,11 @@ export class HttpRequestInterceptor implements HttpInterceptor {
    * @returns Observador con el request modificado
    */
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+
+    // para notificacion del soporte de pago no se debe mostrar el spiner
+    if (CorreosAPIConstant.URL_NOTIFICAR_SOPORTE_PAGO === req.url) {
+      return next.handle(req.clone({ setHeaders: this.getOnlyTypeJson() }));
+    }
 
     // se configura el spinner para esta peticion
     this.spinnerState.displaySpinner();

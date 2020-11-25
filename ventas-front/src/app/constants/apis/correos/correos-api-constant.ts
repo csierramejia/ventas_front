@@ -12,5 +12,5 @@ export class CorreosAPIConstant {
   static readonly URL_NOTIFICAR_SOPORTE_PAGO: string =
     AppDomainConstant.URI_GATEWAY +
     CorreosAPIConstant.CORREOS_API +
-    'enviarNotificacionSoportePagoChance';
+    'enviarNotificacionSoportePago';
 }

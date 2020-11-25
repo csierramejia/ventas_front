@@ -335,13 +335,13 @@ this.messageService.clear();
 
           // se procede enviar la notificacion solo si el cliente existe y tiene correo
           if (this.cartItems[0].correoCustomer) {
-            const data: NotificacionSoportePagoDTO = new NotificacionSoportePagoDTO();
-            data.sportePagoPDF = null;
-            data.totalPagado = this.valueBetTotal;
-            data.nroTransaccion = responseApuesta.idTransaccion;
-            data.correoDestino = this.cartItems[0].correoCustomer;
-            data.idUsuario = this.shellState.userAccount.auth.usuario.idUsuario;
-            this.enviarNotificacionSoportePago(data);
+            // const data: NotificacionSoportePagoDTO = new NotificacionSoportePagoDTO();
+            // data.sportePagoPDF = null;
+            // data.totalPagado = this.valueBetTotal;
+            // data.nroTransaccion = responseApuesta.idTransaccion;
+            // data.correoDestino = this.cartItems[0].correoCustomer;
+            // data.idUsuario = this.shellState.userAccount.auth.usuario.idUsuario;
+            // this.enviarNotificacionSoportePago(data);
           }
 
           // se limpia la data ingresada
