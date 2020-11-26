@@ -1,7 +1,7 @@
 /**
  * Clase que contiene la informacion para generar el PDF soporte de pago
  */
-export class InformacionSoportePagoDTO {
+export class SoportePagoLoteriaVirtualDTO {
 
   /** Nombre de la loteria */
   public loteria: string;

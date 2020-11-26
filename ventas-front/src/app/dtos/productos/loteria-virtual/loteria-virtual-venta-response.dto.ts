@@ -1,4 +1,5 @@
-import { InformacionSoportePagoDTO } from '../../transversal/informacion-soporte-pago.dto';
+import { SoportePagoLoteriaVirtualDTO } from './soporte-pago-loteria-virtual.dto';
+
 
 /**
  * DTO que contiene los atributos de la respuesta cuando se hace la venta
@@ -6,7 +7,7 @@ import { InformacionSoportePagoDTO } from '../../transversal/informacion-soporte
 export class LoteriaVirtualVentaResponseDTO {
 
   /** Es la informacion para la generacion del PDF soporte pago */
-  public informacionSoportePago: Array<InformacionSoportePagoDTO>;
+  public soportePagoLoteriaVirtual: Array<SoportePagoLoteriaVirtualDTO>;
 
   /** Numero de unico que representa la transaccion */
   public nroTransaccion: string;

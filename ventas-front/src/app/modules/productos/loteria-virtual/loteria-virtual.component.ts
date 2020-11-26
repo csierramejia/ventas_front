@@ -156,7 +156,7 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
                 notificacion.idUsuario = this.auth.usuario.idUsuario;
                 notificacion.correoDestino = this.cliente.correo;
                 notificacion.nroTransaccion = data.nroTransaccion;
-                notificacion.informacionSoportePago = data.informacionSoportePago;
+                notificacion.soportePagoLoteriaVirtual = data.soportePagoLoteriaVirtual;
                 notificacion.tipoTransaccion = TipoTransaccionConstants.LOTERIA_VIRTUAL;
                 notificacion.totalPagadoSinIva = this.venta.valorTotal - this.venta.valorTotalIVA;
                 notificacion.valorTotalIVA = this.venta.valorTotalIVA;

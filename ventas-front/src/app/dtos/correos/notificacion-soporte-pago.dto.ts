@@ -1,12 +1,12 @@
-import { InformacionSoportePagoDTO } from '../transversal/informacion-soporte-pago.dto';
+import { SoportePagoLoteriaVirtualDTO } from '../productos/loteria-virtual/soporte-pago-loteria-virtual.dto';
 
 /**
  * DTO para la notificacion de los soportes de pagos
  */
 export class NotificacionSoportePagoDTO {
 
-  /** Es la informacion para la generacion del PDF soporte pago */
-  public informacionSoportePago: Array<InformacionSoportePagoDTO>;
+  /** Es la informacion para la generacion del PDF soporte pago para loteria virtual */
+  public soportePagoLoteriaVirtual: Array<SoportePagoLoteriaVirtualDTO>;
 
   /** Es el total pagado por el usuario sin IVA */
   public totalPagadoSinIva: number;
