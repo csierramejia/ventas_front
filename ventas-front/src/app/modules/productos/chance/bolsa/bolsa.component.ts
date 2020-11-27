@@ -280,7 +280,8 @@ this.messageService.clear();
     this.cartItems.forEach(element => {
       const bet = [];
       const betDetail = {numberPlayed: null, apuestaA: null, apuestaB: null,
-        apuestaC: null, apuestaD: null, apuestaE: null, numeroSuper: null, details: null, numeroAstro: null, zignos: null, lotteries:null};
+        apuestaC: null, apuestaD: null, apuestaE: null, numeroSuper: null, details: null, numeroAstro: null, zignos: null, lotteries:null,
+        fechaSorteo:null};
       if (element.modalidad && element.numeroSuper == null) {
         betDetail.apuestaA = element.apuestaA;
         betDetail.apuestaB = element.apuestaB;
@@ -319,7 +320,7 @@ this.messageService.clear();
       }
       betDetail.details = bet;
      }
-   
+     betDetail.fechaSorteo=element.dataPlayed;
       betDetail.lotteries=element.loterias;
       bets.push(betDetail);
     });
