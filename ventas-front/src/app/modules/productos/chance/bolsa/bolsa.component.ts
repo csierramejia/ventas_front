@@ -334,14 +334,10 @@ this.messageService.clear();
         const responseApuesta: any = apuestaData;
         if (responseApuesta.exito) {
 
-          // se limpia la data ingresada
-          this.cleanCartValues();
-
-              // se muestra el mensaje exitoso
+          // se muestra el mensaje exitoso
           this.messageService.add(MsjUtil.getToastSuccessMedium('Transacción exitosa'));
-          this.creatingBet.emit(true);
 
-          // se procede enviar la notificacion solo si el cliente existe y tiene correo
+          // se envia la notificacion
           if (this.cartItems[0].correoCustomer) {
             const notificacion: NotificacionSoportePagoDTO = apuestaData.notificacionSoportePago;
             if (notificacion) {
@@ -350,6 +346,10 @@ this.messageService.clear();
               this.enviarNotificacionSoportePago(notificacion);
             }
           }
+
+          // se limpia la data ingresada
+          this.cleanCartValues();
+          this.creatingBet.emit(true);
         } 
         else if(responseApuesta.mensaje){
           this.messageService.add(MsjUtil.getToastErrorMedium(responseApuesta.mensaje));
