@@ -333,17 +333,6 @@ this.messageService.clear();
         const responseApuesta: any = apuestaData;
         if (responseApuesta.exito) {
 
-          // se procede enviar la notificacion solo si el cliente existe y tiene correo
-          if (this.cartItems[0].correoCustomer) {
-            // const data: NotificacionSoportePagoDTO = new NotificacionSoportePagoDTO();
-            // data.sportePagoPDF = null;
-            // data.totalPagado = this.valueBetTotal;
-            // data.nroTransaccion = responseApuesta.idTransaccion;
-            // data.correoDestino = this.cartItems[0].correoCustomer;
-            // data.idUsuario = this.shellState.userAccount.auth.usuario.idUsuario;
-            // this.enviarNotificacionSoportePago(data);
-          }
-
           // se limpia la data ingresada
           this.cleanCartValues();
 
@@ -351,6 +340,15 @@ this.messageService.clear();
           this.messageService.add(MsjUtil.getToastSuccessMedium('Transacción exitosa'));
           this.creatingBet.emit(true);
 
+          // se procede enviar la notificacion solo si el cliente existe y tiene correo
+          if (this.cartItems[0].correoCustomer) {
+            const notificacion: NotificacionSoportePagoDTO = apuestaData.notificacionSoportePago;
+            if (notificacion) {
+              notificacion.correoDestino = this.cartItems[0].correoCustomer;
+              notificacion.idUsuario = this.shellState.userAccount.auth.usuario.idUsuario;
+              this.enviarNotificacionSoportePago(notificacion);
+            }
+          }
         } 
         else if(responseApuesta.mensaje){
           this.messageService.add(MsjUtil.getToastErrorMedium(responseApuesta.mensaje));

@@ -1,3 +1,4 @@
+import { NotificacionSoportePagoDTO } from '../../correos/notificacion-soporte-pago.dto';
 
 
 export class ResponseDTO {
@@ -7,4 +8,5 @@ export class ResponseDTO {
     public hora: string;
     public codigo: string;
     public mensaje: string;
+    public notificacionSoportePago: NotificacionSoportePagoDTO;
 }
