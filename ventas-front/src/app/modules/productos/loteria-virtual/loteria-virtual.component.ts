@@ -458,6 +458,7 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
         accept: () => {
 
           // se configuran los valores de la venta
+          this.detalleVenta.fechaSorteo = this.sorteoSeleccionado.fechaSorteo;
           this.detalleVenta.nombreLoteria = this.sorteoSeleccionado.nombreLoteria;
           this.detalleVenta.numeroSorteo = this.sorteoSeleccionado.numeroSorteo;
           this.detalleVenta.valorFraccion = this.sorteoSeleccionado.valorFraccion;

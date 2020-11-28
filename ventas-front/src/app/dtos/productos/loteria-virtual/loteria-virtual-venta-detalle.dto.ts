@@ -38,4 +38,7 @@ export class LoteriaVirtualVentaDetalleDTO {
 
   /** Es la cantidad de fracciones que tiene el sorteo */
   public cantidadFracciones: number;
+
+  /** Indica cuando se juega el sorteo */
+  public fechaSorteo: Date;
 }
