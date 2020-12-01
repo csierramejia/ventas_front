@@ -424,8 +424,16 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
   addBetSend(): void {
     this.messageService.clear();
     // this.lotteriesSelected = this.get_lotteriesSelected();
-  
+    const sumaTotal=this.chanceForm.get('valorDirecto').value +
+    this.chanceForm.get('combinado').value +
+    this.chanceForm.get('tresCifras').value +
+    this.chanceForm.get('dosCifras').value +
+    this.chanceForm.get('unaCifra').value ;
 
+    if(sumaTotal <= 0){
+      this.messageService.add(MsjUtil.getToastErrorMedium('La apuesta debe ser mayor a 0'));
+      return;
+    }
     if (this.valid()) {
       this.addBet.emit({
         action: 1,
@@ -476,6 +484,17 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
     // this.lotteriesSelected = this.get_lotteriesSelected();
     this.messageService.clear();
    
+    const sumaTotal=this.chanceForm.get('valorDirecto').value +
+    this.chanceForm.get('combinado').value +
+    this.chanceForm.get('tresCifras').value +
+    this.chanceForm.get('dosCifras').value +
+    this.chanceForm.get('unaCifra').value ;
+
+    if(sumaTotal <= 0){
+      this.messageService.add(MsjUtil.getToastErrorMedium('La apuesta debe ser mayor a 0'));
+      return;
+    }
+    
     if (this.valid()) {
       this.addBet.emit({
         action: this.esDuplicado ? 1 : 0,
