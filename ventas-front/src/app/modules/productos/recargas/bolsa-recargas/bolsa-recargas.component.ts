@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { CommonComponent } from 'src/app/utilities/common.component';
 import { ShellState } from 'src/app/states/shell/shell.state';
-import { MessageService } from 'primeng/api';
+import { MessageService, ConfirmationService } from 'primeng/api';
 import { ProductosService } from '../../productos.service';
 import { MsjUtil } from 'src/app/utilities/messages.util';
 
@@ -29,6 +29,7 @@ export class BolsaRecargasComponent extends CommonComponent implements OnInit, O
   constructor(
     private productosService: ProductosService,
     protected messageService: MessageService,
+    private confirmationService: ConfirmationService,
     private shellState: ShellState
   ) {
     super();
@@ -182,8 +183,22 @@ export class BolsaRecargasComponent extends CommonComponent implements OnInit, O
     this.valueBetTotal = Math.floor(this.valueBet + this.valueVat);
   }
 
-
   payTransaction(): void {
+    this.messageService.clear();
+
+    // se muestra la ventana de confirmacion
+    this.confirmationService.confirm({
+      message: '¿Está seguro que desea hacer la compra?',
+      header: 'CONFIRMACIÓN',
+      accept: () => {
+        // se confirma
+        this.hacerCompra();
+      },
+    });
+   
+  }
+
+  hacerCompra(): void {
 
     const recargas = [];
 
