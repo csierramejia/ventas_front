@@ -153,7 +153,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
     if(cadena.includes("$")){
       cadena=cadena.substr(1,cadena.length);
       cadena=cadena.substr(0,cadena.indexOf(','))+cadena.slice(cadena.indexOf(',')+1);
-      this.chanceForm.controls.valorApostado.setValue(cadena);
+      this.chanceForm.controls.valorDirecto.setValue(cadena);
       this.currencyDirecto=  this.currencyPipe.transform(this.chanceForm.get('valorDirecto').value, '$','symbol','.0-0');
     }
     else{
@@ -165,7 +165,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
     if(cadena.includes("$")){
       cadena=cadena.substr(1,cadena.length);
       cadena=cadena.substr(0,cadena.indexOf(','))+cadena.slice(cadena.indexOf(',')+1);
-      this.chanceForm.controls.valorApostado.setValue(cadena);
+      this.chanceForm.controls.combinado.setValue(cadena);
       this.currencyCombinado=  this.currencyPipe.transform(this.chanceForm.get('combinado').value, '$','symbol','.0-0');
     }
     else{
@@ -177,7 +177,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
     if(cadena.includes("$")){
       cadena=cadena.substr(1,cadena.length);
       cadena=cadena.substr(0,cadena.indexOf(','))+cadena.slice(cadena.indexOf(',')+1);
-      this.chanceForm.controls.valorApostado.setValue(cadena);
+      this.chanceForm.controls.tresCifras.setValue(cadena);
       this.currency3=  this.currencyPipe.transform(this.chanceForm.get('tresCifras').value, '$','symbol','.0-0');
     }
     else{
@@ -189,7 +189,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
     if(cadena.includes("$")){
       cadena=cadena.substr(1,cadena.length);
       cadena=cadena.substr(0,cadena.indexOf(','))+cadena.slice(cadena.indexOf(',')+1);
-      this.chanceForm.controls.valorApostado.setValue(cadena);
+      this.chanceForm.controls.dosCifras.setValue(cadena);
       this.currency2=  this.currencyPipe.transform(this.chanceForm.get('dosCifras').value, '$','symbol','.0-0');
     }
     else{
@@ -201,7 +201,7 @@ export class ApuestaComponent extends CommonComponent implements OnInit, OnDestr
     if(cadena.includes("$")){
       cadena=cadena.substr(1,cadena.length);
       cadena=cadena.substr(0,cadena.indexOf(','))+cadena.slice(cadena.indexOf(',')+1);
-      this.chanceForm.controls.valorApostado.setValue(cadena);
+      this.chanceForm.controls.unaCifra.setValue(cadena);
       this.currency1=  this.currencyPipe.transform(this.chanceForm.get('unaCifra').value, '$','symbol','.0-0');
     }
     else{
