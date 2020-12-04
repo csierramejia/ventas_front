@@ -253,7 +253,7 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
       tipoApuesta="Chance millonario";
     }
     else   if(cartItem.numeroSuper){
-      tipoApuesta="Super astro";
+      tipoApuesta="Super chance";
     }
 
 
