@@ -1,0 +1,108 @@
+#collapseExample{
+  z-index: 101;
+  right: 0;
+  position: absolute;
+  width: 290px;
+  height: auto;
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #00000029;
+  border: 1px solid #D2D2D2;
+}
+
+
+.item-producto{
+  height: 85px;
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  border: 1px solid #ABABAB;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+
+.right-subtotal {
+  text-align: right;
+}
+
+
+.btn-random-red {
+  border-radius: 15px;
+  box-shadow: 0px 3px 8px #BE1E42;
+  background-color: #BE1E42;
+  font-size: 12px;
+  padding: 0 .30rem 0 .6500rem;
+  font-family: Montserrat;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.27;
+  letter-spacing: normal;
+  height: 31px;
+  width: 80%;
+  color: #ffffff;
+  text-align: center !important;
+}
+
+.center-btn-continuar{
+  text-align: center;
+}
+
+
+.text-info-subtotal{
+  font: normal normal 600 14px/18px Montserrat;
+  letter-spacing: 0px;
+  color: #5B5B5B;
+}
+
+.hr-subtotal{
+  border: 1px solid #707070;
+}
+
+
+.estilo-iconos-cerrar{
+  color: #E90303;
+  cursor: pointer;
+}
+
+.estilo-iconos-editar{
+  color: #2076bd;
+  cursor: pointer;
+}
+
+.estilo-iconos-copiar{
+  color: #23AD44;
+  cursor: pointer;
+}
+
+
+.colilla-texto{
+  font: normal normal 600 12px/15px Montserrat;
+  letter-spacing: 0px;
+  color: #000000;
+}
+
+.fecha-sorteo{
+  padding-left: 10px;
+}
+
+
+.fecha-sorteo-text-numero-loterias{
+  font: normal normal 600 11px/14px Montserrat;
+  letter-spacing: 0px;
+  color: #000000;
+}
+
+
+.espacio-loterias{
+  padding-left: 20px;
+}
+
+
+.valor-apostado{
+  font: normal normal 600 11px/14px Montserrat;
+  letter-spacing: 0px;
+  color: #2076BD;
+}
+
+.valor-valor{
+  padding-left: 10px;
+}

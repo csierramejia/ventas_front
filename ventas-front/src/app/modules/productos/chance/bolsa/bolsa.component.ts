@@ -253,7 +253,7 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
       tipoApuesta="Chance millonario";
     }
     else   if(cartItem.numeroSuper){
-      tipoApuesta="Super chance";
+      tipoApuesta="Super astro";
     }
 
 
@@ -294,7 +294,7 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
 
     this.cartItems.forEach(element => {
       const bet = [];
-      const betDetail = {valueBet:null,valueVat:null,numberPlayed: null, apuestaA: null, apuestaB: null,
+      const betDetail = {numberPlayed: null, apuestaA: null, apuestaB: null,
         apuestaC: null, apuestaD: null, apuestaE: null, numeroSuper: null, details: null, numeroAstro: null, zignos: null, lotteries:null,
         fechaSorteo:null};
       if (element.modalidad && element.numeroSuper == null) {
@@ -303,16 +303,10 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
         betDetail.apuestaC = element.apuestaC;
         betDetail.apuestaD = element.apuestaD;
         betDetail.apuestaE = element.apuestaE;
-        betDetail.valueBet= element.valorApostado;
-        betDetail.valueVat= Math.floor( element.valorApostado* this.inputVat) / 100;
       } else if (element.modalidad == null && element.numeroSuper) {
         betDetail.numeroSuper = element.numeroSuper;
-        betDetail.valueBet= element.valorApostado;
-        betDetail.valueVat= Math.floor( element.valorApostado* this.inputVat) / 100;
       } else if (element.modalidad == null && element.numeroAstro) {
         betDetail.numeroAstro = element.numeroAstro;
-        betDetail.valueBet= element.valorApostado;
-        betDetail.valueVat= Math.floor( element.valorApostado* this.inputVat) / 100;
         betDetail.zignos = element.zignos;
       } else {
       betDetail.numberPlayed = element.numberPlayed;

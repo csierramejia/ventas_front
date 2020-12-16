@@ -13,6 +13,9 @@ import { HeaderComponent } from './header/header.component';
 import { MenuComponent } from './menus/menu/menu.component';
 import { ContentComponent } from './content/content.component';
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
+import { MenuCarritoComponent } from './menus/menu-carrito/menu-carrito.component';
+
+
 
 /**
  * Modulo que contiene todos los componentes y modulos que define
@@ -34,6 +37,7 @@ import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
     HeaderComponent,
     ContentComponent,
     MenuComponent,
+    MenuCarritoComponent,
     BreadcrumbComponent
   ],
   exports: [

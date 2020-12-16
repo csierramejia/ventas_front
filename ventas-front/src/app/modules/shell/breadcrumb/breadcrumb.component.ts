@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ShellState } from './../../../states/shell/shell.state';
 
 /**
@@ -9,11 +9,30 @@ import { ShellState } from './../../../states/shell/shell.state';
   templateUrl: './breadcrumb.component.html',
   styleUrls: ['./breadcrumb.component.css']
 })
-export class BreadcrumbComponent {
+export class BreadcrumbComponent implements OnInit {
+  hoy = new Date();
+  fechaActual = this.hoy.getDate() + '/' + (this.hoy.getMonth() + 1) + '/' + this.hoy.getFullYear();
+  horaActual = this.hoy.getHours() + ':' + this.hoy.getMinutes() + ':' + this.hoy.getSeconds();
+
 
   /**
    * @param shellState , se utiliza para obtener
    * los valores de la miga de pan
    */
-  constructor(public shellState: ShellState) {}
+  constructor(public shellState: ShellState) {
+  }
+
+
+  ngOnInit(): void {
+    setInterval(this.obtenerFechaHora, 1000);
+  }
+
+
+  obtenerFechaHora() {
+    let hoy = new Date();
+    this.fechaActual = hoy.getDate() + '/' + (hoy.getMonth() + 1) + '/' + hoy.getFullYear();
+    this.horaActual = hoy.getHours() + ':' + hoy.getMinutes() + ':' + hoy.getSeconds();
+    // console.log(this.fechaActual+' '+this.horaActual);
+  }
+
 }

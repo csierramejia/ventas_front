@@ -26,4 +26,10 @@ export class CommonService {
       params
     );
   }
+
+
+  /**
+   * servicio qeu retorne la hora y fecha de la base de datos
+   * 
+   */
 }

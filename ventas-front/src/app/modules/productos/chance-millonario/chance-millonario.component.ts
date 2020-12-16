@@ -19,7 +19,7 @@ export class ChanceMillonarioComponent implements OnInit {
    }
 
   ngOnInit(): void {
-   
+
   }
 
   /**
