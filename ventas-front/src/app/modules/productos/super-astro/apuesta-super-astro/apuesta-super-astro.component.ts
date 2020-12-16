@@ -48,7 +48,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
     { text: 'D', name: 'dom', date: null }
   ];
 
-
+  todosSignos:boolean;
   enabledCustomer = false;
   enabledCombined = true;
   enabledThree = true;
@@ -114,6 +114,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
       }
     );
+    this.todosSignos=false;
     this.zignos=[];
     this.productosService.consultarSignos().subscribe(
       signosData => {
@@ -266,12 +267,14 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
   seleccionarTodos(evento){
     if(evento.srcElement.checked){
     this.signoMostrar="Todos";
+    this.todosSignos=true;
     this.zignos.forEach(element => {
       element.checked=true;
     });
   }
   else{
     this.signoMostrar="";
+    this.todosSignos=false;
     this.zignos.forEach(element => {
       element.checked=false;
     });
@@ -878,6 +881,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
    * @description Metodo que se encarga de limpiar los campos
    */
   cleanInputs(): void {
+    this.todosSignos=false;
     this.apuestaCurrency=null;
     this.signoMostrar=null;
     this.mostrarSignos=false;

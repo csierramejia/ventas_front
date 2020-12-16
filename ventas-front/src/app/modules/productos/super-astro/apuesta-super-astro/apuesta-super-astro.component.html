@@ -191,7 +191,7 @@
         <h1 class="tituloModal">SELECCIONA EL SIGNO ZODIACAL A JUGAR</h1>
         
         <div class="col-md-4" class="colLot">
-        <input    (change)="seleccionarTodos($event)" type="checkbox" name="zignosSeleccionados"
+        <input    (change)="seleccionarTodos($event)"[(ngModel)]="todosSignos"  type="checkbox" name="zignosSeleccionados"
         >
         <label for="zignosSeleccionados" class="labelloteria">Jugar con todos</label>
         </div>
