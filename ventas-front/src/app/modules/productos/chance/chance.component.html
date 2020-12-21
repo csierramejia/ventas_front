@@ -23,6 +23,9 @@
 
 
     <section>
-        <app-apuesta-chance></app-apuesta-chance>
+        <app-apuesta-chance
+            (agregarLoterias)="agregarLoterias($event)"
+            (agregarNumeros)="agregarNumeros($event)">
+        </app-apuesta-chance>
         <app-summary-footer></app-summary-footer>
     </section>

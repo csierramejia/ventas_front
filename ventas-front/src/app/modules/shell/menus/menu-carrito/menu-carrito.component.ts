@@ -29,8 +29,18 @@ export class MenuCarritoComponent implements OnInit {
     
   }
 
+  setProductosCarrito(event): void{
+    console.log('-------------PINTAR-------------');
+    console.log(event);
+    console.log('-------------PINTAR-------------');
+
+  }
+
   verResumenCompra(): void {
     this.router.navigate([RouterConstant.NAVIGATE_REVISA_PAGO]);
   }
+
+
+
 
 }

@@ -51,6 +51,7 @@
     display: block;
     margin: auto;
     padding-top: 12px;
+    cursor: pointer;
 }
 #cicleOne{
     width: 60px;

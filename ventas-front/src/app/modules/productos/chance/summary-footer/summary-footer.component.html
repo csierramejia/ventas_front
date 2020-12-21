@@ -5,42 +5,42 @@
                     <div class="div-sum-text">
                         <span class="text-sum">COLILLA</span>
                         <br/>
-                        <span class="text-sum">1AXA-0009876</span>
+                        <span class="text-sum">{{ colilla }}</span>
                     </div>
                 </div>
                 <div class="col-md-2 div-s-t">
                     <div class="div-sum-text">
                         <span class="text-sum">DÍA DEL SORTEO</span>
                         <br/>
-                        <span class="text-sum">23/11/2020</span>
+                        <span class="text-sum">{{ fechaActual }}</span>
                     </div>
                 </div>
                 <div class="col-md-2 div-s-t">
                     <div class="div-sum-text">
                         <span class="text-sum">LOTERIAS</span>
                         <br/>
-                        <span class="text-sum">0</span>
+                        <span class="text-sum">{{ loterias.length }}</span>
                     </div>
                 </div>
                 <div class="col-md-2 div-s-t">
                     <div class="div-sum-text">
                         <span class="text-sum">APOSTADO</span>
                         <br/>
-                        <span class="text-sum">0</span>
+                        <span class="text-sum">{{ valueBet  | currency: "CAD":"symbol-narrow":".0-0"}}</span>
                     </div>
                 </div>
                 <div class="col-md-2 div-s-t">
                     <div class="div-sum-text">
                         <span class="text-sum">IVA</span>
                         <br/>
-                        <span class="text-sum">0</span>
+                        <span class="text-sum">{{ valueVat  | currency: "CAD":"symbol-narrow":".0-0"}}</span>
                     </div>
                 </div>
                 <div class="col-md-2 div-s-t">
                     <div class="div-sum-text">
                         <span class="text-sum">TOTAL</span>
                         <br/>
-                        <span class="text-sum">0</span>
+                        <span class="text-sum">{{ valueBetTotal  | currency: "CAD":"symbol-narrow":".0-0"}}</span>
                     </div>
                 </div>
             </div>
@@ -49,7 +49,7 @@
             <div class="row">
                 <div class="col-md-6 flex-col">
                     <div id="cicleOne">
-                        <img class="img-circle" src="../../../../../assets/img/svg/add-to-cart-l.svg" />
+                        <img (click)="agregarCarritoF()" class="img-circle" src="../../../../../assets/img/svg/add-to-cart-l.svg" />
                     </div>
                 </div>
                 <div class="col-md-6 flex-col">

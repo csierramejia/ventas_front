@@ -145,3 +145,21 @@
     border-radius: 15px;
 }
 
+.labelloteria{
+    width: 43px;
+    height: 16px;
+    text-align: left;
+    font: normal normal 600 13px/16px Montserrat;
+    letter-spacing: 0px;
+    color: #111111;
+}
+
+
+#fila-loteiras{
+    margin: 10px 5px 5px 5px;
+}
+
+.img-aletorio{
+    cursor: pointer;
+}
+

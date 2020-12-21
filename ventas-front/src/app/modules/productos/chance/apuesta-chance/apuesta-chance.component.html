@@ -1,4 +1,4 @@
-  
+      
         <div class="container-fluid">
             <!-- ABRE SEMANARIO Y BOTONES HEADER -->
             <div class="row">
@@ -47,22 +47,22 @@
                 <div class="col-md-2">
                     <div class="row">
                         <div class="col-md-4">
-                            <img src="../../../../../assets/img/svg/Grupo_299.svg" />
+                            <img class="img-aletorio" (click)="aleatorioTresCifras()" src="../../../../../assets/img/svg/Grupo_299.svg" />
                         </div>
                         <div class="col-md-4">
-                            <img src="../../../../../assets/img/svg/Grupo_300.svg" />
+                            <img class="img-aletorio" (click)="aleatorioCuatroCifras()" src="../../../../../assets/img/svg/Grupo_300.svg" />
                         </div>
                     </div>
                 </div>
 
                 <div class="col-md-2">
-                    <button type="button" class="btn btn-random">
+                    <button (click)="repetirNumeroSiguientFila()" type="button" class="btn btn-random">
                         REPETIR <i class="fa fa-repeat" aria-hidden="true"></i>
                     </button>
                 </div>
 
                 <div class="col-md-2">
-                    <button type="button" class="btn btn-random-red">
+                    <button (click)="borrarTodo()" type="button" class="btn btn-random-red">
                         BORRAR TODO
                     </button>
                 </div>
@@ -77,63 +77,77 @@
                     <div id="content-lot">
                         <div class="row select-all-a">
                             <div class="col-md-6"></div>
-                            <div class="col-md-6">
+                            <div class="col-md-6" *ngIf="loterias.length > 0">
                                 <span class="title-lot-bet">Seleccionar todas</span>
-                                <p-inputSwitch [(ngModel)]="checked"></p-inputSwitch>
+                                <p-inputSwitch (click)="cambioSeleccion()" [(ngModel)]="checked"></p-inputSwitch>
                             </div>
+
+
+                            <div class="container-fluid">
+                                <div id="fila-loteiras" class="row">
+                                    <div class="col-md-4"*ngFor="let loteria of loterias">
+                                        <input type="checkbox" (click)="toggleVisibility(loteria)" [(ngModel)]="loteria.checked"/>
+                                        <label class="labelloteria">{{loteria.nombreCorto}}</label>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
-                <div class="col-md-8">
-                    <div class="row fls">
-                        <div class="col-md-2"><span class="title-lot-bet">Número</span></div>
-                        <div class="col-md-2"><span class="title-lot-bet">Directo</span></div>
-                        <div class="col-md-2"><span class="title-lot-bet">Combinado</span></div>
-                        <div class="col-md-2"><span class="title-lot-bet">2 Cifras</span></div>
-                        <div class="col-md-2"><span class="title-lot-bet">1 Cifras</span></div>
-                        <div class="col-md-2"></div>
+                
+                    <div class="col-md-8">
+                        <div class="row fls">
+                            <div class="col-md-2"><span class="title-lot-bet">Número</span></div>
+                            <div class="col-md-2"><span class="title-lot-bet">Directo</span></div>
+                            <div class="col-md-2"><span class="title-lot-bet">Combinado</span></div>
+                            <div class="col-md-2"><span class="title-lot-bet">2 Cifras</span></div>
+                            <div class="col-md-2"><span class="title-lot-bet">1 Cifras</span></div>
+                            <div class="col-md-2"></div>
+                        </div>
+                        <form [formGroup]="chanceForm"> 
+                        <div class="row fls">
+                            <div class="col-md-2"><input type="text" maxlength="4" formControlName="numeroFilaUno" (keypress)="permitirSoloNumeros($event)" (change)="habilitarDeshabilitarSegunCifras($event.target.value, 1)" class="input-bet"></div>
+                            <div class="col-md-2"><input formControlName="valorDirectoFilaUno" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input formControlName="combinadoFilaUno" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input formControlName="dosCifrasFilaUno" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input formControlName="unaCifraFilaUno" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><i (click)="borrarFilaUno()" class="fa fa-trash tras-del" aria-hidden="true"></i></div>
+                        </div>
+                        <div class="row fls">
+                            <div class="col-md-2"><input type="text" maxlength="4" formControlName="numeroFilaDos" (keypress)="permitirSoloNumeros($event)" (change)="habilitarDeshabilitarSegunCifras($event.target.value, 2)" class="input-bet"></div>
+                            <div class="col-md-2"><input formControlName="valorDirectoFilaDos" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input formControlName="combinadoFilaDos" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input formControlName="dosCifrasFilaDos" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input formControlName="unaCifraFilaDos" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><i (click)="borrarFilaDos()" class="fa fa-trash tras-del" aria-hidden="true"></i></div>
+                        </div>
+                        <div class="row fls">
+                            <div class="col-md-2"><input type="text" maxlength="4" formControlName="numeroFilaTres" (keypress)="permitirSoloNumeros($event)" (change)="habilitarDeshabilitarSegunCifras($event.target.value, 3)" class="input-bet"></div>
+                            <div class="col-md-2"><input formControlName="valorDirectoFilaTres" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input formControlName="combinadoFilaTres" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input formControlName="dosCifrasFilaTres" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input formControlName="unaCifraFilaTres" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><i (click)="borrarFilaTres()" class="fa fa-trash tras-del" aria-hidden="true"></i></div>
+                        </div>
+                        <div class="row fls">
+                            <div class="col-md-2"><input type="text" maxlength="4" formControlName="numeroFilaCuatro" (keypress)="permitirSoloNumeros($event)" (change)="habilitarDeshabilitarSegunCifras($event.target.value, 4)" class="input-bet"></div>
+                            <div class="col-md-2"><input formControlName="valorDirectoFilaCuatro" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input formControlName="combinadoFilaCuatro" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input formControlName="dosCifrasFilaCuatro" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input formControlName="unaCifraFilaCuatro" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><i (click)="borrarFilaCuatro()" class="fa fa-trash tras-del" aria-hidden="true"></i></div>
+                        </div>
+                        <div class="row fls">
+                            <div class="col-md-2"><input type="text" maxlength="4" formControlName="numeroFilaCinco" (keypress)="permitirSoloNumeros($event)" (change)="habilitarDeshabilitarSegunCifras($event.target.value, 5)" class="input-bet"></div>
+                            <div class="col-md-2"><input formControlName="valorDirectoFilaCinco" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input formControlName="combinadoFilaCinco" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input formControlName="dosCifrasFilaCinco" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input formControlName="unaCifraFilaCinco" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><i (click)="borrarFilaCinco()" class="fa fa-trash tras-del" aria-hidden="true"></i></div>
+                        </div>
+                        </form>
                     </div>
-                    <div class="row fls">
-                        <div class="col-md-2"><input class="input-bet"></div>
-                        <div class="col-md-2"><input class="input-bet"></div>
-                        <div class="col-md-2"><input class="input-bet"></div>
-                        <div class="col-md-2"><input class="input-bet"></div>
-                        <div class="col-md-2"><input class="input-bet"></div>
-                        <div class="col-md-2"><i class="fa fa-trash tras-del" aria-hidden="true"></i></div>
-                    </div>
-                    <div class="row fls">
-                        <div class="col-md-2"><input class="input-bet"></div>
-                        <div class="col-md-2"><input class="input-bet"></div>
-                        <div class="col-md-2"><input class="input-bet"></div>
-                        <div class="col-md-2"><input class="input-bet"></div>
-                        <div class="col-md-2"><input class="input-bet"></div>
-                        <div class="col-md-2"><i class="fa fa-trash tras-del" aria-hidden="true"></i></div>
-                    </div>
-                    <div class="row fls">
-                        <div class="col-md-2"><input class="input-bet"></div>
-                        <div class="col-md-2"><input class="input-bet"></div>
-                        <div class="col-md-2"><input class="input-bet"></div>
-                        <div class="col-md-2"><input class="input-bet"></div>
-                        <div class="col-md-2"><input class="input-bet"></div>
-                        <div class="col-md-2"><i class="fa fa-trash tras-del" aria-hidden="true"></i></div>
-                    </div>
-                    <div class="row fls">
-                        <div class="col-md-2"><input class="input-bet"></div>
-                        <div class="col-md-2"><input class="input-bet"></div>
-                        <div class="col-md-2"><input class="input-bet"></div>
-                        <div class="col-md-2"><input class="input-bet"></div>
-                        <div class="col-md-2"><input class="input-bet"></div>
-                        <div class="col-md-2"><i class="fa fa-trash tras-del" aria-hidden="true"></i></div>
-                    </div>
-                    <div class="row fls">
-                        <div class="col-md-2"><input class="input-bet"></div>
-                        <div class="col-md-2"><input class="input-bet"></div>
-                        <div class="col-md-2"><input class="input-bet"></div>
-                        <div class="col-md-2"><input class="input-bet"></div>
-                        <div class="col-md-2"><input class="input-bet"></div>
-                        <div class="col-md-2"><i class="fa fa-trash tras-del" aria-hidden="true"></i></div>
-                    </div>
-                </div>
                 
             </div>
             <!-- / CIERRA SELECCION DE LOTERIAS Y NUMEROS QUE APUESTAN -->
@@ -164,6 +178,8 @@
             
             <!-- / CIERRA SELECCION DE LOTERIAS Y NUMEROS QUE APUESTAN -->
         </div>
+
+    
 
     
 

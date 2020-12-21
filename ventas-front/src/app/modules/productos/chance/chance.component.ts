@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { BolsaComponent } from './bolsa/bolsa.component';
+import { SummaryFooterComponent } from './summary-footer/summary-footer.component';
 import { ApuestaComponent } from './apuesta/apuesta.component';
 import { ApuestaMillonariaComponent } from '../chance-millonario/apuesta-millonaria/apuesta-millonaria.component';
 
@@ -10,7 +11,13 @@ import { ApuestaMillonariaComponent } from '../chance-millonario/apuesta-millona
 })
 export class ChanceComponent implements OnInit {
 
+  // validar si estas sirve para las otras apuestas
   @ViewChild(BolsaComponent) bolsaChild: BolsaComponent;
+
+  // esto aplica para chance y chance millonario
+  @ViewChild(SummaryFooterComponent) summaryFooter: SummaryFooterComponent;
+
+
   @ViewChild(ApuestaComponent) apuestaChild: ApuestaComponent;
   esMillonaria: boolean;
   constructor() {
@@ -38,10 +45,14 @@ export class ChanceComponent implements OnInit {
    * @param event
    * @description funcion que se encarga de setear las loterias en la bolsa
    */
-  addLotteries(event): void {
-    this.bolsaChild.setLotteries(event);
-    this.bolsaChild.setProducto('CHANCE');
+  agregarLoterias(event): void {
+    this.summaryFooter.setLoterias(event);
+    this.summaryFooter.setProducto('CHANCE');
+  }
 
+
+  agregarNumeros(event){
+    this.summaryFooter.setNumeros(event);
   }
 
 
