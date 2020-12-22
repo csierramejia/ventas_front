@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { BolsaComponent } from './bolsa/bolsa.component';
 import { SummaryFooterComponent } from './summary-footer/summary-footer.component';
+import { ApuestaChanceComponent } from './apuesta-chance/apuesta-chance.component';
+
 import { ApuestaComponent } from './apuesta/apuesta.component';
 import { ApuestaMillonariaComponent } from '../chance-millonario/apuesta-millonaria/apuesta-millonaria.component';
 
@@ -16,6 +18,8 @@ export class ChanceComponent implements OnInit {
 
   // esto aplica para chance y chance millonario
   @ViewChild(SummaryFooterComponent) summaryFooter: SummaryFooterComponent;
+  @ViewChild(ApuestaChanceComponent) apuestaChance: ApuestaChanceComponent;
+
 
 
   @ViewChild(ApuestaComponent) apuestaChild: ApuestaComponent;
@@ -51,8 +55,13 @@ export class ChanceComponent implements OnInit {
   }
 
 
-  agregarNumeros(event){
+  agregarNumeros(event) {
     this.summaryFooter.setNumeros(event);
+  }
+
+
+  borrarTodoReset(event) {
+    this.apuestaChance.borrarTodo();
   }
 
 

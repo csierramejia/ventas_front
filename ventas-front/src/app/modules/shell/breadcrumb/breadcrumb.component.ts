@@ -14,6 +14,7 @@ export class BreadcrumbComponent implements OnInit {
 
   // esto aplica para chance y chance millonario
   @ViewChild(MenuCarritoComponent) menuCarrito: MenuCarritoComponent;
+  
 
   hoy = new Date();
   fechaActual = this.hoy.getDate() + '/' + (this.hoy.getMonth() + 1) + '/' + this.hoy.getFullYear();
@@ -42,7 +43,10 @@ export class BreadcrumbComponent implements OnInit {
 
 
   agregarCarrito(event){
-    this.menuCarrito.setProductosCarrito(event);
+    console.log('.-.-.-.-.testing 2.-.-.-.-.');
+    console.log(event);
+    console.log('.-.-.-.-.testing 2.-.-.-.-.');
+    // this.menuCarrito.setProductosCarrito(event);
   }
 
 }

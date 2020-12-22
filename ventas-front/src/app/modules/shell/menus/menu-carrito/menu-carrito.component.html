@@ -5,17 +5,17 @@
 
       <div class="row">
         <div class="col-md-10">
-          <span class="colilla-texto">COLILLA: 1AXA-0009876</span>
+          <span class="colilla-texto">COLILLA: {{ producto.colilla }}</span>
         </div>
         <div class="col-md-2">
-          <i class="fa fa-times estilo-iconos-cerrar" aria-hidden="true"></i>
+          <i (click)="borrarApuesta(producto._id)" class="fa fa-times estilo-iconos-cerrar" aria-hidden="true"></i>
         </div>
       </div>
 
       <div class="row">
         <div class="col-md-10">
-          <span class="fecha-sorteo-text-numero-loterias">Fecha sorteo:</span> <span class="fecha-sorteo">23/11/2020</span><br/>
-          <span class="fecha-sorteo-text-numero-loterias">Número: 5</span> <span class="fecha-sorteo-text-numero-loterias espacio-loterias">Loterías: 5</span><br/>
+          <span class="fecha-sorteo-text-numero-loterias">Fecha sorteo:</span> <span class="fecha-sorteo">{{ producto.fechaActual }}</span><br/>
+          <span class="fecha-sorteo-text-numero-loterias">Números: {{ producto.colilla }}</span> <span class="fecha-sorteo-text-numero-loterias espacio-loterias">Loterías: 5</span><br/>
         </div>
         <div class="col-md-2">
           <i class="fa fa-pencil estilo-iconos-editar" aria-hidden="true"></i>
@@ -27,14 +27,15 @@
           <span class="valor-apostado">Valor apostado:</span> <span class="valor-apostado valor-valor">$7.500</span>
         </div>
         <div class="col-md-2">
-          <i class="fa fa-files-o estilo-iconos-copiar" aria-hidden="true"></i>
+          <i (click)="duplicarApuesta(producto._id)" class="fa fa-files-o estilo-iconos-copiar" aria-hidden="true"></i>
         </div>
       </div>
 
     </div>
     <!-- ///// ng for ///// -->
 
-    <hr class="hr-subtotal" />
+    <div *ngIf="productos.length > 0">
+      <hr class="hr-subtotal" />
       <div class="row">
         <div class="col-md-6">
           <span class="text-info-subtotal">SUBTOTAL:</span>
@@ -43,15 +44,22 @@
           <span class="text-info-subtotal">$ 4.000</span>
         </div>
       </div>
-    <hr class="hr-subtotal" />
+      <hr class="hr-subtotal" />
 
-    <div class="row">
-      <div class="col-md-12 center-btn-continuar">
-        <button (click)="verResumenCompra()" type="button" class="btn btn-random-red">
-          CONTINUAR
-        </button>
+      <div class="row">
+        <div class="col-md-12 center-btn-continuar">
+          <button (click)="verResumenCompra()" type="button" class="btn btn-random-red">
+            CONTINUAR
+          </button>
+        </div>
       </div>
     </div>
+
+
+    <div *ngIf="productos.length == 0">
+      <span class="textoSinProductos">No hay jugadas agregadas</span>
+    </div>
+    
 
   </div>
 </div>

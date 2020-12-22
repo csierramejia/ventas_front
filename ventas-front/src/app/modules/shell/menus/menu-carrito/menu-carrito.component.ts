@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { RouterConstant } from '../../../../constants/router.constant';
+import { MessageService } from 'primeng/api';
+import { CommonService } from 'src/app/utilities/common.service';
+import { MsjUtil } from 'src/app/utilities/messages.util';
+
 
 /**
  * Es el Menu del shell a visualizar en la aplicacion
@@ -9,31 +13,59 @@ import { RouterConstant } from '../../../../constants/router.constant';
   selector: 'app-menu-carrito',
   templateUrl: './menu-carrito.component.html',
   styleUrls: ['./menu-carrito.component.css'],
+  providers: [CommonService]
 })
 export class MenuCarritoComponent implements OnInit {
 
-  productos = [
-    {id: 0, name: "policy001"},
-    {id: 2, name: "policy002"},
-    {id: 3, name: "policy003"},
-    {id: 4, name: "policy004"},
-  ];
+  productos = [];
  
-  constructor(private router: Router) {}
+  constructor(
+    protected messageService: MessageService,
+    private router: Router,
+    private commonService: CommonService) {
+
+    }
 
 
   /**
    * Se indica que el menu ya esta cargado
    */
   ngOnInit(): void {
-    
+    this.obtenerProductosCarrito();
   }
 
-  setProductosCarrito(event): void{
-    console.log('-------------PINTAR-------------');
-    console.log(event);
-    console.log('-------------PINTAR-------------');
+  obtenerProductosCarrito() {
+    // setInterval(() => {
+    //   this.productos = JSON.parse(localStorage.getItem('chanceApuesta'))
+    // }, 1000);
+  }
 
+
+  borrarApuesta(id) {
+    const keyResponse = this.getKeyObject(id);
+    if ( keyResponse  !== -1 ) {
+      this.productos.splice( keyResponse , 1 );
+      // this.get_values_totals();
+    }
+  }
+
+
+  duplicarApuesta(id){
+    this.productos.push(this.getKeyObject(id))
+  }
+
+
+  /**
+   * @author Luis Hernandez
+   * @param id
+   * @description metodo que se encarga
+   * de buscar el punto dentro del array
+   * de un producto
+   */
+  getKeyObject(_id) {
+    return this.productos.map((e) => {
+      return e;
+    }).indexOf(_id);
   }
 
   verResumenCompra(): void {

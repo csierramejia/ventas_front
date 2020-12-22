@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy, ViewChild } from '@angular/core';
 import { CommonComponent } from 'src/app/utilities/common.component';
 import { ShellState } from 'src/app/states/shell/shell.state';
 import { MessageService, ConfirmationService } from 'primeng/api';
@@ -6,17 +6,21 @@ import { ProductosService } from '../../productos.service';
 import { MsjUtil } from 'src/app/utilities/messages.util';
 import { NotificacionSoportePagoDTO } from 'src/app/dtos/correos/notificacion-soporte-pago.dto';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { CommonService } from 'src/app/utilities/common.service';
+
+
+
 
 @Component({
   selector: 'app-summary-footer',
   templateUrl: './summary-footer.component.html',
   styleUrls: ['./summary-footer.component.css'],
-  providers: [ProductosService]
+  providers: [ProductosService, CommonService]
 })
 
 export class SummaryFooterComponent extends CommonComponent implements OnInit, OnDestroy  {
 
-  @Output() agregarCarrito: EventEmitter<any> = new EventEmitter();
+  @Output() borrarTodoReset: EventEmitter<any> = new EventEmitter();
 
   inputVat = 0;
   valueBet = 0;
@@ -34,7 +38,8 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
     private productosService: ProductosService,
     protected messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private shellState: ShellState
+    private shellState: ShellState,
+    private commonService: CommonService
   ) {
     super();
     this.productosService.consultarNumeroSerieApuesta("CHANCE").subscribe(
@@ -142,25 +147,57 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
   }
 
 
-  // inputVat = 0;
-  // valueBet = 0;
-  // valueVat = 0;
-  // valueBetTotal = 0;
-  // listaNumeros = [];
-  // producto = null;
-  // loterias = [];
-  // colilla = '';
-
-  // hoy = new Date();
-  // fechaActual = this.hoy.getDate() + '/' + (this.hoy.getMonth() + 1) + '/' + this.hoy.getFullYear();
-
   agregarCarritoF(): void {
-    const productosAgregar = {
 
+    const listaNumeros = this.obtenerFilasConApuesta(this.listaNumeros)
+
+    if(this.colilla && this.fechaActual && this.loterias.length > 0 && listaNumeros.length > 0) {
+      const productosAgregar = {
+        _id: 'bet_' + Math.floor(Math.random() * 999999),
+        colilla: this.colilla,
+        fechaActual: this.fechaActual,
+        loterias: this.loterias,
+        apostado: this.valueBet,
+        iva: this.valueVat,
+        total: this.valueBetTotal,
+        listaNumeros:listaNumeros
+      }
+  
+      const chanceApuesta = localStorage.getItem('chanceApuesta');
+      if(chanceApuesta === null){
+        const arrayproductosAgregar = []
+        arrayproductosAgregar.push(productosAgregar)
+        localStorage.setItem('chanceApuesta', JSON.stringify(arrayproductosAgregar));
+      } else {
+        const chanceAp = JSON.parse(localStorage.getItem('chanceApuesta'));
+        chanceAp.push(productosAgregar);
+        localStorage.setItem('chanceApuesta', JSON.stringify(chanceAp));
+      }
+      this.borrarTodoReset.emit(true);
+    } else {
+      alert('Valide que esta gestionando los campos necesarios para realizar la apuesta');
     }
-    // seguir!!
-    // this.agregarCarrito.emit()
+    
+
   }
+
+
+
+
+  obtenerFilasConApuesta(numeros){
+    const returnNumeros = [];
+    numeros.forEach(element => {
+      if (element.numeroFilaUno) { returnNumeros.push(element) }
+      if (element.numeroFilaDos) { returnNumeros.push(element) }
+      if (element.numeroFilaTres) { returnNumeros.push(element) }
+      if (element.numeroFilaCuatro) { returnNumeros.push(element) }
+      if (element.numeroFilaCinco) { returnNumeros.push(element) }
+    });
+    return returnNumeros
+  }
+
+
+
 
 
   /**

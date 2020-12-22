@@ -3,12 +3,16 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { ItemParamDTO } from '../dtos/transversal/item-param.dto';
 import { CommonAPIConstant } from '../constants/apis/common/common-api-constant';
+import { Subject } from 'rxjs/Subject';
 
 /**
  * Service que contiene los procesos de negocio comunes del sistema
  */
 @Injectable()
 export class CommonService {
+
+
+
   /**
    * @param HTTP para hacer las peticiones a los servicios REST
    */
@@ -26,7 +30,6 @@ export class CommonService {
       params
     );
   }
-
 
   /**
    * servicio qeu retorne la hora y fecha de la base de datos
