@@ -11,7 +11,7 @@ import { Subject } from 'rxjs/Subject';
 @Injectable()
 export class CommonService {
 
-
+  public stringSubject = new Subject<string>();
 
   /**
    * @param HTTP para hacer las peticiones a los servicios REST
@@ -29,6 +29,24 @@ export class CommonService {
       CommonAPIConstant.URL_GET_SELECT_ITEMS,
       params
     );
+  }
+
+
+  obtenerHora(): Observable<Date>{
+
+    return new Observable(
+        observer => {
+              setInterval(() =>
+                  observer.next(new Date())
+              , 1000);
+        }
+    );
+  }
+
+
+  passValue(data) {
+    //passing the data as the next observable
+    this.stringSubject.next(data);
   }
 
   /**

@@ -1,20 +1,17 @@
 import { Component, OnInit, Output, EventEmitter, OnDestroy, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ProductosService } from '../../productos.service';
-import { ClientesDTO } from 'src/app/dtos/productos/chance/clientes.dto';
 import { MessageService } from 'primeng/api';
 import { MsjUtil } from 'src/app/utilities/messages.util';
 import { CommonComponent } from 'src/app/utilities/common.component';
-import { ShellState } from 'src/app/states/shell/shell.state';
-import { CrearClienteComponent } from '../crear-cliente/crear-cliente.component';
-import { CurrencyPipe } from '@angular/common';
 import { FechaUtil } from 'src/app/utilities/fecha-util';
+import { CommonService } from 'src/app/utilities/common.service';
 
 @Component({
   selector: 'app-apuesta-chance',
   templateUrl: './apuesta-chance.component.html',
   styleUrls: ['./apuesta-chance.component.css'],
-  providers: [ProductosService]
+  providers: [ProductosService, CommonService]
 })
 export class ApuestaChanceComponent extends CommonComponent implements OnInit  {
 
@@ -84,7 +81,8 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit  {
 
   constructor(
     private productosService: ProductosService,
-    protected messageService: MessageService
+    protected messageService: MessageService,
+    private commonService: CommonService
   ) {
     super();
     // obtenemos el semanario
@@ -93,6 +91,14 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit  {
 
 
   ngOnInit(): void {
+
+    this.commonService.stringSubject.subscribe(
+      data => 
+      {
+        console.log('next subscribed value: ' + data);
+      }
+    );
+
   }
 
 
@@ -680,6 +686,12 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit  {
 
     this.agregarNumeros.emit(numerosValores);
 
+  }
+
+
+
+  testing(){
+    console.log('testing 123456');
   }
 
 

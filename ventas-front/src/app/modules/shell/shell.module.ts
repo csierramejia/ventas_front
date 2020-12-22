@@ -30,7 +30,7 @@ import { MenuCarritoComponent } from './menus/menu-carrito/menu-carrito.componen
     MessagesModule,
     ConfirmDialogModule,
     DialogModule,
-    ToastModule
+    ToastModule,
   ],
   declarations: [
     ShellComponent,

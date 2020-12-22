@@ -30,6 +30,7 @@ import { BolsaRecargasComponent } from './recargas/bolsa-recargas/bolsa-recargas
 import {InputSwitchModule} from 'primeng/inputswitch';
 
 
+
 @NgModule({
   declarations: [
     ChanceComponent,
@@ -79,7 +80,7 @@ import {InputSwitchModule} from 'primeng/inputswitch';
       {
         path: RouterConstant.ROUTER_RECARGAS,
         component: RecargasComponent
-      },
+      }
     ]),
     SharedModule,
     CardModule,
@@ -87,7 +88,7 @@ import {InputSwitchModule} from 'primeng/inputswitch';
     SidebarModule,
     InputSwitchModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
   ],
 })
 export class ProductosModule { }

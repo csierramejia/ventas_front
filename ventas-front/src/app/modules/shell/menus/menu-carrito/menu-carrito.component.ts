@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { RouterConstant } from '../../../../constants/router.constant';
 import { MessageService } from 'primeng/api';
 import { CommonService } from 'src/app/utilities/common.service';
-import { MsjUtil } from 'src/app/utilities/messages.util';
 
 
 /**
@@ -35,23 +34,38 @@ export class MenuCarritoComponent implements OnInit {
   }
 
   obtenerProductosCarrito() {
-    // setInterval(() => {
-    //   this.productos = JSON.parse(localStorage.getItem('chanceApuesta'))
-    // }, 1000);
+    setInterval(() => {
+      this.productos = JSON.parse(localStorage.getItem('chanceApuesta'))
+    }, 1000);
   }
 
 
   borrarApuesta(id) {
-    const keyResponse = this.getKeyObject(id);
+
+    const productosBorrar = JSON.parse(localStorage.getItem('chanceApuesta'))
+    const keyResponse = this.getKeyObject(id, productosBorrar);
     if ( keyResponse  !== -1 ) {
-      this.productos.splice( keyResponse , 1 );
+      productosBorrar.splice( keyResponse , 1 );
       // this.get_values_totals();
     }
+    localStorage.setItem('chanceApuesta', JSON.stringify(productosBorrar));
+  }
+
+
+  
+  editarApuesta(id) {
+    console.log('entramos a editar');
+    this.apuestaChanceComponentChild.testing();
+    // this.commonService.passValue('hola')
   }
 
 
   duplicarApuesta(id){
-    this.productos.push(this.getKeyObject(id))
+    const productosDuplicar = JSON.parse(localStorage.getItem('chanceApuesta'))
+    const result = productosDuplicar.filter(productoDuplicar => productoDuplicar._id == id);
+    productosDuplicar.push(result[0])
+    localStorage.setItem('chanceApuesta', JSON.stringify(productosDuplicar));
+
   }
 
 
@@ -62,9 +76,9 @@ export class MenuCarritoComponent implements OnInit {
    * de buscar el punto dentro del array
    * de un producto
    */
-  getKeyObject(_id) {
-    return this.productos.map((e) => {
-      return e;
+  getKeyObject(_id, productos) {
+    return productos.map((e) => {
+      return e._id;
     }).indexOf(_id);
   }
 
