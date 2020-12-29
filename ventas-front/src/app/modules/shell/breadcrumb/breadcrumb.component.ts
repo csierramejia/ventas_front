@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ShellState } from './../../../states/shell/shell.state';
-import { MenuCarritoComponent } from '../menus/menu-carrito/menu-carrito.component';
 import { CommonService } from "../../../utilities/common.service";
+import { MenuCarritoComponent } from '../../productos/chance/menu-carrito/menu-carrito.component';
 
 /**
  * Miga de pan que se visualiza en el Shell de la aplicacion
@@ -14,9 +14,7 @@ import { CommonService } from "../../../utilities/common.service";
 })
 export class BreadcrumbComponent implements OnInit {
 
-  // esto aplica para chance y chance millonario
-  @ViewChild(MenuCarritoComponent) menuCarrito: MenuCarritoComponent;
-  
+  @ViewChild(MenuCarritoComponent) menuCarritoComponent: MenuCarritoComponent;
 
   hoy = new Date();
   fechaActual = this.hoy.getDate() + '/' + (this.hoy.getMonth() + 1) + '/' + this.hoy.getFullYear();
@@ -49,12 +47,5 @@ export class BreadcrumbComponent implements OnInit {
     // console.log(this.fechaActual+' '+this.horaActual);
   }
 
-
-  agregarCarrito(event){
-    console.log('.-.-.-.-.testing 2.-.-.-.-.');
-    console.log(event);
-    console.log('.-.-.-.-.testing 2.-.-.-.-.');
-    // this.menuCarrito.setProductosCarrito(event);
-  }
 
 }

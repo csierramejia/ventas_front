@@ -4,9 +4,9 @@ import { ShellState } from 'src/app/states/shell/shell.state';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { ProductosService } from '../../productos.service';
 import { MsjUtil } from 'src/app/utilities/messages.util';
-import { NotificacionSoportePagoDTO } from 'src/app/dtos/correos/notificacion-soporte-pago.dto';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { CommonService } from 'src/app/utilities/common.service';
+import { Router } from '@angular/router';
+import { RouterConstant } from '../../../../constants/router.constant';
 
 
 
@@ -22,6 +22,10 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
 
   @Output() borrarTodoReset: EventEmitter<any> = new EventEmitter();
 
+  @Output() agregarProductos: EventEmitter<any> = new EventEmitter();
+
+  edit = false;
+  infoEdit:any;
   inputVat = 0;
   valueBet = 0;
   valueVat = 0;
@@ -29,7 +33,9 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
   listaNumeros = [];
   producto = null;
   loterias = [];
+  loteriaSeleccionadas = [];
   colilla = '';
+  fechaSeleccionApuesta: Date;
 
   hoy = new Date();
   fechaActual = this.hoy.getDate() + '/' + (this.hoy.getMonth() + 1) + '/' + this.hoy.getFullYear();
@@ -38,6 +44,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
     private productosService: ProductosService,
     protected messageService: MessageService,
     private confirmationService: ConfirmationService,
+    private router: Router,
     private shellState: ShellState,
     private commonService: CommonService
   ) {
@@ -82,7 +89,10 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
    * que el usuarios selecciono y generar los valores totales
    */
   setLoterias(event): void {
-    this.loterias = event;
+    this.loterias = event.loterias;
+    this.loteriaSeleccionadas = this.get_lotteriesSelected()
+
+    this.fechaSeleccionApuesta = event.fechaSeleccionApuesta
     this.obtenerValoresTotales();
   }
 
@@ -139,10 +149,17 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
       if(this.listaNumeros[index].unaCifraFilaCinco){ valorSumado = (valorSumado + parseInt(this.listaNumeros[index].unaCifraFilaCinco)); }
     }
 
-    this.valueBet = (this.loterias.length * valorSumado);
-    this.valueVat = Math.floor(this.valueBet * this.inputVat) / 100;
-    this.valueBet = this.valueBet - this.valueVat;
-    this.valueBetTotal = Math.floor(this.valueBet + this.valueVat);
+
+
+    if(this.loterias){
+      // const loteriasSeleccionadas = this.get_lotteriesSelected()
+      this.valueBet = (this.loteriaSeleccionadas.length * valorSumado);
+      this.valueVat = Math.floor(this.valueBet * this.inputVat) / 100;
+      this.valueBet = this.valueBet - this.valueVat;
+      this.valueBetTotal = Math.floor(this.valueBet + this.valueVat);
+    }
+
+    
 
   }
 
@@ -151,34 +168,105 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
 
     const listaNumeros = this.obtenerFilasConApuesta(this.listaNumeros)
 
-    if(this.colilla && this.fechaActual && this.loterias.length > 0 && listaNumeros.length > 0) {
-      const productosAgregar = {
-        _id: 'bet_' + Math.floor(Math.random() * 999999),
-        colilla: this.colilla,
-        fechaActual: this.fechaActual,
-        loterias: this.loterias,
-        apostado: this.valueBet,
-        iva: this.valueVat,
-        total: this.valueBetTotal,
-        listaNumeros:listaNumeros
-      }
-  
-      const chanceApuesta = localStorage.getItem('chanceApuesta');
-      if(chanceApuesta === null){
-        const arrayproductosAgregar = []
-        arrayproductosAgregar.push(productosAgregar)
-        localStorage.setItem('chanceApuesta', JSON.stringify(arrayproductosAgregar));
+    if(this.colilla && this.fechaActual && this.loteriaSeleccionadas.length > 0 && listaNumeros.length > 0) {
+
+      
+
+      if(this.edit){
+        // limpiar variable edit  -- infoEdit
+        const productosEditar = {
+          _id: this.infoEdit[0]._id,
+          colilla: this.colilla,
+          fechaActual: this.fechaActual,
+          loterias: this.loterias,
+          apostado: this.valueBet,
+          iva: this.valueVat,
+          total: this.valueBetTotal,
+          listaNumeros:listaNumeros,
+          fechaSeleccionApuesta:this.fechaSeleccionApuesta
+        }
+
+        const chanceApuesta:any = JSON.parse(localStorage.getItem('chanceApuesta'));
+        const keyResponse = this.getKeyObject(this.infoEdit[0]._id, chanceApuesta);
+        chanceApuesta[keyResponse]._id = productosEditar._id
+        chanceApuesta[keyResponse].colilla = productosEditar.colilla
+        chanceApuesta[keyResponse].fechaActual = productosEditar.fechaActual
+        chanceApuesta[keyResponse].loterias = productosEditar.loterias
+        chanceApuesta[keyResponse].apostado = productosEditar.apostado
+        chanceApuesta[keyResponse].iva = productosEditar.iva
+        chanceApuesta[keyResponse].total = productosEditar.total
+        chanceApuesta[keyResponse].listaNumeros = productosEditar.listaNumeros
+        chanceApuesta[keyResponse].fechaSeleccionApuesta = productosEditar.fechaSeleccionApuesta
+        localStorage.setItem('chanceApuesta', JSON.stringify(chanceApuesta));
+        this.cleanFooter()
+        this.agregarProductos.emit(true);
+        this.borrarTodoReset.emit(true);
+
+
+
       } else {
-        const chanceAp = JSON.parse(localStorage.getItem('chanceApuesta'));
-        chanceAp.push(productosAgregar);
-        localStorage.setItem('chanceApuesta', JSON.stringify(chanceAp));
+
+        const productosAgregar = {
+          _id: 'bet_' + Math.floor(Math.random() * 999999),
+          colilla: this.colilla,
+          fechaActual: this.fechaActual,
+          loterias: this.loterias,
+          apostado: this.valueBet,
+          iva: this.valueVat,
+          total: this.valueBetTotal,
+          listaNumeros:listaNumeros,
+          fechaSeleccionApuesta:this.fechaSeleccionApuesta
+        }
+
+        const chanceApuesta = localStorage.getItem('chanceApuesta');
+        if(chanceApuesta === null) {
+          const arrayproductosAgregar = []
+          arrayproductosAgregar.push(productosAgregar)
+          localStorage.setItem('chanceApuesta', JSON.stringify(arrayproductosAgregar));
+        } else {
+          const chanceAp = JSON.parse(localStorage.getItem('chanceApuesta'));
+          chanceAp.push(productosAgregar);
+          localStorage.setItem('chanceApuesta', JSON.stringify(chanceAp));
+        }
+        this.agregarProductos.emit(true);
+        this.borrarTodoReset.emit(true);
+
       }
-      this.borrarTodoReset.emit(true);
+      
+  
+      
     } else {
       alert('Valide que esta gestionando los campos necesarios para realizar la apuesta');
     }
     
 
+  }
+
+
+  cleanFooter(){
+    this.edit = false
+    delete this.infoEdit
+    this.inputVat = 0;
+    this.valueBet = 0;
+    this.valueVat = 0;
+    this.valueBetTotal = 0;
+    this.listaNumeros = [];
+    this.loterias = [];
+    this.loteriaSeleccionadas = [];
+  }
+
+
+  /**
+   * @author Luis Hernandez
+   * @param id
+   * @description metodo que se encarga
+   * de buscar el punto dentro del array
+   * de un producto
+   */
+  getKeyObject(_id, array) {
+    return array.map((e) => {
+      return e._id;
+    }).indexOf(_id);
   }
 
 
@@ -196,6 +284,52 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
     return returnNumeros
   }
 
+
+  editarProducto(event){
+    this.edit = true;
+    const buscarApuestasEditar = JSON.parse(localStorage.getItem('chanceApuesta'))
+    const apuestaEditar = buscarApuestasEditar.filter(buscarApuestaEditar => buscarApuestaEditar._id == event._id);
+    this.infoEdit = apuestaEditar;
+    this.colilla = apuestaEditar[0].colilla
+    this.fechaActual = apuestaEditar[0].fechaActual
+  }
+
+
+
+  /**
+   * @author Luis Hernandez
+   * @description Metodo que se valida cuales fueron
+   * las loterias seleccionadas y las manda para el carrito
+   */
+  get_lotteriesSelected() {
+    const loteriasSeleccionadas = [];
+    if(this.loterias){
+      this.loterias.forEach(element => {
+        if (element.checked) {
+          loteriasSeleccionadas.push({
+            idLoteria: element.idLoteria,
+            codigo: element.codigo,
+            nombre: element.nombre,
+            nombreCorto: element.nombreCorto,
+            telefono: element.telefono,
+            idEstado: element.idEstado,
+            idEmpresa: element.idEmpresa,
+            idSorteo: element.idSorteo,
+            idSorteoDetalle: element.idSorteoDetalle,
+            horaSorteo:element.horaSorteo
+          });
+        }
+      });
+    }
+    
+    return loteriasSeleccionadas;
+  }
+
+
+
+  irResumen() {
+    this.router.navigate([RouterConstant.NAVIGATE_REVISA_PAGO]);
+  }
 
 
 

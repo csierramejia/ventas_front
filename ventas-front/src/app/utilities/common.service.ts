@@ -11,8 +11,6 @@ import { Subject } from 'rxjs/Subject';
 @Injectable()
 export class CommonService {
 
-  public stringSubject = new Subject<string>();
-
   /**
    * @param HTTP para hacer las peticiones a los servicios REST
    */
@@ -32,6 +30,10 @@ export class CommonService {
   }
 
 
+  /**
+   * servicio qeu retorne la hora y fecha de la base de datos
+   * 
+   */
   obtenerHora(): Observable<Date>{
 
     return new Observable(
@@ -44,13 +46,5 @@ export class CommonService {
   }
 
 
-  passValue(data) {
-    //passing the data as the next observable
-    this.stringSubject.next(data);
-  }
-
-  /**
-   * servicio qeu retorne la hora y fecha de la base de datos
-   * 
-   */
+  
 }

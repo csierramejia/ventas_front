@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { BolsaComponent } from './bolsa/bolsa.component';
 import { SummaryFooterComponent } from './summary-footer/summary-footer.component';
 import { ApuestaChanceComponent } from './apuesta-chance/apuesta-chance.component';
+import { MenuCarritoComponent } from './menu-carrito/menu-carrito.component';
+
 
 import { ApuestaComponent } from './apuesta/apuesta.component';
 import { ApuestaMillonariaComponent } from '../chance-millonario/apuesta-millonaria/apuesta-millonaria.component';
@@ -19,6 +21,10 @@ export class ChanceComponent implements OnInit {
   // esto aplica para chance y chance millonario
   @ViewChild(SummaryFooterComponent) summaryFooter: SummaryFooterComponent;
   @ViewChild(ApuestaChanceComponent) apuestaChance: ApuestaChanceComponent;
+  // @ViewChild(MenuCarritoComponent) menuCarrito: MenuCarritoComponent;
+
+  @ViewChild(MenuCarritoComponent, {static: true}) menuCarrito: MenuCarritoComponent;
+
 
 
 
@@ -62,6 +68,18 @@ export class ChanceComponent implements OnInit {
 
   borrarTodoReset(event) {
     this.apuestaChance.borrarTodo();
+  }
+
+
+  agregarProductos(event){
+    this.menuCarrito.refrescarCarrito()
+  }
+
+
+
+  editarProducto(event){
+    this.summaryFooter.editarProducto(event)
+    this.apuestaChance.editarProducto(event)
   }
 
 

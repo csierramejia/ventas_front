@@ -19,7 +19,8 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit  {
   @Output() agregarNumeros: EventEmitter<any> = new EventEmitter();
 
 
-
+  edit = false;
+  infoEdit:any;
   dayBet: Date;
   fechaActual: Date;
   loterias = [];
@@ -91,14 +92,6 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit  {
 
 
   ngOnInit(): void {
-
-    this.commonService.stringSubject.subscribe(
-      data => 
-      {
-        console.log('next subscribed value: ' + data);
-      }
-    );
-
   }
 
 
@@ -210,7 +203,11 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit  {
       }
     );
 
-    this.agregarLoterias.emit(this.get_lotteriesSelected());
+    const emitLoterias = {
+      loterias:this.loterias,
+      fechaSeleccionApuesta:this.dayBet
+    }
+    this.agregarLoterias.emit(emitLoterias);
   }
 
 
@@ -241,7 +238,14 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit  {
       this.checked = false;
     }
 
-    this.agregarLoterias.emit(this.get_lotteriesSelected());
+    const emitLoterias = {
+      loterias:this.loterias,
+      fechaSeleccionApuesta:this.dayBet
+    }
+    
+    this.agregarLoterias.emit(emitLoterias);
+
+    // this.agregarLoterias.emit(this.get_lotteriesSelected());
   }
 
 
@@ -265,7 +269,15 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit  {
       }
       this.checked = false;
     }
-    this.agregarLoterias.emit(this.get_lotteriesSelected());
+
+    const emitLoterias = {
+        loterias:this.loterias,
+        fechaSeleccionApuesta:this.dayBet
+    }
+      
+    this.agregarLoterias.emit(emitLoterias);
+
+    // this.agregarLoterias.emit(this.get_lotteriesSelected());
   }
 
 
@@ -276,26 +288,26 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit  {
    * @description Metodo que se valida cuales fueron
    * las loterias seleccionadas y las manda para el carrito
    */
-  get_lotteriesSelected() {
-    this.loteriasSeleccionadas = [];
-    this.loterias.forEach(element => {
-      if (element.checked) {
-        this.loteriasSeleccionadas.push({
-          idLoteria: element.idLoteria,
-          codigo: element.codigo,
-          nombre: element.nombre,
-          nombreCorto: element.nombreCorto,
-          telefono: element.telefono,
-          idEstado: element.idEstado,
-          idEmpresa: element.idEmpresa,
-          idSorteo: element.idSorteo,
-          idSorteoDetalle: element.idSorteoDetalle,
-          horaSorteo:element.horaSorteo
-        });
-      }
-    });
-    return this.loteriasSeleccionadas;
-  }
+  // get_lotteriesSelected() {
+  //   this.loteriasSeleccionadas = [];
+  //   this.loterias.forEach(element => {
+  //     if (element.checked) {
+  //       this.loteriasSeleccionadas.push({
+  //         idLoteria: element.idLoteria,
+  //         codigo: element.codigo,
+  //         nombre: element.nombre,
+  //         nombreCorto: element.nombreCorto,
+  //         telefono: element.telefono,
+  //         idEstado: element.idEstado,
+  //         idEmpresa: element.idEmpresa,
+  //         idSorteo: element.idSorteo,
+  //         idSorteoDetalle: element.idSorteoDetalle,
+  //         horaSorteo:element.horaSorteo
+  //       });
+  //     }
+  //   });
+  //   return this.loteriasSeleccionadas;
+  // }
 
 
 
@@ -640,7 +652,7 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit  {
     this.chanceForm.controls.dosCifrasFilaCinco.setValue('');
     this.chanceForm.controls.unaCifraFilaCinco.setValue('');
     this.loterias = [];
-    this.agregarLoterias.emit(this.get_lotteriesSelected());
+    this.agregarLoterias.emit(this.loterias);
     this.emitirNumeros();
   }
 
@@ -690,8 +702,68 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit  {
 
 
 
-  testing(){
-    console.log('testing 123456');
+  editarProducto(event){
+    this.edit = true;
+    const buscarApuestasEditar = JSON.parse(localStorage.getItem('chanceApuesta'))
+    const apuestaEditar = buscarApuestasEditar.filter(buscarApuestaEditar => buscarApuestaEditar._id == event._id);
+    
+    this.loterias = apuestaEditar[0].loterias;
+    const emitLoterias = {
+      loterias:this.loterias,
+      fechaSeleccionApuesta:apuestaEditar[0].fechaSeleccionApuesta
+    }
+    
+    this.agregarLoterias.emit(emitLoterias);
+    this.infoEdit = apuestaEditar;
+    apuestaEditar[0].listaNumeros.forEach(element => {
+
+      if(element.numeroFilaUno) { 
+        this.chanceForm.get('numeroFilaUno').setValue(element.numeroFilaUno);
+        this.habilitarDeshabilitarSegunCifras(element.numeroFilaUno, 1);
+      }
+      if(element.valorDirectoFilaUno) { this.chanceForm.get('valorDirectoFilaUno').setValue(element.valorDirectoFilaUno); }
+      if(element.combinadoFilaUno) { this.chanceForm.get('combinadoFilaUno').setValue(element.combinadoFilaUno); }
+      if(element.dosCifrasFilaUno) { this.chanceForm.get('dosCifrasFilaUno').setValue(element.dosCifrasFilaUno); }
+      if(element.unaCifraFilaUno) { this.chanceForm.get('unaCifraFilaUno').setValue(element.unaCifraFilaUno); }
+
+      if(element.numeroFilaDos) { 
+        this.chanceForm.get('numeroFilaDos').setValue(element.numeroFilaDos);
+        this.habilitarDeshabilitarSegunCifras(element.numeroFilaDos, 2);
+      }
+      if(element.valorDirectoFilaDos) { this.chanceForm.get('valorDirectoFilaDos').setValue(element.valorDirectoFilaDos); }
+      if(element.combinadoFilaDos) { this.chanceForm.get('combinadoFilaDos').setValue(element.combinadoFilaDos); }
+      if(element.dosCifrasFilaDos) { this.chanceForm.get('dosCifrasFilaDos').setValue(element.dosCifrasFilaDos); }
+      if(element.unaCifraFilaDos) { this.chanceForm.get('unaCifraFilaDos').setValue(element.unaCifraFilaDos); }
+
+      if(element.numeroFilaTres) { 
+        this.chanceForm.get('numeroFilaTres').setValue(element.numeroFilaTres);
+        this.habilitarDeshabilitarSegunCifras(element.numeroFilaTres, 3);
+      }
+      if(element.valorDirectoFilaTres) { this.chanceForm.get('valorDirectoFilaTres').setValue(element.valorDirectoFilaTres); }
+      if(element.combinadoFilaTres) { this.chanceForm.get('combinadoFilaTres').setValue(element.combinadoFilaTres); }
+      if(element.dosCifrasFilaTres) { this.chanceForm.get('dosCifrasFilaTres').setValue(element.dosCifrasFilaTres); }
+      if(element.unaCifraFilaTres) { this.chanceForm.get('unaCifraFilaTres').setValue(element.unaCifraFilaTres); }
+
+      if(element.numeroFilaCuatro) { 
+        this.chanceForm.get('numeroFilaCuatro').setValue(element.numeroFilaCuatro);
+        this.habilitarDeshabilitarSegunCifras(element.numeroFilaCuatro, 4);
+      }
+      if(element.valorDirectoFilaCuatro) { this.chanceForm.get('valorDirectoFilaCuatro').setValue(element.valorDirectoFilaCuatro); }
+      if(element.combinadoFilaCuatro) { this.chanceForm.get('combinadoFilaCuatro').setValue(element.combinadoFilaCuatro); }
+      if(element.dosCifrasFilaCuatro) { this.chanceForm.get('dosCifrasFilaCuatro').setValue(element.dosCifrasFilaCuatro); }
+      if(element.unaCifraFilaCuatro) { this.chanceForm.get('unaCifraFilaCuatro').setValue(element.unaCifraFilaCuatro); }
+
+      if(element.numeroFilaCinco) { 
+        this.chanceForm.get('numeroFilaCinco').setValue(element.numeroFilaCinco); 
+        this.habilitarDeshabilitarSegunCifras(element.numeroFilaCinco, 5);
+      }
+      if(element.valorDirectoFilaCinco) { this.chanceForm.get('valorDirectoFilaCinco').setValue(element.valorDirectoFilaCinco); }
+      if(element.combinadoFilaCinco) { this.chanceForm.get('combinadoFilaCinco').setValue(element.combinadoFilaCinco); }
+      if(element.dosCifrasFilaCinco) { this.chanceForm.get('dosCifrasFilaCinco').setValue(element.dosCifrasFilaCinco); }
+      if(element.unaCifraFilaCinco) { this.chanceForm.get('unaCifraFilaCinco').setValue(element.unaCifraFilaCinco); }
+
+    });
+    this.emitirNumeros();
   }
 
 

@@ -12,6 +12,7 @@ import {CardModule} from 'primeng/card';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {DialogModule} from 'primeng/dialog';
 import {SidebarModule} from 'primeng/sidebar';
+import { ShellModule } from '../../modules/shell/shell.module';
 
 // OJOS QUITAR ESTE COMPONENTE
 import { BolsaComponent } from './chance/bolsa/bolsa.component';
@@ -27,7 +28,10 @@ import { LoteriaVirtualComponent } from './loteria-virtual/loteria-virtual.compo
 import { RecargasComponent } from './recargas/recargas.component';
 import { RecargasOperadorComponent } from './recargas/regargas-operador/recargas-operador.component';
 import { BolsaRecargasComponent } from './recargas/bolsa-recargas/bolsa-recargas.component';
-import {InputSwitchModule} from 'primeng/inputswitch';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { MenuCarritoComponent } from './chance/menu-carrito/menu-carrito.component';
+
+
 
 
 
@@ -49,8 +53,10 @@ import {InputSwitchModule} from 'primeng/inputswitch';
     LoteriaVirtualComponent,
     RecargasComponent,
     RecargasOperadorComponent,
-    BolsaRecargasComponent
+    BolsaRecargasComponent,
+    MenuCarritoComponent
   ],
+  
   imports: [
     RouterModule.forChild([
       {
@@ -88,7 +94,10 @@ import {InputSwitchModule} from 'primeng/inputswitch';
     SidebarModule,
     InputSwitchModule,
     ReactiveFormsModule,
-    FormsModule,
+    FormsModule
+  ],
+  exports: [
+    MenuCarritoComponent
   ],
 })
 export class ProductosModule { }

@@ -18,7 +18,7 @@
           <span class="fecha-sorteo-text-numero-loterias">Números: {{ producto.listaNumeros.length }}</span> <span class="fecha-sorteo-text-numero-loterias espacio-loterias">Loterías: {{ producto.loterias.length }}</span><br/>
         </div>
         <div class="col-md-2">
-          <i (click)="editarApuesta(producto._id)" class="fa fa-pencil estilo-iconos-editar" aria-hidden="true"></i>
+          <i (click)="editarApuesta(producto)" class="fa fa-pencil estilo-iconos-editar" aria-hidden="true"></i>
         </div>
       </div>
 
@@ -41,7 +41,7 @@
           <span class="text-info-subtotal">SUBTOTAL:</span>
         </div>
         <div class="col-md-6 right-subtotal">
-          <span class="text-info-subtotal">$ 4.000</span>
+          <span class="text-info-subtotal">$ {{ subtotal }}</span>
         </div>
       </div>
       <hr class="hr-subtotal" />

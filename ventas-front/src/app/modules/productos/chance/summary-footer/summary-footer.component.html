@@ -19,7 +19,7 @@
                     <div class="div-sum-text">
                         <span class="text-sum">LOTERIAS</span>
                         <br/>
-                        <span class="text-sum">{{ loterias.length }}</span>
+                        <span *ngIf="loteriaSeleccionadas" class="text-sum">{{ loteriaSeleccionadas.length }}</span>
                     </div>
                 </div>
                 <div class="col-md-2 div-s-t">
@@ -54,7 +54,7 @@
                 </div>
                 <div class="col-md-6 flex-col">
                     <div id="cicleTwo">
-                        <img class="img-circle" src="../../../../../assets/img/svg/money-l.svg" />
+                        <img (click)="irResumen()" class="img-circle" src="../../../../../assets/img/svg/money-l.svg" />
                     </div>
                 </div>
             </div>
