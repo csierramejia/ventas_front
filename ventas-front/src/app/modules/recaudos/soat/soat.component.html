@@ -1,0 +1,109 @@
+<!-- panel principal -->
+<div class="pnl1 mat-elevation-z8">
+       <div class="head">
+              <span class="title">Soat </span>
+       </div>
+
+       <!-- filtro - tbl cartera -->
+       <div class="ui-g">
+
+
+              <!-- panel filtros -->
+              <ng-container>
+                     <div class="ui-g-12 ml-3 mr-3 p-0 mt-2">
+
+                            <!-- filtro por producto -->
+                            <div class="ui-g-9 pb-0">
+
+                            </div>
+
+
+                            <!-- btn cerrar caja -->
+                            <div class="ui-g-3 pb-0 text-right pr-0">
+
+                                   <button (click)="cerrarCaja()" class="btn-light" type="button" title="Cerrar caja">
+                                          <label class="btn-label"> Cerrar caja</label>
+                                          <i class="fa fa-lock btn-icon pl-1"></i>
+                                   </button>
+
+                            </div>
+                     </div>
+              </ng-container>
+
+              <div class="ui-g-12 barra ml-3 mr-3 pt-1"></div>
+
+
+              <!-- tabla carteras -->
+              <div class="ui-g-12 ml-3 mr-3 p-0 mt-2">
+                     <div class="ui-g-3 pb-0">
+                            <!-- logo app -->
+                            <div class="ui-g-12 mb-4 p-0 text-center">
+                                   <img src="assets/img/soat/soat.png" class="logo" />
+                            </div>
+
+
+                     </div>
+
+
+                     <div class="ui-g-9 pb-0 text-right pr-0">
+                            <mat-horizontal-stepper linear #stepsoat>
+
+                                   <!-- informacion basica sorteo -->
+                                   <mat-step  [editable]="false">
+
+                                          <ng-template matStepLabel>Cotización</ng-template>
+
+                                          <div class="col-md-6 text-center">
+                                                 <label class="titleInput">Ingresa el número de placa para</label>
+                                                 <label class="titleInput">realizar la contización</label>
+                                                 <div class="input-group">
+                                                        <input type="text" class="form-control styleInputSoat"
+                                                               placeholder="Placa" [(ngModel)]="placa">
+                                                        <span style="height: 31px" class="input-group-append">
+                                                               <button type="button" style="padding-top: 3px"
+                                                                      (click)="consultarPlaca()"
+                                                                      class="btn-buscar btn btn-info btn-flat">
+                                                                      <label class="btn-size-admin"><i
+                                                                                    class="fa fa-search"></i></label>
+                                                               </button>
+                                                        </span>
+                                                 </div>
+                                          </div>
+
+                                   </mat-step>
+
+                                   <mat-step  [editable]="false">
+                                          <ng-template matStepLabel>Datos</ng-template>
+                                  
+                               
+                                   </mat-step>
+
+
+                                   <mat-step  [editable]="false">
+                                          <ng-template matStepLabel>Pago</ng-template>
+                                          <div class="pnl1 brd m-2">
+
+                                                 <!-- informacion -->
+                                                 <div class="ui-g">
+
+                                                        <!-- titulo -->
+                                                        <div class="ui-g-12 p-1 bg-clrg"
+                                                               style="border-top-left-radius: 10px; border-top-right-radius: 10px;">
+                                                               <span class="steps-circle">1</span>
+                                                               <span class="sub-title"> Información del sorteo</span>
+                                                        </div>
+                                                 </div>
+                                          </div>
+                                   </mat-step>
+                            </mat-horizontal-stepper>
+                     </div>
+              </div>
+                <!-- tabla carteras -->
+                <div *ngIf="index === 1"class="ui-g-12 ml-3 mr-3 p-0 mt-2">
+                     <div class="ui-g-3 pb-0">
+
+
+
+                     prueba
+              </div>
+              </div>

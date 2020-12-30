@@ -64,4 +64,12 @@ export class RouterConstant {
 
   /** Constante para navegar a la pagina de BIENVENIDA */
   public static readonly NAVIGATE_CHANCE: string = `/${RouterConstant.ROUTER_CHANCE}/${RouterConstant.ROUTER_BIENVENIDA}`;
+
+  /** Router para el componente de recaudos */
+  public static readonly ROUTER_RECAUDOS: string = 'recaudos';
+
+  /** Router para el componente de pago de soat */
+  public static readonly ROUTER_SOAT: string = 'soat';
+
 }
+
