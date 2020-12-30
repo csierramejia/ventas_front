@@ -23,45 +23,36 @@
                             <div class="col-md-3"><span class="titulo-resumen">LOTERIAS</span></div>
                             <div class="col-md-2"><span class="titulo-resumen">APOSTADO</span></div>
                         </div>
-                        <div>
+                        <div *ngFor="let productoChance of productosChance">
                             <div class="row">
-                                <div class="col-md-2 div-icono-eliminar"><i class="fa fa-times-circle i-eliminar" aria-hidden="true"></i></div>
-                                <div class="col-md-2"><span class="info-resumen">1AXA-00009876</span></div>
-                                <div class="col-md-3"><span class="info-resumen">0928, 0926, 876, 56, 8</span></div>
-                                <div class="col-md-3"><span class="info-resumen">VALLE, MANIZ, DORMA, META, PLA4D</span></div>
-                                <div class="col-md-2"><span class="info-resumen">$14.000</span></div>
+                                <div class="col-md-2 div-icono-eliminar"><i (click)="borrarApuesta(productoChance._id)" class="fa fa-times-circle i-eliminar" aria-hidden="true"></i></div>
+                                <div class="col-md-2"><span class="info-resumen">{{ productoChance.colilla }}</span></div>
+                                <div class="col-md-3"><span class="info-resumen">{{ productoChance.listaNumeros }}</span></div>
+                                <div class="col-md-3"><span class="info-resumen">{{ productoChance.loterias }}</span></div>
+                                <div class="col-md-2"><span class="info-resumen">{{ productoChance.apostado }}</span></div>
                             </div>
                             <hr>
                         </div>
 
-                        <div>
-                            <div class="row">
-                                <div class="col-md-2 div-icono-eliminar"><i class="fa fa-times-circle i-eliminar" aria-hidden="true"></i></div>
-                                <div class="col-md-2"><span class="info-resumen">1AXA-00009876</span></div>
-                                <div class="col-md-3"><span class="info-resumen">0928, 0926, 876, 56, 8</span></div>
-                                <div class="col-md-3"><span class="info-resumen">VALLE, MANIZ, DORMA, META, PLA4D</span></div>
-                                <div class="col-md-2"><span class="info-resumen">$14.000</span></div>
-                            </div>
-                            <hr>
-                        </div>
+                
                     </div>
 
 
-                    <div class="container">
+                    <div class="container" *ngIf="productosChance.length > 0">
                         <div class="row">
                             <div class="col-md-6 elemento-calculos-totales">
                                 <div class="container espacios-contenedor">
                                     <div class="row">
                                         <div class="col-md-8 right-totales"><span>SUBTOTAL</span></div>
-                                        <div class="col-md-4 right-totales"><span>$18.060</span></div>
+                                        <div class="col-md-4 right-totales"><span>${{subtotalGeneral}}</span></div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-8 right-totales"><span>IVA</span></div>
-                                        <div class="col-md-4 right-totales"><span>$3.340</span></div>
+                                        <div class="col-md-4 right-totales"><span>${{ivaGeneral}}</span></div>
                                     </div>
                                     <div class="row espacio-total-devuelta">
                                         <div class="col-md-8 total-estilo"><span>TOTAL</span></div>
-                                        <div class="col-md-4 total-estilo"><span>$21.500</span></div>
+                                        <div class="col-md-4 total-estilo"><span>${{totalGeneral}}</span></div>
                                     </div>
                                 </div>
                             </div>
@@ -69,18 +60,26 @@
                                 <div class="container espacios-contenedor">
                                     <div class="row">
                                         <div class="col-md-4 left-totales"><span>EFECTIVO</span></div>
-                                        <div class="col-md-8"><input type="text" class="form-control input-efectivo"></div>
+                                        <div class="col-md-8"><input type="text" [(ngModel)]="efectivo" (change)="calcularDevuelta()" class="form-control input-efectivo"></div>
                                     </div>
                                     <div class="row espacio-total-devuelta">
                                         <div class="col-md-4 devuelva-estilo"><span>DEVUELTA</span></div>
-                                        <div class="col-md-8 devuelva-estilo"><span>$28.500</span></div>
+                                        <div class="col-md-8 devuelva-estilo"><span>${{devuelta}}</span></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="row">
+                            <div class="col-md-6">
 
+                            </div>
+
+                            <div class="col-md-6 btn-finalizar-col">
+                                <button type="button" class="btn btn-finalizar">
+                                    FINALIZAR
+                                </button>
+                            </div>
                         </div>
                         
                     </div>
