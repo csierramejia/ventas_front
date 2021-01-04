@@ -1,5 +1,4 @@
       
-        <!-- <form [formGroup]="chanceForm"> -->
             <div class="container-fluid">
                 <!-- ABRE SEMANARIO Y BOTONES HEADER -->
                 <div class="row">
@@ -32,6 +31,8 @@
                             </div>
                             <div class="col-md-4">
                                 <p-calendar
+                                    [(ngModel)]="pCalendarioValor"
+                                    (onSelect)="obtenerFechaCalendario(pCalendarioValor)"
                                     class="calendar-control"
                                     placeholder="Otro día"
                                     showOn="button"
@@ -182,7 +183,6 @@
                 
                 <!-- / CIERRA SELECCION DE LOTERIAS Y NUMEROS QUE APUESTAN -->
             </div>
-        <!-- </form> -->
 
 
 

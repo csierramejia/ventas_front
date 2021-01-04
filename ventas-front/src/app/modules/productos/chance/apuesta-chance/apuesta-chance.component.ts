@@ -25,6 +25,8 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit  {
 
   @ViewChild(CrearClienteComponent) crearClienteChild: CrearClienteComponent;
 
+  pCalendarioValor: Date;
+
   /** Es el correo del cliente quien hace la compra */
   private correoCustomer: string;
   enabledCustomer = false;
@@ -112,6 +114,7 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit  {
    * @param day
    */
   get_date_bet(day) {
+    console.log(day.date)
     this.dayBet = day.date;
     const fechaA = this.fechaActual;
     const fechaB = FechaUtil.stringToDate(this.dayBet.toString());
@@ -662,6 +665,13 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit  {
     this.chanceForm.controls.combinadoFilaCinco.setValue('');
     this.chanceForm.controls.dosCifrasFilaCinco.setValue('');
     this.chanceForm.controls.unaCifraFilaCinco.setValue('');
+
+    this.chanceForm.controls.tipoDocumento.setValue('');
+    this.chanceForm.controls.numeroDocumento.setValue('');
+    this.chanceForm.controls.nombreCliente.setValue('');
+    this.correoCustomer = '';
+    this.idCustomer = '';
+
     this.loterias = [];
     this.agregarLoterias.emit(this.loterias);
     this.emitirNumeros();
@@ -862,6 +872,19 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit  {
     this.chanceForm.controls.nombreCliente.setValue(name);
     this.enabledCustomer = true;
     this.emitirCliente(1)
+  }
+
+
+  /**
+   * @author Luis Fernando Hernandez
+   * @description Metodo que se encarga 
+   */
+  obtenerFechaCalendario(event){
+    let d = new Date(event.toString());
+    console.log(typeof d);
+ 
+
+
   }
 
 
