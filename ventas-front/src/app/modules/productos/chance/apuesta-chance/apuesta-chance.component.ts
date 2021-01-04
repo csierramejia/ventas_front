@@ -8,6 +8,7 @@ import { FechaUtil } from 'src/app/utilities/fecha-util';
 import { CommonService } from 'src/app/utilities/common.service';
 import { ClientesDTO } from 'src/app/dtos/productos/chance/clientes.dto';
 import { CrearClienteComponent } from '../crear-cliente/crear-cliente.component';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-apuesta-chance',
@@ -880,11 +881,9 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit  {
    * @description Metodo que se encarga 
    */
   obtenerFechaCalendario(event){
-    let d = new Date(event.toString());
-    console.log(typeof d);
- 
-
-
+    let FormatoMomentFecha = moment(new Date(event.toString())).format();
+    this.dayBet = FechaUtil.stringToDate(FormatoMomentFecha.toString());
+    this.getLotteries()
   }
 
 
