@@ -24,6 +24,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
 
   @Output() agregarProductos: EventEmitter<any> = new EventEmitter();
 
+  clienteOperacion = {correoCustomer:null, idCustomer:null, nombreCliente:null, numeroDocumento:null, tipoDocumento:null}
   edit = false;
   infoEdit:any;
   inputVat = 0;
@@ -113,6 +114,11 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
   }
 
 
+  setCliente(event){
+    this.clienteOperacion = event;
+  }
+
+
 
 
   /**
@@ -168,9 +174,9 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
 
     const listaNumeros = this.obtenerFilasConApuesta(this.listaNumeros)
 
-    if(this.colilla && this.fechaActual && this.loteriaSeleccionadas.length > 0 && listaNumeros.length > 0) {
+    if(this.colilla && this.fechaActual && this.loteriaSeleccionadas.length > 0 && listaNumeros.length > 0 && this.clienteOperacion.idCustomer) {
 
-      
+      // clienteOperacion = {correoCustomer:null, idCustomer:null, nombreCliente:null, numeroDocumento:null, tipoDocumento:null}
 
       if(this.edit){
         // limpiar variable edit  -- infoEdit
@@ -183,6 +189,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
           iva: this.valueVat,
           total: this.valueBetTotal,
           listaNumeros:listaNumeros,
+          clienteOperacion:this.clienteOperacion,
           fechaSeleccionApuesta:this.fechaSeleccionApuesta
         }
 
@@ -215,6 +222,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
           iva: this.valueVat,
           total: this.valueBetTotal,
           listaNumeros:listaNumeros,
+          clienteOperacion:this.clienteOperacion,
           fechaSeleccionApuesta:this.fechaSeleccionApuesta
         }
 

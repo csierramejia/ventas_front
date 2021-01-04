@@ -6,6 +6,8 @@ import { MsjUtil } from 'src/app/utilities/messages.util';
 import { CommonComponent } from 'src/app/utilities/common.component';
 import { FechaUtil } from 'src/app/utilities/fecha-util';
 import { CommonService } from 'src/app/utilities/common.service';
+import { ClientesDTO } from 'src/app/dtos/productos/chance/clientes.dto';
+import { CrearClienteComponent } from '../crear-cliente/crear-cliente.component';
 
 @Component({
   selector: 'app-apuesta-chance',
@@ -17,8 +19,17 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit  {
 
   @Output() agregarLoterias: EventEmitter<any> = new EventEmitter();
   @Output() agregarNumeros: EventEmitter<any> = new EventEmitter();
+  @Output() agregarCliente: EventEmitter<any> = new EventEmitter();
 
+  
 
+  @ViewChild(CrearClienteComponent) crearClienteChild: CrearClienteComponent;
+
+  /** Es el correo del cliente quien hace la compra */
+  private correoCustomer: string;
+  enabledCustomer = false;
+  idCustomer = '';
+  displayModalCreate = false;
   edit = false;
   infoEdit:any;
   dayBet: Date;
@@ -764,6 +775,93 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit  {
 
     });
     this.emitirNumeros();
+  }
+
+
+
+  /**
+   * @author Luis Hernandez
+   * @description Metodo que se encarga de validar si
+   * existe o no el cliente, si este no existe se
+   * levanta un popup para su posterior creación
+   */
+  validExistClient(): void {
+
+    if (this.chanceForm.get('tipoDocumento').value && this.chanceForm.get('numeroDocumento').value) {
+      const clientesDTO: ClientesDTO = new ClientesDTO();
+      this.enabledCustomer = false;
+      this.chanceForm.controls.nombreCliente.setValue('');
+      clientesDTO.numeroDocumento = this.chanceForm.get('numeroDocumento').value;
+      clientesDTO.tipoDocumento = this.chanceForm.get('tipoDocumento').value;
+      this.productosService.clienteApuesta(clientesDTO).subscribe(
+        clienteData => {
+          const responseCliente: any = clienteData;
+          if (responseCliente.existe) {
+            const name = responseCliente.primerNombre + ' ' + responseCliente.segundoNombre + ' ' + responseCliente.primerApellido;
+            this.idCustomer = responseCliente.idCliente;
+            this.correoCustomer = responseCliente.correo;
+            this.chanceForm.controls.nombreCliente.setValue(name);
+            this.enabledCustomer = true;
+            this.emitirCliente(1);
+          } else {
+            this.crearClienteChild.clienteForm.get('tipoDocumento').setValue(this.chanceForm.get('tipoDocumento').value);
+            this.crearClienteChild.clienteForm.get('numeroDocumento').setValue(this.chanceForm.get('numeroDocumento').value);
+            this.displayModalCreate = true;
+            this.emitirCliente(2);
+          }
+        },
+        error => {
+          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+        }
+      );
+    }
+
+  }
+
+
+  emitirCliente(event){
+    if(event === 1){
+      let clienteInfo = { 
+        tipoDocumento : this.chanceForm.get('tipoDocumento').value, 
+        numeroDocumento : this.chanceForm.get('numeroDocumento').value, 
+        nombreCliente: this.chanceForm.get('nombreCliente').value,
+        idCustomer: this.idCustomer,
+        correoCustomer: this.correoCustomer
+      }
+      this.agregarCliente.emit(clienteInfo);
+    } else if(event === 2) {
+      let clienteInfo = {tipoDocumento:null, numeroDocumento:null, nombreCliente:null, idCustomer:null, correoCustomer:null}
+      this.agregarCliente.emit(clienteInfo);
+    }
+  }
+
+  /**
+   * @author Luis Hernandez
+   * @param event
+   * @description Metodo que se encarga de
+   * recibir el false que emite el componente
+   * que contiene el html del fomulario de
+   * creación (popup)
+   */
+  closeModal(event): void {
+    this.displayModalCreate = event;
+  }
+
+
+  /**
+   * @author Luis Hernandez
+   * @param event
+   * @description Metodo que se encarga de recibir
+   * el cliente creado y mostrarlo en pantalla
+   */
+  createCustomer(event): void {
+    this.displayModalCreate = false;
+    const name = event.primerNombre + ' ' + event.segundoNombre + ' ' + event.primerApellido;
+    this.idCustomer = event.idPersona;
+    this.correoCustomer = event.correo;
+    this.chanceForm.controls.nombreCliente.setValue(name);
+    this.enabledCustomer = true;
+    this.emitirCliente(1)
   }
 
 

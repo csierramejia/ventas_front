@@ -65,6 +65,10 @@ export class ChanceComponent implements OnInit {
     this.summaryFooter.setNumeros(event);
   }
 
+  agregarCliente(event) {
+    this.summaryFooter.setCliente(event);
+  }
+
 
   borrarTodoReset(event) {
     this.apuestaChance.borrarTodo();

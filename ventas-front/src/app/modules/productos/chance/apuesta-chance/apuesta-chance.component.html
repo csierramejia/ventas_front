@@ -1,101 +1,102 @@
       
-        <div class="container-fluid">
-            <!-- ABRE SEMANARIO Y BOTONES HEADER -->
-            <div class="row">
-                <div class="col-md-6">
-                    <span class="hea-titles">Seleccione el día del sorteo</span>
-                    <hr/>
-                </div>
-                <div class="col-md-2">
-                    <span class="hea-titles">Juego Automático</span>
-                    <hr/>
-                </div>
-                <div class="col-md-2">
-                    <span class="hea-titles">Ultima Apuesta</span>
-                    <hr/>
-                </div>
-                <div class="col-md-2"></div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <span 
-                                class="badge badge-secondary chipOptionDay" 
-                                *ngFor="let day of days"
-                                [id]="day.name"
-                                (click)="get_date_bet(day)">
-                                {{day.text}}
-                            </span>
-                        </div>
-                        <div class="col-md-4">
-                            <p-calendar
-                                class="calendar-control"
-                                placeholder="Otro día"
-                                showOn="button"
-                                [readonlyInput]="true"
-                                yearRange="2020:2021"
-                                [monthNavigator]="true"
-                                [yearNavigator]="true"
-                                dateFormat="yy-mm-dd"
-                                [showIcon]="false">
-                            </p-calendar>
-                        </div>
+        <!-- <form [formGroup]="chanceForm"> -->
+            <div class="container-fluid">
+                <!-- ABRE SEMANARIO Y BOTONES HEADER -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <span class="hea-titles">Seleccione el día del sorteo</span>
+                        <hr/>
                     </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <img class="img-aletorio" (click)="aleatorioTresCifras()" src="../../../../../assets/img/svg/Grupo_299.svg" />
-                        </div>
-                        <div class="col-md-4">
-                            <img class="img-aletorio" (click)="aleatorioCuatroCifras()" src="../../../../../assets/img/svg/Grupo_300.svg" />
-                        </div>
+                    <div class="col-md-2">
+                        <span class="hea-titles">Juego Automático</span>
+                        <hr/>
                     </div>
+                    <div class="col-md-2">
+                        <span class="hea-titles">Ultima Apuesta</span>
+                        <hr/>
+                    </div>
+                    <div class="col-md-2"></div>
                 </div>
-
-                <div class="col-md-2">
-                    <button (click)="repetirNumeroSiguientFila()" type="button" class="btn btn-random">
-                        REPETIR <i class="fa fa-repeat" aria-hidden="true"></i>
-                    </button>
-                </div>
-
-                <div class="col-md-2">
-                    <button (click)="borrarTodo()" type="button" class="btn btn-random-red">
-                        BORRAR TODO
-                    </button>
-                </div>
-            
-            </div>
-            <!-- / CIERRA SEMANARIO Y BOTONES HEADER -->
-
-            <!-- ABRE SELECCION DE LOTERIAS Y NUMEROS QUE APUESTAN -->
-            <div id="content-bet" class="row">
-                <div class="col-md-4">
-                    <span class="title-lot-bet">Loterias del día</span>
-                    <div id="content-lot">
-                        <div class="row select-all-a">
-                            <div class="col-md-6"></div>
-                            <div class="col-md-6" *ngIf="loterias.length > 0">
-                                <span class="title-lot-bet">Seleccionar todas</span>
-                                <p-inputSwitch (click)="cambioSeleccion()" [(ngModel)]="checked"></p-inputSwitch>
+    
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <span 
+                                    class="badge badge-secondary chipOptionDay" 
+                                    *ngFor="let day of days"
+                                    [id]="day.name"
+                                    (click)="get_date_bet(day)">
+                                    {{day.text}}
+                                </span>
                             </div>
-
-
-                            <div class="container-fluid">
-                                <div id="fila-loteiras" class="row">
-                                    <div class="col-md-4"*ngFor="let loteria of loterias">
-                                        <input type="checkbox" (click)="toggleVisibility(loteria)" [(ngModel)]="loteria.checked"/>
-                                        <label class="labelloteria">{{loteria.nombreCorto}}</label>
+                            <div class="col-md-4">
+                                <p-calendar
+                                    class="calendar-control"
+                                    placeholder="Otro día"
+                                    showOn="button"
+                                    [readonlyInput]="true"
+                                    yearRange="2020:2021"
+                                    [monthNavigator]="true"
+                                    [yearNavigator]="true"
+                                    dateFormat="yy-mm-dd"
+                                    [showIcon]="false">
+                                </p-calendar>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <img class="img-aletorio" (click)="aleatorioTresCifras()" src="../../../../../assets/img/svg/Grupo_299.svg" />
+                            </div>
+                            <div class="col-md-4">
+                                <img class="img-aletorio" (click)="aleatorioCuatroCifras()" src="../../../../../assets/img/svg/Grupo_300.svg" />
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="col-md-2">
+                        <button (click)="repetirNumeroSiguientFila()" type="button" class="btn btn-random">
+                            REPETIR <i class="fa fa-repeat" aria-hidden="true"></i>
+                        </button>
+                    </div>
+    
+                    <div class="col-md-2">
+                        <button (click)="borrarTodo()" type="button" class="btn btn-random-red">
+                            BORRAR TODO
+                        </button>
+                    </div>
+                
+                </div>
+                <!-- / CIERRA SEMANARIO Y BOTONES HEADER -->
+    
+                <!-- ABRE SELECCION DE LOTERIAS Y NUMEROS QUE APUESTAN -->
+                <div id="content-bet" class="row">
+                    <div class="col-md-4">
+                        <span class="title-lot-bet">Loterias del día</span>
+                        <div id="content-lot">
+                            <div class="row select-all-a">
+                                <div class="col-md-6"></div>
+                                <div class="col-md-6" *ngIf="loterias.length > 0">
+                                    <span class="title-lot-bet">Seleccionar todas</span>
+                                    <p-inputSwitch (click)="cambioSeleccion()" [(ngModel)]="checked"></p-inputSwitch>
+                                </div>
+    
+    
+                                <div class="container-fluid">
+                                    <div id="fila-loteiras" class="row">
+                                        <div class="col-md-4"*ngFor="let loteria of loterias">
+                                            <input type="checkbox" (click)="toggleVisibility(loteria)" [(ngModel)]="loteria.checked"/>
+                                            <label class="labelloteria">{{loteria.nombreCorto}}</label>
+                                        </div>
                                     </div>
                                 </div>
+    
                             </div>
-
                         </div>
                     </div>
-                </div>
-                
+                    
                     <div class="col-md-8">
                         <div class="row fls">
                             <div class="col-md-2"><span class="title-lot-bet">Número</span></div>
@@ -148,36 +149,50 @@
                         </div>
                         </form>
                     </div>
-                
-            </div>
-            <!-- / CIERRA SELECCION DE LOTERIAS Y NUMEROS QUE APUESTAN -->
-
-
-            <!-- ABRE INFO CLIENTE -->
-            <div class="info-client">
-                <div class="row">
-                    <div class="col-md-2">
-                        <label class="title-lot-bet" for="identificacion">Tipo Identificación</label>
-                        <div class="form-group">
-                            <select class="form-control typeIdentification">
-                                <option value="CC">CC</option>
-                                <option value="TI">TI</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-md-2">
-                        <label class="title-lot-bet" for="identificacion">Identificación del Cliente</label>
-                        <div class="form-group">
-                            <input type="text" class="form-control styleInput">
-                        </div>
-                    </div>
                     
                 </div>
+                <!-- / CIERRA SELECCION DE LOTERIAS Y NUMEROS QUE APUESTAN -->
+    
+    
+                <!-- ABRE INFO CLIENTE -->
+                <div class="info-client">
+                    <form [formGroup]="chanceForm">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <select (change)="validExistClient()" formControlName="tipoDocumento" class="form-control typeIdentification">
+                                        <option value="CC">CC</option>
+                                        <option value="TI">TI</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <input (keypress)="permitirSoloNumeros($event)" (change)="validExistClient()" formControlName="numeroDocumento" type="text" class="form-control styleInput" placeholder="Identificación">
+                                </div>
+                            </div>
+                            <div class="col-md-4" *ngIf="enabledCustomer">
+                                <div class="form-group">
+                                    <input type="text" class="form-control styleInput" formControlName="nombreCliente" placeholder="Cliente">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- / CIERRA SELECCION DE LOTERIAS Y NUMEROS QUE APUESTAN -->
             </div>
-            
-            <!-- / CIERRA SELECCION DE LOTERIAS Y NUMEROS QUE APUESTAN -->
-        </div>
+        <!-- </form> -->
+
+
+
+        <p-dialog [(visible)]="displayModalCreate" [style]="{width: '464px'}">
+            <app-crear-cliente 
+                (closePopup)="closeModal($event)" 
+                (createCustomer)="createCustomer($event)">
+            </app-crear-cliente>
+        </p-dialog>
+        
 
     
 
