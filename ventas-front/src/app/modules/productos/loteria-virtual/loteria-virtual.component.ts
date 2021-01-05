@@ -6,7 +6,7 @@ import { TiposDocumentosConstant } from 'src/app/constants/tipos-documentos.cons
 import { ClientesDTO } from 'src/app/dtos/productos/chance/clientes.dto';
 import { MsjUtil } from 'src/app/utilities/messages.util';
 import { ProductosService } from '../../../modules/productos/productos.service';
-import { CrearClienteComponent } from '../chance/crear-cliente/crear-cliente.component';
+import { CrearClienteComponent } from '../genericos/crear-cliente/crear-cliente.component';
 import { LoteriaVirtualDTO } from 'src/app/dtos/productos/loteria-virtual/loteria-virtual.dto';
 import { FiltroBusquedaDTO } from 'src/app/dtos/transversal/filtro-busqueda.dto';
 import { CommonService } from 'src/app/utilities/common.service';

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ShellState } from './../../../states/shell/shell.state';
 import { CommonService } from "../../../utilities/common.service";
-import { MenuCarritoComponent } from '../../productos/chance/menu-carrito/menu-carrito.component';
+import { MenuCarritoComponent } from '../../productos/genericos/menu-carrito/menu-carrito.component';
 
 /**
  * Miga de pan que se visualiza en el Shell de la aplicacion

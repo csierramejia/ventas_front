@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ApuestaMillonariaComponent } from './apuesta-millonaria/apuesta-millonaria.component';
-import { BolsaComponent } from '../chance/bolsa/bolsa.component';
-import { ApuestaComponent } from '../chance/apuesta/apuesta.component';
+import { BolsaComponent } from '../genericos/bolsa/bolsa.component';
 
 @Component({
   selector: 'app-chance-millonario',
@@ -11,12 +10,11 @@ import { ApuestaComponent } from '../chance/apuesta/apuesta.component';
 export class ChanceMillonarioComponent implements OnInit {
 
   @ViewChild(BolsaComponent) bolsaChild: BolsaComponent;
-  @ViewChild(ApuestaComponent) apuestaChild: ApuestaComponent;
   @ViewChild(ApuestaMillonariaComponent) apuestaMillonariaComponent: ApuestaMillonariaComponent;
 
   constructor() {
 
-   }
+  }
 
   ngOnInit(): void {
 

@@ -7,7 +7,7 @@ import { CommonComponent } from 'src/app/utilities/common.component';
 import { FechaUtil } from 'src/app/utilities/fecha-util';
 import { CommonService } from 'src/app/utilities/common.service';
 import { ClientesDTO } from 'src/app/dtos/productos/chance/clientes.dto';
-import { CrearClienteComponent } from '../crear-cliente/crear-cliente.component';
+import { CrearClienteComponent } from '../../genericos/crear-cliente/crear-cliente.component';
 import * as moment from 'moment';
 
 @Component({

@@ -6,19 +6,17 @@ import { RouterModule } from '@angular/router';
 import { RouterConstant } from './../../constants/router.constant';
 import { SharedModule} from '../shared/shared.module';
 // OJOS QUITAR ESTE COMPONENTE
-import { ApuestaComponent } from './chance/apuesta/apuesta.component';
 import { ApuestaChanceComponent } from './chance/apuesta-chance/apuesta-chance.component';
 import {CardModule} from 'primeng/card';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {DialogModule} from 'primeng/dialog';
 import {SidebarModule} from 'primeng/sidebar';
-import { ShellModule } from '../../modules/shell/shell.module';
 
 // OJOS QUITAR ESTE COMPONENTE
-import { BolsaComponent } from './chance/bolsa/bolsa.component';
+import { BolsaComponent } from './genericos/bolsa/bolsa.component';
 import { SummaryFooterComponent } from './chance/summary-footer/summary-footer.component';
 
-import { CrearClienteComponent } from './chance/crear-cliente/crear-cliente.component';
+import { CrearClienteComponent } from './genericos/crear-cliente/crear-cliente.component';
 import { ApuestaMillonariaComponent } from './chance-millonario/apuesta-millonaria/apuesta-millonaria.component';
 import { SuperChanceComponent } from './super-chance/super-chance.component';
 import { ApuestaSuperComponent } from './super-chance/apuesta-super/apuesta-super.component';
@@ -29,7 +27,7 @@ import { RecargasComponent } from './recargas/recargas.component';
 import { RecargasOperadorComponent } from './recargas/regargas-operador/recargas-operador.component';
 import { BolsaRecargasComponent } from './recargas/bolsa-recargas/bolsa-recargas.component';
 import { InputSwitchModule } from 'primeng/inputswitch';
-import { MenuCarritoComponent } from './chance/menu-carrito/menu-carrito.component';
+import { MenuCarritoComponent } from './genericos/menu-carrito/menu-carrito.component';
 
 
 
@@ -40,7 +38,6 @@ import { MenuCarritoComponent } from './chance/menu-carrito/menu-carrito.compone
     ChanceComponent,
     RevisaPagoComponent,
     ChanceMillonarioComponent,
-    ApuestaComponent,
     ApuestaChanceComponent,
     BolsaComponent,
     SummaryFooterComponent,

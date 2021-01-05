@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { BolsaComponent } from '../chance/bolsa/bolsa.component';
-import { ApuestaComponent } from '../chance/apuesta/apuesta.component';
+import { BolsaComponent } from '../genericos/bolsa/bolsa.component';
 import { ApuestaSuperAstroComponent } from './apuesta-super-astro/apuesta-super-astro.component';
 
 @Component({
@@ -11,7 +10,6 @@ import { ApuestaSuperAstroComponent } from './apuesta-super-astro/apuesta-super-
 export class SuperAstroComponent implements OnInit {
 
   @ViewChild(BolsaComponent) bolsaChild: BolsaComponent;
-  @ViewChild(ApuestaComponent) apuestaChild: ApuestaComponent;
   @ViewChild(ApuestaSuperAstroComponent) apuestaMillonariaComponent: ApuestaSuperAstroComponent;
 
   esMillonaria:boolean;

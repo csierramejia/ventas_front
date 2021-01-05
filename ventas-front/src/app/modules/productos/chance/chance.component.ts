@@ -1,13 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { BolsaComponent } from './bolsa/bolsa.component';
 import { SummaryFooterComponent } from './summary-footer/summary-footer.component';
 import { ApuestaChanceComponent } from './apuesta-chance/apuesta-chance.component';
-import { MenuCarritoComponent } from './menu-carrito/menu-carrito.component';
-
-
-import { ApuestaComponent } from './apuesta/apuesta.component';
-import { ApuestaMillonariaComponent } from '../chance-millonario/apuesta-millonaria/apuesta-millonaria.component';
-
+import { MenuCarritoComponent } from '../genericos/menu-carrito/menu-carrito.component';
 @Component({
   selector: 'app-chance',
   templateUrl: './chance.component.html',
@@ -15,39 +9,17 @@ import { ApuestaMillonariaComponent } from '../chance-millonario/apuesta-millona
 })
 export class ChanceComponent implements OnInit {
 
-  // validar si estas sirve para las otras apuestas
-  @ViewChild(BolsaComponent) bolsaChild: BolsaComponent;
-
-  // esto aplica para chance y chance millonario
+  // esto aplica para chance
   @ViewChild(SummaryFooterComponent) summaryFooter: SummaryFooterComponent;
   @ViewChild(ApuestaChanceComponent) apuestaChance: ApuestaChanceComponent;
-  // @ViewChild(MenuCarritoComponent) menuCarrito: MenuCarritoComponent;
-
   @ViewChild(MenuCarritoComponent, {static: true}) menuCarrito: MenuCarritoComponent;
 
-
-
-
-  @ViewChild(ApuestaComponent) apuestaChild: ApuestaComponent;
-  esMillonaria: boolean;
   constructor() {
 
    }
 
   ngOnInit(): void {
-    this.esMillonaria = false;
-  }
 
-  /**
-   * @author Luis Hernandez
-   * @param event
-   * @description Metodo que se engarda de recibir
-   * la informacion del chance que viene del
-   * componente apuesta y lo envia para el
-   * componente bolsa
-   */
-  addBet(event): void {
-    this.bolsaChild.validCreateAndEdit(event);
   }
 
   /**
@@ -79,39 +51,9 @@ export class ChanceComponent implements OnInit {
     this.menuCarrito.refrescarCarrito()
   }
 
-
-
   editarProducto(event){
     this.summaryFooter.editarProducto(event)
     this.apuestaChance.editarProducto(event)
   }
-
-
-
-
-  /**
-   * @author Luis Hernandez
-   * @param event
-   * @description Metodo que se engarda de recibir
-   * la informacion del chance que viene del
-   * componente bolsa y lo envia para el
-   * componente chance
-   */
-  editBet(event): void {
-      this.apuestaChild.editBetSendEmit(event);
-  }
-
-
-
-  /**
-   * @author Luis Hernandez
-   * @param event
-   * @description Metodo que se engarda de notificar
-   * que la transaccion esta ok
-   */
-  creatingBet(event): void {
-      this.apuestaChild.createBetSendEmit(event);
-  }
-
 
 }
