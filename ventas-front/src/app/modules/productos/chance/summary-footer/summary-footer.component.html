@@ -60,4 +60,12 @@
             </div>
         </div>
     </div>
+
+
+    <p-dialog [(visible)]="verConfirmacionPopap" [style]="{width: '664px'}">
+        <app-confirmacion-agregar-carrito  
+            (closePopup)="closeModal($event)" 
+            (eventoCrearEditar)="eventoCrearEditar($event)">
+        </app-confirmacion-agregar-carrito >
+    </p-dialog>
     

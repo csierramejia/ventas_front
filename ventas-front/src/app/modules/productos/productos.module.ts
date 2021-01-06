@@ -15,6 +15,8 @@ import {SidebarModule} from 'primeng/sidebar';
 // OJOS QUITAR ESTE COMPONENTE
 import { BolsaComponent } from './genericos/bolsa/bolsa.component';
 import { SummaryFooterComponent } from './chance/summary-footer/summary-footer.component';
+import { ConfirmacionAgregarCarritoComponent } from './genericos/confirmacion-agregar-carrito/confirmacion-agregar-carrito.component';
+
 
 import { CrearClienteComponent } from './genericos/crear-cliente/crear-cliente.component';
 import { ApuestaMillonariaComponent } from './chance-millonario/apuesta-millonaria/apuesta-millonaria.component';
@@ -40,6 +42,7 @@ import { MenuCarritoComponent } from './genericos/menu-carrito/menu-carrito.comp
     ChanceMillonarioComponent,
     ApuestaChanceComponent,
     BolsaComponent,
+    ConfirmacionAgregarCarritoComponent,
     SummaryFooterComponent,
     CrearClienteComponent,
     ApuestaMillonariaComponent,

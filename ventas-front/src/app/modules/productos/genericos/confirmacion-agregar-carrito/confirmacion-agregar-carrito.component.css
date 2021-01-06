@@ -1,0 +1,21 @@
+.titleCreate{
+    font-family: "Montserrat";
+    font-weight: 800;
+    font-style: normal;
+    font-family: Montserrat;
+    font-size: 15px;
+    color: #999999;
+    opacity: 1;
+}
+
+.btnActions{
+    text-align: left;
+    font: Regular 11px/14px Montserrat;
+    letter-spacing: 0px;
+    color: #888181;
+    opacity: 1;
+}
+
+.btnActions:hover{
+    color: #0083FE;
+}

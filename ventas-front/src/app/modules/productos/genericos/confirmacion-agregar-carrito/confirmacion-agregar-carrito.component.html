@@ -1,0 +1,31 @@
+ 
+    <div class="container-fluid">
+        <h5 class="titleCreate" *ngIf="isCreate">Se agregará la siguiente jugada:</h5>
+        <h5 class="titleCreate" *ngIf="!isCreate">Se actualizará la siguiente jugada:</h5>
+      
+      
+        <div class="row">
+          <div class="col-md-12">COLILLA: {{colilla}}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">NUMEROS: {{numeros}}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">LOTERIAS: {{loterias}}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">APOSTADO: {{apostado}}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">IVA: {{iva}}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">TOTAL: {{total}}</div>
+        </div>
+
+
+        <div class="row float-right">
+            <button type="button" (click)="closePopupE()" class="btn btn-outline-light btnActions">Cancelar</button>
+            <button type="button" (click)="validEventoCrearEditar()" class="btn btn-outline-light btnActions">Aceptar</button>
+        </div>
+    </div>

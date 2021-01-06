@@ -7,6 +7,7 @@ import { MsjUtil } from 'src/app/utilities/messages.util';
 import { CommonService } from 'src/app/utilities/common.service';
 import { Router } from '@angular/router';
 import { RouterConstant } from '../../../../constants/router.constant';
+import { ConfirmacionAgregarCarritoComponent } from '../../genericos/confirmacion-agregar-carrito/confirmacion-agregar-carrito.component';
 
 
 
@@ -21,8 +22,8 @@ import { RouterConstant } from '../../../../constants/router.constant';
 export class SummaryFooterComponent extends CommonComponent implements OnInit, OnDestroy  {
 
   @Output() borrarTodoReset: EventEmitter<any> = new EventEmitter();
-
   @Output() agregarProductos: EventEmitter<any> = new EventEmitter();
+  @ViewChild(ConfirmacionAgregarCarritoComponent) confirmacionAgregar: ConfirmacionAgregarCarritoComponent;
 
   clienteOperacion = {correoCustomer:null, idCustomer:null, nombreCliente:null, numeroDocumento:null, tipoDocumento:null}
   edit = false;
@@ -37,7 +38,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
   loteriaSeleccionadas = [];
   colilla = '';
   fechaSeleccionApuesta: Date;
-
+  verConfirmacionPopap = false;
   hoy = new Date();
   fechaActual = this.hoy.getDate() + '/' + (this.hoy.getMonth() + 1) + '/' + this.hoy.getFullYear();
 
@@ -174,74 +175,57 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
     const listaNumeros = this.obtenerFilasConApuesta(this.listaNumeros)
     if(this.colilla && this.fechaActual && this.loteriaSeleccionadas.length > 0 && listaNumeros.length > 0 && this.clienteOperacion.idCustomer) {
       if(this.edit){
-        const productosEditar = {
-          _id: this.infoEdit[0]._id,
-          colilla: this.colilla,
-          fechaActual: this.fechaActual,
-          loterias: this.loterias,
-          apostado: this.valueBet,
-          iva: this.valueVat,
-          total: this.valueBetTotal,
-          listaNumeros:listaNumeros,
-          clienteOperacion:this.clienteOperacion,
-          fechaSeleccionApuesta:this.fechaSeleccionApuesta
-        }
-
-        const chanceApuesta:any = JSON.parse(localStorage.getItem('chanceApuesta'));
-        const keyResponse = this.getKeyObject(this.infoEdit[0]._id, chanceApuesta);
-        chanceApuesta[keyResponse]._id = productosEditar._id
-        chanceApuesta[keyResponse].colilla = productosEditar.colilla
-        chanceApuesta[keyResponse].fechaActual = productosEditar.fechaActual
-        chanceApuesta[keyResponse].loterias = productosEditar.loterias
-        chanceApuesta[keyResponse].apostado = productosEditar.apostado
-        chanceApuesta[keyResponse].iva = productosEditar.iva
-        chanceApuesta[keyResponse].total = productosEditar.total
-        chanceApuesta[keyResponse].listaNumeros = productosEditar.listaNumeros
-        chanceApuesta[keyResponse].fechaSeleccionApuesta = productosEditar.fechaSeleccionApuesta
-        localStorage.setItem('chanceApuesta', JSON.stringify(chanceApuesta));
-        this.cleanFooter()
-        this.agregarProductos.emit(true);
-        this.borrarTodoReset.emit(true);
-
-
-
+        this.confirmacionAgregar.isCreate = false;
+        this.verConfirmacionPopap = true;
+        this.confirmacionAgregar.colilla = this.colilla
+        this.confirmacionAgregar.numeros = this.concatenarNumeros(listaNumeros)
+        this.confirmacionAgregar.loterias = this.concatenarLoterias(this.loterias)
+        this.confirmacionAgregar.apostado = this.valueBet
+        this.confirmacionAgregar.iva = this.valueVat
+        this.confirmacionAgregar.total = this.valueBetTotal
       } else {
-
-        const productosAgregar = {
-          _id: 'bet_' + Math.floor(Math.random() * 999999),
-          colilla: this.colilla,
-          fechaActual: this.fechaActual,
-          loterias: this.loterias,
-          apostado: this.valueBet,
-          iva: this.valueVat,
-          total: this.valueBetTotal,
-          listaNumeros:listaNumeros,
-          clienteOperacion:this.clienteOperacion,
-          fechaSeleccionApuesta:this.fechaSeleccionApuesta
-        }
-
-        const chanceApuesta = localStorage.getItem('chanceApuesta');
-        if(chanceApuesta === null) {
-          const arrayproductosAgregar = []
-          arrayproductosAgregar.push(productosAgregar)
-          localStorage.setItem('chanceApuesta', JSON.stringify(arrayproductosAgregar));
-        } else {
-          const chanceAp = JSON.parse(localStorage.getItem('chanceApuesta'));
-          chanceAp.push(productosAgregar);
-          localStorage.setItem('chanceApuesta', JSON.stringify(chanceAp));
-        }
-        this.agregarProductos.emit(true);
-        this.borrarTodoReset.emit(true);
-
+        this.confirmacionAgregar.isCreate = true;
+        this.verConfirmacionPopap = true;
+        this.confirmacionAgregar.colilla = this.colilla
+        this.confirmacionAgregar.numeros = this.concatenarNumeros(listaNumeros)
+        this.confirmacionAgregar.loterias = this.concatenarLoterias(this.loterias)
+        this.confirmacionAgregar.apostado = this.valueBet
+        this.confirmacionAgregar.iva = this.valueVat
+        this.confirmacionAgregar.total = this.valueBetTotal
       }
-      
-  
-      
     } else {
       alert('Valide que esta gestionando los campos necesarios para realizar la apuesta');
     }
-    
+  }
 
+  concatenarNumeros(numeros){
+    let numerosConcatenar = '';
+    numeros.forEach(num => {
+      if(numerosConcatenar === ''){
+        if(num.numeroFilaUno){ numerosConcatenar = num.numeroFilaUno}
+      } else {
+        if(num.numeroFilaDos){ numerosConcatenar = numerosConcatenar+', '+num.numeroFilaDos }
+        if(num.numeroFilaTres){ numerosConcatenar = numerosConcatenar+', '+num.numeroFilaTres }
+        if(num.numeroFilaCuatro){ numerosConcatenar = numerosConcatenar+', '+num.numeroFilaCuatro }
+        if(num.numeroFilaCinco){ numerosConcatenar = numerosConcatenar+', '+num.numeroFilaCinco }
+      }
+    });
+    return numerosConcatenar
+  }
+
+
+  concatenarLoterias(loterias){
+    let loteriasConcatenar = '';
+    loterias.forEach(lot => {
+      if(lot.checked){
+        if(loteriasConcatenar === ''){
+          loteriasConcatenar = lot.nombreCorto
+        } else {
+          loteriasConcatenar = loteriasConcatenar+', '+lot.nombreCorto
+        }
+      }
+    });
+    return loteriasConcatenar
   }
 
 
@@ -331,6 +315,93 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
 
   irResumen() {
     this.router.navigate([RouterConstant.NAVIGATE_REVISA_PAGO]);
+  }
+
+
+
+  /**
+   * @author Luis Hernandez
+   * @param event
+   * @description Metodo que se encarga de
+   * recibir el false que emite el componente
+   * que contiene el html del modal de confirmacion (edit- create)
+   */
+  closeModal(event): void {
+    this.verConfirmacionPopap = event;
+  }
+
+
+
+  /**
+   * @author Luis Hernandez
+   * @param event
+   * @description Metodo que se encarga de recibir
+   * el evento de crear o edit para agregar al carrito el producto
+   */
+  eventoCrearEditar (event): void {
+    console.log('.-.-.-.-.-.-.-AGREGAR AL CARRITO.-.-.-.-.-.-.-');
+    console.log(event);
+    console.log('.-.-.-.-.-.-.-AGREGAR AL CARRITO.-.-.-.-.-.-.-');
+
+    this.confirmacionAgregar.isCreate = false;
+    this.verConfirmacionPopap = false;
+
+    const listaNumeros = this.obtenerFilasConApuesta(this.listaNumeros)
+    if(this.edit){
+      const productosEditar = {
+        _id: this.infoEdit[0]._id,
+        colilla: this.colilla,
+        fechaActual: this.fechaActual,
+        loterias: this.loterias,
+        apostado: this.valueBet,
+        iva: this.valueVat,
+        total: this.valueBetTotal,
+        listaNumeros:listaNumeros,
+        clienteOperacion:this.clienteOperacion,
+        fechaSeleccionApuesta:this.fechaSeleccionApuesta
+      }
+
+      const chanceApuesta:any = JSON.parse(localStorage.getItem('chanceApuesta'));
+      const keyResponse = this.getKeyObject(this.infoEdit[0]._id, chanceApuesta);
+      chanceApuesta[keyResponse]._id = productosEditar._id
+      chanceApuesta[keyResponse].colilla = productosEditar.colilla
+      chanceApuesta[keyResponse].fechaActual = productosEditar.fechaActual
+      chanceApuesta[keyResponse].loterias = productosEditar.loterias
+      chanceApuesta[keyResponse].apostado = productosEditar.apostado
+      chanceApuesta[keyResponse].iva = productosEditar.iva
+      chanceApuesta[keyResponse].total = productosEditar.total
+      chanceApuesta[keyResponse].listaNumeros = productosEditar.listaNumeros
+      chanceApuesta[keyResponse].fechaSeleccionApuesta = productosEditar.fechaSeleccionApuesta
+      localStorage.setItem('chanceApuesta', JSON.stringify(chanceApuesta));
+      this.cleanFooter()
+      this.agregarProductos.emit(true);
+      this.borrarTodoReset.emit(true);
+    } else {
+      const productosAgregar = {
+        _id: 'bet_' + Math.floor(Math.random() * 999999),
+        colilla: this.colilla,
+        fechaActual: this.fechaActual,
+        loterias: this.loterias,
+        apostado: this.valueBet,
+        iva: this.valueVat,
+        total: this.valueBetTotal,
+        listaNumeros:listaNumeros,
+        clienteOperacion:this.clienteOperacion,
+        fechaSeleccionApuesta:this.fechaSeleccionApuesta
+      }
+      const chanceApuesta = localStorage.getItem('chanceApuesta');
+      if(chanceApuesta === null) {
+        const arrayproductosAgregar = []
+        arrayproductosAgregar.push(productosAgregar)
+        localStorage.setItem('chanceApuesta', JSON.stringify(arrayproductosAgregar));
+      } else {
+        const chanceAp = JSON.parse(localStorage.getItem('chanceApuesta'));
+        chanceAp.push(productosAgregar);
+        localStorage.setItem('chanceApuesta', JSON.stringify(chanceAp));
+      }
+      this.agregarProductos.emit(true);
+      this.borrarTodoReset.emit(true);
+    }
   }
 
 
