@@ -181,10 +181,14 @@ export class RevisaPagoComponent implements OnInit {
         listaNumeros: this.obtenerEstructuraDatosNumeros(productosDepurar[0].listaNumeros)
       })
     }
+
+    console.log('++++++++++++++');
+    console.log(productosDespuesDepurado);
+    console.log('++++++++++++++');
+
+
   }
 
-
-  // obtenerTipo
 
 
 
@@ -226,9 +230,9 @@ export class RevisaPagoComponent implements OnInit {
         numeros.push({
           combinado: numerosIteras[index].combinadoFilaTres,
           dosCifras: numerosIteras[index].dosCifrasFilaTres,
-          numero: numerosIteras[index].numeroFilaTdosCifrasFilaTres,
-          unaCifra: numerosIteras[index].unaCifraFilaTdosCifrasFilaTres,
-          valorDirecto: numerosIteras[index].valorDirectoFilaTdosCifrasFilaTres,
+          numero: numerosIteras[index].numeroFilaTres,
+          unaCifra: numerosIteras[index].unaCifraFilaTres,
+          valorDirecto: numerosIteras[index].valorDirectoFilaTres,
           tipoJuego: '',
           iva: '',
           total: '',
@@ -239,10 +243,10 @@ export class RevisaPagoComponent implements OnInit {
       if(index === 3){
         numeros.push({
           combinado: numerosIteras[index].combinadoFilaCuatro,
-          dosCifras: numerosIteras[index].dosCifrasFilaCuacombinadoFilaCuatro,
-          numero: numerosIteras[index].numeroFilaTdosCifrasFilaCuacombinadoFilaCuatro,
-          unaCifra: numerosIteras[index].unaCifraFilaTdosCifrasFilaCuacombinadoFilaCuatro,
-          valorDirecto: numerosIteras[index].valorDirectoFilaTdosCifrasFilaCuacombinadoFilaCuatro,
+          dosCifras: numerosIteras[index].dosCifrasFilaCuatro,
+          numero: numerosIteras[index].numeroFilaCuatro,
+          unaCifra: numerosIteras[index].unaCifraFilaCuatro,
+          valorDirecto: numerosIteras[index].valorDirectoFilaCuatro,
           tipoJuego: '',
           iva: '',
           total: '',
@@ -253,10 +257,10 @@ export class RevisaPagoComponent implements OnInit {
       if(index === 4){
         numeros.push({
           combinado: numerosIteras[index].combinadoFilaCinco,
-          dosCifras: numerosIteras[index].dosCifrasFilaCuacombinadoFilaCinco,
-          numero: numerosIteras[index].numeroFilaTdosCifrasFilaCuacombinadoFilaCinco,
-          unaCifra: numerosIteras[index].unaCifraFilaTdosCifrasFilaCuacombinadoFilaCinco,
-          valorDirecto: numerosIteras[index].valorDirectoFilaTdosCifrasFilaCuacombinadoFilaCinco,
+          dosCifras: numerosIteras[index].dosCifrasFilaCinco,
+          numero: numerosIteras[index].numeroFilaCinco,
+          unaCifra: numerosIteras[index].unaCifraFilaCinco,
+          valorDirecto: numerosIteras[index].valorDirectoFilaCinco,
           tipoJuego: '',
           iva: '',
           total: '',
@@ -264,9 +268,42 @@ export class RevisaPagoComponent implements OnInit {
         })
       }
 
-      
-      
     }
+
+    return this.obtenerTipoJuego(numeros);
+
+  }
+
+
+  obtenerTipoJuego(numeros){
+
+    let cont = 0
+
+    numeros.forEach(element => {
+      const detalles = []
+
+      if (String(element.numero).length === 4) {
+        if (element.valorDirecto) { detalles.push({code: 1, valor: element.valorDirecto});}
+        if (element.combinado) { detalles.push({code: 2, valor: element.combinado});}
+        if (element.dosCifras) { detalles.push({code: 5, valor: element.dosCifras}); }
+        if (element.unaCifra) { detalles.push({code: 6, valor: element.unaCifra}); }
+      } else if (String(element.numero).length === 3) {
+        if (element.valorDirecto) { detalles.push({code: 3, valor: element.valorDirecto});}
+        if (element.combinado) { detalles.push({code: 4, valor: element.combinado});}
+        if (element.dosCifras) { detalles.push({code: 5, valor: element.dosCifras}); }
+        if (element.unaCifra) { detalles.push({code: 6, valor: element.unaCifra}); }
+      } else if (String(element.numero).length === 2) {
+        if (element.dosCifras) { detalles.push({code: 5, valor: element.dosCifras}); }
+        if (element.unaCifra) { detalles.push({code: 6, valor: element.unaCifra}); }
+      } else if (String(element.numero).length === 1) {
+        if (element.unaCifra) { detalles.push({code: 6, valor: element.unaCifra}); }
+      }
+
+      numeros[cont].tipoJuego = detalles;
+
+      cont++;
+
+    });
 
     return numeros
 
