@@ -164,6 +164,148 @@ export class RevisaPagoComponent implements OnInit {
 
 
 
+  depurarInfo(){
+    const productosDepurar = JSON.parse(localStorage.getItem('chanceApuesta'))
+    const productosDespuesDepurado = [];
+    for (let index = 0; index < productosDepurar.length; index++) {
+      productosDespuesDepurado.push({
+        apostado: productosDepurar[index].apostado,
+        clienteOperacion: productosDepurar[index].clienteOperacion,
+        colilla: productosDepurar[index].colilla,
+        fechaActual: productosDepurar[index].fechaActual,
+        fechaSeleccionApuesta: productosDepurar[index].fechaSeleccionApuesta,
+        iva: productosDepurar[index].iva,
+        total: productosDepurar[index].iva,
+        _id: productosDepurar[index].fechaSeleccionApuesta,
+        loterias:this.obtenerLoteriasSeleccionadas(productosDepurar[index].loterias),
+        listaNumeros: this.obtenerEstructuraDatosNumeros(productosDepurar[0].listaNumeros)
+      })
+    }
+  }
+
+
+  // obtenerTipo
+
+
+
+  obtenerEstructuraDatosNumeros(numerosIteras){
+
+    const numeros = [];
+
+    for (let index = 0; index < numerosIteras.length; index++) {
+
+      if(index === 0){
+        numeros.push({
+          combinado: numerosIteras[index].combinadoFilaUno,
+          dosCifras: numerosIteras[index].dosCifrasFilaUno,
+          numero: numerosIteras[index].numeroFilaUno,
+          unaCifra: numerosIteras[index].unaCifraFilaUno,
+          valorDirecto: numerosIteras[index].valorDirectoFilaUno,
+          tipoJuego: '',
+          iva: '',
+          total: '',
+          apostado: ''
+        })
+      }
+
+      if(index === 1){
+        numeros.push({
+          combinado: numerosIteras[index].combinadoFilaDos,
+          dosCifras: numerosIteras[index].dosCifrasFilaDos,
+          numero: numerosIteras[index].numeroFilaDos,
+          unaCifra: numerosIteras[index].unaCifraFilaDos,
+          valorDirecto: numerosIteras[index].valorDirectoFilaDos,
+          tipoJuego: '',
+          iva: '',
+          total: '',
+          apostado: ''
+        })
+      }
+
+      if(index === 2){
+        numeros.push({
+          combinado: numerosIteras[index].combinadoFilaTres,
+          dosCifras: numerosIteras[index].dosCifrasFilaTres,
+          numero: numerosIteras[index].numeroFilaTdosCifrasFilaTres,
+          unaCifra: numerosIteras[index].unaCifraFilaTdosCifrasFilaTres,
+          valorDirecto: numerosIteras[index].valorDirectoFilaTdosCifrasFilaTres,
+          tipoJuego: '',
+          iva: '',
+          total: '',
+          apostado: ''
+        })
+      }
+
+      if(index === 3){
+        numeros.push({
+          combinado: numerosIteras[index].combinadoFilaCuatro,
+          dosCifras: numerosIteras[index].dosCifrasFilaCuacombinadoFilaCuatro,
+          numero: numerosIteras[index].numeroFilaTdosCifrasFilaCuacombinadoFilaCuatro,
+          unaCifra: numerosIteras[index].unaCifraFilaTdosCifrasFilaCuacombinadoFilaCuatro,
+          valorDirecto: numerosIteras[index].valorDirectoFilaTdosCifrasFilaCuacombinadoFilaCuatro,
+          tipoJuego: '',
+          iva: '',
+          total: '',
+          apostado: ''
+        })
+      }
+
+      if(index === 4){
+        numeros.push({
+          combinado: numerosIteras[index].combinadoFilaCinco,
+          dosCifras: numerosIteras[index].dosCifrasFilaCuacombinadoFilaCinco,
+          numero: numerosIteras[index].numeroFilaTdosCifrasFilaCuacombinadoFilaCinco,
+          unaCifra: numerosIteras[index].unaCifraFilaTdosCifrasFilaCuacombinadoFilaCinco,
+          valorDirecto: numerosIteras[index].valorDirectoFilaTdosCifrasFilaCuacombinadoFilaCinco,
+          tipoJuego: '',
+          iva: '',
+          total: '',
+          apostado: ''
+        })
+      }
+
+      
+      
+    }
+
+    return numeros
+
+  }
+
+
+
+
+  /**
+   * @author Luis Hernandez
+   * @description Metodo que se valida cuales fueron
+   * las loterias seleccionadas y las manda para el carrito
+   */
+  obtenerLoteriasSeleccionadas(loterias) {
+    const loteriasSeleccionadas = [];
+    if(loterias){
+      loterias.forEach(element => {
+        if (element.checked) {
+          loteriasSeleccionadas.push({
+            idLoteria: element.idLoteria,
+            codigo: element.codigo,
+            nombre: element.nombre,
+            nombreCorto: element.nombreCorto,
+            telefono: element.telefono,
+            idEstado: element.idEstado,
+            idEmpresa: element.idEmpresa,
+            idSorteo: element.idSorteo,
+            idSorteoDetalle: element.idSorteoDetalle,
+            horaSorteo:element.horaSorteo
+          });
+        }
+      });
+    }
+    
+    return loteriasSeleccionadas;
+  }
+
+
+
   /**
    * @author Luis Hernandez
    * @param id

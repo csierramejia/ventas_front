@@ -77,3 +77,14 @@
     align-items: center;
     padding-top: 14px;
 }
+
+
+/* .ui-dialog .ui-dialog-title {
+    float: right;
+    margin: .3em 16px .1em 0;
+    background: red;
+} */
+
+.ui-panel-title { 
+    background: red;
+}

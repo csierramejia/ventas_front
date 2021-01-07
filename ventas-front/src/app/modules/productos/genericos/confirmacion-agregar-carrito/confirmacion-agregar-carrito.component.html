@@ -4,28 +4,34 @@
         <h5 class="titleCreate" *ngIf="!isCreate">Se actualizará la siguiente jugada:</h5>
       
       
-        <div class="row">
-          <div class="col-md-12">COLILLA: {{colilla}}</div>
+        <div class="row espacio">
+          <div class="col-md-12"><b class="info-apuesta">COLILLA:</b> <span class="estilo-info-span">{{colilla}}</span></div>
         </div>
-        <div class="row">
-          <div class="col-md-12">NUMEROS: {{numeros}}</div>
+        <div class="row espacio">
+          <div class="col-md-12"><b class="info-apuesta">NUMEROS:</b> <span class="estilo-info-span">{{numeros}}</span></div>
         </div>
-        <div class="row">
-          <div class="col-md-12">LOTERIAS: {{loterias}}</div>
+        <div class="row espacio">
+          <div class="col-md-12"><b class="info-apuesta">LOTERIAS:</b> <span class="estilo-info-span">{{loterias}}</span></div>
         </div>
-        <div class="row">
-          <div class="col-md-12">APOSTADO: {{apostado}}</div>
+        <div class="row espacio">
+          <div class="col-md-12"><b class="info-apuesta">APOSTADO:</b> <span class="estilo-info-span">{{apostado}}</span></div>
         </div>
-        <div class="row">
-          <div class="col-md-12">IVA: {{iva}}</div>
+        <div class="row espacio">
+          <div class="col-md-12"><b class="info-apuesta">IVA:</b> <span class="estilo-info-span">{{iva}}</span></div>
         </div>
-        <div class="row">
-          <div class="col-md-12">TOTAL: {{total}}</div>
+        <div class="row espacio">
+          <div class="col-md-12"><b class="info-apuesta">TOTAL:</b> <span class="estilo-info-span">{{total}}</span></div>
         </div>
 
 
-        <div class="row float-right">
-            <button type="button" (click)="closePopupE()" class="btn btn-outline-light btnActions">Cancelar</button>
-            <button type="button" (click)="validEventoCrearEditar()" class="btn btn-outline-light btnActions">Aceptar</button>
+        <div class="row">
+          <div class="col-md-12 center-btn">
+            <button (click)="closePopupE()" type="button" class="btn btn-cancelar">
+              Cancelar <i class="fa fa-times" aria-hidden="true"></i>
+            </button>
+            <button (click)="validEventoCrearEditar()" type="button" class="btn btn-aceptar">
+              Aceptar <i class="fa fa-check-circle" aria-hidden="true"></i>
+            </button>
+          </div>
         </div>
     </div>

@@ -6,6 +6,8 @@
     font-size: 15px;
     color: #999999;
     opacity: 1;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 .btnActions{
@@ -18,4 +20,69 @@
 
 .btnActions:hover{
     color: #0083FE;
+}
+
+.info-apuesta {
+    font: normal normal 600 15px/19px Montserrat;
+    letter-spacing: 0px;
+    color: #000000;
+}
+
+.espacio{
+    padding-bottom: 10px;
+}
+
+.estilo-info-span{
+    font: normal normal normal 15px/19px Montserrat;
+    letter-spacing: 0px;
+    color: #000000;
+    margin-left: 15px;
+}
+
+.center-btn{
+    text-align: center;
+}
+
+
+.btn-cancelar {
+    border-radius: 15px;
+    box-shadow: 0px 3px 8px #149DB773;
+    background-color: #F2F2F2 ;
+    font-size: 12px;
+    padding: 0 .30rem 0 .6500rem;
+    font-family: Montserrat;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.27;
+    letter-spacing: normal;
+    text-align: left;
+    height: 31px;
+    width: 20%;
+    color: black;
+    text-align: center !important;
+}
+
+
+.btn-aceptar {
+    border-radius: 15px;
+    box-shadow: 0px 3px 8px #149DB773;
+    background-color: #2076BD;
+    font-size: 12px;
+    padding: 0 .30rem 0 .6500rem;
+    font-family: Montserrat;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.27;
+    letter-spacing: normal;
+    text-align: left;
+    height: 31px;
+    width: 20%;
+    color: #ffffff;
+    text-align: center !important;
+}
+
+.fa{
+    font-size: 16px;
 }

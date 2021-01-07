@@ -88,7 +88,14 @@
     
                                 <div class="container-fluid">
                                     <div id="fila-loteiras" class="row">
+                                        
+
                                         <div class="col-md-4"*ngFor="let loteria of loterias">
+                                            <!-- <p-overlayPanel #op>
+                                                <ng-template pTemplate>
+                                                    <img src="" alt="" srcset="">
+                                                </ng-template>
+                                            </p-overlayPanel> -->
                                             <input type="checkbox" (click)="toggleVisibility(loteria)" [(ngModel)]="loteria.checked"/>
                                             <label class="labelloteria">{{loteria.nombreCorto}}</label>
                                         </div>
