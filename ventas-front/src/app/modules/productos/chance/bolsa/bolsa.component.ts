@@ -235,7 +235,8 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
       }
     });
    
-    this.valueVat = Math.floor(this.valueBet * this.inputVat) / 100;
+    const calculoImpuesto=(this.inputVat/100) + 1
+    this.valueVat = this.valueBet-(this.valueBet / calculoImpuesto);
     this.valueBet = this.valueBet - this.valueVat;
 
     this.valueBetTotal = Math.floor(this.valueBet + this.valueVat);
@@ -304,15 +305,18 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
         betDetail.apuestaD = element.apuestaD;
         betDetail.apuestaE = element.apuestaE;
         betDetail.valueBet= element.valorApostado;
-        betDetail.valueVat= Math.floor( element.valorApostado* this.inputVat) / 100;
+        const calculoImpuesto=(this.inputVat/100) + 1
+        betDetail.valueVat = this.valueBet-(this.valueBet / calculoImpuesto);
       } else if (element.modalidad == null && element.numeroSuper) {
         betDetail.numeroSuper = element.numeroSuper;
         betDetail.valueBet= element.valorApostado;
-        betDetail.valueVat= Math.floor( element.valorApostado* this.inputVat) / 100;
+        const calculoImpuesto=(this.inputVat/100) + 1
+        betDetail.valueVat = this.valueBet-(this.valueBet / calculoImpuesto);
       } else if (element.modalidad == null && element.numeroAstro) {
         betDetail.numeroAstro = element.numeroAstro;
         betDetail.valueBet= element.valorApostado;
-        betDetail.valueVat= Math.floor( element.valorApostado* this.inputVat) / 100;
+        const calculoImpuesto=(this.inputVat/100) + 1
+        betDetail.valueVat = this.valueBet-(this.valueBet / calculoImpuesto);
         betDetail.zignos = element.zignos;
       } else {
       betDetail.numberPlayed = element.numberPlayed;
