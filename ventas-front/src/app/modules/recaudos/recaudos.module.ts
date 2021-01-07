@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { RouterConstant } from '../../constants/router.constant';
 import { SharedModule} from '../shared/shared.module';
 import {CardModule} from 'primeng/card';
+import {FieldsetModule} from 'primeng/fieldset';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {DialogModule} from 'primeng/dialog';
 import {SidebarModule} from 'primeng/sidebar';
@@ -28,7 +29,8 @@ import {SidebarModule} from 'primeng/sidebar';
     DialogModule,
     SidebarModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    FieldsetModule
   ],
 })
 export class RecaudosModule { }
