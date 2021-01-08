@@ -146,9 +146,9 @@ body {
   background-color: #f8f9fa !important
 }
 
-.ui-calendar {
+/* .ui-calendar {
   display: block !important;
-}
+} */
 
 .ui-calendar .ui-widget:disabled {
   opacity: 1 !important;

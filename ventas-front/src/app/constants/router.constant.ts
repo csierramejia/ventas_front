@@ -12,6 +12,9 @@ export class RouterConstant {
   /** Router para el componente de chance */
   public static readonly ROUTER_CHANCE: string = 'chance';
 
+  /** Router para el componente de revisa-pago */
+  public static readonly ROUTER_REVISA_PAGO: string = 'revisa-pago';
+
   /** Router para el componente de chance */
   public static readonly ROUTER_CHANCE_MILLONARIO: string = 'chance-millonario';
 
@@ -59,11 +62,17 @@ export class RouterConstant {
   /** Constante para navegar a la pagina de BIENVENIDA */
   public static readonly NAVIGATE_BIENVENIDA: string = `/${RouterConstant.ROUTER_AUTENTICADO}/${RouterConstant.ROUTER_BIENVENIDA}`;
 
+  /** Constante para navegar a la pagina de revisa-pago (RESUMEN) */
+  public static readonly NAVIGATE_REVISA_PAGO: string = `/${RouterConstant.ROUTER_AUTENTICADO}/productos/${RouterConstant.ROUTER_REVISA_PAGO}`;
+
   /** Constante para navegar a la pagina de ADMIN CUENTA USER */
   public static readonly NAVIGATE_CUENTA_USER: string = `/${RouterConstant.ROUTER_AUTENTICADO}/${RouterConstant.ROUTER_CUENTA_USER}`;
 
   /** Constante para navegar a la pagina de BIENVENIDA */
-  public static readonly NAVIGATE_CHANCE: string = `/${RouterConstant.ROUTER_CHANCE}/${RouterConstant.ROUTER_BIENVENIDA}`;
+  public static readonly NAVIGATE_CHANCE: string = `/${RouterConstant.ROUTER_AUTENTICADO}/productos/${RouterConstant.ROUTER_CHANCE}`;
+
+
+  // public static readonly NAVIGATE_CHANCE: string = `/${RouterConstant.ROUTER_CHANCE}/${RouterConstant.ROUTER_BIENVENIDA}`;
 
   /** Router para el componente de recaudos */
   public static readonly ROUTER_RECAUDOS: string = 'recaudos';

@@ -1,7 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { BolsaRecargasComponent } from './bolsa-recargas/bolsa-recargas.component';
-import { ApuestaComponent } from '../chance/apuesta/apuesta.component';
-
 import { RecargasOperadorComponent } from './regargas-operador/recargas-operador.component';
 
 @Component({
@@ -17,7 +15,7 @@ export class RecargasComponent implements OnInit {
   esMillonaria:boolean;
   constructor() {
 
-   }
+  }
 
   ngOnInit(): void {
     this.esMillonaria=true;

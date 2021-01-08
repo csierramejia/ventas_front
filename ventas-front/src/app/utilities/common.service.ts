@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { ItemParamDTO } from '../dtos/transversal/item-param.dto';
 import { CommonAPIConstant } from '../constants/apis/common/common-api-constant';
+import { Subject } from 'rxjs/Subject';
 import { ItemFiltroDTO } from '../dtos/transversal/item-filtro.dto';
 import { SelectItem } from 'primeng/api';
 
@@ -11,6 +12,7 @@ import { SelectItem } from 'primeng/api';
  */
 @Injectable()
 export class CommonService {
+
   /**
    * @param HTTP para hacer las peticiones a los servicios REST
    */
@@ -31,7 +33,26 @@ export class CommonService {
 
 
   /**
-   * Servicio que permite obtener los items de la tabla LOTERIAS
+   * servicio qeu retorne la hora y fecha de la base de datos
+   * 
+   */
+
+  obtenerHora(): Observable<Date>{
+
+    return new Observable(
+        observer => {
+              setInterval(() =>
+                  observer.next(new Date())
+              , 1000);
+        }
+    );
+  }
+
+
+  
+
+  
+   /* Servicio que permite obtener los items de la tabla LOTERIAS
    *
    * @param filtro, DTO que contiene los valores del filtro
    * @return Lista de Items parametrizados en el sistema
@@ -44,4 +65,5 @@ export class CommonService {
       filtro
     );
   }
+
 }

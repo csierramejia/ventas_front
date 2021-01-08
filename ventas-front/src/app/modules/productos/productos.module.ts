@@ -1,16 +1,24 @@
 import { NgModule } from '@angular/core';
 import { ChanceComponent } from './chance/chance.component';
+import { RevisaPagoComponent } from './revisa-pago/revisa-pago.component';
 import { ChanceMillonarioComponent } from './chance-millonario/chance-millonario.component';
 import { RouterModule } from '@angular/router';
 import { RouterConstant } from './../../constants/router.constant';
 import { SharedModule} from '../shared/shared.module';
-import { ApuestaComponent } from './chance/apuesta/apuesta.component';
+// OJOS QUITAR ESTE COMPONENTE
+import { ApuestaChanceComponent } from './chance/apuesta-chance/apuesta-chance.component';
 import {CardModule} from 'primeng/card';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {DialogModule} from 'primeng/dialog';
 import {SidebarModule} from 'primeng/sidebar';
-import { BolsaComponent } from './chance/bolsa/bolsa.component';
-import { CrearClienteComponent } from './chance/crear-cliente/crear-cliente.component';
+
+// OJOS QUITAR ESTE COMPONENTE
+import { BolsaComponent } from './genericos/bolsa/bolsa.component';
+import { SummaryFooterComponent } from './chance/summary-footer/summary-footer.component';
+import { ConfirmacionAgregarCarritoComponent } from './genericos/confirmacion-agregar-carrito/confirmacion-agregar-carrito.component';
+
+
+import { CrearClienteComponent } from './genericos/crear-cliente/crear-cliente.component';
 import { ApuestaMillonariaComponent } from './chance-millonario/apuesta-millonaria/apuesta-millonaria.component';
 import { SuperChanceComponent } from './super-chance/super-chance.component';
 import { ApuestaSuperComponent } from './super-chance/apuesta-super/apuesta-super.component';
@@ -20,13 +28,22 @@ import { LoteriaVirtualComponent } from './loteria-virtual/loteria-virtual.compo
 import { RecargasComponent } from './recargas/recargas.component';
 import { RecargasOperadorComponent } from './recargas/regargas-operador/recargas-operador.component';
 import { BolsaRecargasComponent } from './recargas/bolsa-recargas/bolsa-recargas.component';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { MenuCarritoComponent } from './genericos/menu-carrito/menu-carrito.component';
+
+
+
+
 
 @NgModule({
   declarations: [
     ChanceComponent,
+    RevisaPagoComponent,
     ChanceMillonarioComponent,
-    ApuestaComponent,
+    ApuestaChanceComponent,
     BolsaComponent,
+    ConfirmacionAgregarCarritoComponent,
+    SummaryFooterComponent,
     CrearClienteComponent,
     ApuestaMillonariaComponent,
     SuperChanceComponent,
@@ -36,13 +53,19 @@ import { BolsaRecargasComponent } from './recargas/bolsa-recargas/bolsa-recargas
     LoteriaVirtualComponent,
     RecargasComponent,
     RecargasOperadorComponent,
-    BolsaRecargasComponent
+    BolsaRecargasComponent,
+    MenuCarritoComponent
   ],
+  
   imports: [
     RouterModule.forChild([
       {
         path: RouterConstant.ROUTER_CHANCE,
         component: ChanceComponent
+      },
+      {
+        path: RouterConstant.ROUTER_REVISA_PAGO,
+        component: RevisaPagoComponent
       },
       {
         path: RouterConstant.ROUTER_CHANCE_MILLONARIO,
@@ -63,14 +86,18 @@ import { BolsaRecargasComponent } from './recargas/bolsa-recargas/bolsa-recargas
       {
         path: RouterConstant.ROUTER_RECARGAS,
         component: RecargasComponent
-      },
+      }
     ]),
     SharedModule,
     CardModule,
     DialogModule,
     SidebarModule,
+    InputSwitchModule,
     ReactiveFormsModule,
     FormsModule
+  ],
+  exports: [
+    MenuCarritoComponent
   ],
 })
 export class ProductosModule { }

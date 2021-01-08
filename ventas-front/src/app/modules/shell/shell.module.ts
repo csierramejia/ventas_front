@@ -13,6 +13,10 @@ import { HeaderComponent } from './header/header.component';
 import { MenuComponent } from './menus/menu/menu.component';
 import { ContentComponent } from './content/content.component';
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
+import { ProductosModule } from '../../modules/productos/productos.module';
+
+
+
 
 /**
  * Modulo que contiene todos los componentes y modulos que define
@@ -27,7 +31,8 @@ import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
     MessagesModule,
     ConfirmDialogModule,
     DialogModule,
-    ToastModule
+    ToastModule,
+    ProductosModule
   ],
   declarations: [
     ShellComponent,
@@ -37,7 +42,8 @@ import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
     BreadcrumbComponent
   ],
   exports: [
-    ShellComponent
+    ShellComponent,
+    BreadcrumbComponent
   ],
   providers: [
     ConfirmationService,

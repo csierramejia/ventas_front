@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DirectoComponent } from './directo.component';
+import { SummaryFooterComponent } from './summary-footer.component';
 
-describe('DirectoComponent', () => {
-  let component: DirectoComponent;
-  let fixture: ComponentFixture<DirectoComponent>;
+describe('SummaryFooterComponent', () => {
+  let component: SummaryFooterComponent;
+  let fixture: ComponentFixture<SummaryFooterComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DirectoComponent ]
+      declarations: [ SummaryFooterComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DirectoComponent);
+    fixture = TestBed.createComponent(SummaryFooterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

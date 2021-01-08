@@ -27,3 +27,24 @@
   font-size: 20px;
   margin-right: 5px;
 }
+
+
+.inline-li{
+  display: inline-block;
+}
+
+
+#li-cart{
+  padding-left: 40px;
+}
+
+.carrito{
+  font-size: 30px;
+}
+
+.fechaActual{
+  font-size: 13px;
+  font-family: Montserrat !important;
+  letter-spacing: 0px;
+  color: #000000;
+}
