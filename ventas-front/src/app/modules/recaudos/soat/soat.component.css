@@ -368,12 +368,9 @@
   text-align: center;
   font-weight: bold;
   height: 64px;
-  
   float: left;
   position: relative;
- 
- 
-  border: solid 1px #ccc;
+   border: solid 1px #ccc;
   border-right: none;
   background: #b80019 0% 0% no-repeat padding-box;
 }

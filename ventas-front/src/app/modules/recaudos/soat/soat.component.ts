@@ -9,6 +9,12 @@ import { CommonService } from 'src/app/utilities/common.service';
 import { ItemFiltroDTO } from 'src/app/dtos/transversal/item-filtro.dto';
 import { MsjUtil } from 'src/app/utilities/messages.util';
 import { LabelsConstant } from 'src/app/constants/labels.constant';
+import { RecaudosService } from '../recaudos.service';
+import { SpinnerState } from 'src/app/states/spinner.state';
+import { VehiculoDTO } from 'src/app/dtos/soat/vehiculo.dto';
+import { AutenticacionResponseDTO } from 'src/app/dtos/seguridad/autenticacion/autenticacion-response.dto';
+import { TipoEventoConstant } from 'src/app/constants/tipo-evento.constant';
+import { SessionStoreUtil } from 'src/app/utilities/session-store.util';
 
 
 
@@ -16,7 +22,7 @@ import { LabelsConstant } from 'src/app/constants/labels.constant';
   selector: 'app-soat',
   templateUrl: './soat.component.html',
   styleUrls: ['./soat.component.css'],
-  providers: [CommonService],
+  providers: [CommonService, RecaudosService],
 })
 export class SoatComponent extends CommonComponent implements OnInit, OnDestroy {
 
@@ -30,14 +36,20 @@ export class SoatComponent extends CommonComponent implements OnInit, OnDestroy 
 
   /** Datos del tomador */
   public tomadorDTO: TomadorDTO;
+
+  /** Datos del vehículo */
+  public vehiculoDTO: VehiculoDTO;
   /** Variable que almacena el tipo de documento */
   public itemsTipoDocumento: SelectItem[];
 
   /** constante para el idioma espaniol para los calendar */
   public CALENDAR_SPANISH = LabelsConstant.CALENDAR_SPANISH;
 
-   /** Indica si ya se dio submit para la creacion del tomador */
-   public isSubmit: boolean;
+  /** Indica si ya se dio submit para la creacion del tomador */
+  public isSubmit: boolean;
+
+  /** Dto que contiene los datos de la autenticacion */
+  private auth: AutenticacionResponseDTO;
 
 
   /**
@@ -64,16 +76,18 @@ export class SoatComponent extends CommonComponent implements OnInit, OnDestroy 
     fechaNacimiento: new FormControl('', [Validators.required]),
     ciudad: new FormControl('', [Validators.required]),
     direccion: new FormControl('', [Validators.required]),
-    numeroCelular: new FormControl('', [Validators.required,Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]),
-     correo: new FormControl('', [Validators.required, Validators.email]),
+    numeroCelular: new FormControl('', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]),
+    correo: new FormControl('', [Validators.required, Validators.email]),
     fechaInicioVigencia: new FormControl('', [Validators.required])
-  
+
 
   });
   constructor(
     protected messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private recaudosService: RecaudosService,
+    private spinnerState: SpinnerState
 
   ) {
     super();
@@ -95,19 +109,46 @@ export class SoatComponent extends CommonComponent implements OnInit, OnDestroy 
    * datos iniciales requeridos de la funcionalidad
    */
   private init(): void {
-    this.tomadorDTO = new TomadorDTO();
+    // se obtiene los datos de la autenticacion
+    this.auth = SessionStoreUtil.auth(TipoEventoConstant.GET);
     this.index = 0;
     this.obtenerTiposDocumento();
   }
 
-  public cerrarCaja(): void { }
 
 
- 
 
+  /**
+   * Método encargado de consultar un vehículo por placaS
+   */
   public consultarPlaca(): void {
-    this.step.next();
-    this.index = this.step._selectedIndex;
+    this.spinnerState.displaySpinner();
+    setTimeout(() => {
+      this.vehiculoDTO = new VehiculoDTO();
+      if (this.placa) {
+        this.recaudosService.consultarVehiculoPorPlaca(this.placa).subscribe(
+          (data) => {
+            this.vehiculoDTO = data;
+            this.step.next();
+            this.index = this.step._selectedIndex;
+            this.isSubmit = false;
+          },
+          (error) => {
+            this.messageService.add(
+              MsjUtil.getMsjError(this.showMensajeError(error))
+            );
+          }
+        );
+        this.isSubmit = false;
+      }
+      else {
+        this.isSubmit = true;
+        this.messageService.add(MsjUtil.getToastErrorMedium('Por favor ingresar la placa del vehículo'));
+
+      }
+
+      this.spinnerState.hideSpinner();
+    }, 100);
   }
 
   /**
@@ -171,14 +212,55 @@ export class SoatComponent extends CommonComponent implements OnInit, OnDestroy 
 
 
 
-
-  public pagar(): void { }
-
-   /**
-   * @author Jhon Rivera
-   * @description Metodo que se encarga de validar
-   * si van los campos obligatorios para almacenar el tomador
+  /**
+   * Método quer permite realizar el pago del soat
    */
+  public pagar(): void {
+    this.spinnerState.displaySpinner();
+    setTimeout(() => {
+
+      this.tomadorDTO = new TomadorDTO();
+      this.tomadorDTO.idUsuario = this.auth.usuario.idUsuario;
+      this.tomadorDTO.tipoDocumento = this.tomadorForm.get('tipoDocumento').value;
+      this.tomadorDTO.numeroDocumento = this.tomadorForm.get('numeroDocumento').value;
+      this.tomadorDTO.nombres = this.tomadorForm.get('nombres').value;
+      this.tomadorDTO.apellidos = this.tomadorForm.get('apellidos').value;
+      this.tomadorDTO.fechaNacimiento = this.tomadorForm.get('fechaNacimiento').value;
+      this.tomadorDTO.ciudad = this.tomadorForm.get('ciudad').value;
+      this.tomadorDTO.direccion = this.tomadorForm.get('direccion').value;
+      this.tomadorDTO.numeroCelular = this.tomadorForm.get('numeroCelular').value;
+      this.tomadorDTO.correo = this.tomadorForm.get('correo').value;
+      this.tomadorDTO.fechaInicioVigencia = this.tomadorForm.get('fechaInicioVigencia').value;
+      this.tomadorDTO.vehiculo = this.vehiculoDTO;
+
+      this.recaudosService.registrarPagoTomador(this.tomadorDTO).subscribe(
+        (data) => {
+          this.vehiculoDTO = data;
+          this.step.next();
+          this.index = this.step._selectedIndex;
+          this.isSubmit = false;
+          this.messageService.add(MsjUtil.getToastSuccessMedium('Transacción realizada exitosamente'));
+
+        },
+        (error) => {
+          this.messageService.add(
+            MsjUtil.getMsjError(this.showMensajeError(error))
+          );
+        }
+      );
+      this.isSubmit = false;
+
+
+      this.spinnerState.hideSpinner();
+    }, 100);
+
+  }
+
+  /**
+  * @author Jhon Rivera
+  * @description Metodo que se encarga de validar
+  * si van los campos obligatorios para almacenar el tomador
+  */
   public comprar(): void {
     this.messageService.clear();
     if (
@@ -193,28 +275,15 @@ export class SoatComponent extends CommonComponent implements OnInit, OnDestroy 
       this.tomadorForm.get('correo').valid &&
       this.tomadorForm.get('fechaInicioVigencia').valid &&
       this.autorizacion
-      ) {
-        const clientSend = {
-          tipoDocumento : this.tomadorForm.get('tipoDocumento').value,
-          numeroDocumento: this.tomadorForm.get('numeroDocumento').value,
-          nombres: this.tomadorForm.get('nombres').value,
-          apellidos: this.tomadorForm.get('apellidos').value,
-          fechaNacimiento : this.tomadorForm.get('fechaNacimiento').value,
-          ciudad : this.tomadorForm.get('ciudad').value,
-          direccion : this.tomadorForm.get('direccion').value,
-          numeroCelular : this.tomadorForm.get('numeroCelular').value,
-          correo : this.tomadorForm.get('correo').value,
-          fechaInicioVigencia : this.tomadorForm.get('fechaInicioVigencia').value
-          
-        };
-         // se indica que ya se dio commit
-        this.isSubmit = false;
-       // this.createTomadorService(clientSend);
-       this.step.next();
-       this.index = this.step._selectedIndex;
+    ) {
+
+      // se indica que ya se dio commit
+      this.isSubmit = false;
+      this.step.next();
+      this.index = this.step._selectedIndex;
     } else {
-       // se indica que ya se dio commit
-       this.isSubmit = true;
+      // se indica que ya se dio commit
+      this.isSubmit = true;
       this.messageService.add(MsjUtil.getToastErrorMedium('Por favor diligenciar todos los campos'));
     }
   }

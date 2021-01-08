@@ -1,8 +1,12 @@
 
+import { VehiculoDTO } from 'src/app/dtos/soat/vehiculo.dto';
 
+/**
+ * DTO que contiene los atributos del tomador
+ */
 export class TomadorDTO {
 
-    public idCliente: number;
+    public idUsuario: number;
     public nombres: string;
     public apellidos: string;
     public tipoDocumento: string;
@@ -13,4 +17,5 @@ export class TomadorDTO {
     public correo: string;
     public numeroCelular: string;
     public fechaInicioVigencia: Date;
+    public vehiculo: VehiculoDTO;
 }
