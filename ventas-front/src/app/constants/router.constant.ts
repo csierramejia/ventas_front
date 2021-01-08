@@ -69,7 +69,10 @@ export class RouterConstant {
   public static readonly NAVIGATE_CUENTA_USER: string = `/${RouterConstant.ROUTER_AUTENTICADO}/${RouterConstant.ROUTER_CUENTA_USER}`;
 
   /** Constante para navegar a la pagina de BIENVENIDA */
-  public static readonly NAVIGATE_CHANCE: string = `/${RouterConstant.ROUTER_CHANCE}/${RouterConstant.ROUTER_BIENVENIDA}`;
+  public static readonly NAVIGATE_CHANCE: string = `/${RouterConstant.ROUTER_AUTENTICADO}/productos/${RouterConstant.ROUTER_CHANCE}`;
+
+
+  // public static readonly NAVIGATE_CHANCE: string = `/${RouterConstant.ROUTER_CHANCE}/${RouterConstant.ROUTER_BIENVENIDA}`;
 
   /** Router para el componente de recaudos */
   public static readonly ROUTER_RECAUDOS: string = 'recaudos';

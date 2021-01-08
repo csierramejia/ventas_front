@@ -37,6 +37,7 @@
 
 .div-icono-eliminar{
     text-align: center;
+    cursor: pointer;
 }
 
 .i-eliminar{
@@ -97,4 +98,17 @@
     font: normal normal 600 18px/22px Montserrat;
     letter-spacing: 0px;
     color: #000000;
+}
+
+.btn-finalizar-col{
+    text-align: right;
+}
+
+.btn-finalizar{
+    width: 253px;
+    height: 40px;
+    background: #BE1E42 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 8px #149DB77A;
+    border-radius: 20px;
+    color: #fff;
 }

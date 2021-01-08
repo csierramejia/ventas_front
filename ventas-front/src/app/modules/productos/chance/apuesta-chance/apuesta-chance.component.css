@@ -139,9 +139,45 @@
 }
 
 .styleInput{
-    width: 232px;
     height: 31px;
     background: #F2F2F2 0% 0% no-repeat padding-box;
     border-radius: 15px;
 }
+
+.labelloteria{
+    width: 43px;
+    height: 16px;
+    text-align: left;
+    font: normal normal 600 13px/16px Montserrat;
+    letter-spacing: 0px;
+    color: #111111;
+}
+
+
+#fila-loteiras{
+    margin: 10px 5px 5px 5px;
+}
+
+.img-aletorio{
+    cursor: pointer;
+    padding-left: 15px;
+}
+
+
+
+@media screen and (max-width: 1421px) {
+    .chipOptionDay{
+        font-size: 15px;
+        width: 30px;
+        height: 30px;
+        
+        
+    }
+}
+
+
+
+
+    
+
 

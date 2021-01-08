@@ -13,7 +13,8 @@ import { HeaderComponent } from './header/header.component';
 import { MenuComponent } from './menus/menu/menu.component';
 import { ContentComponent } from './content/content.component';
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
-import { MenuCarritoComponent } from './menus/menu-carrito/menu-carrito.component';
+import { ProductosModule } from '../../modules/productos/productos.module';
+
 
 
 
@@ -30,18 +31,19 @@ import { MenuCarritoComponent } from './menus/menu-carrito/menu-carrito.componen
     MessagesModule,
     ConfirmDialogModule,
     DialogModule,
-    ToastModule
+    ToastModule,
+    ProductosModule
   ],
   declarations: [
     ShellComponent,
     HeaderComponent,
     ContentComponent,
     MenuComponent,
-    MenuCarritoComponent,
     BreadcrumbComponent
   ],
   exports: [
-    ShellComponent
+    ShellComponent,
+    BreadcrumbComponent
   ],
   providers: [
     ConfirmationService,

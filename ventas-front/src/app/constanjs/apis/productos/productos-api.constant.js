@@ -47,10 +47,14 @@ var ProductosAPIConstant = /** @class */ (function () {
     ProductosAPIConstant.URL_IMPUESTO_IVA = AppDomainConstant.URI_GATEWAY +
         ProductosAPIConstant.IMPUESTOS_API +
         'consultarImpuestoNombre';
-    /** URL del recurso para obtener el iva */
+    /** URL del recurso para hacer compra */
     ProductosAPIConstant.URL_REGISTRAR_APUESTA = AppDomainConstant.URI_GATEWAY +
         ProductosAPIConstant.LOTERIAS_API +
         'registrarApuesta';
+    /** URL del recurso para hacer compra version 2 */
+    ProductosAPIConstant.URL_REGISTRAR_APUESTAS = AppDomainConstant.URI_GATEWAY +
+        ProductosAPIConstant.LOTERIAS_API +
+        'registrarApuestas';
     /** URL del recurso para obtener el iva */
     ProductosAPIConstant.URL_REGISTRAR_RECARGA = AppDomainConstant.URI_GATEWAY +
         ProductosAPIConstant.MODALIDADES_RECARGAS +

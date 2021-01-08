@@ -6,7 +6,7 @@ import { MessageService } from 'primeng/api';
 import { MsjUtil } from 'src/app/utilities/messages.util';
 import { CommonComponent } from 'src/app/utilities/common.component';
 import { ShellState } from 'src/app/states/shell/shell.state';
-import { CrearClienteComponent } from '../../chance/crear-cliente/crear-cliente.component';
+import { CrearClienteComponent } from '../../genericos/crear-cliente/crear-cliente.component';
 import { FechaUtil } from 'src/app/utilities/fecha-util';
 @Component({
   selector: 'app-apuesta-millonaria',

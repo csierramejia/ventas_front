@@ -98,4 +98,5 @@ export class ContentComponent implements OnInit {
       })();
     }, 10);
   }
+
 }

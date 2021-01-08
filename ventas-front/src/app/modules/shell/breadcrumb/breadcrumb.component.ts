@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ShellState } from './../../../states/shell/shell.state';
+import { CommonService } from "../../../utilities/common.service";
+import { MenuCarritoComponent } from '../../productos/genericos/menu-carrito/menu-carrito.component';
 
 /**
  * Miga de pan que se visualiza en el Shell de la aplicacion
@@ -7,19 +9,29 @@ import { ShellState } from './../../../states/shell/shell.state';
 @Component({
   selector: 'app-breadcrumb',
   templateUrl: './breadcrumb.component.html',
-  styleUrls: ['./breadcrumb.component.css']
+  styleUrls: ['./breadcrumb.component.css'],
+  providers: [ CommonService ]
 })
 export class BreadcrumbComponent implements OnInit {
+
+  @ViewChild(MenuCarritoComponent) menuCarritoComponent: MenuCarritoComponent;
+
   hoy = new Date();
   fechaActual = this.hoy.getDate() + '/' + (this.hoy.getMonth() + 1) + '/' + this.hoy.getFullYear();
-  horaActual = this.hoy.getHours() + ':' + this.hoy.getMinutes() + ':' + this.hoy.getSeconds();
+  horaActual: Date;
+  // horaActual = this.hoy.getHours() + ':' + this.hoy.getMinutes() + ':' + this.hoy.getSeconds();
 
 
   /**
    * @param shellState , se utiliza para obtener
    * los valores de la miga de pan
    */
-  constructor(public shellState: ShellState) {
+  constructor(
+    public shellState: ShellState,
+    private commonService: CommonService
+    ) {
+      this.commonService.obtenerHora()
+      .subscribe( data => this.horaActual = data );
   }
 
 
@@ -31,8 +43,9 @@ export class BreadcrumbComponent implements OnInit {
   obtenerFechaHora() {
     let hoy = new Date();
     this.fechaActual = hoy.getDate() + '/' + (hoy.getMonth() + 1) + '/' + hoy.getFullYear();
-    this.horaActual = hoy.getHours() + ':' + hoy.getMinutes() + ':' + hoy.getSeconds();
+    // this.horaActual = hoy.getHours() + ':' + hoy.getMinutes() + ':' + hoy.getSeconds();
     // console.log(this.fechaActual+' '+this.horaActual);
   }
+
 
 }

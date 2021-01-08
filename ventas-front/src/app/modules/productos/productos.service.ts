@@ -104,6 +104,14 @@ export class ProductosService {
   }
 
 
+  public registrarApuestas(bet): Observable<ResponseDTO> {
+    return this.http.post<ResponseDTO>(
+      ProductosAPIConstant.URL_REGISTRAR_APUESTAS,
+      bet
+    );
+  }
+
+
   /**
    * @author Luis Hernandez
    * @param cliente

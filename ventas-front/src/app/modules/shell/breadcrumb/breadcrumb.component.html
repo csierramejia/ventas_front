@@ -8,7 +8,7 @@
       <li class="nav-item inline-li">
         <i class="fa fa-clock-o icon fecha-carrito"></i>
         <!-- <span>02/04/2020 15:28:09</span> -->
-        <span class="fechaActual">{{ fechaActual }} {{ horaActual }}</span>
+        <span class="fechaActual">{{ fechaActual }} {{horaActual | date: 'mediumTime'}}</span>
       </li>
       <li 
         class="fa fa-shopping-cart icon carrito" 
@@ -34,5 +34,5 @@
 
 
 
-<app-menu-carrito></app-menu-carrito>
+<!-- <app-menu-carrito></app-menu-carrito> -->
 

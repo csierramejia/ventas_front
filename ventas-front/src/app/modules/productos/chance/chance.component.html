@@ -1,28 +1,12 @@
-    <section class="container-fluid">
-        <div class="row">
-            <div class="col-9" *ngIf="!esMillonaria">
-                <app-apuesta
-                    (addBet)="addBet($event)"
-                    (addLotteries)="addLotteries($event)">
-                </app-apuesta>
-            </div>
-            <div class="col-9" *ngIf="esMillonaria">
-                <app-apuesta-millonaria
-                    (addBet)="addBet($event)"
-                    (addLotteries)="addLotteries($event)">
-                </app-apuesta-millonaria>
-            </div>
-            <div class="col-3">
-                <app-bolsa 
-                    (editBet)="editBet($event)"
-                    (creatingBet)="creatingBet($event)">
-                </app-bolsa>
-            </div>
-        </div>
+    
+    <app-menu-carrito (editarProducto)="editarProducto($event)"></app-menu-carrito>
+    <section>
+        <app-apuesta-chance
+            (agregarLoterias)="agregarLoterias($event)"
+            (agregarNumeros)="agregarNumeros($event)"
+            (agregarCliente)="agregarCliente($event)">
+        </app-apuesta-chance>
+        <app-summary-footer
+            (borrarTodoReset)="borrarTodoReset($event)" (agregarProductos)="agregarProductos($event)">
+        </app-summary-footer>
     </section>
-
-
-    <!-- <section>
-        <app-apuesta-chance></app-apuesta-chance>
-        <app-summary-footer></app-summary-footer>
-    </section> -->
