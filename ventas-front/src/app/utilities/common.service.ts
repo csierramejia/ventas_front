@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { ItemParamDTO } from '../dtos/transversal/item-param.dto';
 import { CommonAPIConstant } from '../constants/apis/common/common-api-constant';
+import { ItemFiltroDTO } from '../dtos/transversal/item-filtro.dto';
+import { SelectItem } from 'primeng/api';
 
 /**
  * Service que contiene los procesos de negocio comunes del sistema
@@ -32,4 +34,18 @@ export class CommonService {
    * servicio qeu retorne la hora y fecha de la base de datos
    * 
    */
+  
+   /* Servicio que permite obtener los items de la tabla LOTERIAS
+   *
+   * @param filtro, DTO que contiene los valores del filtro
+   * @return Lista de Items parametrizados en el sistema
+   */
+  public getItemsTiposDocumentos(
+    filtro: ItemFiltroDTO
+  ): Observable<Array<SelectItem>> {
+    return this.http.post<Array<SelectItem>>(
+      CommonAPIConstant.URL_GET_ITEMS_TIPO_NUM_DOCUMETNO,
+      filtro
+    );
+  }
 }

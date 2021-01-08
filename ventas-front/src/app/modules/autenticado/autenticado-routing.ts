@@ -30,6 +30,12 @@ export const ROUTES: Routes = [
         data: { preload: true},
         loadChildren: () => import('../consultas/consultas.module').then(m => m.ConsultasModule)
       },
+      {
+        path: RouterConstant.ROUTER_RECAUDOS,
+        canActivate: [PrivilegiosGuard],
+        data: { preload: true},
+        loadChildren: () => import('../recaudos/recaudos.module').then(m => m.RecaudosModule)
+      },
     ]
   }
 ];

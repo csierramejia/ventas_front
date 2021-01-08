@@ -1,32 +1,36 @@
-import { SoatComponent } from './../recaudos/soat/soat.component';
+import { SoatComponent } from './soat/soat.component';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { RouterConstant } from './../../constants/router.constant';
+import { RouterConstant } from '../../constants/router.constant';
 import { SharedModule} from '../shared/shared.module';
 import {CardModule} from 'primeng/card';
+import {FieldsetModule} from 'primeng/fieldset';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {DialogModule} from 'primeng/dialog';
 import {SidebarModule} from 'primeng/sidebar';
-import { ConsultaMovimientosComponent } from './../consultas/consulta-movimientos/consulta-movimientos.component';
 
 @NgModule({
   declarations: [
-    ConsultaMovimientosComponent,
+    SoatComponent,
 
   ],
   imports: [
     RouterModule.forChild([
       {
-        path: RouterConstant.ROUTER_CONSULTA_MOVIMIENTOS,
-        component: ConsultaMovimientosComponent
+        path: RouterConstant.ROUTER_SOAT,
+        component: SoatComponent
       },
+
+
+     
     ]),
     SharedModule,
     CardModule,
     DialogModule,
     SidebarModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    FieldsetModule
   ],
 })
-export class ConsultasModule { }
+export class RecaudosModule { }

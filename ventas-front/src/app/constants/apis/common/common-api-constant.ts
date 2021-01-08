@@ -14,4 +14,12 @@ export class CommonAPIConstant {
     CommonAPIConstant.COMMON_API +
     'getSelectItems';
 
+
+  /** URL del recurso para obtener los items de tipo de documentos */
+  static readonly URL_GET_ITEMS_TIPO_NUM_DOCUMETNO: string =
+    AppDomainConstant.URI_GATEWAY +
+    CommonAPIConstant.COMMON_API +
+    'getItemsTiposDocumentos';
+
+
 }
