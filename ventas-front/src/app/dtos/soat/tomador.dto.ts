@@ -18,4 +18,10 @@ export class TomadorDTO {
     public numeroCelular: string;
     public fechaInicioVigencia: Date;
     public vehiculo: VehiculoDTO;
+    public idTipoTransaccion: number;
+    public idCanal: number;
+    public idEmpresa: number;
+    public idCliente: number;
+    public idDispositivo: number;
+    public idProducto:number;
 }

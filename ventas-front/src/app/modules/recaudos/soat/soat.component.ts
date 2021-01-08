@@ -232,6 +232,12 @@ export class SoatComponent extends CommonComponent implements OnInit, OnDestroy 
       this.tomadorDTO.correo = this.tomadorForm.get('correo').value;
       this.tomadorDTO.fechaInicioVigencia = this.tomadorForm.get('fechaInicioVigencia').value;
       this.tomadorDTO.vehiculo = this.vehiculoDTO;
+      this.tomadorDTO.idTipoTransaccion = 2;
+      this.tomadorDTO.idCanal = 1;
+      this.tomadorDTO.idEmpresa= 1;
+      this.tomadorDTO.idCliente = 0;
+      this.tomadorDTO.idDispositivo =1;
+      this.tomadorDTO.idProducto = 0;
 
       this.recaudosService.registrarPagoTomador(this.tomadorDTO).subscribe(
         (data) => {
