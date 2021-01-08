@@ -3,6 +3,8 @@ import { RouterConstant } from '../../../constants/router.constant';
 import { Router } from '@angular/router';
 import { ProductosService } from '../productos.service';
 import { MessageService } from 'primeng/api';
+import { ShellState } from 'src/app/states/shell/shell.state';
+
 @Component({
   selector: 'app-revisa-pago',
   templateUrl: './revisa-pago.component.html',
@@ -12,6 +14,14 @@ import { MessageService } from 'primeng/api';
 export class RevisaPagoComponent implements OnInit {
 
   productosChance = []
+
+  // OJO ESTE PRODUCTO VA A SER CAMBIANTE SEGUN EL PRODUCTO
+  // NOTA : DE MOMENTO SE VA A DEJAR QUEMADO COMO CHANCE PERO CUANDO ENTREN LOS DEMAS PRODUCTOS HAY QUE SETEARLO
+  // producto = null;
+  producto = "CHANCE";
+
+
+  paySend = []
 
   subtotalGeneral = 0
   ivaGeneral = 0
@@ -25,7 +35,8 @@ export class RevisaPagoComponent implements OnInit {
   constructor(
     private productosService: ProductosService,
     private router: Router,
-    protected messageService: MessageService
+    protected messageService: MessageService,
+    private shellState: ShellState
   ) {
   }
 
@@ -165,34 +176,77 @@ export class RevisaPagoComponent implements OnInit {
 
 
   depurarInfo(){
+    this.paySend = [];
     const productosDepurar = JSON.parse(localStorage.getItem('chanceApuesta'))
-    const productosDespuesDepurado = [];
     for (let index = 0; index < productosDepurar.length; index++) {
-      productosDespuesDepurado.push({
-        apostado: productosDepurar[index].apostado,
-        clienteOperacion: productosDepurar[index].clienteOperacion,
-        colilla: productosDepurar[index].colilla,
-        fechaActual: productosDepurar[index].fechaActual,
-        fechaSeleccionApuesta: productosDepurar[index].fechaSeleccionApuesta,
-        iva: productosDepurar[index].iva,
-        total: productosDepurar[index].iva,
-        _id: productosDepurar[index].fechaSeleccionApuesta,
-        loterias:this.obtenerLoteriasSeleccionadas(productosDepurar[index].loterias),
-        listaNumeros: this.obtenerEstructuraDatosNumeros(productosDepurar[0].listaNumeros)
-      })
+      const bet = { bets:null, canal: 'WEB', dataPlayed:null, idCustomer:null, idUser:this.shellState.userAccount.auth.usuario.idUsuario, lotteries:null, producto:this.producto, valueBet:null, valueBetTotal:null, valueVat:null};
+
+      bet.lotteries = this.obtenerLoteriasSeleccionadas(productosDepurar[index].loterias)
+      bet.bets = this.obtenerEstructuraDatosNumeros(productosDepurar[index].listaNumeros, productosDepurar[0].fechaSeleccionApuesta, bet.lotteries)
+      bet.dataPlayed = productosDepurar[index].fechaActual
+      bet.idCustomer = productosDepurar[index].clienteOperacion.idCustomer
+      bet.valueBetTotal = this.obtenerValorTotal(bet.bets, bet.lotteries.length)
+      bet.valueVat = this.obtenerIvaMetodo(bet.valueBetTotal)
+      bet.valueBet = bet.valueBetTotal - bet.valueVat
+
+
+
+
+
+      this.paySend.push(bet);
+
+      // productosDespuesDepurado.push({
+      //   apostado: productosDepurar[index].apostado,
+      //   clienteOperacion: productosDepurar[index].clienteOperacion,
+      //   colilla: productosDepurar[index].colilla,
+      //   fechaActual: productosDepurar[index].fechaActual,
+      //   fechaSeleccionApuesta: productosDepurar[index].fechaSeleccionApuesta,
+      //   iva: productosDepurar[index].iva,
+      //   total: productosDepurar[index].iva,
+      //   _id: productosDepurar[index].fechaSeleccionApuesta,
+      //   loterias:this.obtenerLoteriasSeleccionadas(productosDepurar[index].loterias),
+      //   listaNumeros: this.obtenerEstructuraDatosNumeros(productosDepurar[0].listaNumeros)
+      // })
+
     }
 
     console.log('++++++++++++++');
-    console.log(productosDespuesDepurado);
+    console.log(this.paySend);
     console.log('++++++++++++++');
+
+    console.log(JSON.stringify(this.paySend));
 
 
   }
 
 
+  obtenerValorTotal(bets, cantidadLoterias){
+    let sumaTotal = 0
+    for (let index = 0; index < bets.length; index++) {
+      for (let ind = 0; ind < bets[index].details.length; ind++) {
+        // console.log(bets[index].details[ind].valor)
+        sumaTotal = sumaTotal + parseInt(bets[index].details[ind].valor)
+      }
+    
+    }
+
+    return cantidadLoterias * sumaTotal;
+  }
 
 
-  obtenerEstructuraDatosNumeros(numerosIteras){
+  // ivaServicio
+  /**
+   * @author Luis Hernandez
+   */
+  obtenerIvaMetodo(total) {
+    const calculoImpuesto=(this.ivaServicio/100) + 1
+    return total-(total / calculoImpuesto);
+  }
+
+
+
+
+  obtenerEstructuraDatosNumeros(numerosIteras, fechaSorteo, loterias){
 
     const numeros = [];
 
@@ -200,71 +254,122 @@ export class RevisaPagoComponent implements OnInit {
 
       if(index === 0){
         numeros.push({
+          apuestaA: null,
+          apuestaB: null,
+          apuestaC: null,
+          apuestaD: null,
+          apuestaE: null,
+          details: null,
+          fechaSorteo: fechaSorteo,
+          lotteries: loterias,
+          numberPlayed: numerosIteras[index].numeroFilaUno,
+          numeroAstro: null,
+          numeroSuper: null,
+          valueBet: null,
+          valueVat: null,
+          zignos: null,
+          // ------------------------------------
           combinado: numerosIteras[index].combinadoFilaUno,
           dosCifras: numerosIteras[index].dosCifrasFilaUno,
-          numero: numerosIteras[index].numeroFilaUno,
           unaCifra: numerosIteras[index].unaCifraFilaUno,
           valorDirecto: numerosIteras[index].valorDirectoFilaUno,
-          tipoJuego: '',
-          iva: '',
-          total: '',
-          apostado: ''
         })
       }
 
       if(index === 1){
         numeros.push({
+          apuestaA: null,
+          apuestaB: null,
+          apuestaC: null,
+          apuestaD: null,
+          apuestaE: null,
+          details: null,
+          fechaSorteo: fechaSorteo,
+          lotteries: loterias,
+          numberPlayed: numerosIteras[index].numeroFilaDos,
+          numeroAstro: null,
+          numeroSuper: null,
+          valueBet: null,
+          valueVat: null,
+          zignos: null,
+          // ---------------
           combinado: numerosIteras[index].combinadoFilaDos,
           dosCifras: numerosIteras[index].dosCifrasFilaDos,
-          numero: numerosIteras[index].numeroFilaDos,
           unaCifra: numerosIteras[index].unaCifraFilaDos,
           valorDirecto: numerosIteras[index].valorDirectoFilaDos,
-          tipoJuego: '',
-          iva: '',
-          total: '',
-          apostado: ''
+          
         })
       }
 
       if(index === 2){
         numeros.push({
+          apuestaA: null,
+          apuestaB: null,
+          apuestaC: null,
+          apuestaD: null,
+          apuestaE: null,
+          details: null,
+          fechaSorteo: fechaSorteo,
+          lotteries: loterias,
+          numberPlayed: numerosIteras[index].numeroFilaTres,
+          numeroAstro: null,
+          numeroSuper: null,
+          valueBet: null,
+          valueVat: null,
+          zignos: null,
+          //---------------------------
           combinado: numerosIteras[index].combinadoFilaTres,
           dosCifras: numerosIteras[index].dosCifrasFilaTres,
-          numero: numerosIteras[index].numeroFilaTres,
           unaCifra: numerosIteras[index].unaCifraFilaTres,
-          valorDirecto: numerosIteras[index].valorDirectoFilaTres,
-          tipoJuego: '',
-          iva: '',
-          total: '',
-          apostado: ''
+          valorDirecto: numerosIteras[index].valorDirectoFilaTres
         })
       }
 
       if(index === 3){
         numeros.push({
+          apuestaA: null,
+          apuestaB: null,
+          apuestaC: null,
+          apuestaD: null,
+          apuestaE: null,
+          details: null,
+          fechaSorteo: fechaSorteo,
+          lotteries: loterias,
+          numberPlayed: numerosIteras[index].numeroFilaCuatro,
+          numeroAstro: null,
+          numeroSuper: null,
+          valueBet: null,
+          valueVat: null,
+          zignos: null,
+          // --------------------------------------------------
           combinado: numerosIteras[index].combinadoFilaCuatro,
           dosCifras: numerosIteras[index].dosCifrasFilaCuatro,
-          numero: numerosIteras[index].numeroFilaCuatro,
           unaCifra: numerosIteras[index].unaCifraFilaCuatro,
           valorDirecto: numerosIteras[index].valorDirectoFilaCuatro,
-          tipoJuego: '',
-          iva: '',
-          total: '',
-          apostado: ''
         })
       }
 
       if(index === 4){
         numeros.push({
+          apuestaA: null,
+          apuestaB: null,
+          apuestaC: null,
+          apuestaD: null,
+          apuestaE: null,
+          details: null,
+          fechaSorteo: fechaSorteo,
+          lotteries: loterias,
+          numberPlayed: numerosIteras[index].numeroFilaCinco,
+          numeroAstro: null,
+          numeroSuper: null,
+          valueBet: null,
+          valueVat: null,
+          zignos: null,
+          // --------------
           combinado: numerosIteras[index].combinadoFilaCinco,
           dosCifras: numerosIteras[index].dosCifrasFilaCinco,
-          numero: numerosIteras[index].numeroFilaCinco,
           unaCifra: numerosIteras[index].unaCifraFilaCinco,
           valorDirecto: numerosIteras[index].valorDirectoFilaCinco,
-          tipoJuego: '',
-          iva: '',
-          total: '',
-          apostado: ''
         })
       }
 
@@ -282,36 +387,40 @@ export class RevisaPagoComponent implements OnInit {
     numeros.forEach(element => {
       const detalles = []
 
-      if (String(element.numero).length === 4) {
+      if (String(element.numberPlayed).length === 4) {
         if (element.valorDirecto) { detalles.push({code: 1, valor: element.valorDirecto});}
         if (element.combinado) { detalles.push({code: 2, valor: element.combinado});}
         if (element.dosCifras) { detalles.push({code: 5, valor: element.dosCifras}); }
         if (element.unaCifra) { detalles.push({code: 6, valor: element.unaCifra}); }
-      } else if (String(element.numero).length === 3) {
+      } else if (String(element.numberPlayed).length === 3) {
         if (element.valorDirecto) { detalles.push({code: 3, valor: element.valorDirecto});}
         if (element.combinado) { detalles.push({code: 4, valor: element.combinado});}
         if (element.dosCifras) { detalles.push({code: 5, valor: element.dosCifras}); }
         if (element.unaCifra) { detalles.push({code: 6, valor: element.unaCifra}); }
-      } else if (String(element.numero).length === 2) {
+      } else if (String(element.numberPlayed).length === 2) {
         if (element.dosCifras) { detalles.push({code: 5, valor: element.dosCifras}); }
         if (element.unaCifra) { detalles.push({code: 6, valor: element.unaCifra}); }
-      } else if (String(element.numero).length === 1) {
+      } else if (String(element.numberPlayed).length === 1) {
         if (element.unaCifra) { detalles.push({code: 6, valor: element.unaCifra}); }
       }
 
-      numeros[cont].tipoJuego = detalles;
+      numeros[cont].details = detalles;
+
+      delete numeros[cont].combinado
+      delete numeros[cont].dosCifras
+      delete numeros[cont].unaCifra
+      delete numeros[cont].valorDirecto
 
       cont++;
 
     });
 
-    return numeros
+    return numeros;
 
   }
 
 
-
-
+ 
   /**
    * @author Luis Hernandez
    * @description Metodo que se valida cuales fueron
