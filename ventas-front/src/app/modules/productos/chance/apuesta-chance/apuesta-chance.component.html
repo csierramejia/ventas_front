@@ -2,74 +2,49 @@
             <div class="container-fluid">
                 <!-- ABRE SEMANARIO Y BOTONES HEADER -->
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                         <span class="hea-titles">Seleccione el día del sorteo</span>
                         <hr/>
+                        <span 
+                            class="badge badge-secondary chipOptionDay" 
+                            *ngFor="let day of days"
+                            [id]="day.name"
+                            (click)="get_date_bet(day)">
+                            {{day.text}}
+                        </span>
+                        <p-calendar
+                            [(ngModel)]="pCalendarioValor"
+                            [inputStyle]="{'width':'150px', 'height':'40px', 'padding-left':'20px','background':'url(../../../../../assets/img/svg/calendar-blue.svg) 100px 3px no-repeat #ffff', 'box-shadow':'0px 3px 6px #149DB77A', 'border-radius':'25px'}"
+                            (onSelect)="obtenerFechaCalendario(pCalendarioValor)"
+                            class="calendar-control"
+                            placeholder="Otro día"
+                            showOn="button"
+                            [readonlyInput]="true"
+                            yearRange="2020:2021"
+                            [monthNavigator]="true"
+                            [yearNavigator]="true"
+                            dateFormat="yy-mm-dd"
+                            [showIcon]="false">
+                        </p-calendar>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                         <span class="hea-titles">Juego Automático</span>
                         <hr/>
+                        <img class="img-aletorio" (click)="aleatorioTresCifras()" src="../../../../../assets/img/svg/Grupo_299.svg" />
+                        <img class="img-aletorio" (click)="aleatorioCuatroCifras()" src="../../../../../assets/img/svg/Grupo_300.svg" />
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                         <span class="hea-titles">Ultima Apuesta</span>
                         <hr/>
-                    </div>
-                    <div class="col-md-2"></div>
-                </div>
-    
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="row">
-                            <div class="col-md-8">
-                                <span 
-                                    class="badge badge-secondary chipOptionDay" 
-                                    *ngFor="let day of days"
-                                    [id]="day.name"
-                                    (click)="get_date_bet(day)">
-                                    {{day.text}}
-                                </span>
-                            </div>
-                            <div class="col-md-4">
-                                <p-calendar
-                                    [(ngModel)]="pCalendarioValor"
-                                    [inputStyle]="{'width':'150px', 'height':'40px', 'padding-left':'20px','background':'url(../../../../../assets/img/svg/calendar-blue.svg) 100px 3px no-repeat #ffff', 'box-shadow':'0px 3px 6px #149DB77A', 'border-radius':'25px'}"
-                                    (onSelect)="obtenerFechaCalendario(pCalendarioValor)"
-                                    class="calendar-control"
-                                    placeholder="Otro día"
-                                    showOn="button"
-                                    [readonlyInput]="true"
-                                    yearRange="2020:2021"
-                                    [monthNavigator]="true"
-                                    [yearNavigator]="true"
-                                    dateFormat="yy-mm-dd"
-                                    [showIcon]="false">
-                                </p-calendar>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <img class="img-aletorio" (click)="aleatorioTresCifras()" src="../../../../../assets/img/svg/Grupo_299.svg" />
-                            </div>
-                            <div class="col-md-4">
-                                <img class="img-aletorio" (click)="aleatorioCuatroCifras()" src="../../../../../assets/img/svg/Grupo_300.svg" />
-                            </div>
-                        </div>
-                    </div>
-    
-                    <div class="col-md-2">
                         <button (click)="repetirNumeroSiguientFila()" type="button" class="btn btn-random">
                             REPETIR <i class="fa fa-repeat" aria-hidden="true"></i>
                         </button>
                     </div>
-    
-                    <div class="col-md-2">
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                         <button (click)="borrarTodo()" type="button" class="btn btn-random-red">
                             BORRAR TODO
                         </button>
                     </div>
-                
                 </div>
                 <!-- / CIERRA SEMANARIO Y BOTONES HEADER -->
     

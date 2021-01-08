@@ -1,9 +1,13 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { RouterConstant } from '../../../constants/router.constant';
 import { Router } from '@angular/router';
 import { ProductosService } from '../productos.service';
 import { MessageService } from 'primeng/api';
 import { ShellState } from 'src/app/states/shell/shell.state';
+import { MsjUtil } from 'src/app/utilities/messages.util';
+import { CommonComponent } from 'src/app/utilities/common.component';
+import { NotificacionSoportePagoDTO } from 'src/app/dtos/correos/notificacion-soporte-pago.dto';
+import { MenuCarritoComponent } from '../genericos/menu-carrito/menu-carrito.component';
 
 @Component({
   selector: 'app-revisa-pago',
@@ -11,25 +15,24 @@ import { ShellState } from 'src/app/states/shell/shell.state';
   styleUrls: ['./revisa-pago.component.css'],
   providers: [ProductosService]
 })
-export class RevisaPagoComponent implements OnInit {
+export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDestroy  {
 
-  productosChance = []
+  @ViewChild(MenuCarritoComponent, {static: true}) menuCarrito: MenuCarritoComponent;
+  
 
   // OJO ESTE PRODUCTO VA A SER CAMBIANTE SEGUN EL PRODUCTO
   // NOTA : DE MOMENTO SE VA A DEJAR QUEMADO COMO CHANCE PERO CUANDO ENTREN LOS DEMAS PRODUCTOS HAY QUE SETEARLO
   // producto = null;
   producto = "CHANCE";
-
-
   paySend = []
-
+  productosChance = []
   subtotalGeneral = 0
   ivaGeneral = 0
   totalGeneral = 0
   efectivo = 0
   devuelta = 0
-
   ivaServicio = 0
+  correoCliente = ''
 
 
   constructor(
@@ -38,6 +41,7 @@ export class RevisaPagoComponent implements OnInit {
     protected messageService: MessageService,
     private shellState: ShellState
   ) {
+    super();
   }
 
   ngOnInit(): void {
@@ -180,7 +184,6 @@ export class RevisaPagoComponent implements OnInit {
     const productosDepurar = JSON.parse(localStorage.getItem('chanceApuesta'))
     for (let index = 0; index < productosDepurar.length; index++) {
       const bet = { bets:null, canal: 'WEB', dataPlayed:null, idCustomer:null, idUser:this.shellState.userAccount.auth.usuario.idUsuario, lotteries:null, producto:this.producto, valueBet:null, valueBetTotal:null, valueVat:null};
-
       bet.lotteries = this.obtenerLoteriasSeleccionadas(productosDepurar[index].loterias)
       bet.bets = this.obtenerEstructuraDatosNumeros(productosDepurar[index].listaNumeros, productosDepurar[0].fechaSeleccionApuesta, bet.lotteries)
       bet.dataPlayed = productosDepurar[index].fechaActual
@@ -188,48 +191,60 @@ export class RevisaPagoComponent implements OnInit {
       bet.valueBetTotal = this.obtenerValorTotal(bet.bets, bet.lotteries.length)
       bet.valueVat = this.obtenerIvaMetodo(bet.valueBetTotal)
       bet.valueBet = bet.valueBetTotal - bet.valueVat
-
-
-
-
-
+      // guardamos el correo del usuario (para enviar desplendible de pago)
+      this.correoCliente = productosDepurar[index].clienteOperacion.correoCustomer
       this.paySend.push(bet);
-
-      // productosDespuesDepurado.push({
-      //   apostado: productosDepurar[index].apostado,
-      //   clienteOperacion: productosDepurar[index].clienteOperacion,
-      //   colilla: productosDepurar[index].colilla,
-      //   fechaActual: productosDepurar[index].fechaActual,
-      //   fechaSeleccionApuesta: productosDepurar[index].fechaSeleccionApuesta,
-      //   iva: productosDepurar[index].iva,
-      //   total: productosDepurar[index].iva,
-      //   _id: productosDepurar[index].fechaSeleccionApuesta,
-      //   loterias:this.obtenerLoteriasSeleccionadas(productosDepurar[index].loterias),
-      //   listaNumeros: this.obtenerEstructuraDatosNumeros(productosDepurar[0].listaNumeros)
-      // })
-
     }
+ 
 
-    console.log('++++++++++++++');
-    console.log(this.paySend);
-    console.log('++++++++++++++');
-
-    console.log(JSON.stringify(this.paySend));
-
-
+    this.hacerCompraServicio(this.paySend);
   }
 
+
+  hacerCompraServicio(paySend){
+    this.productosService.registrarApuestas(paySend).subscribe(
+      apuestaData => {
+        const responseApuesta: any = apuestaData;
+        if (responseApuesta.exito) {
+
+          // se muestra el mensaje exitoso
+          this.messageService.add(MsjUtil.getToastSuccessMedium('Transacción exitosa'));
+
+          // se envia la notificacion
+          if (this.correoCliente) {
+            const notificacion: NotificacionSoportePagoDTO = apuestaData.notificacionSoportePago;
+            if (notificacion) {
+              notificacion.correoDestino = this.correoCliente;
+              notificacion.idUsuario = this.shellState.userAccount.auth.usuario.idUsuario;
+              this.enviarNotificacionSoportePago(notificacion);
+            }
+          }
+
+          // se limpia la data ingresada
+          // this.cleanCartValues();
+          // this.creatingBet.emit(true);
+          this.limpiarCarrito();
+        } 
+        else if(responseApuesta.mensaje){
+          this.messageService.add(MsjUtil.getToastErrorMedium(responseApuesta.mensaje));
+        }
+        else {
+          this.messageService.add(MsjUtil.getToastErrorMedium('Problemas con la transacción'));
+        }
+      },
+      error => {
+        this.messageService.add(MsjUtil.getToastErrorMedium(this.showMensajeError(error)));
+      }
+    );
+  }
 
   obtenerValorTotal(bets, cantidadLoterias){
     let sumaTotal = 0
     for (let index = 0; index < bets.length; index++) {
-      for (let ind = 0; ind < bets[index].details.length; ind++) {
-        // console.log(bets[index].details[ind].valor)
+      for (let ind = 0; ind < bets[index].details.length; ind++){
         sumaTotal = sumaTotal + parseInt(bets[index].details[ind].valor)
       }
-    
     }
-
     return cantidadLoterias * sumaTotal;
   }
 
@@ -268,7 +283,6 @@ export class RevisaPagoComponent implements OnInit {
           valueBet: null,
           valueVat: null,
           zignos: null,
-          // ------------------------------------
           combinado: numerosIteras[index].combinadoFilaUno,
           dosCifras: numerosIteras[index].dosCifrasFilaUno,
           unaCifra: numerosIteras[index].unaCifraFilaUno,
@@ -292,7 +306,6 @@ export class RevisaPagoComponent implements OnInit {
           valueBet: null,
           valueVat: null,
           zignos: null,
-          // ---------------
           combinado: numerosIteras[index].combinadoFilaDos,
           dosCifras: numerosIteras[index].dosCifrasFilaDos,
           unaCifra: numerosIteras[index].unaCifraFilaDos,
@@ -317,7 +330,6 @@ export class RevisaPagoComponent implements OnInit {
           valueBet: null,
           valueVat: null,
           zignos: null,
-          //---------------------------
           combinado: numerosIteras[index].combinadoFilaTres,
           dosCifras: numerosIteras[index].dosCifrasFilaTres,
           unaCifra: numerosIteras[index].unaCifraFilaTres,
@@ -341,7 +353,6 @@ export class RevisaPagoComponent implements OnInit {
           valueBet: null,
           valueVat: null,
           zignos: null,
-          // --------------------------------------------------
           combinado: numerosIteras[index].combinadoFilaCuatro,
           dosCifras: numerosIteras[index].dosCifrasFilaCuatro,
           unaCifra: numerosIteras[index].unaCifraFilaCuatro,
@@ -365,7 +376,6 @@ export class RevisaPagoComponent implements OnInit {
           valueBet: null,
           valueVat: null,
           zignos: null,
-          // --------------
           combinado: numerosIteras[index].combinadoFilaCinco,
           dosCifras: numerosIteras[index].dosCifrasFilaCinco,
           unaCifra: numerosIteras[index].unaCifraFilaCinco,
@@ -403,20 +413,14 @@ export class RevisaPagoComponent implements OnInit {
       } else if (String(element.numberPlayed).length === 1) {
         if (element.unaCifra) { detalles.push({code: 6, valor: element.unaCifra}); }
       }
-
       numeros[cont].details = detalles;
-
       delete numeros[cont].combinado
       delete numeros[cont].dosCifras
       delete numeros[cont].unaCifra
       delete numeros[cont].valorDirecto
-
       cont++;
-
     });
-
     return numeros;
-
   }
 
 
@@ -471,6 +475,37 @@ export class RevisaPagoComponent implements OnInit {
     this.router.navigate([RouterConstant.NAVIGATE_CHANCE]);
   }
 
+
+  limpiarCarrito(){
+    this.paySend = []
+    this.productosChance = []
+    this.subtotalGeneral = 0
+    this.ivaGeneral = 0
+    this.totalGeneral = 0
+    this.efectivo = 0
+    this.devuelta = 0
+    localStorage.removeItem('chanceApuesta');
+    this.menuCarrito.refrescarCarrito();
+  }
+
+
+  /**
+   * Permite enviar la notificacion de soporte de pago
+   */
+  private enviarNotificacionSoportePago(data: NotificacionSoportePagoDTO): void {
+    this.productosService.enviarNotificacionSoportePagoChance(data).subscribe(
+      (response) => {},
+      (error) => { this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error))); }
+    );
+  }
+
+
+  /**
+   * Se utiliza para limpiar los mensajes visualizados pantalla y titulos
+   */
+  ngOnDestroy(): void {
+    this.messageService.clear();
+  }
 
   
 

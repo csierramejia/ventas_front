@@ -160,6 +160,19 @@
 
 .img-aletorio{
     cursor: pointer;
+    padding-left: 15px;
+}
+
+
+
+@media screen and (max-width: 1421px) {
+    .chipOptionDay{
+        font-size: 15px;
+        width: 30px;
+        height: 30px;
+        
+        
+    }
 }
 
 
