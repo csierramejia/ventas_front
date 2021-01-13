@@ -173,7 +173,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
 
   agregarCarritoF(): void {
     const listaNumeros = this.obtenerFilasConApuesta(this.listaNumeros)
-    if(this.colilla && this.fechaActual && this.loteriaSeleccionadas.length > 0 && listaNumeros.length > 0 && this.clienteOperacion.idCustomer) {
+    if(this.colilla && this.fechaActual && this.loteriaSeleccionadas.length > 0 && listaNumeros.length > 0) {
       if(this.edit){
         this.confirmacionAgregar.isCreate = false;
         this.verConfirmacionPopap = true;

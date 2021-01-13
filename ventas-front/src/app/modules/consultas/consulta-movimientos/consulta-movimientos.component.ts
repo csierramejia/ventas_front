@@ -85,6 +85,9 @@ export class ConsultaMovimientosComponent extends CommonComponent
 
     // se obtiene los datos de la autenticacion
     this.auth = SessionStoreUtil.auth(TipoEventoConstant.GET);
+    const fechaActual = new Date();
+    this.filtro.fecha = new Date(fechaActual.getFullYear(), fechaActual.getMonth(), fechaActual.getDate());
+  
 
     // se procede a consultar los items de productos y tipos reporte
     this.getSelectItems();

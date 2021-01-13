@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { NoEspaciosBlancoDirective } from 'src/app/directives/espacios-blanco/no-espacios-blanco.directive';
 import { AutofocusDirective } from 'src/app/directives/focus/autofocus.directive';
 import { AutofocusAsyncDirective } from 'src/app/directives/focus/autofocus-async.directive';
+import { BlockCopyPasteDirective } from 'src/app/directives/block-copy/block-copy-paste.directive';
 
 /**
  * Modulo que contiene los artefactos comunes,
@@ -21,12 +22,14 @@ import { AutofocusAsyncDirective } from 'src/app/directives/focus/autofocus-asyn
     FormsModule,
     NoEspaciosBlancoDirective,
     AutofocusDirective,
-    AutofocusAsyncDirective
+    AutofocusAsyncDirective,
+    BlockCopyPasteDirective
   ],
   declarations: [
     NoEspaciosBlancoDirective,
     AutofocusDirective,
-    AutofocusAsyncDirective
+    AutofocusAsyncDirective,
+    BlockCopyPasteDirective
   ]
 })
 export class SharedCommonModule {}
