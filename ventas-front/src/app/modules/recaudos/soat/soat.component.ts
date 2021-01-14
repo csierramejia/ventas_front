@@ -227,18 +227,15 @@ export class SoatComponent extends CommonComponent implements OnInit, OnDestroy 
    * solo ingrese letras en los campos donde se espera solo letras
    * @param e
    */
-  keyPressChartNumber(e) {
-    const filtro = '1234567890'; // Caracteres invalidos
+  keyPressPlaca(e) {
+    var regex = new RegExp("^[a-zA-Z0-9]+$");
     for (let i = 0; i < e.key.length; i++) {
-      console.log(filtro.indexOf(e.key.charAt(i)) === -1);
-      if (filtro.indexOf(e.key.charAt(i)) === -1) {
-        return true;
-      } else {
+      if (!regex.test(e.key.charAt(i))) {
         return false;
       }
+      return true;
     }
   }
-
 
 
   /**

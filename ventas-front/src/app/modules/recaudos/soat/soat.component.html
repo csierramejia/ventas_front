@@ -26,7 +26,8 @@
                                                                placeholder="Placa" [(ngModel)]="placa"
                                                                (ngModelChange)="placa = $event.toUpperCase()"
                                                                [ngClass]="{'requerido' : (isSubmit && (!placa))}"
-                                                               maxlength="6">
+                                                               maxlength="6"
+                                                               (keypress)="keyPressPlaca($event)">
                                                         <span style="height: 31px" class="input-group-append">
                                                                <button type="button" style="padding-top: 3px"
                                                                       (click)="consultarPlaca()"
