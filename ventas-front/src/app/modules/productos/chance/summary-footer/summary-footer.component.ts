@@ -339,9 +339,6 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
    * el evento de crear o edit para agregar al carrito el producto
    */
   eventoCrearEditar (event): void {
-    console.log('.-.-.-.-.-.-.-AGREGAR AL CARRITO.-.-.-.-.-.-.-');
-    console.log(event);
-    console.log('.-.-.-.-.-.-.-AGREGAR AL CARRITO.-.-.-.-.-.-.-');
 
     this.confirmacionAgregar.isCreate = false;
     this.verConfirmacionPopap = false;
