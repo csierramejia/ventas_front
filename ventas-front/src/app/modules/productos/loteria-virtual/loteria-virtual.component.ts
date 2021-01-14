@@ -464,8 +464,9 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
           this.detalleVenta.valorFraccion = this.sorteoSeleccionado.valorFraccion;
           this.detalleVenta.cantidadFracciones = this.sorteoSeleccionado.cantidadFraccion;
           this.detalleVenta.valor = this.detalleVenta.fracciones * this.sorteoSeleccionado.valorFraccion;
+          const  calculoImpuesto = (this.PORCENTAJE_IVA/100)+1;
           this.venta.valorTotal = this.venta.valorTotal + this.detalleVenta.valor;
-          this.venta.valorTotalIVA = (this.venta.valorTotal * this.PORCENTAJE_IVA) / 100;
+          this.venta.valorTotalIVA = Math.round(this.venta.valorTotal  / calculoImpuesto);
           this.detalleVenta.todoBillete = false;
           if (this.sorteoSeleccionado.cantidadFraccion === this.detalleVenta.fracciones) {
             this.detalleVenta.todoBillete = true;
@@ -540,8 +541,9 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
         }
 
         // se calculan los valores de la venta
+        const  calculoImpuesto= (this.PORCENTAJE_IVA/100)+1;
         this.venta.valorTotal = this.venta.valorTotal - detalle.valor;
-        this.venta.valorTotalIVA = (this.venta.valorTotal * this.PORCENTAJE_IVA) / 100;
+        this.venta.valorTotalIVA = Math.round(this.venta.valorTotal  / calculoImpuesto);
         this.spinnerState.displaySpinner();
         setTimeout(() => {
           this.spinnerState.hideSpinner();
@@ -589,10 +591,10 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
 
         // se calcula el nuevo valor
         this.modalEdicion.data.valor = this.modalEdicion.data.fracciones * this.modalEdicion.data.valorFraccion;
-
         // se calcula el valor total del IVA
+        const  calculoImpuesto= (this.PORCENTAJE_IVA/100)+1;
         this.venta.valorTotal = this.venta.valorTotal + this.modalEdicion.data.valor;
-        this.venta.valorTotalIVA = (this.venta.valorTotal * this.PORCENTAJE_IVA) / 100;
+        this.venta.valorTotalIVA = Math.round(this.venta.valorTotal  / calculoImpuesto);
 
         // se verifica si escogieron todo el billete
         this.modalEdicion.data.todoBillete = false;
