@@ -26,13 +26,14 @@ import { SessionStoreUtil } from 'src/app/utilities/session-store.util';
 })
 export class SoatComponent extends CommonComponent implements OnInit, OnDestroy {
 
-
+  
   /** componente steps para la creacion o edicion */
   @ViewChild('stepsoat') step: any;
 
   public index: number;
   public placa: string;
   public autorizacion: boolean;
+ 
 
   /** Datos del tomador */
   public tomadorDTO: TomadorDTO;
@@ -109,6 +110,7 @@ export class SoatComponent extends CommonComponent implements OnInit, OnDestroy 
    * datos iniciales requeridos de la funcionalidad
    */
   private init(): void {
+    this.vehiculoDTO = new VehiculoDTO();
     // se obtiene los datos de la autenticacion
     this.auth = SessionStoreUtil.auth(TipoEventoConstant.GET);
     this.index = 0;
@@ -242,11 +244,10 @@ export class SoatComponent extends CommonComponent implements OnInit, OnDestroy 
       this.recaudosService.registrarPagoTomador(this.tomadorDTO).subscribe(
         (data) => {
           this.vehiculoDTO = data;
-          this.step.next();
-          this.index = this.step._selectedIndex;
+          this.placa = null;
           this.isSubmit = false;
           this.messageService.add(MsjUtil.getToastSuccessMedium('Transacción realizada exitosamente'));
-
+          this.step.reset();
         },
         (error) => {
           this.messageService.add(
@@ -292,6 +293,17 @@ export class SoatComponent extends CommonComponent implements OnInit, OnDestroy 
       this.isSubmit = true;
       this.messageService.add(MsjUtil.getToastErrorMedium('Por favor diligenciar todos los campos'));
     }
+  }
+
+
+  /**
+  * @author Jhon Rivera
+  * @description Metodo que se encarga de regresar al paso inicial
+  */
+  public salir(): void{
+    this.init();
+    
+
   }
 
 

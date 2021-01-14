@@ -389,3 +389,17 @@
   content: '';
 }
 
+:host ::ng-deep .mat-horizontal-content-container {
+  overflow: visible;
+}
+
+:host ::ng-deep .mat-horizontal-stepper-header {
+  pointer-events: none !important;
+}
+
+:host ::ng-deep .mat-step-header[aria-selected="true"] {
+  background-color: #fff !important
+}
+
+
+
