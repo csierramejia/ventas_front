@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, OnDestroy, ViewChild } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { ProductosService } from '../../productos.service';
 import { MessageService } from 'primeng/api';
 import { MsjUtil } from 'src/app/utilities/messages.util';
@@ -52,6 +52,11 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
   ];
 
 
+  group: FormGroup;
+
+  
+
+
   chanceForm = new FormGroup({
     numeroFilaUno: new FormControl('', [Validators.required, Validators.maxLength(4)]),
     valorDirectoFilaUno: new FormControl({ value: '', disabled: true }),
@@ -97,11 +102,22 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
   constructor(
     private productosService: ProductosService,
     protected messageService: MessageService,
-    private commonService: CommonService
+    private fb: FormBuilder
   ) {
     super();
     // obtenemos el semanario
     this.setDaysServicio();
+
+    this.productosService.consultarRutaImagenes().subscribe(
+      responseDTO => {
+        if(responseDTO){
+        this.rutaServidor = responseDTO.codigo;
+        }
+      },
+      error => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
   }
 
 
@@ -235,8 +251,10 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
    * @param loteria
    */
   toggleVisibility(loteria): void {
+
     const keyResponse = this.getKeyObject(loteria.idLoteria);
-    if (this.loterias[keyResponse].checked) {
+
+    if (this.loterias[keyResponse].checked === true) {
       this.loterias[keyResponse].checked = false;
     } else {
       this.loterias[keyResponse].checked = true;
@@ -259,8 +277,6 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
     }
 
     this.agregarLoterias.emit(emitLoterias);
-
-    // this.agregarLoterias.emit(this.get_lotteriesSelected());
   }
 
 
@@ -271,7 +287,18 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
    * se encarga de validar si
    * se seleccionan o no todas las loterias
    */
-  cambioSeleccion() {
+  cambioSeleccion(event) {
+
+    if(event === 1){
+      if(this.checked === false){
+        this.checked = true;
+      } else {
+        this.checked = false;
+      }
+    }
+
+    
+
 
     if (this.checked) {
       for (let index = 0; index < this.loterias.length; index++) {
@@ -291,41 +318,7 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
     }
 
     this.agregarLoterias.emit(emitLoterias);
-
-    // this.agregarLoterias.emit(this.get_lotteriesSelected());
   }
-
-
-
-
-  /**
-   * @author Luis Hernandez
-   * @description Metodo que se valida cuales fueron
-   * las loterias seleccionadas y las manda para el carrito
-   */
-  // get_lotteriesSelected() {
-  //   this.loteriasSeleccionadas = [];
-  //   this.loterias.forEach(element => {
-  //     if (element.checked) {
-  //       this.loteriasSeleccionadas.push({
-  //         idLoteria: element.idLoteria,
-  //         codigo: element.codigo,
-  //         nombre: element.nombre,
-  //         nombreCorto: element.nombreCorto,
-  //         telefono: element.telefono,
-  //         idEstado: element.idEstado,
-  //         idEmpresa: element.idEmpresa,
-  //         idSorteo: element.idSorteo,
-  //         idSorteoDetalle: element.idSorteoDetalle,
-  //         horaSorteo:element.horaSorteo
-  //       });
-  //     }
-  //   });
-  //   return this.loteriasSeleccionadas;
-  // }
-
-
-
 
   /**
    * @author Luis Hernandez

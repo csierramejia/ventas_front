@@ -103,12 +103,13 @@
 .input-bet{
     top: 263px;
     left: 692px;
-    width: 112px;
+    width: 86px;
     height: 39px;
     background: #FFFFFF 0% 0% no-repeat padding-box;
     border: 1px solid #707070;
     border-radius: 5px;
     opacity: 1;
+    padding-left: 15px;
 }
 
 .fls{
@@ -122,12 +123,13 @@
 
 .info-client{
     top: 541px;
-    width: 1075px;
-    height: 78px;
+    width: 100%;
+    height: auto;
     background: #FFFFFF 0% 0% no-repeat padding-box;
     border-radius: 5px;
     padding-top: 15px;
     padding-left: 15px;
+    margin-bottom: 8px;
 }
 
 
@@ -145,7 +147,8 @@
 }
 
 .labelloteria{
-    width: 43px;
+    width: 60px;
+    text-transform: uppercase;
     height: 16px;
     text-align: left;
     font: normal normal 600 13px/16px Montserrat;
@@ -163,9 +166,13 @@
     padding-left: 15px;
 }
 
+.select-all-a .title-lot-bet{
+    cursor: pointer;
+}
 
 
-@media screen and (max-width: 1421px) {
+
+/* @media screen and (max-width: 1421px) {
     .chipOptionDay{
         font-size: 15px;
         width: 30px;
@@ -173,7 +180,7 @@
         
         
     }
-}
+} */
 
 
 

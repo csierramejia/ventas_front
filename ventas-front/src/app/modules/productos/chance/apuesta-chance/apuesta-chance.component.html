@@ -50,29 +50,27 @@
     
                 <!-- ABRE SELECCION DE LOTERIAS Y NUMEROS QUE APUESTAN -->
                 <div id="content-bet" class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-5" style="position: static;">
                         <span class="title-lot-bet">Loterias del día</span>
                         <div id="content-lot">
                             <div class="row select-all-a">
                                 <div class="col-md-6"></div>
                                 <div class="col-md-6" *ngIf="loterias.length > 0">
-                                    <span class="title-lot-bet">Seleccionar todas</span>
-                                    <p-inputSwitch (click)="cambioSeleccion()" [(ngModel)]="checked"></p-inputSwitch>
+                                    <span (click)="cambioSeleccion(1)" class="title-lot-bet">Seleccionar todas</span>
+                                    <p-inputSwitch (click)="cambioSeleccion(2)" [(ngModel)]="checked"></p-inputSwitch>
                                 </div>
     
     
                                 <div class="container-fluid">
                                     <div id="fila-loteiras" class="row">
-                                        
-
-                                        <div class="col-md-4"*ngFor="let loteria of loterias">
-                                            <!-- <p-overlayPanel #op>
-                                                <ng-template pTemplate>
-                                                    <img src="" alt="" srcset="">
-                                                </ng-template>
-                                            </p-overlayPanel> -->
-                                            <input type="checkbox" (click)="toggleVisibility(loteria)" [(ngModel)]="loteria.checked"/>
-                                            <label class="labelloteria">{{loteria.nombreCorto}}</label>
+                                        <div class="col-md-4" style="position: static;" *ngFor="let loteria of loterias">
+                                            <!-- <p-checkbox (onChange)="toggleVisibility(loteria)" [formControl]="loteria.checked"></p-checkbox>
+                                            <label class="labelloteria">{{loteria.nombreCorto}}</label> -->
+                                            <input (mouseenter)="op1.toggle($event)" (mouseleave)="op1.toggle($event)" type="checkbox"(click)="toggleVisibility(loteria)" [(ngModel)]="loteria.checked"/>
+                                            <label (mouseenter)="op1.toggle($event)" (mouseleave)="op1.toggle($event)" class="labelloteria" (click)="toggleVisibility(loteria)">{{loteria.nombreCorto}}</label>
+                                            <p-overlayPanel #op1>
+                                                <img [src]="loteria.url" style="width: 60px;" alt="Galleria 1" />
+                                            </p-overlayPanel>
                                         </div>
                                     </div>
                                 </div>
@@ -81,7 +79,7 @@
                         </div>
                     </div>
                     
-                    <div class="col-md-8">
+                    <div class="col-md-7">
                         <div class="row fls">
                             <div class="col-md-2"><span class="title-lot-bet">Número</span></div>
                             <div class="col-md-2"><span class="title-lot-bet">Directo</span></div>
@@ -145,6 +143,7 @@
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <select (change)="validExistClient()" formControlName="tipoDocumento" class="form-control typeIdentification">
+                                        <option value="" selected>Tipo</option>
                                         <option value="CC">CC</option>
                                         <option value="TI">TI</option>
                                     </select>

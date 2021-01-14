@@ -12,24 +12,28 @@
 
 #row-summary{
     margin-right:auto !important;
-    padding-top: 10px;
 }
 
-/* .triangleOne {
-    border-left: 52px solid transparent;
-    border-top: 44px solid #666699;
-}
-
-
-.triangleTwo {
-    border-right: 52px solid transparent;
-    border-top: 44px solid #666699;
-} */
 
 #colilla-div{
     background: #B80019 0% 0% no-repeat padding-box;
-    width: 165px;
+    width: 135px;
     height: 87px;
+    display: flex;
+    float: left;
+    padding-left: 12px;
+}
+
+#colilla-div:after{
+    content: '';
+    width: 0;
+    height: 0;
+    border-top: 43.5px solid transparent;
+    border-bottom: 43.5px solid transparent;
+    border-left: 29.5px solid #B80019;
+    left: 135px;
+    position: absolute;
+    clear: both;
 }
 
 
@@ -45,6 +49,7 @@
 }
 .div-sum-text{
     padding-top: 12px;
+    padding-left: 20px;
 }
 
 .img-circle{

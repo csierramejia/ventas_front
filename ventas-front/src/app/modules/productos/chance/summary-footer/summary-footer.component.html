@@ -1,7 +1,7 @@
     <div id="row-summary" class="row">
         <div id="summary-footer" class="col-md-9">
             <div class="row">
-                <div id="colilla-div" class="col-md-2">
+                <div id="colilla-div">
                     <div class="div-sum-text">
                         <span class="text-sum">COLILLA</span>
                         <br/>
@@ -36,7 +36,7 @@
                         <span class="text-sum">{{ valueVat  | currency: "CAD":"symbol-narrow":".0-0"}}</span>
                     </div>
                 </div>
-                <div class="col-md-2 div-s-t">
+                <div class="col-md-2">
                     <div class="div-sum-text">
                         <span class="text-sum">TOTAL</span>
                         <br/>
@@ -49,7 +49,8 @@
             <div class="row">
                 <div class="col-md-6 flex-col">
                     <div id="cicleOne">
-                        <img (click)="agregarCarritoF()" class="img-circle" src="../../../../../assets/img/svg/add-to-cart-l.svg" />
+                        <img (click)="agregarCarritoF()" *ngIf="!edit" class="img-circle" src="../../../../../assets/img/svg/add-to-cart-l.svg" />
+                        <img (click)="agregarCarritoF()" *ngIf="edit" class="img-circle" src="../../../../../assets/img/svg/update.svg" />
                     </div>
                 </div>
                 <div class="col-md-6 flex-col">

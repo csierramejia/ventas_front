@@ -11,6 +11,7 @@ import {CardModule} from 'primeng/card';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {DialogModule} from 'primeng/dialog';
 import {SidebarModule} from 'primeng/sidebar';
+import {OverlayPanelModule} from 'primeng/overlaypanel';
 
 // OJOS QUITAR ESTE COMPONENTE
 import { BolsaComponent } from './genericos/bolsa/bolsa.component';
@@ -92,6 +93,7 @@ import { MenuCarritoComponent } from './genericos/menu-carrito/menu-carrito.comp
     CardModule,
     DialogModule,
     SidebarModule,
+    OverlayPanelModule,
     InputSwitchModule,
     ReactiveFormsModule,
     FormsModule
