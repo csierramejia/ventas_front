@@ -33,6 +33,16 @@ export class ChanceComponent implements OnInit {
   }
 
 
+  /**
+   * @author Luis Hernandez
+   * @param event
+   * @description funcion que se encarga de setear la variable 
+   */
+  reiniciarEdit(event){
+    this.summaryFooter.edit = event;
+  }
+
+
   agregarNumeros(event) {
     this.summaryFooter.setNumeros(event);
   }

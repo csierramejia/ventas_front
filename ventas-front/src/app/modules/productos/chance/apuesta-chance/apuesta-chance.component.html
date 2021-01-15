@@ -36,7 +36,7 @@
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                         <span class="hea-titles">Ultima Apuesta</span>
                         <hr/>
-                        <button (click)="repetirNumeroSiguientFila()" type="button" class="btn btn-random">
+                        <button (click)="repetir()" type="button" class="btn btn-random">
                             REPETIR <i class="fa fa-repeat" aria-hidden="true"></i>
                         </button>
                     </div>
@@ -90,43 +90,43 @@
                         </div>
                         <form [formGroup]="chanceForm"> 
                         <div class="row fls">
-                            <div class="col-md-2"><input type="text" maxlength="4" formControlName="numeroFilaUno" (keypress)="permitirSoloNumeros($event)" (change)="habilitarDeshabilitarSegunCifras($event.target.value, 1)" class="input-bet"></div>
-                            <div class="col-md-2"><input formControlName="valorDirectoFilaUno" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
-                            <div class="col-md-2"><input formControlName="combinadoFilaUno" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
-                            <div class="col-md-2"><input formControlName="dosCifrasFilaUno" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
-                            <div class="col-md-2"><input formControlName="unaCifraFilaUno" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input id="numeroFilaUno" formControlName="numeroFilaUno" type="text" maxlength="4"  (keypress)="permitirSoloNumeros($event)" (change)="habilitarDeshabilitarSegunCifras($event.target.value, 1)" class="input-bet"></div>
+                            <div class="col-md-2"><input id="valorDirectoFilaUno" formControlName="valorDirectoFilaUno" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input id="combinadoFilaUno" formControlName="combinadoFilaUno" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input id="dosCifrasFilaUno" formControlName="dosCifrasFilaUno" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input id="unaCifraFilaUno" formControlName="unaCifraFilaUno" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
                             <div class="col-md-2"><i (click)="borrarFilaUno()" class="fa fa-trash tras-del" aria-hidden="true"></i></div>
                         </div>
                         <div class="row fls">
-                            <div class="col-md-2"><input type="text" maxlength="4" formControlName="numeroFilaDos" (keypress)="permitirSoloNumeros($event)" (change)="habilitarDeshabilitarSegunCifras($event.target.value, 2)" class="input-bet"></div>
-                            <div class="col-md-2"><input formControlName="valorDirectoFilaDos" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
-                            <div class="col-md-2"><input formControlName="combinadoFilaDos" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
-                            <div class="col-md-2"><input formControlName="dosCifrasFilaDos" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
-                            <div class="col-md-2"><input formControlName="unaCifraFilaDos" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input id="numeroFilaDos" formControlName="numeroFilaDos" type="text" maxlength="4" (keypress)="permitirSoloNumeros($event)" (change)="habilitarDeshabilitarSegunCifras($event.target.value, 2)" class="input-bet"></div>
+                            <div class="col-md-2"><input id="valorDirectoFilaDos" formControlName="valorDirectoFilaDos" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input id="combinadoFilaDos" formControlName="combinadoFilaDos" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input id="dosCifrasFilaDos" formControlName="dosCifrasFilaDos" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input id="unaCifraFilaDos" formControlName="unaCifraFilaDos" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
                             <div class="col-md-2"><i (click)="borrarFilaDos()" class="fa fa-trash tras-del" aria-hidden="true"></i></div>
                         </div>
                         <div class="row fls">
-                            <div class="col-md-2"><input type="text" maxlength="4" formControlName="numeroFilaTres" (keypress)="permitirSoloNumeros($event)" (change)="habilitarDeshabilitarSegunCifras($event.target.value, 3)" class="input-bet"></div>
-                            <div class="col-md-2"><input formControlName="valorDirectoFilaTres" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
-                            <div class="col-md-2"><input formControlName="combinadoFilaTres" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
-                            <div class="col-md-2"><input formControlName="dosCifrasFilaTres" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
-                            <div class="col-md-2"><input formControlName="unaCifraFilaTres" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input id="numeroFilaTres" formControlName="numeroFilaTres" type="text" maxlength="4"  (keypress)="permitirSoloNumeros($event)" (change)="habilitarDeshabilitarSegunCifras($event.target.value, 3)" class="input-bet"></div>
+                            <div class="col-md-2"><input id="valorDirectoFilaTres" formControlName="valorDirectoFilaTres" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input id="combinadoFilaTres" formControlName="combinadoFilaTres" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input id="dosCifrasFilaTres" formControlName="dosCifrasFilaTres" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input id="unaCifraFilaTres" formControlName="unaCifraFilaTres" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
                             <div class="col-md-2"><i (click)="borrarFilaTres()" class="fa fa-trash tras-del" aria-hidden="true"></i></div>
                         </div>
                         <div class="row fls">
-                            <div class="col-md-2"><input type="text" maxlength="4" formControlName="numeroFilaCuatro" (keypress)="permitirSoloNumeros($event)" (change)="habilitarDeshabilitarSegunCifras($event.target.value, 4)" class="input-bet"></div>
-                            <div class="col-md-2"><input formControlName="valorDirectoFilaCuatro" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
-                            <div class="col-md-2"><input formControlName="combinadoFilaCuatro" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
-                            <div class="col-md-2"><input formControlName="dosCifrasFilaCuatro" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
-                            <div class="col-md-2"><input formControlName="unaCifraFilaCuatro" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input id="numeroFilaCuatro" formControlName="numeroFilaCuatro" type="text" maxlength="4" (keypress)="permitirSoloNumeros($event)" (change)="habilitarDeshabilitarSegunCifras($event.target.value, 4)" class="input-bet"></div>
+                            <div class="col-md-2"><input id="valorDirectoFilaCuatro" formControlName="valorDirectoFilaCuatro" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input id="combinadoFilaCuatro" formControlName="combinadoFilaCuatro" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input id="dosCifrasFilaCuatro" formControlName="dosCifrasFilaCuatro" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input id="unaCifraFilaCuatro" formControlName="unaCifraFilaCuatro" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
                             <div class="col-md-2"><i (click)="borrarFilaCuatro()" class="fa fa-trash tras-del" aria-hidden="true"></i></div>
                         </div>
                         <div class="row fls">
-                            <div class="col-md-2"><input type="text" maxlength="4" formControlName="numeroFilaCinco" (keypress)="permitirSoloNumeros($event)" (change)="habilitarDeshabilitarSegunCifras($event.target.value, 5)" class="input-bet"></div>
-                            <div class="col-md-2"><input formControlName="valorDirectoFilaCinco" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
-                            <div class="col-md-2"><input formControlName="combinadoFilaCinco" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
-                            <div class="col-md-2"><input formControlName="dosCifrasFilaCinco" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
-                            <div class="col-md-2"><input formControlName="unaCifraFilaCinco" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input id="numeroFilaCinco" formControlName="numeroFilaCinco" type="text" maxlength="4" (keypress)="permitirSoloNumeros($event)" (change)="habilitarDeshabilitarSegunCifras($event.target.value, 5)" class="input-bet"></div>
+                            <div class="col-md-2"><input id="valorDirectoFilaCinco" formControlName="valorDirectoFilaCinco" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input id="combinadoFilaCinco" formControlName="combinadoFilaCinco" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input id="dosCifrasFilaCinco" formControlName="dosCifrasFilaCinco" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input id="unaCifraFilaCinco" formControlName="unaCifraFilaCinco" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
                             <div class="col-md-2"><i (click)="borrarFilaCinco()" class="fa fa-trash tras-del" aria-hidden="true"></i></div>
                         </div>
                         </form>

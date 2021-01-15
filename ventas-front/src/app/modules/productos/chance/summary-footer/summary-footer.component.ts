@@ -42,6 +42,8 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
   hoy = new Date();
   fechaActual = this.hoy.getDate() + '/' + (this.hoy.getMonth() + 1) + '/' + this.hoy.getFullYear();
 
+  
+
   constructor(
     private productosService: ProductosService,
     protected messageService: MessageService,
@@ -127,8 +129,12 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
    * @description Metodo que se encarga de recalcular el valor de la apuesta
    */
   obtenerValoresTotales(): void {
+
+    this.valueVat = 0;
+    this.valueBetTotal = 0;
     this.valueBet = 0;
     let valorSumado = 0;
+
     for (let index = 0; index < this.listaNumeros.length; index++) {
       if(this.listaNumeros[index].valorDirectoFilaUno){ valorSumado = (valorSumado + parseInt(this.listaNumeros[index].valorDirectoFilaUno));}
       if(this.listaNumeros[index].combinadoFilaUno){ valorSumado = (valorSumado + parseInt(this.listaNumeros[index].combinadoFilaUno)); }
@@ -194,7 +200,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
         this.confirmacionAgregar.total = this.valueBetTotal
       }
     } else {
-      alert('Valide que esta gestionando los campos necesarios para realizar la apuesta');
+      this.messageService.add(MsjUtil.getToastErrorMedium('Valide que esta gestionando los campos necesarios para realizar la apuesta'));
     }
   }
 
@@ -344,6 +350,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
     this.verConfirmacionPopap = false;
 
     const listaNumeros = this.obtenerFilasConApuesta(this.listaNumeros)
+    
     if(this.edit){
       const productosEditar = {
         _id: this.infoEdit[0]._id,
@@ -398,7 +405,12 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
       }
       this.agregarProductos.emit(true);
       this.borrarTodoReset.emit(true);
+      
     }
+
+    this.valueVat = 0;
+    this.valueBetTotal = 0;
+
   }
 
 

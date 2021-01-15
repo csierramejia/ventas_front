@@ -9,6 +9,7 @@ import { CommonService } from 'src/app/utilities/common.service';
 import { ClientesDTO } from 'src/app/dtos/productos/chance/clientes.dto';
 import { CrearClienteComponent } from '../../genericos/crear-cliente/crear-cliente.component';
 import * as moment from 'moment';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-apuesta-chance',
@@ -19,6 +20,7 @@ import * as moment from 'moment';
 export class ApuestaChanceComponent extends CommonComponent implements OnInit {
 
   @Output() agregarLoterias: EventEmitter<any> = new EventEmitter();
+  @Output() reiniciarEdit: EventEmitter<any> = new EventEmitter();
   @Output() agregarNumeros: EventEmitter<any> = new EventEmitter();
   @Output() agregarCliente: EventEmitter<any> = new EventEmitter();
 
@@ -55,7 +57,6 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
   group: FormGroup;
 
   
-
 
   chanceForm = new FormGroup({
     numeroFilaUno: new FormControl('', [Validators.required, Validators.maxLength(4)]),
@@ -94,9 +95,6 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
     nombreCliente: new FormControl(''),
 
   });
-
-
-
 
 
   constructor(
@@ -372,6 +370,12 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
       this.chanceForm.get('combinadoFilaUno').enable();
       this.chanceForm.get('dosCifrasFilaUno').enable();
       this.chanceForm.get('unaCifraFilaUno').enable();
+
+      document.getElementById('valorDirectoFilaUno').focus();
+      document.getElementById('valorDirectoFilaUno').style.backgroundColor = '#FFFFFF';
+      document.getElementById('combinadoFilaUno').style.backgroundColor = '#FFFFFF';
+      document.getElementById('dosCifrasFilaUno').style.backgroundColor = '#FFFFFF';
+      document.getElementById('unaCifraFilaUno').style.backgroundColor = '#FFFFFF';
     } else if (String(value).length === 2) {
       this.chanceForm.get('valorDirectoFilaUno').disable();
       this.chanceForm.get('combinadoFilaUno').disable();
@@ -379,6 +383,12 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
       this.chanceForm.get('unaCifraFilaUno').enable();
       this.chanceForm.get('valorDirectoFilaUno').setValue('');
       this.chanceForm.get('combinadoFilaUno').setValue('');
+
+      document.getElementById('dosCifrasFilaUno').focus();
+      document.getElementById('valorDirectoFilaUno').style.backgroundColor = '#EFEFEF';
+      document.getElementById('combinadoFilaUno').style.backgroundColor = '#EFEFEF';
+      document.getElementById('dosCifrasFilaUno').style.backgroundColor = '#FFFFFF';
+      document.getElementById('unaCifraFilaUno').style.backgroundColor = '#FFFFFF';
     } else if (String(value).length === 1) {
       this.chanceForm.get('valorDirectoFilaUno').disable();
       this.chanceForm.get('combinadoFilaUno').disable();
@@ -387,6 +397,12 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
       this.chanceForm.get('valorDirectoFilaUno').setValue('');
       this.chanceForm.get('combinadoFilaUno').setValue('');
       this.chanceForm.get('dosCifrasFilaUno').setValue('');
+
+      document.getElementById('unaCifraFilaUno').focus();
+      document.getElementById('valorDirectoFilaUno').style.backgroundColor = '#EFEFEF';
+      document.getElementById('combinadoFilaUno').style.backgroundColor = '#EFEFEF';
+      document.getElementById('dosCifrasFilaUno').style.backgroundColor = '#EFEFEF';
+      document.getElementById('unaCifraFilaUno').style.backgroundColor = '#FFFFFF';
     }
   }
 
@@ -397,6 +413,13 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
       this.chanceForm.get('combinadoFilaDos').enable();
       this.chanceForm.get('dosCifrasFilaDos').enable();
       this.chanceForm.get('unaCifraFilaDos').enable();
+
+      document.getElementById('valorDirectoFilaDos').focus();
+      document.getElementById('valorDirectoFilaDos').style.backgroundColor = '#FFFFFF';
+      document.getElementById('combinadoFilaDos').style.backgroundColor = '#FFFFFF';
+      document.getElementById('dosCifrasFilaDos').style.backgroundColor = '#FFFFFF';
+      document.getElementById('unaCifraFilaDos').style.backgroundColor = '#FFFFFF';
+
     } else if (String(value).length === 2) {
       this.chanceForm.get('valorDirectoFilaDos').disable();
       this.chanceForm.get('combinadoFilaDos').disable();
@@ -404,6 +427,13 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
       this.chanceForm.get('unaCifraFilaDos').enable();
       this.chanceForm.get('valorDirectoFilaDos').setValue('');
       this.chanceForm.get('combinadoFilaDos').setValue('');
+
+      document.getElementById('dosCifrasFilaDos').focus();
+      document.getElementById('valorDirectoFilaDos').style.backgroundColor = '#EFEFEF';
+      document.getElementById('combinadoFilaDos').style.backgroundColor = '#EFEFEF';
+      document.getElementById('dosCifrasFilaDos').style.backgroundColor = '#FFFFFF';
+      document.getElementById('unaCifraFilaDos').style.backgroundColor = '#FFFFFF';
+
     } else if (String(value).length === 1) {
       this.chanceForm.get('valorDirectoFilaDos').disable();
       this.chanceForm.get('combinadoFilaDos').disable();
@@ -412,6 +442,12 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
       this.chanceForm.get('valorDirectoFilaDos').setValue('');
       this.chanceForm.get('combinadoFilaDos').setValue('');
       this.chanceForm.get('dosCifrasFilaDos').setValue('');
+
+      document.getElementById('unaCifraFilaDos').focus();
+      document.getElementById('valorDirectoFilaDos').style.backgroundColor = '#EFEFEF';
+      document.getElementById('combinadoFilaDos').style.backgroundColor = '#EFEFEF';
+      document.getElementById('dosCifrasFilaDos').style.backgroundColor = '#EFEFEF';
+      document.getElementById('unaCifraFilaDos').style.backgroundColor = '#FFFFFF';
     }
   }
 
@@ -421,6 +457,12 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
       this.chanceForm.get('combinadoFilaTres').enable();
       this.chanceForm.get('dosCifrasFilaTres').enable();
       this.chanceForm.get('unaCifraFilaTres').enable();
+
+      document.getElementById('valorDirectoFilaTres').focus();
+      document.getElementById('valorDirectoFilaTres').style.backgroundColor = '#FFFFFF';
+      document.getElementById('combinadoFilaTres').style.backgroundColor = '#FFFFFF';
+      document.getElementById('dosCifrasFilaTres').style.backgroundColor = '#FFFFFF';
+      document.getElementById('unaCifraFilaTres').style.backgroundColor = '#FFFFFF';
     } else if (String(value).length === 2) {
       this.chanceForm.get('valorDirectoFilaTres').disable();
       this.chanceForm.get('combinadoFilaTres').disable();
@@ -428,6 +470,13 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
       this.chanceForm.get('unaCifraFilaTres').enable();
       this.chanceForm.get('valorDirectoFilaTres').setValue('');
       this.chanceForm.get('combinadoFilaTres').setValue('');
+
+      document.getElementById('dosCifrasFilaTres').focus();
+      document.getElementById('valorDirectoFilaTres').style.backgroundColor = '#EFEFEF';
+      document.getElementById('combinadoFilaTres').style.backgroundColor = '#EFEFEF';
+      document.getElementById('dosCifrasFilaTres').style.backgroundColor = '#FFFFFF';
+      document.getElementById('unaCifraFilaTres').style.backgroundColor = '#FFFFFF';
+
     } else if (String(value).length === 1) {
       this.chanceForm.get('valorDirectoFilaTres').disable();
       this.chanceForm.get('combinadoFilaTres').disable();
@@ -436,6 +485,12 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
       this.chanceForm.get('valorDirectoFilaTres').setValue('');
       this.chanceForm.get('combinadoFilaTres').setValue('');
       this.chanceForm.get('dosCifrasFilaTres').setValue('');
+
+      document.getElementById('unaCifraFilaTres').focus();
+      document.getElementById('valorDirectoFilaTres').style.backgroundColor = '#EFEFEF';
+      document.getElementById('combinadoFilaTres').style.backgroundColor = '#EFEFEF';
+      document.getElementById('dosCifrasFilaTres').style.backgroundColor = '#EFEFEF';
+      document.getElementById('unaCifraFilaTres').style.backgroundColor = '#FFFFFF';
     }
   }
 
@@ -446,6 +501,12 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
       this.chanceForm.get('combinadoFilaCuatro').enable();
       this.chanceForm.get('dosCifrasFilaCuatro').enable();
       this.chanceForm.get('unaCifraFilaCuatro').enable();
+
+      document.getElementById('valorDirectoFilaCuatro').focus();
+      document.getElementById('valorDirectoFilaCuatro').style.backgroundColor = '#FFFFFF';
+      document.getElementById('combinadoFilaCuatro').style.backgroundColor = '#FFFFFF';
+      document.getElementById('dosCifrasFilaCuatro').style.backgroundColor = '#FFFFFF';
+      document.getElementById('unaCifraFilaCuatro').style.backgroundColor = '#FFFFFF';
     } else if (String(value).length === 2) {
       this.chanceForm.get('valorDirectoFilaCuatro').disable();
       this.chanceForm.get('combinadoFilaCuatro').disable();
@@ -453,6 +514,12 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
       this.chanceForm.get('unaCifraFilaCuatro').enable();
       this.chanceForm.get('valorDirectoFilaCuatro').setValue('');
       this.chanceForm.get('combinadoFilaCuatro').setValue('');
+
+      document.getElementById('dosCifrasFilaCuatro').focus();
+      document.getElementById('valorDirectoFilaCuatro').style.backgroundColor = '#EFEFEF';
+      document.getElementById('combinadoFilaCuatro').style.backgroundColor = '#EFEFEF';
+      document.getElementById('dosCifrasFilaCuatro').style.backgroundColor = '#FFFFFF';
+      document.getElementById('unaCifraFilaCuatro').style.backgroundColor = '#FFFFFF';
     } else if (String(value).length === 1) {
       this.chanceForm.get('valorDirectoFilaCuatro').disable();
       this.chanceForm.get('combinadoFilaCuatro').disable();
@@ -461,6 +528,12 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
       this.chanceForm.get('valorDirectoFilaCuatro').setValue('');
       this.chanceForm.get('combinadoFilaCuatro').setValue('');
       this.chanceForm.get('dosCifrasFilaCuatro').setValue('');
+
+      document.getElementById('unaCifraFilaCuatro').focus();
+      document.getElementById('valorDirectoFilaCuatro').style.backgroundColor = '#EFEFEF';
+      document.getElementById('combinadoFilaCuatro').style.backgroundColor = '#EFEFEF';
+      document.getElementById('dosCifrasFilaCuatro').style.backgroundColor = '#EFEFEF';
+      document.getElementById('unaCifraFilaCuatro').style.backgroundColor = '#FFFFFF';
     }
   }
 
@@ -471,6 +544,12 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
       this.chanceForm.get('combinadoFilaCinco').enable();
       this.chanceForm.get('dosCifrasFilaCinco').enable();
       this.chanceForm.get('unaCifraFilaCinco').enable();
+
+      document.getElementById('valorDirectoFilaCinco').focus();
+      document.getElementById('valorDirectoFilaCinco').style.backgroundColor = '#FFFFFF';
+      document.getElementById('combinadoFilaCinco').style.backgroundColor = '#FFFFFF';
+      document.getElementById('dosCifrasFilaCinco').style.backgroundColor = '#FFFFFF';
+      document.getElementById('unaCifraFilaCinco').style.backgroundColor = '#FFFFFF';
     } else if (String(value).length === 2) {
       this.chanceForm.get('valorDirectoFilaCinco').disable();
       this.chanceForm.get('combinadoFilaCinco').disable();
@@ -478,6 +557,12 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
       this.chanceForm.get('unaCifraFilaCinco').enable();
       this.chanceForm.get('valorDirectoFilaCinco').setValue('');
       this.chanceForm.get('combinadoFilaCinco').setValue('');
+
+      document.getElementById('dosCifrasFilaCinco').focus();
+      document.getElementById('valorDirectoFilaCinco').style.backgroundColor = '#EFEFEF';
+      document.getElementById('combinadoFilaCinco').style.backgroundColor = '#EFEFEF';
+      document.getElementById('dosCifrasFilaCinco').style.backgroundColor = '#FFFFFF';
+      document.getElementById('unaCifraFilaCinco').style.backgroundColor = '#FFFFFF';
     } else if (String(value).length === 1) {
       this.chanceForm.get('valorDirectoFilaCinco').disable();
       this.chanceForm.get('combinadoFilaCinco').disable();
@@ -486,6 +571,12 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
       this.chanceForm.get('valorDirectoFilaCinco').setValue('');
       this.chanceForm.get('combinadoFilaCinco').setValue('');
       this.chanceForm.get('dosCifrasFilaCinco').setValue('');
+
+      document.getElementById('unaCifraFilaCinco').focus();
+      document.getElementById('valorDirectoFilaCinco').style.backgroundColor = '#EFEFEF';
+      document.getElementById('combinadoFilaCinco').style.backgroundColor = '#EFEFEF';
+      document.getElementById('dosCifrasFilaCinco').style.backgroundColor = '#EFEFEF';
+      document.getElementById('unaCifraFilaCinco').style.backgroundColor = '#FFFFFF';
     }
   }
 
@@ -499,6 +590,15 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
     this.chanceForm.get('dosCifrasFilaUno').setValue('');
     this.chanceForm.get('unaCifraFilaUno').setValue('');
     this.emitirNumeros()
+
+    document.getElementById('numeroFilaUno').focus();
+    document.getElementById('numeroFilaUno').style.backgroundColor = '#FFFFFF';
+    document.getElementById('valorDirectoFilaUno').style.backgroundColor = '#EFEFEF';
+    document.getElementById('combinadoFilaUno').style.backgroundColor = '#EFEFEF';
+    document.getElementById('dosCifrasFilaUno').style.backgroundColor = '#EFEFEF';
+    document.getElementById('unaCifraFilaUno').style.backgroundColor = '#EFEFEF';
+
+
   }
 
   borrarFilaDos() {
@@ -508,6 +608,13 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
     this.chanceForm.get('dosCifrasFilaDos').setValue('');
     this.chanceForm.get('unaCifraFilaDos').setValue('');
     this.emitirNumeros()
+
+    document.getElementById('numeroFilaDos').focus();
+    document.getElementById('numeroFilaDos').style.backgroundColor = '#FFFFFF';
+    document.getElementById('valorDirectoFilaDos').style.backgroundColor = '#EFEFEF';
+    document.getElementById('combinadoFilaDos').style.backgroundColor = '#EFEFEF';
+    document.getElementById('dosCifrasFilaDos').style.backgroundColor = '#EFEFEF';
+    document.getElementById('unaCifraFilaDos').style.backgroundColor = '#EFEFEF';
   }
 
   borrarFilaTres() {
@@ -516,7 +623,14 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
     this.chanceForm.get('combinadoFilaTres').setValue('');
     this.chanceForm.get('dosCifrasFilaTres').setValue('');
     this.chanceForm.get('unaCifraFilaTres').setValue('');
-    this.emitirNumeros()
+    this.emitirNumeros();
+
+    document.getElementById('numeroFilaTres').focus();
+    document.getElementById('numeroFilaTres').style.backgroundColor = '#FFFFFF';
+    document.getElementById('valorDirectoFilaTres').style.backgroundColor = '#EFEFEF';
+    document.getElementById('combinadoFilaTres').style.backgroundColor = '#EFEFEF';
+    document.getElementById('dosCifrasFilaTres').style.backgroundColor = '#EFEFEF';
+    document.getElementById('unaCifraFilaTres').style.backgroundColor = '#EFEFEF';
   }
 
   borrarFilaCuatro() {
@@ -526,6 +640,13 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
     this.chanceForm.get('dosCifrasFilaCuatro').setValue('');
     this.chanceForm.get('unaCifraFilaCuatro').setValue('');
     this.emitirNumeros()
+
+    document.getElementById('numeroFilaCuatro').focus();
+    document.getElementById('numeroFilaCuatro').style.backgroundColor = '#FFFFFF';
+    document.getElementById('valorDirectoFilaCuatro').style.backgroundColor = '#EFEFEF';
+    document.getElementById('combinadoFilaCuatro').style.backgroundColor = '#EFEFEF';
+    document.getElementById('dosCifrasFilaCuatro').style.backgroundColor = '#EFEFEF';
+    document.getElementById('unaCifraFilaCuatro').style.backgroundColor = '#EFEFEF';
   }
 
   borrarFilaCinco() {
@@ -534,7 +655,14 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
     this.chanceForm.get('combinadoFilaCinco').setValue('');
     this.chanceForm.get('dosCifrasFilaCinco').setValue('');
     this.chanceForm.get('unaCifraFilaCinco').setValue('');
-    this.emitirNumeros()
+    this.emitirNumeros();
+
+    document.getElementById('numeroFilaCinco').focus();
+    document.getElementById('numeroFilaCinco').style.backgroundColor = '#FFFFFF';
+    document.getElementById('valorDirectoFilaCinco').style.backgroundColor = '#EFEFEF';
+    document.getElementById('combinadoFilaCinco').style.backgroundColor = '#EFEFEF';
+    document.getElementById('dosCifrasFilaCinco').style.backgroundColor = '#EFEFEF';
+    document.getElementById('unaCifraFilaCinco').style.backgroundColor = '#EFEFEF';
   }
 
 
@@ -580,246 +708,74 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
 
 
 
-  repetirNumeroSiguientFila() {
-    if (
-      this.chanceForm.get('numeroFilaUno').value != '' &&
-      this.chanceForm.get('numeroFilaDos').value == '' &&
-      this.chanceForm.get('numeroFilaTres').value == '' &&
-      this.chanceForm.get('numeroFilaCuatro').value == '' &&
-      this.chanceForm.get('numeroFilaCinco').value == '') {
-      this.chanceForm.controls.numeroFilaDos.setValue(this.chanceForm.get('numeroFilaUno').value);
-      this.chanceForm.controls.valorDirectoFilaDos.setValue(this.chanceForm.get('valorDirectoFilaUno').value);
-      this.chanceForm.controls.combinadoFilaDos.setValue(this.chanceForm.get('combinadoFilaUno').value);
-      this.chanceForm.controls.dosCifrasFilaDos.setValue(this.chanceForm.get('dosCifrasFilaUno').value);
-      this.chanceForm.controls.unaCifraFilaDos.setValue(this.chanceForm.get('unaCifraFilaUno').value);
-    } else if (
-      this.chanceForm.get('numeroFilaUno').value != '' &&
-      this.chanceForm.get('numeroFilaDos').value != '' &&
-      this.chanceForm.get('numeroFilaTres').value == '' &&
-      this.chanceForm.get('numeroFilaCuatro').value == '' &&
-      this.chanceForm.get('numeroFilaCinco').value == '') {
-      this.chanceForm.controls.numeroFilaTres.setValue(this.chanceForm.get('numeroFilaDos').value);
-      this.chanceForm.controls.valorDirectoFilaTres.setValue(this.chanceForm.get('valorDirectoFilaDos').value);
-      this.chanceForm.controls.combinadoFilaTres.setValue(this.chanceForm.get('combinadoFilaDos').value);
-      this.chanceForm.controls.dosCifrasFilaTres.setValue(this.chanceForm.get('dosCifrasFilaDos').value);
-      this.chanceForm.controls.unaCifraFilaTres.setValue(this.chanceForm.get('unaCifraFilaDos').value);
-    } else if (
+  repetir() {
+    this.borrarTodo();
+    const chanceApuesta = JSON.parse(localStorage.getItem('chanceApuesta'))
 
-      this.chanceForm.get('numeroFilaUno').value != '' &&
-      this.chanceForm.get('numeroFilaDos').value != '' &&
-      this.chanceForm.get('numeroFilaTres').value != '' &&
-      this.chanceForm.get('numeroFilaCuatro').value == '' &&
-      this.chanceForm.get('numeroFilaCinco').value == ''
-
-    ) {
-      this.chanceForm.controls.numeroFilaCuatro.setValue(this.chanceForm.get('numeroFilaTres').value);
-      this.chanceForm.controls.valorDirectoFilaCuatro.setValue(this.chanceForm.get('valorDirectoFilaTres').value);
-      this.chanceForm.controls.combinadoFilaCuatro.setValue(this.chanceForm.get('combinadoFilaTres').value);
-      this.chanceForm.controls.dosCifrasFilaCuatro.setValue(this.chanceForm.get('dosCifrasFilaTres').value);
-      this.chanceForm.controls.unaCifraFilaCuatro.setValue(this.chanceForm.get('unaCifraFilaTres').value);
-    } else if (
-      this.chanceForm.get('numeroFilaUno').value != '' &&
-      this.chanceForm.get('numeroFilaDos').value != '' &&
-      this.chanceForm.get('numeroFilaTres').value != '' &&
-      this.chanceForm.get('numeroFilaCuatro').value != '' &&
-      this.chanceForm.get('numeroFilaCinco').value == ''
-
-    ) {
-      this.chanceForm.controls.numeroFilaCinco.setValue(this.chanceForm.get('numeroFilaCuatro').value);
-      this.chanceForm.controls.valorDirectoFilaCinco.setValue(this.chanceForm.get('valorDirectoFilaCuatro').value);
-      this.chanceForm.controls.combinadoFilaCinco.setValue(this.chanceForm.get('combinadoFilaCuatro').value);
-      this.chanceForm.controls.dosCifrasFilaCinco.setValue(this.chanceForm.get('dosCifrasFilaCuatro').value);
-      this.chanceForm.controls.unaCifraFilaCinco.setValue(this.chanceForm.get('unaCifraFilaCuatro').value);
-    } else if (
-      this.chanceForm.get('valorDirectoFilaUno').value != '' &&
-      this.chanceForm.get('valorDirectoFilaDos').value == '' &&
-      this.chanceForm.get('valorDirectoFilaTres').value == '' &&
-      this.chanceForm.get('valorDirectoFilaCuatro').value == '' &&
-      this.chanceForm.get('valorDirectoFilaCinco').value == '') {
-
-      this.chanceForm.controls.valorDirectoFilaDos.setValue(this.chanceForm.get('valorDirectoFilaUno').value);
-
-
-
-    } else if (
-      this.chanceForm.get('valorDirectoFilaUno').value != '' &&
-      this.chanceForm.get('valorDirectoFilaDos').value != '' &&
-      this.chanceForm.get('valorDirectoFilaTres').value == '' &&
-      this.chanceForm.get('valorDirectoFilaCuatro').value == '' &&
-      this.chanceForm.get('valorDirectoFilaCinco').value == '') {
-
-      this.chanceForm.controls.valorDirectoFilaTres.setValue(this.chanceForm.get('valorDirectoFilaDos').value);
-
-
-
-    } else if (
-      this.chanceForm.get('valorDirectoFilaUno').value != '' &&
-      this.chanceForm.get('valorDirectoFilaDos').value != '' &&
-      this.chanceForm.get('valorDirectoFilaTres').value != '' &&
-      this.chanceForm.get('valorDirectoFilaCuatro').value == '' &&
-      this.chanceForm.get('valorDirectoFilaCinco').value == '') {
-
-      this.chanceForm.controls.valorDirectoFilaCuatro.setValue(this.chanceForm.get('valorDirectoFilaTres').value);
-
-
-
-    } else if (
-      this.chanceForm.get('valorDirectoFilaUno').value != '' &&
-      this.chanceForm.get('valorDirectoFilaDos').value != '' &&
-      this.chanceForm.get('valorDirectoFilaTres').value != '' &&
-      this.chanceForm.get('valorDirectoFilaCuatro').value != '' &&
-      this.chanceForm.get('valorDirectoFilaCinco').value == '') {
-
-      this.chanceForm.controls.valorDirectoFilaCinco.setValue(this.chanceForm.get('valorDirectoFilaCuatro').value);
-
-
-
-    } else if (
-      this.chanceForm.get('combinadoFilaUno').value != '' &&
-      this.chanceForm.get('combinadoFilaDos').value == '' &&
-      this.chanceForm.get('combinadoFilaTres').value == '' &&
-      this.chanceForm.get('combinadoFilaCuatro').value == '' &&
-      this.chanceForm.get('combinadoFilaCinco').value == ''
-
-    ) {
-
-      this.chanceForm.controls.combinadoFilaDos.setValue(this.chanceForm.get('combinadoFilaUno').value);
-
-
-    } else if (
-      this.chanceForm.get('combinadoFilaUno').value != '' &&
-      this.chanceForm.get('combinadoFilaDos').value != '' &&
-      this.chanceForm.get('combinadoFilaTres').value == '' &&
-      this.chanceForm.get('combinadoFilaCuatro').value == '' &&
-      this.chanceForm.get('combinadoFilaCinco').value == ''
-
-    ) {
-
-      this.chanceForm.controls.combinadoFilaTres.setValue(this.chanceForm.get('combinadoFilaDos').value);
-
-
-    } else if (
-      this.chanceForm.get('combinadoFilaUno').value != '' &&
-      this.chanceForm.get('combinadoFilaDos').value != '' &&
-      this.chanceForm.get('combinadoFilaTres').value != '' &&
-      this.chanceForm.get('combinadoFilaCuatro').value == '' &&
-      this.chanceForm.get('combinadoFilaCinco').value == ''
-
-    ) {
-
-      this.chanceForm.controls.combinadoFilaCuatro.setValue(this.chanceForm.get('combinadoFilaTres').value);
-
-
-    } else if (
-      this.chanceForm.get('combinadoFilaUno').value != '' &&
-      this.chanceForm.get('combinadoFilaDos').value != '' &&
-      this.chanceForm.get('combinadoFilaTres').value != '' &&
-      this.chanceForm.get('combinadoFilaCuatro').value != '' &&
-      this.chanceForm.get('combinadoFilaCinco').value == ''
-
-    ) {
-
-      this.chanceForm.controls.combinadoFilaCinco.setValue(this.chanceForm.get('combinadoFilaCuatro').value);
-
-
+    if(chanceApuesta.length > 0){
+      const apuestaRepetir = chanceApuesta.pop()
+      this.loterias = apuestaRepetir.loterias;
+      this.pCalendarioValor = new Date(apuestaRepetir.fechaSeleccionApuesta);
+      this.setNumerosEvento(apuestaRepetir.listaNumeros)
+      const emitLoterias = {
+        loterias: this.loterias,
+        fechaSeleccionApuesta: apuestaRepetir.fechaSeleccionApuesta
+      }
+      this.agregarLoterias.emit(emitLoterias);
     }
-    else if (
-      this.chanceForm.get('dosCifrasFilaUno').value != '' &&
-      this.chanceForm.get('dosCifrasFilaDos').value == '' &&
-      this.chanceForm.get('dosCifrasFilaTres').value == '' &&
-      this.chanceForm.get('dosCifrasFilaCuatro').value == '' &&
-      this.chanceForm.get('dosCifrasFilaCinco').value == ''
 
-    ) {
-
-      this.chanceForm.controls.dosCifrasFilaDos.setValue(this.chanceForm.get('dosCifrasFilaUno').value);
+    
+  }
 
 
-    } else if (
-      this.chanceForm.get('dosCifrasFilaUno').value != '' &&
-      this.chanceForm.get('dosCifrasFilaDos').value != '' &&
-      this.chanceForm.get('dosCifrasFilaTres').value == '' &&
-      this.chanceForm.get('dosCifrasFilaCuatro').value == '' &&
-      this.chanceForm.get('dosCifrasFilaCinco').value == ''
+  setNumerosEvento(numeros){
+    numeros.forEach(element => {
 
-    ) {
+      if (element.numeroFilaUno) {
+        this.chanceForm.get('numeroFilaUno').setValue(element.numeroFilaUno);
+        this.habilitarDeshabilitarSegunCifras(element.numeroFilaUno, 1);
+      }
+      if (element.valorDirectoFilaUno) { this.chanceForm.get('valorDirectoFilaUno').setValue(element.valorDirectoFilaUno); }
+      if (element.combinadoFilaUno) { this.chanceForm.get('combinadoFilaUno').setValue(element.combinadoFilaUno); }
+      if (element.dosCifrasFilaUno) { this.chanceForm.get('dosCifrasFilaUno').setValue(element.dosCifrasFilaUno); }
+      if (element.unaCifraFilaUno) { this.chanceForm.get('unaCifraFilaUno').setValue(element.unaCifraFilaUno); }
 
-      this.chanceForm.controls.dosCifrasFilaTres.setValue(this.chanceForm.get('dosCifrasFilaDos').value);
+      if (element.numeroFilaDos) {
+        this.chanceForm.get('numeroFilaDos').setValue(element.numeroFilaDos);
+        this.habilitarDeshabilitarSegunCifras(element.numeroFilaDos, 2);
+      }
+      if (element.valorDirectoFilaDos) { this.chanceForm.get('valorDirectoFilaDos').setValue(element.valorDirectoFilaDos); }
+      if (element.combinadoFilaDos) { this.chanceForm.get('combinadoFilaDos').setValue(element.combinadoFilaDos); }
+      if (element.dosCifrasFilaDos) { this.chanceForm.get('dosCifrasFilaDos').setValue(element.dosCifrasFilaDos); }
+      if (element.unaCifraFilaDos) { this.chanceForm.get('unaCifraFilaDos').setValue(element.unaCifraFilaDos); }
 
+      if (element.numeroFilaTres) {
+        this.chanceForm.get('numeroFilaTres').setValue(element.numeroFilaTres);
+        this.habilitarDeshabilitarSegunCifras(element.numeroFilaTres, 3);
+      }
+      if (element.valorDirectoFilaTres) { this.chanceForm.get('valorDirectoFilaTres').setValue(element.valorDirectoFilaTres); }
+      if (element.combinadoFilaTres) { this.chanceForm.get('combinadoFilaTres').setValue(element.combinadoFilaTres); }
+      if (element.dosCifrasFilaTres) { this.chanceForm.get('dosCifrasFilaTres').setValue(element.dosCifrasFilaTres); }
+      if (element.unaCifraFilaTres) { this.chanceForm.get('unaCifraFilaTres').setValue(element.unaCifraFilaTres); }
 
-    } else if (
-      this.chanceForm.get('dosCifrasFilaUno').value != '' &&
-      this.chanceForm.get('dosCifrasFilaDos').value != '' &&
-      this.chanceForm.get('dosCifrasFilaTres').value != '' &&
-      this.chanceForm.get('dosCifrasFilaCuatro').value == '' &&
-      this.chanceForm.get('dosCifrasFilaCinco').value == ''
+      if (element.numeroFilaCuatro) {
+        this.chanceForm.get('numeroFilaCuatro').setValue(element.numeroFilaCuatro);
+        this.habilitarDeshabilitarSegunCifras(element.numeroFilaCuatro, 4);
+      }
+      if (element.valorDirectoFilaCuatro) { this.chanceForm.get('valorDirectoFilaCuatro').setValue(element.valorDirectoFilaCuatro); }
+      if (element.combinadoFilaCuatro) { this.chanceForm.get('combinadoFilaCuatro').setValue(element.combinadoFilaCuatro); }
+      if (element.dosCifrasFilaCuatro) { this.chanceForm.get('dosCifrasFilaCuatro').setValue(element.dosCifrasFilaCuatro); }
+      if (element.unaCifraFilaCuatro) { this.chanceForm.get('unaCifraFilaCuatro').setValue(element.unaCifraFilaCuatro); }
 
-    ) {
-
-      this.chanceForm.controls.dosCifrasFilaCuatro.setValue(this.chanceForm.get('dosCifrasFilaTres').value);
-
-
-    } else if (
-      this.chanceForm.get('dosCifrasFilaUno').value != '' &&
-      this.chanceForm.get('dosCifrasFilaDos').value != '' &&
-      this.chanceForm.get('dosCifrasFilaTres').value != '' &&
-      this.chanceForm.get('dosCifrasFilaCuatro').value != '' &&
-      this.chanceForm.get('dosCifrasFilaCinco').value == ''
-
-    ) {
-
-      this.chanceForm.controls.dosCifrasFilaCinco.setValue(this.chanceForm.get('dosCifrasFilaCuatro').value);
-
-
-    } else if (
-      this.chanceForm.get('unaCifraFilaUno').value != '' &&
-      this.chanceForm.get('unaCifraFilaDos').value == '' &&
-      this.chanceForm.get('unaCifraFilaTres').value == '' &&
-      this.chanceForm.get('unaCifraFilaCuatro').value == '' &&
-      this.chanceForm.get('unaCifraFilaCinco').value == ''
-
-    ) {
-
-      this.chanceForm.controls.unaCifraFilaDos.setValue(this.chanceForm.get('unaCifraFilaUno').value);
-
-
-    } else if (
-      this.chanceForm.get('unaCifraFilaUno').value != '' &&
-      this.chanceForm.get('unaCifraFilaDos').value != '' &&
-      this.chanceForm.get('unaCifraFilaTres').value == '' &&
-      this.chanceForm.get('unaCifraFilaCuatro').value == '' &&
-      this.chanceForm.get('unaCifraFilaCinco').value == ''
-
-    ) {
-
-      this.chanceForm.controls.unaCifraFilaTres.setValue(this.chanceForm.get('unaCifraFilaDos').value);
-
-
-    } else if (
-      this.chanceForm.get('unaCifraFilaUno').value != '' &&
-      this.chanceForm.get('unaCifraFilaDos').value != '' &&
-      this.chanceForm.get('unaCifraFilaTres').value != '' &&
-      this.chanceForm.get('unaCifraFilaCuatro').value == '' &&
-      this.chanceForm.get('unaCifraFilaCinco').value == ''
-
-    ) {
-
-      this.chanceForm.controls.unaCifraFilaCuatro.setValue(this.chanceForm.get('unaCifraFilaTres').value);
-
-
-    } else if (
-      this.chanceForm.get('unaCifraFilaUno').value != '' &&
-      this.chanceForm.get('unaCifraFilaDos').value != '' &&
-      this.chanceForm.get('unaCifraFilaTres').value != '' &&
-      this.chanceForm.get('unaCifraFilaCuatro').value != '' &&
-      this.chanceForm.get('unaCifraFilaCinco').value == ''
-
-    ) {
-
-      this.chanceForm.controls.unaCifraFilaCinco.setValue(this.chanceForm.get('unaCifraFilaCuatro').value);
-
-
-    }
+      if (element.numeroFilaCinco) {
+        this.chanceForm.get('numeroFilaCinco').setValue(element.numeroFilaCinco);
+        this.habilitarDeshabilitarSegunCifras(element.numeroFilaCinco, 5);
+      }
+      if (element.valorDirectoFilaCinco) { this.chanceForm.get('valorDirectoFilaCinco').setValue(element.valorDirectoFilaCinco); }
+      if (element.combinadoFilaCinco) { this.chanceForm.get('combinadoFilaCinco').setValue(element.combinadoFilaCinco); }
+      if (element.dosCifrasFilaCinco) { this.chanceForm.get('dosCifrasFilaCinco').setValue(element.dosCifrasFilaCinco); }
+      if (element.unaCifraFilaCinco) { this.chanceForm.get('unaCifraFilaCinco').setValue(element.unaCifraFilaCinco); }
+    });
 
     this.emitirNumeros();
   }
@@ -861,7 +817,40 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
 
     this.loterias = [];
     this.agregarLoterias.emit(this.loterias);
+    this.reiniciarEdit.emit(false);
     this.emitirNumeros();
+
+
+    document.getElementById('numeroFilaUno').focus();
+    document.getElementById('numeroFilaUno').style.backgroundColor = '#FFFFFF';
+    document.getElementById('valorDirectoFilaUno').style.backgroundColor = '#EFEFEF';
+    document.getElementById('combinadoFilaUno').style.backgroundColor = '#EFEFEF';
+    document.getElementById('dosCifrasFilaUno').style.backgroundColor = '#EFEFEF';
+    document.getElementById('unaCifraFilaUno').style.backgroundColor = '#EFEFEF';
+
+    document.getElementById('numeroFilaDos').style.backgroundColor = '#FFFFFF';
+    document.getElementById('valorDirectoFilaDos').style.backgroundColor = '#EFEFEF';
+    document.getElementById('combinadoFilaDos').style.backgroundColor = '#EFEFEF';
+    document.getElementById('dosCifrasFilaDos').style.backgroundColor = '#EFEFEF';
+    document.getElementById('unaCifraFilaDos').style.backgroundColor = '#EFEFEF';
+
+    document.getElementById('numeroFilaTres').style.backgroundColor = '#FFFFFF';
+    document.getElementById('valorDirectoFilaTres').style.backgroundColor = '#EFEFEF';
+    document.getElementById('combinadoFilaTres').style.backgroundColor = '#EFEFEF';
+    document.getElementById('dosCifrasFilaTres').style.backgroundColor = '#EFEFEF';
+    document.getElementById('unaCifraFilaTres').style.backgroundColor = '#EFEFEF';
+
+    document.getElementById('numeroFilaCuatro').style.backgroundColor = '#FFFFFF';
+    document.getElementById('valorDirectoFilaCuatro').style.backgroundColor = '#EFEFEF';
+    document.getElementById('combinadoFilaCuatro').style.backgroundColor = '#EFEFEF';
+    document.getElementById('dosCifrasFilaCuatro').style.backgroundColor = '#EFEFEF';
+    document.getElementById('unaCifraFilaCuatro').style.backgroundColor = '#EFEFEF';
+
+    document.getElementById('numeroFilaCinco').style.backgroundColor = '#FFFFFF';
+    document.getElementById('valorDirectoFilaCinco').style.backgroundColor = '#EFEFEF';
+    document.getElementById('combinadoFilaCinco').style.backgroundColor = '#EFEFEF';
+    document.getElementById('dosCifrasFilaCinco').style.backgroundColor = '#EFEFEF';
+    document.getElementById('unaCifraFilaCinco').style.backgroundColor = '#EFEFEF';
   }
 
 
@@ -911,6 +900,7 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
 
 
   editarProducto(event) {
+    this.borrarTodo()
     this.edit = true;
     const buscarApuestasEditar = JSON.parse(localStorage.getItem('chanceApuesta'))
     const apuestaEditar = buscarApuestasEditar.filter(buscarApuestaEditar => buscarApuestaEditar._id == event._id);
@@ -923,55 +913,8 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
 
     this.agregarLoterias.emit(emitLoterias);
     this.infoEdit = apuestaEditar;
-    apuestaEditar[0].listaNumeros.forEach(element => {
 
-      if (element.numeroFilaUno) {
-        this.chanceForm.get('numeroFilaUno').setValue(element.numeroFilaUno);
-        this.habilitarDeshabilitarSegunCifras(element.numeroFilaUno, 1);
-      }
-      if (element.valorDirectoFilaUno) { this.chanceForm.get('valorDirectoFilaUno').setValue(element.valorDirectoFilaUno); }
-      if (element.combinadoFilaUno) { this.chanceForm.get('combinadoFilaUno').setValue(element.combinadoFilaUno); }
-      if (element.dosCifrasFilaUno) { this.chanceForm.get('dosCifrasFilaUno').setValue(element.dosCifrasFilaUno); }
-      if (element.unaCifraFilaUno) { this.chanceForm.get('unaCifraFilaUno').setValue(element.unaCifraFilaUno); }
-
-      if (element.numeroFilaDos) {
-        this.chanceForm.get('numeroFilaDos').setValue(element.numeroFilaDos);
-        this.habilitarDeshabilitarSegunCifras(element.numeroFilaDos, 2);
-      }
-      if (element.valorDirectoFilaDos) { this.chanceForm.get('valorDirectoFilaDos').setValue(element.valorDirectoFilaDos); }
-      if (element.combinadoFilaDos) { this.chanceForm.get('combinadoFilaDos').setValue(element.combinadoFilaDos); }
-      if (element.dosCifrasFilaDos) { this.chanceForm.get('dosCifrasFilaDos').setValue(element.dosCifrasFilaDos); }
-      if (element.unaCifraFilaDos) { this.chanceForm.get('unaCifraFilaDos').setValue(element.unaCifraFilaDos); }
-
-      if (element.numeroFilaTres) {
-        this.chanceForm.get('numeroFilaTres').setValue(element.numeroFilaTres);
-        this.habilitarDeshabilitarSegunCifras(element.numeroFilaTres, 3);
-      }
-      if (element.valorDirectoFilaTres) { this.chanceForm.get('valorDirectoFilaTres').setValue(element.valorDirectoFilaTres); }
-      if (element.combinadoFilaTres) { this.chanceForm.get('combinadoFilaTres').setValue(element.combinadoFilaTres); }
-      if (element.dosCifrasFilaTres) { this.chanceForm.get('dosCifrasFilaTres').setValue(element.dosCifrasFilaTres); }
-      if (element.unaCifraFilaTres) { this.chanceForm.get('unaCifraFilaTres').setValue(element.unaCifraFilaTres); }
-
-      if (element.numeroFilaCuatro) {
-        this.chanceForm.get('numeroFilaCuatro').setValue(element.numeroFilaCuatro);
-        this.habilitarDeshabilitarSegunCifras(element.numeroFilaCuatro, 4);
-      }
-      if (element.valorDirectoFilaCuatro) { this.chanceForm.get('valorDirectoFilaCuatro').setValue(element.valorDirectoFilaCuatro); }
-      if (element.combinadoFilaCuatro) { this.chanceForm.get('combinadoFilaCuatro').setValue(element.combinadoFilaCuatro); }
-      if (element.dosCifrasFilaCuatro) { this.chanceForm.get('dosCifrasFilaCuatro').setValue(element.dosCifrasFilaCuatro); }
-      if (element.unaCifraFilaCuatro) { this.chanceForm.get('unaCifraFilaCuatro').setValue(element.unaCifraFilaCuatro); }
-
-      if (element.numeroFilaCinco) {
-        this.chanceForm.get('numeroFilaCinco').setValue(element.numeroFilaCinco);
-        this.habilitarDeshabilitarSegunCifras(element.numeroFilaCinco, 5);
-      }
-      if (element.valorDirectoFilaCinco) { this.chanceForm.get('valorDirectoFilaCinco').setValue(element.valorDirectoFilaCinco); }
-      if (element.combinadoFilaCinco) { this.chanceForm.get('combinadoFilaCinco').setValue(element.combinadoFilaCinco); }
-      if (element.dosCifrasFilaCinco) { this.chanceForm.get('dosCifrasFilaCinco').setValue(element.dosCifrasFilaCinco); }
-      if (element.unaCifraFilaCinco) { this.chanceForm.get('unaCifraFilaCinco').setValue(element.unaCifraFilaCinco); }
-
-    });
-    this.emitirNumeros();
+    this.setNumerosEvento(apuestaEditar[0].listaNumeros);
   }
 
 
