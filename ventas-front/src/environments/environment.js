@@ -3,8 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 export var environment = {
     production: false,
-    // serverApiUrl: 'http://localhost:8181/'
-    serverApiUrl: 'https://gateway2.logiiblue.com/'
+     // serverApiUrl: 'http://localhost:8181/'
+     serverApiUrl: 'https://gateway2.logiiblue.com/'
 };
 /*
  * For easier debugging in development mode, you can import the following file

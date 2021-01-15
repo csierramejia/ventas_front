@@ -46,6 +46,10 @@ export class SoatComponent extends CommonComponent implements OnInit, OnDestroy 
   /** constante para el idioma espaniol para los calendar */
   public CALENDAR_SPANISH = LabelsConstant.CALENDAR_SPANISH;
 
+   /** Placa vehículo 3 letras , 2 numeros y 1 letra o 3 números */
+   public static readonly PLACA_VEHICULO: RegExp = /^[a-zA-Z]{3}[0-9]{3}$/;;
+
+
   /** Indica si ya se dio submit para la creacion del tomador */
   public isSubmit: boolean;
 
@@ -130,10 +134,14 @@ export class SoatComponent extends CommonComponent implements OnInit, OnDestroy 
       if (this.placa) {
         this.recaudosService.consultarVehiculoPorPlaca(this.placa).subscribe(
           (data) => {
+            if(data.placa){
             this.vehiculoDTO = data;
             this.step.next();
             this.index = this.step._selectedIndex;
             this.isSubmit = false;
+            }
+            else{this.messageService.add(MsjUtil.getMsjError('La placa ingresada no se encuentra en el sistema'));
+          }
           },
           (error) => {
             this.messageService.add(
@@ -212,6 +220,22 @@ export class SoatComponent extends CommonComponent implements OnInit, OnDestroy 
     }
   }
 
+
+    /**
+   * 
+   * @description Funcion que permite valida que el usuario
+   * solo ingrese letras en los campos donde se espera solo letras
+   * @param e
+   */
+  keyPressPlaca(e) {
+    var regex = new RegExp("^[a-zA-Z0-9]+$");
+    for (let i = 0; i < e.key.length; i++) {
+      if (!regex.test(e.key.charAt(i))) {
+        return false;
+      }
+      return true;
+    }
+  }
 
 
   /**
@@ -296,15 +320,11 @@ export class SoatComponent extends CommonComponent implements OnInit, OnDestroy 
   }
 
 
-  /**
-  * @author Jhon Rivera
-  * @description Metodo que se encarga de regresar al paso inicial
-  */
-  public salir(): void{
-    this.init();
-    
-
+   /**
+   * Metodo que permite validar la placa d
+   */
+  public static isPlacaValido(cadena: string): boolean {
+    return this.PLACA_VEHICULO.test(cadena);
   }
-
 
 }
