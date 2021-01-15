@@ -17,13 +17,10 @@ import { Observable } from 'rxjs/Observable';
 export class BreadcrumbComponent implements OnInit {
 
   itemsCarrito: Observable<number>;
-
   @ViewChild(MenuCarritoComponent) menuCarritoComponent: MenuCarritoComponent;
-
   hoy = new Date();
   fechaActual = this.hoy.getDate() + '/' + (this.hoy.getMonth() + 1) + '/' + this.hoy.getFullYear();
   horaActual: Date;
-
 
   /**
    * @param shellState , se utiliza para obtener
@@ -37,8 +34,9 @@ export class BreadcrumbComponent implements OnInit {
       this.commonService.obtenerHora()
       .subscribe( data => this.horaActual = data );
 
-      this.itemsCarrito = JSON.parse(localStorage.getItem('chanceApuesta')).length;
-
+      if(JSON.parse(localStorage.getItem('chanceApuesta'))){
+        this.itemsCarrito = JSON.parse(localStorage.getItem('chanceApuesta')).length;
+      }
   }
 
 
