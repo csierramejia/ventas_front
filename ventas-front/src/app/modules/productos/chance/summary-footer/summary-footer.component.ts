@@ -200,7 +200,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
         this.confirmacionAgregar.total = this.valueBetTotal
       }
     } else {
-      alert('Valide que esta gestionando los campos necesarios para realizar la apuesta');
+      this.messageService.add(MsjUtil.getToastErrorMedium('Valide que esta gestionando los campos necesarios para realizar la apuesta'));
     }
   }
 
