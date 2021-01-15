@@ -281,6 +281,7 @@ export class SoatComponent extends CommonComponent implements OnInit, OnDestroy 
           this.activaPasoDatos = true;
           this.activaPasoPago = true;
           this.step.reset();
+          this.limpiarCampos();
         },
         (error) => {
           this.messageService.add(
@@ -373,10 +374,29 @@ export class SoatComponent extends CommonComponent implements OnInit, OnDestroy 
           this.activaPasoDatos = true;
           this.activaPasoPago = true;
           this.step.reset();
+          this.limpiarCampos();
           this.spinnerState.hideSpinner();
         }, 100);
       }
     });
+
+  }
+
+  /**
+   * Método que permite limpiar los campos del formulario
+   */
+  public limpiarCampos(): void {
+
+    this.tomadorForm.get('tipoDocumento').setValue('');
+    this.tomadorForm.get('numeroDocumento').setValue('');
+    this.tomadorForm.get('nombres').setValue('');
+    this.tomadorForm.get('apellidos').setValue('');
+    this.tomadorForm.get('fechaNacimiento').setValue('');
+    this.tomadorForm.get('ciudad').setValue('');
+    this.tomadorForm.get('direccion').setValue('');
+    this.tomadorForm.get('numeroCelular').setValue('');
+    this.tomadorForm.get('correo').setValue('');
+    this.tomadorForm.get('fechaInicioVigencia').setValue('');
 
   }
 
