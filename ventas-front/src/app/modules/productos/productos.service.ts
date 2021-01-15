@@ -21,8 +21,6 @@ import { LoteriaVirtualVentaResponseDTO } from 'src/app/dtos/productos/loteria-v
  */
 @Injectable()
 export class ProductosService {
-
-
   /**
    * @param HTTP para hacer las peticiones a los servicios REST
    */

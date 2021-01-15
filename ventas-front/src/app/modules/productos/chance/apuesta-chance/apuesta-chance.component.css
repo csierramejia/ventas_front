@@ -96,6 +96,7 @@
 .tras-del{
     color: red;
     font-size: 25px;
+    cursor: pointer;
 }
 
 
@@ -105,12 +106,18 @@
     left: 692px;
     width: 86px;
     height: 39px;
-    background: #FFFFFF 0% 0% no-repeat padding-box;
+    background: #EFEFEF 0% 0% no-repeat padding-box;
     border: 1px solid #707070;
     border-radius: 5px;
     opacity: 1;
     padding-left: 15px;
 }
+
+
+#numeroFilaUno, #numeroFilaDos, #numeroFilaTres, #numeroFilaCuatro, #numeroFilaCinco {
+    background: #FFFFFF;
+}
+
 
 .fls{
     padding-bottom: 12px;

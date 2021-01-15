@@ -11,7 +11,7 @@
 
 
 .item-producto{
-  height: 85px;
+  height: auto;
   background: #FFFFFF 0% 0% no-repeat padding-box;
   border: 1px solid #ABABAB;
   border-radius: 5px;
@@ -112,4 +112,29 @@
   font: normal normal normal 12px/15px Montserrat;
   letter-spacing: 0px;
   color: #000000;
+}
+
+
+.btns-duplicar{
+  font-size: 25px;
+  color: #0BC9EC;
+  cursor: pointer;
+}
+
+.cantidad-duplicar{
+  font-size: 17px;
+  padding: 15px;
+  color: #000000;
+}
+
+
+#row-duplicate{
+  padding: 10px;
+}
+
+.repetir-estilo{
+  font: normal normal 600 14px Montserrat;
+  letter-spacing: 0px;
+  color: #0BC9EC;
+  cursor: pointer;
 }

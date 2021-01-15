@@ -1,8 +1,9 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { RouterConstant } from '../../../../constants/router.constant';
 import { MessageService } from 'primeng/api';
 import { CommonService } from 'src/app/utilities/common.service';
+import { ProductosService } from '../../productos.service';
 
 
 /**
@@ -12,11 +13,13 @@ import { CommonService } from 'src/app/utilities/common.service';
   selector: 'app-menu-carrito',
   templateUrl: './menu-carrito.component.html',
   styleUrls: ['./menu-carrito.component.css'],
-  providers: [CommonService]
+  providers: [CommonService, ProductosService]
 })
 export class MenuCarritoComponent implements OnInit {
 
   @Output() editarProducto: EventEmitter<any> = new EventEmitter();
+
+  cantidadRepetir = 1;
 
   productos = [];
   subtotal = 0
@@ -24,6 +27,7 @@ export class MenuCarritoComponent implements OnInit {
   constructor(
     protected messageService: MessageService,
     private router: Router,
+    private productosService:ProductosService,
     private commonService: CommonService) {}
 
 
@@ -55,10 +59,12 @@ export class MenuCarritoComponent implements OnInit {
   duplicarApuesta(id) {
     const productosDuplicar = JSON.parse(localStorage.getItem('chanceApuesta'))
     const result = productosDuplicar.filter(productoDuplicar => productoDuplicar._id == id);
-    result[0]._id = 'bet_' + Math.floor(Math.random() * 999999)
-    const newLocalstorage = JSON.parse(localStorage.getItem('chanceApuesta'));
-    newLocalstorage.push(result[0]);
-    localStorage.setItem('chanceApuesta', JSON.stringify(newLocalstorage));
+    for (let index = 0; index < this.cantidadRepetir; index++) {
+      result[0]._id = 'bet_' + Math.floor(Math.random() * 999999)
+      const newLocalstorage = JSON.parse(localStorage.getItem('chanceApuesta'));
+      newLocalstorage.push(result[0]);
+      localStorage.setItem('chanceApuesta', JSON.stringify(newLocalstorage));
+    }
     this.refrescarCarrito();
   }
 
@@ -102,6 +108,7 @@ export class MenuCarritoComponent implements OnInit {
             loterias:loteriasSeleccionadas,
             total:element.total,
             _id:element._id,
+            viewRepetir: false
           })
           this.subtotal = this.subtotal + element.apostado
         });
@@ -110,6 +117,7 @@ export class MenuCarritoComponent implements OnInit {
         this.productos = []
       }
     }
+
 
   }
 
@@ -138,6 +146,29 @@ export class MenuCarritoComponent implements OnInit {
       }
     });
     return loteriasSeleccionadas;
+  }
+
+
+
+  aumentarDuplicidad(){
+    if(this.cantidadRepetir < 5){
+      this.cantidadRepetir = this.cantidadRepetir + 1;
+    }
+  }
+
+  disminuirDuplicidad(){
+    if(this.cantidadRepetir > 1){
+      this.cantidadRepetir = this.cantidadRepetir - 1;
+    }
+  }
+
+  viewRepetirEvent(index){
+    this.cantidadRepetir = 1;
+    if(this.productos[index].viewRepetir){
+      this.productos[index].viewRepetir = false;
+    } else {
+      this.productos[index].viewRepetir = true;
+    }
   }
 
   verResumenCompra(): void {

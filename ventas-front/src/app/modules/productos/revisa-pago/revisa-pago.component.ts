@@ -34,6 +34,8 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
   ivaServicio = 0
   correoCliente = ''
 
+  verBotonFinalizar = false;
+
 
   constructor(
     private productosService: ProductosService,
@@ -162,6 +164,12 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
 
   calcularDevuelta(){
     this.devuelta = this.efectivo - this.totalGeneral
+    if(this.devuelta >= 0){
+      this.verBotonFinalizar = true;
+    } else {
+      this.verBotonFinalizar = false;
+      this.messageService.add(MsjUtil.getToastErrorMedium('El valor recibido no puede ser menor al total a pagar'));
+    }
   }
 
 
