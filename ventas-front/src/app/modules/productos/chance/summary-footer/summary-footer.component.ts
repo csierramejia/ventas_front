@@ -350,12 +350,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
     this.verConfirmacionPopap = false;
 
     const listaNumeros = this.obtenerFilasConApuesta(this.listaNumeros)
-
-    console.log('.-.-.-.-.-.');
-    console.log(this.infoEdit);
-    console.log('.-.-.-.-.-.');
-
-
+    
     if(this.edit){
       const productosEditar = {
         _id: this.infoEdit[0]._id,

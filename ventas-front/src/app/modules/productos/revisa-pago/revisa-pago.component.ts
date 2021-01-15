@@ -64,6 +64,7 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
       },
       error => {
         console.log(error);
+        this.messageService.add(MsjUtil.getToastErrorMedium(error));
       }
     );
   }
