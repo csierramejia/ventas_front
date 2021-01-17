@@ -56,7 +56,7 @@
   right:0%;
   top:0%;
   content: attr(data-count);
-  font-size:40%;
+  font-size:37%;
   padding:.6em;
   border-radius:999px;
   line-height:.75em;
@@ -77,5 +77,9 @@
 
 
 .fa-stack-2x{
-  font-size: 40px;
+  font-size: 30px;
+}
+
+.fa-stack{
+  height: 1em;
 }

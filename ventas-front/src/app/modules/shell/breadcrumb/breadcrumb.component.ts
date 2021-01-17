@@ -3,7 +3,6 @@ import { ShellState } from './../../../states/shell/shell.state';
 import { CommonService } from "../../../utilities/common.service";
 import { MenuCarritoComponent } from '../../productos/genericos/menu-carrito/menu-carrito.component';
 import { ProductosService } from '../../productos/productos.service';
-import { Observable } from 'rxjs/Observable';
 
 /**
  * Miga de pan que se visualiza en el Shell de la aplicacion
@@ -43,10 +42,6 @@ export class BreadcrumbComponent implements OnInit {
           this.itemsCarrito = 0;
         }
       });
-
-      if(JSON.parse(localStorage.getItem('chanceApuesta'))){
-        this.itemsCarrito = JSON.parse(localStorage.getItem('chanceApuesta')).length;
-      }
   }
 
 
