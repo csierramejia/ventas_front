@@ -1,6 +1,5 @@
 #summary-footer{
-    /* width: 896px; */
-    height: 87px;
+    height: auto;
     background: transparent linear-gradient(90deg, #004C8B 0%, #068AF9 100%)
 }
 
@@ -92,4 +91,9 @@
 
 .ui-panel-title { 
     background: red;
+}
+
+
+.rowf{
+    flex-wrap: unset;
 }
