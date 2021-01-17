@@ -16,7 +16,7 @@ import { Observable } from 'rxjs/Observable';
 })
 export class BreadcrumbComponent implements OnInit {
 
-  itemsCarrito: Observable<number>;
+  itemsCarrito = 0;
   @ViewChild(MenuCarritoComponent) menuCarritoComponent: MenuCarritoComponent;
   hoy = new Date();
   fechaActual = this.hoy.getDate() + '/' + (this.hoy.getMonth() + 1) + '/' + this.hoy.getFullYear();
@@ -33,6 +33,16 @@ export class BreadcrumbComponent implements OnInit {
     ) {
       this.commonService.obtenerHora()
       .subscribe( data => this.horaActual = data );
+
+      this.commonService.obtenerItemsCarrito()
+      .subscribe( data => {
+        const res:any = data;
+        if(res){
+          this.itemsCarrito = res.length;
+        } else {
+          this.itemsCarrito = 0;
+        }
+      });
 
       if(JSON.parse(localStorage.getItem('chanceApuesta'))){
         this.itemsCarrito = JSON.parse(localStorage.getItem('chanceApuesta')).length;
