@@ -15,6 +15,7 @@ import { VehiculoDTO } from 'src/app/dtos/soat/vehiculo.dto';
 import { AutenticacionResponseDTO } from 'src/app/dtos/seguridad/autenticacion/autenticacion-response.dto';
 import { TipoEventoConstant } from 'src/app/constants/tipo-evento.constant';
 import { SessionStoreUtil } from 'src/app/utilities/session-store.util';
+import { MsjFrontConstant } from 'src/app/constants/messages-frontend.constant';
 
 
 
@@ -26,14 +27,16 @@ import { SessionStoreUtil } from 'src/app/utilities/session-store.util';
 })
 export class SoatComponent extends CommonComponent implements OnInit, OnDestroy {
 
-  
+
   /** componente steps para la creacion o edicion */
   @ViewChild('stepsoat') step: any;
 
   public index: number;
   public placa: string;
   public autorizacion: boolean;
- 
+  public activaPasoDatos: boolean;
+  public activaPasoPago: boolean;
+
 
   /** Datos del tomador */
   public tomadorDTO: TomadorDTO;
@@ -46,8 +49,8 @@ export class SoatComponent extends CommonComponent implements OnInit, OnDestroy 
   /** constante para el idioma espaniol para los calendar */
   public CALENDAR_SPANISH = LabelsConstant.CALENDAR_SPANISH;
 
-   /** Placa vehículo 3 letras , 2 numeros y 1 letra o 3 números */
-   public static readonly PLACA_VEHICULO: RegExp = /^[a-zA-Z]{3}[0-9]{3}$/;;
+  /** Placa vehículo 3 letras , 2 numeros y 1 letra o 3 números */
+  public static readonly PLACA_VEHICULO: RegExp = /^[a-zA-Z]{3}[0-9]{3}$/;;
 
 
   /** Indica si ya se dio submit para la creacion del tomador */
@@ -115,6 +118,8 @@ export class SoatComponent extends CommonComponent implements OnInit, OnDestroy 
    */
   private init(): void {
     this.vehiculoDTO = new VehiculoDTO();
+    this.activaPasoDatos = true;
+    this.activaPasoPago = true;
     // se obtiene los datos de la autenticacion
     this.auth = SessionStoreUtil.auth(TipoEventoConstant.GET);
     this.index = 0;
@@ -134,14 +139,16 @@ export class SoatComponent extends CommonComponent implements OnInit, OnDestroy 
       if (this.placa) {
         this.recaudosService.consultarVehiculoPorPlaca(this.placa).subscribe(
           (data) => {
-            if(data.placa){
-            this.vehiculoDTO = data;
-            this.step.next();
-            this.index = this.step._selectedIndex;
-            this.isSubmit = false;
+            if (data.placa) {
+              this.vehiculoDTO = data;
+              this.step.next();
+              this.index = this.step._selectedIndex;
+              this.isSubmit = false;
+              this.activaPasoDatos = false;
             }
-            else{this.messageService.add(MsjUtil.getMsjError('La placa ingresada no se encuentra en el sistema'));
-          }
+            else {
+              this.messageService.add(MsjUtil.getMsjError('La placa ingresada no se encuentra en el sistema'));
+            }
           },
           (error) => {
             this.messageService.add(
@@ -221,12 +228,12 @@ export class SoatComponent extends CommonComponent implements OnInit, OnDestroy 
   }
 
 
-    /**
-   * 
-   * @description Funcion que permite valida que el usuario
-   * solo ingrese letras en los campos donde se espera solo letras
-   * @param e
-   */
+  /**
+ * 
+ * @description Funcion que permite valida que el usuario
+ * solo ingrese letras en los campos donde se espera solo letras
+ * @param e
+ */
   keyPressPlaca(e) {
     var regex = new RegExp("^[a-zA-Z0-9]+$");
     for (let i = 0; i < e.key.length; i++) {
@@ -260,9 +267,9 @@ export class SoatComponent extends CommonComponent implements OnInit, OnDestroy 
       this.tomadorDTO.vehiculo = this.vehiculoDTO;
       this.tomadorDTO.idTipoTransaccion = 2;
       this.tomadorDTO.idCanal = 1;
-      this.tomadorDTO.idEmpresa= 1;
+      this.tomadorDTO.idEmpresa = 1;
       this.tomadorDTO.idCliente = 0;
-      this.tomadorDTO.idDispositivo =1;
+      this.tomadorDTO.idDispositivo = 1;
       this.tomadorDTO.idProducto = 0;
 
       this.recaudosService.registrarPagoTomador(this.tomadorDTO).subscribe(
@@ -271,7 +278,10 @@ export class SoatComponent extends CommonComponent implements OnInit, OnDestroy 
           this.placa = null;
           this.isSubmit = false;
           this.messageService.add(MsjUtil.getToastSuccessMedium('Transacción realizada exitosamente'));
+          this.activaPasoDatos = true;
+          this.activaPasoPago = true;
           this.step.reset();
+          this.limpiarCampos();
         },
         (error) => {
           this.messageService.add(
@@ -312,6 +322,7 @@ export class SoatComponent extends CommonComponent implements OnInit, OnDestroy 
       this.isSubmit = false;
       this.step.next();
       this.index = this.step._selectedIndex;
+      this.activaPasoPago = false;
     } else {
       // se indica que ya se dio commit
       this.isSubmit = true;
@@ -320,11 +331,73 @@ export class SoatComponent extends CommonComponent implements OnInit, OnDestroy 
   }
 
 
-   /**
-   * Metodo que permite validar la placa d
-   */
+  /**
+  * Metodo que permite validar la placa d
+  */
   public static isPlacaValido(cadena: string): boolean {
     return this.PLACA_VEHICULO.test(cadena);
+  }
+
+
+  /**
+   * Metodo que permite capturar el evento de los pasos 
+   * @param event 
+   */
+  public onStepChange(event: any): void {
+
+  }
+
+  /**
+   * Metodo que permite consultar oprimiendo enter
+   */
+  public onEnter(event) {
+    this.consultarPlaca();
+  }
+
+
+
+  /**
+   * Método que permite limpiar la placa del vehículo
+   */
+  public volver(): void {
+    // se muestra el mensaje de confirmacion
+    this.confirmationService.confirm({
+      message: MsjFrontConstant.SEGURO_SALIR,
+      header: MsjFrontConstant.CONFIRMACION,
+      accept: () => {
+
+        // se limpia los datos 
+        this.spinnerState.displaySpinner();
+        setTimeout(() => {
+          this.messageService.clear();
+          this.placa = null;
+          this.activaPasoDatos = true;
+          this.activaPasoPago = true;
+          this.step.reset();
+          this.limpiarCampos();
+          this.spinnerState.hideSpinner();
+        }, 100);
+      }
+    });
+
+  }
+
+  /**
+   * Método que permite limpiar los campos del formulario
+   */
+  public limpiarCampos(): void {
+
+    this.tomadorForm.get('tipoDocumento').setValue('');
+    this.tomadorForm.get('numeroDocumento').setValue('');
+    this.tomadorForm.get('nombres').setValue('');
+    this.tomadorForm.get('apellidos').setValue('');
+    this.tomadorForm.get('fechaNacimiento').setValue('');
+    this.tomadorForm.get('ciudad').setValue('');
+    this.tomadorForm.get('direccion').setValue('');
+    this.tomadorForm.get('numeroCelular').setValue('');
+    this.tomadorForm.get('correo').setValue('');
+    this.tomadorForm.get('fechaInicioVigencia').setValue('');
+
   }
 
 }

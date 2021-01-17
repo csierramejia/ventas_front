@@ -1,565 +1,569 @@
-<!-- panel principal -->
-<div class="pnl1 mat-elevation-z8">
-       <div class="head">
-              <span class="title">Soat </span>
+<!-- pnl principal -->
+<div class="ui-g">
+       <div *ngIf="!activaPasoDatos" class="row boton-atras-fila">
+              <div class="col-md-2">
+                     <button (click)="volver()" type="button" class="btn btn-volver">
+                            <i class="fa fa-arrow-circle-left btn-icon font-size-20"></i>
+                            VOLVER
+                     </button>
+              </div>
        </div>
-       <div class="ui-g">
-              <div class="ui-g-3 pb-0">
-                     <!-- logo app -->
-                     <div class="ui-g-12 mb-4 p-0 text-center">
-                            <img src="assets/img/soat/soat.png" class="logo" />
+
+       <div class="ui-g-12 ml-3 mr-3 pt-1"></div>
+
+       <!-- panel principal -->
+       <div class="pnl1 mat-elevation-z8">
+              <div class="head">
+                     <span class="title">Soat </span>
+              </div>
+              <div class="ui-g">
+                     <div class="ui-g-3 pb-0">
+                            <!-- logo app -->
+                            <div class="ui-g-12 mb-4 p-0 text-center">
+                                   <img src="assets/img/soat/soat.png" class="logo" />
+                            </div>
+                     </div>
+                     <div class="ui-g-12 ml-3 mr-3 p-0 mt-2 ">
+
+                            <mat-horizontal-stepper (selectionChange)="onStepChange($event)" linear #stepsoat>
+                                   <mat-step>
+                                          <ng-template matStepLabel>Cotización</ng-template>
+                                          <div class="ui-g-12 text-center pb-0 pt-2 pr-3 pl-3">
+                                                 <div class="ui-g-4 ">
+                                                 </div>
+                                                 <div class="ui-g-4 text-center">
+                                                        <label class="titleInput">Ingresa el número de placa
+                                                               para</label>
+                                                        <label class="titleInput">realizar la contización</label>
+                                                        <div class="input-group">
+
+                                                               <input type="text" class="form-control styleInputSoat"
+                                                                      placeholder="Placa" [(ngModel)]="placa"
+                                                                      (ngModelChange)="placa = $event.toUpperCase()"
+                                                                      [ngClass]="{'requerido' : (isSubmit && (!placa))}"
+                                                                      maxlength="6" (keypress)="keyPressPlaca($event)"
+                                                                      (keyup.enter)="onEnter($event)">
+
+                                                               <span style="height: 31px" class="input-group-append">
+                                                                      <button type="button" style="padding-top: 3px"
+                                                                             (click)="consultarPlaca()"
+                                                                             class="btn-buscar btn btn-info btn-flat">
+                                                                             <label class="btn-size-admin">
+                                                                                    <i class="fa fa-search"></i></label>
+                                                                      </button>
+                                                               </span>
+
+                                                        </div>
+                                                 </div>
+                                                 <div class="ui-g-4 ">
+                                                 </div>
+                                          </div>
+                                   </mat-step>
+                                   <mat-step [aria-labelledby]="activaPasoDatos ? 'disabled_af' : null">
+                                          <ng-template matStepLabel>Datos</ng-template>
+                                          <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                                          </div>
+                                          <div class="ui-g-12 ml-0 mr-3 p-0 mt-2">
+                                                 <div class="ui-g">
+
+
+                                                        <div class="ui-g-9 p-1 ">
+                                                               <div class="ui-g-12 ">
+                                                                      <div class="ui-g-3 p-0 flecha">
+                                                                             <div class="ui-g-12 pb-0">
+                                                                                    <label style="color:  #FFFFFF"
+                                                                                           class="mb-0 mt-1">PLACA</label>
+                                                                             </div>
+                                                                             <div class="ui-g-12 p-0 ">
+                                                                                    <strong> <span
+                                                                                                  style="color:  #FFFFFF">{{vehiculoDTO.placa}}</span></strong>
+                                                                             </div>
+                                                                      </div>
+                                                                      <div class="ui-g-3 p-0 arrow-left">
+                                                                             <div class="ui-g-12 pb-0">
+                                                                                    <label style="color:  #FFFFFF"
+                                                                                           class="mb-0 mt-1">MARCA</label>
+                                                                             </div>
+                                                                             <div class="ui-g-12 p-0 ">
+                                                                                    <strong> <span
+                                                                                                  style="color:  #FFFFFF">{{vehiculoDTO.marca}}</span></strong>
+                                                                             </div>
+                                                                      </div>
+                                                                      <div class="ui-g-3 p-0 arrow-left">
+                                                                             <div class="ui-g-12 pb-0">
+                                                                                    <label style="color:  #FFFFFF"
+                                                                                           class="mb-0 mt-1">LÍNEA</label>
+                                                                             </div>
+                                                                             <div class="ui-g-12 p-0 ">
+                                                                                    <strong> <span
+                                                                                                  style="color:  #FFFFFF">{{vehiculoDTO.linea}}</span></strong>
+                                                                             </div>
+                                                                      </div>
+                                                                      <div class="ui-g-3 p-0 arrow-left">
+                                                                             <div class="ui-g-12 pb-0">
+                                                                                    <label style="color:  #FFFFFF"
+                                                                                           class="mb-0 mt-1">MODELO</label>
+                                                                             </div>
+                                                                             <div class="ui-g-12 p-0 ">
+                                                                                    <strong> <span
+                                                                                                  style="color:  #FFFFFF">{{vehiculoDTO.modelo}}</span></strong>
+                                                                             </div>
+                                                                      </div>
+                                                               </div>
+                                                               <br>
+                                                        </div>
+                                                        <div class="ui-g-3 p-1">
+                                                               <div class="ui-g-12 ">
+                                                                      <div class="ui-g-5 p-3 ribbon">
+                                                                             <div class="ui-g-12">
+                                                                                    <strong> <label
+                                                                                                  class="label-total">TOTAL</label></strong>
+                                                                             </div>
+                                                                      </div>
+                                                                      <div class="ui-g-7 p-3 ribbon">
+                                                                             <div class="ui-g-12">
+                                                                                    <strong> <label
+                                                                                                  class="label-total">{{vehiculoDTO.total | currency: "CAD":"symbol-narrow":".0-0"}}</label></strong>
+                                                                             </div>
+                                                                      </div>
+                                                               </div>
+                                                        </div>
+                                                 </div>
+                                                 <div class="ui-g">
+                                                        <div class="ui-g-8 p-2 ">
+                                                               <div class="ui-g-12 p-0">
+                                                                      <strong> <span class="lbl-pay">Datos del
+                                                                                    tomador(propietario)</span></strong>
+                                                               </div>
+                                                               <div class="ui-g-12 barra ml-0 mr-0 pt-0"></div>
+                                                               <form [formGroup]="tomadorForm">
+                                                                      <div class="ui-g-12 ">
+                                                                             <!-- tipo identificacion -->
+                                                                             <div class="ui-g-6 p-0">
+                                                                                    <div class="ui-g-12 pb-0">
+                                                                                           <label for="tipoin"
+                                                                                                  class="lbl ml-0 mb-0">Tipo
+                                                                                                  de
+                                                                                                  Identificación*</label>
+                                                                                    </div>
+                                                                                    <div class="ui-g-12 pt-0 pb-0">
+                                                                                           <p-dropdown
+                                                                                                  formControlName="tipoDocumento"
+                                                                                                  [styleClass]="(isSubmit && (!tomadorForm.get('tipoDocumento').value)) ? 'w-100 dropdown-app requerido' : 'w-100 dropdown-app'"
+                                                                                                  placeholder="Seleccione una Opción"
+                                                                                                  [options]="itemsTipoDocumento"
+                                                                                                  inputId="tipoin"
+                                                                                                  name="tipoin"
+                                                                                                  title="Tipo de Identificación"
+                                                                                                  styleClass="w-100 dropdown-app">
+                                                                                           </p-dropdown>
+                                                                                    </div>
+                                                                             </div>
+                                                                             <!-- nro identificacion -->
+                                                                             <div class="ui-g-6 p-0">
+                                                                                    <div class="ui-g-12 pb-0">
+                                                                                           <label for="nrodocu"
+                                                                                                  class="lbl ml-1 mb-0">Número
+                                                                                                  de
+                                                                                                  identificación*</label>
+                                                                                    </div>
+                                                                                    <div class="ui-g-12 pt-0 pb-0">
+                                                                                           <div
+                                                                                                  class="inner-addon left-addon-user">
+                                                                                                  <input id="nrodocu"
+                                                                                                         formControlName="numeroDocumento"
+                                                                                                         [ngClass]="{'requerido': (isSubmit && (!tomadorForm.get('numeroDocumento').value))}"
+                                                                                                         (keypress)="keyPressNumber($event)"
+                                                                                                         class="input-app-sm w-100"
+                                                                                                         type="text"
+                                                                                                         pKeyFilter="pint"
+                                                                                                         title="Identificación del tomador" />
+                                                                                           </div>
+                                                                                    </div>
+                                                                             </div>
+                                                                      </div>
+                                                                      <div class="ui-g-12 ">
+                                                                             <div class="ui-g-6 p-0">
+                                                                                    <div class="ui-g-12 pb-0">
+                                                                                           <label for="nombre"
+                                                                                                  class="lbl ml-1 mb-0">Nombres*</label>
+                                                                                    </div>
+                                                                                    <div class="ui-g-12 pt-0 pb-0">
+                                                                                           <div
+                                                                                                  class="inner-addon left-addon-user">
+                                                                                                  <input id="nombre"
+                                                                                                         formControlName="nombres"
+                                                                                                         [ngClass]="{'requerido': (isSubmit && (!tomadorForm.get('nombres').value))}"
+                                                                                                         (keypress)="keyPressChart($event)"
+                                                                                                         class="input-app-sm w-100"
+                                                                                                         type="text"
+                                                                                                         title="Nombre del tomador" />
+                                                                                           </div>
+                                                                                    </div>
+                                                                             </div>
+                                                                             <div class="ui-g-6 p-0">
+                                                                                    <div class="ui-g-12 pb-0">
+                                                                                           <label for="apellido"
+                                                                                                  class="lbl ml-1 mb-0">Apellidos*</label>
+                                                                                    </div>
+                                                                                    <div class="ui-g-12 pt-0 pb-0">
+                                                                                           <div
+                                                                                                  class="inner-addon left-addon-user">
+                                                                                                  <input id="apellido"
+                                                                                                         formControlName="apellidos"
+                                                                                                         [ngClass]="{'requerido': (isSubmit && (!tomadorForm.get('apellidos').value))}"
+                                                                                                         (keypress)="keyPressChart($event)"
+                                                                                                         class="input-app-sm w-100"
+                                                                                                         type="text"
+                                                                                                         title="Apellido del tomador" />
+                                                                                           </div>
+                                                                                    </div>
+                                                                             </div>
+                                                                      </div>
+                                                                      <div class="ui-g-12 ">
+                                                                             <div class="ui-g-6 p-0">
+                                                                                    <div class="ui-g-12 pb-0">
+                                                                                           <label for="fnaci"
+                                                                                                  class="lbl ml-1 mb-0">Fecha
+                                                                                                  de
+                                                                                                  nacimiento*</label>
+                                                                                    </div>
+                                                                                    <div class="ui-g-12 pt-0 pb-0">
+                                                                                           <div
+                                                                                                  class="inner-addon left-addon">
+                                                                                                  <i [ngClass]=" 'text-dark' "
+                                                                                                         class="fa fa-calendar  font-size-16 aico copy"></i>
+                                                                                                  <p-calendar
+                                                                                                         formControlName="fechaNacimiento"
+                                                                                                         [styleClass]="(isSubmit && (!tomadorForm.get('fechaNacimiento').value)) ? 'w-100 dropdown-app requerido' : 'w-100 dropdown-app'"
+                                                                                                         name="finit"
+                                                                                                         inputId="fnaci"
+                                                                                                         [locale]="CALENDAR_SPANISH"
+                                                                                                         showButtonBar="true"
+                                                                                                         [readonlyInput]="false"
+                                                                                                         inputStyleClass="calendar-app-sm font-new-roman"
+                                                                                                         [monthNavigator]="true"
+                                                                                                         [yearNavigator]="true"
+                                                                                                         yearRange="1900:2030"
+                                                                                                         dateFormat="yy-mm-dd"
+                                                                                                         title="Fecha nacimiento del tomador"
+                                                                                                         placeholder="">
+                                                                                                  </p-calendar>
+                                                                                           </div>
+                                                                                    </div>
+                                                                             </div>
+                                                                             <div class="ui-g-6 p-0">
+                                                                                    <div class="ui-g-12 pb-0">
+                                                                                           <label for="ciudad"
+                                                                                                  class="lbl ml-1 mb-0">Ciudad*</label>
+                                                                                    </div>
+                                                                                    <div class="ui-g-12 pt-0 pb-0">
+                                                                                           <div
+                                                                                                  class="inner-addon left-addon-user">
+                                                                                                  <input id="ciudad"
+                                                                                                         formControlName="ciudad"
+                                                                                                         [ngClass]="{'requerido': (isSubmit && (!tomadorForm.get('ciudad').value))}"
+                                                                                                         (keypress)="keyPressChart($event)"
+                                                                                                         class="input-app-sm w-100"
+                                                                                                         type="text"
+                                                                                                         title="Ciudad del tomador" />
+                                                                                           </div>
+                                                                                    </div>
+                                                                             </div>
+                                                                      </div>
+                                                                      <div class="ui-g-12 ">
+
+                                                                             <div class="ui-g-6 p-0">
+                                                                                    <div class="ui-g-12 pb-0">
+                                                                                           <label for="direccion"
+                                                                                                  class="lbl ml-1 mb-0">Dirección*</label>
+                                                                                    </div>
+                                                                                    <div class="ui-g-12 pt-0 pb-0">
+                                                                                           <div
+                                                                                                  class="inner-addon left-addon-user">
+                                                                                                  <input id="direccion"
+                                                                                                         formControlName="direccion"
+                                                                                                         [ngClass]="{'requerido': (isSubmit && (!tomadorForm.get('direccion').value))}"
+                                                                                                         class="input-app-sm w-100"
+                                                                                                         type="text"
+                                                                                                         title="Dirección del tomador" />
+                                                                                           </div>
+                                                                                    </div>
+                                                                             </div>
+                                                                             <div class="ui-g-6 p-0">
+                                                                                    <div class="ui-g-12 pb-0">
+                                                                                           <label for="celular"
+                                                                                                  class="lbl ml-1 mb-0">Celular*</label>
+                                                                                    </div>
+                                                                                    <div class="ui-g-12 pt-0 pb-0">
+                                                                                           <div
+                                                                                                  class="inner-addon left-addon-user">
+                                                                                                  <input type="text"
+                                                                                                         title="Identificación del Cliente"
+                                                                                                         [ngClass]="{'requerido': (isSubmit && (!tomadorForm.get('numeroCelular').value))}"
+                                                                                                         class="input-app-sm w-100"
+                                                                                                         minlength="10"
+                                                                                                         maxlength="10"
+                                                                                                         title="Celular del tomador"
+                                                                                                         formControlName="numeroCelular"
+                                                                                                         placeholder="">
+                                                                                                  <div *ngIf="tomadorForm.get('numeroCelular').touched && tomadorForm.get('numeroCelular').invalid"
+                                                                                                         class="alert-mail">
+                                                                                                         <div
+                                                                                                                *ngIf="tomadorForm.get('numeroCelular').errors.pattern">
+                                                                                                                Por
+                                                                                                                favor
+                                                                                                                ingrese
+                                                                                                                un nú
+                                                                                                                mero de
+                                                                                                                celular
+                                                                                                                correcto.
+                                                                                                         </div>
+                                                                                                  </div>
+
+
+                                                                                           </div>
+                                                                                    </div>
+                                                                             </div>
+                                                                      </div>
+                                                                      <div class="ui-g-12 ">
+                                                                             <div class="ui-g-6 p-0">
+                                                                                    <div class="ui-g-12 pb-0">
+                                                                                           <label for="correo"
+                                                                                                  class="lbl ml-1 mb-0">Correo
+                                                                                                  electrónico*</label>
+                                                                                    </div>
+                                                                                    <div class="ui-g-12 pt-0 pb-0">
+                                                                                           <div
+                                                                                                  class="inner-addon left-addon-user">
+
+                                                                                                  <input type="text"
+                                                                                                         id="correo"
+                                                                                                         class="input-app-sm w-100"
+                                                                                                         [ngClass]="{'requerido': tomadorForm.get('correo').errors?.email ||  (isSubmit && (!tomadorForm.get('correo').value))}"
+                                                                                                         title="Correo del tomador"
+                                                                                                         formControlName="correo"
+                                                                                                         title="Identificación del Cliente"
+                                                                                                         placeholder="">
+                                                                                                  <span class="alert-mail"
+                                                                                                         *ngIf="tomadorForm.get('correo').errors?.email">Por
+                                                                                                         favor ingrese
+                                                                                                         un email
+                                                                                                         valido</span>
+                                                                                           </div>
+                                                                                    </div>
+                                                                             </div>
+                                                                             <div class="ui-g-6 p-0">
+                                                                                    <div class="ui-g-12 pb-0">
+                                                                                           <label for="finicio"
+                                                                                                  class="lbl ml-1 mb-0">Fecha
+                                                                                                  inicio
+                                                                                                  de vigencia*</label>
+                                                                                    </div>
+                                                                                    <div class="ui-g-12 pt-0 pb-0">
+                                                                                           <div
+                                                                                                  class="inner-addon left-addon">
+                                                                                                  <i [ngClass]=" 'text-dark' "
+                                                                                                         class="fa fa-calendar font-size-16 aico copy"></i>
+                                                                                                  <p-calendar
+                                                                                                         formControlName="fechaInicioVigencia"
+                                                                                                         [styleClass]="(isSubmit && (!tomadorForm.get('fechaInicioVigencia').value)) ? 'w-100 dropdown-app requerido' : 'w-100 dropdown-app'"
+                                                                                                         name="finicio"
+                                                                                                         inputId="finicio"
+                                                                                                         [locale]="CALENDAR_SPANISH"
+                                                                                                         showButtonBar="true"
+                                                                                                         [readonlyInput]="false"
+                                                                                                         inputStyleClass="calendar-app-sm font-new-roman"
+                                                                                                         [monthNavigator]="true"
+                                                                                                         [yearNavigator]="true"
+                                                                                                         yearRange="2000:2030"
+                                                                                                         dateFormat="yy-mm-dd"
+                                                                                                         title="Fecha inicio vigencia"
+                                                                                                         placeholder="">
+                                                                                                  </p-calendar>
+                                                                                           </div>
+                                                                                    </div>
+                                                                             </div>
+                                                                      </div>
+                                                               </form>
+                                                        </div>
+                                                        <div class="ui-g-4 p-2">
+                                                               <div class="ui-g-12 ml-2 p-0">
+                                                                      <strong> <span class="lbl-pay">Datos del
+                                                                                    vehículo</span></strong>
+                                                               </div>
+                                                               <div class="ui-g-12 barra ml-2 mr-0 pt-0">
+                                                               </div>
+                                                               <div class="ui-g-12 ">
+                                                                      <p-fieldset>
+                                                                             <p-header>
+                                                                                    <strong><span
+                                                                                                  style="color:  #10538A; font-size: 70%">Información
+                                                                                                  del
+                                                                                                  vehículo</span></strong>
+                                                                             </p-header>
+                                                                             <div class="ui-g-12 p-0">
+                                                                                    <strong> <span
+                                                                                                  class="nro-sorteo-e pr-2">Tipo
+                                                                                                  servicio:</span>
+                                                                                    </strong>{{vehiculoDTO.tipoServicio}}
+                                                                             </div>
+                                                                             <div class="ui-g-12 p-0">
+                                                                                    <strong> <span
+                                                                                                  class="nro-sorteo-e pr-2">Cilindraje:</span>
+                                                                                    </strong>{{vehiculoDTO.cilindraje}}
+                                                                             </div>
+                                                                             <div class="ui-g-12 p-0">
+                                                                                    <strong> <span
+                                                                                                  class="nro-sorteo-e pr-2">Número
+                                                                                                  de motor:</span>
+                                                                                    </strong>{{vehiculoDTO.numeroMotor}}
+                                                                             </div>
+                                                                             <div class="ui-g-12 p-0">
+                                                                                    <strong> <span
+                                                                                                  class="nro-sorteo-e pr-2">Pasajeros:</span>
+                                                                                    </strong>{{vehiculoDTO.pasajeros}}
+                                                                             </div>
+                                                                             <div class="ui-g-12 p-0">
+                                                                                    <strong> <span
+                                                                                                  class="nro-sorteo-e pr-2">Clase:</span>
+                                                                                    </strong>{{vehiculoDTO.clase}}
+                                                                             </div>
+                                                                             <div class="ui-g-12 p-0">
+                                                                                    <strong> <span
+                                                                                                  class="nro-sorteo-e pr-2">Tipo
+                                                                                                  combustible:</span>
+                                                                                    </strong>{{vehiculoDTO.tipoCombustible}}
+                                                                             </div>
+                                                                             <div class="ui-g-12 p-0">
+                                                                                    <strong> <span
+                                                                                                  class="nro-sorteo-e pr-2">VIN:</span>
+                                                                                    </strong>{{vehiculoDTO.vin}}
+                                                                             </div>
+                                                                      </p-fieldset>
+                                                                      <div class="ui-g-12 ">
+                                                                             <div class="ui-g-2  pb-0">
+                                                                                    <p-checkbox
+                                                                                           [(ngModel)]="autorizacion"
+                                                                                           binary="true"
+                                                                                           [ngClass]="{'requerido' : (isSubmit && (!autorizacion))}"
+                                                                                           inputId="chact"
+                                                                                           title="Autorización información">
+                                                                                    </p-checkbox>
+                                                                             </div>
+                                                                             <div class="ui-g-10  pb-0">
+                                                                                    <label style="color: #0BC9EC; font-size: 70%"
+                                                                                           for="chact">Autorizo el uso
+                                                                                           responsable de mi información
+                                                                                           y
+                                                                                           acepto términos y
+                                                                                           condiciones</label>
+                                                                             </div>
+                                                                      </div>
+                                                                      <div class="ui-g-12 p-0 text-center">
+                                                                             <button (click)="comprar()"
+                                                                                    class="btn-light-soat" type="button"
+                                                                                    title="Comprar">
+                                                                                    <label
+                                                                                           class="btn-label">COMPRAR</label>
+
+                                                                             </button>
+                                                                      </div>
+                                                               </div>
+                                                        </div>
+                                                 </div>
+                                          </div>
+                                   </mat-step>
+                                   <mat-step [aria-labelledby]="activaPasoPago ? 'disabled_af' : null">
+                                          <ng-template matStepLabel>Pago</ng-template>
+
+                                          <div class="ui-g">
+                                                 <div class="ui-g-6 ui-g-nopad">
+                                                        <div class="ui-g-10">
+                                                               <p-card>
+                                                                      <div class="ui-g">
+                                                                             <strong> <label
+                                                                                           class="titulopago">RESUMEN:</label>
+                                                                             </strong>
+                                                                             <div class="ui-g-12 barra ml-0 mr-0 pt-0">
+                                                                             </div>
+                                                                             <div class="ui-g-12 p-0">
+                                                                                    <strong> <span
+                                                                                                  class="nro-sorteo-e pr-2">Clase:</span>
+                                                                                    </strong>{{vehiculoDTO.clase}}
+                                                                             </div>
+                                                                             <div class="ui-g-12 p-0">
+                                                                                    <strong> <span
+                                                                                                  class="nro-sorteo-e pr-2">Tipo
+                                                                                                  de
+                                                                                                  servicio:</span>
+                                                                                    </strong>{{vehiculoDTO.tipoServicio}}
+                                                                             </div>
+                                                                             <div class="ui-g-12 p-0">
+                                                                                    <strong> <span
+                                                                                                  class="nro-sorteo-e pr-2">Modelo:</span>
+                                                                                    </strong>{{vehiculoDTO.modelo}}
+                                                                             </div>
+                                                                             <div class="ui-g-12 p-0">
+                                                                                    <strong> <span
+                                                                                                  class="nro-sorteo-e pr-2">Cilindraje:</span>
+                                                                                    </strong>{{vehiculoDTO.cilindraje}}
+                                                                             </div>
+                                                                             <div class="ui-g-12 p-0">
+                                                                                    <strong> <span
+                                                                                                  class="nro-sorteo-e pr-2">Pasajeros:</span>
+                                                                                    </strong>{{vehiculoDTO.pasajeros}}
+                                                                             </div>
+                                                                             <div class="ui-g-12 p-0">
+                                                                                    <strong> <span
+                                                                                                  class="nro-sorteo-e pr-2">Placa:</span>
+                                                                                    </strong>{{vehiculoDTO.placa}}
+                                                                             </div>
+                                                                             <div class="ui-g-12 p-0">
+                                                                                    <strong> <span
+                                                                                                  class="nro-sorteo-e pr-2">Prepoliza:</span>
+                                                                                    </strong>{{vehiculoDTO.prepoliza | currency: "CAD":"symbol-narrow":".0-0"}}
+                                                                             </div>
+                                                                             <div class="ui-g-12 p-0">
+                                                                                    <strong> <span
+                                                                                                  class="nro-sorteo-e pr-2">Prima:</span>
+                                                                                    </strong>{{vehiculoDTO.prima | currency: "CAD":"symbol-narrow":".0-0"}}
+                                                                             </div>
+                                                                             <div class="ui-g-12 p-0">
+                                                                                    <strong> <span
+                                                                                                  class="nro-sorteo-e pr-2">Contribución:</span>
+                                                                                    </strong>{{vehiculoDTO.contribucion | currency: "CAD":"symbol-narrow":".0-0"}}
+                                                                             </div>
+                                                                             <div class="ui-g-12 p-0">
+                                                                                    <strong> <span
+                                                                                                  class="nro-sorteo-e pr-2">RUNT:</span>
+                                                                                    </strong>{{vehiculoDTO.runt | currency: "CAD":"symbol-narrow":".0-0"}}
+                                                                             </div>
+                                                                             <div class="ui-g-12 barra ml-0 mr-0 pt-0">
+                                                                             </div>
+                                                                             <strong> <label class="titulopago">TOTAL A
+                                                                                           PAGAR:</label>
+                                                                             </strong>
+                                                                      </div>
+                                                               </p-card>
+                                                        </div>
+
+                                                 </div>
+                                                 <div class="ui-g-6">
+                                                        <div class="ui-g-7 text-left pb-0 pt-2 pr-3 pl-3">
+                                                               <br /><br /><br /> <br /><br />
+                                                               <button (click)="pagar()" class="btn-light-soat"
+                                                                      type="button" title="Pagar">
+                                                                      <label class="btn-label">PAGAR</label>
+                                                               </button>
+
+                                                        </div>
+
+                                                 </div>
+                                          </div>
+                                   </mat-step>
+                            </mat-horizontal-stepper>
+
                      </div>
               </div>
-              <div class="ui-g-12 ml-3 mr-3 p-0 mt-2 ">
-
-                     <mat-horizontal-stepper linear #stepsoat>
-                            <mat-step>
-                                   <ng-template matStepLabel>Cotización</ng-template>
-                                   <div class="ui-g-12 text-center pb-0 pt-2 pr-3 pl-3">
-                                          <div class="ui-g-4 ">
-                                          </div>
-                                          <div class="ui-g-4 text-center">
-                                                 <label class="titleInput">Ingresa el número de placa para</label>
-                                                 <label class="titleInput">realizar la contización</label>
-                                                 <div class="input-group">
-                                                        <input type="text" class="form-control styleInputSoat"
-                                                               placeholder="Placa" [(ngModel)]="placa"
-                                                               (ngModelChange)="placa = $event.toUpperCase()"
-                                                               [ngClass]="{'requerido' : (isSubmit && (!placa))}"
-                                                               maxlength="6"
-                                                               (keypress)="keyPressPlaca($event)">
-                                                        <span style="height: 31px" class="input-group-append">
-                                                               <button type="button" style="padding-top: 3px"
-                                                                      (click)="consultarPlaca()"
-                                                                      class="btn-buscar btn btn-info btn-flat">
-                                                                      <label class="btn-size-admin">
-                                                                             <i class="fa fa-search"></i></label>
-                                                               </button>
-                                                        </span>
-                                                 </div>
-                                          </div>
-                                          <div class="ui-g-4 ">
-                                          </div>
-                                   </div>
-                            </mat-step>
-                            <mat-step>
-                                   <ng-template matStepLabel>Datos</ng-template>
-                                   <div class="ui-g-12 ml-0 mr-3 p-0 mt-2">
-                                          <div class="ui-g">
-
-
-                                                 <div class="ui-g-9 p-1 ">
-                                                        <div class="ui-g-12 ">
-                                                               <div class="ui-g-3 p-0 flecha">
-                                                                      <div class="ui-g-12 pb-0">
-                                                                             <label style="color:  #FFFFFF"
-                                                                                    class="mb-0 mt-1">PLACA</label>
-                                                                      </div>
-                                                                      <div class="ui-g-12 p-0 ">
-                                                                             <strong> <span
-                                                                                           style="color:  #FFFFFF">{{vehiculoDTO.placa}}</span></strong>
-                                                                      </div>
-                                                               </div>
-                                                               <div class="ui-g-3 p-0 arrow-left">
-                                                                      <div class="ui-g-12 pb-0">
-                                                                             <label style="color:  #FFFFFF"
-                                                                                    class="mb-0 mt-1">MARCA</label>
-                                                                      </div>
-                                                                      <div class="ui-g-12 p-0 ">
-                                                                             <strong> <span
-                                                                                           style="color:  #FFFFFF">{{vehiculoDTO.marca}}</span></strong>
-                                                                      </div>
-                                                               </div>
-                                                               <div class="ui-g-3 p-0 arrow-left">
-                                                                      <div class="ui-g-12 pb-0">
-                                                                             <label style="color:  #FFFFFF"
-                                                                                    class="mb-0 mt-1">LÍNEA</label>
-                                                                      </div>
-                                                                      <div class="ui-g-12 p-0 ">
-                                                                             <strong> <span
-                                                                                           style="color:  #FFFFFF">{{vehiculoDTO.linea}}</span></strong>
-                                                                      </div>
-                                                               </div>
-                                                               <div class="ui-g-3 p-0 arrow-left">
-                                                                      <div class="ui-g-12 pb-0">
-                                                                             <label style="color:  #FFFFFF"
-                                                                                    class="mb-0 mt-1">MODELO</label>
-                                                                      </div>
-                                                                      <div class="ui-g-12 p-0 ">
-                                                                             <strong> <span
-                                                                                           style="color:  #FFFFFF">{{vehiculoDTO.modelo}}</span></strong>
-                                                                      </div>
-                                                               </div>
-                                                        </div>
-                                                        <br>
-                                                 </div>
-                                                 <div class="ui-g-3 p-1">
-                                                        <div class="ui-g-12 ">
-                                                               <div class="ui-g-5 p-0 ribbon">
-                                                                      <div class="ui-g-12 pb-0">
-                                                                             <strong> <label style="color:#0BC9EC"
-                                                                                           class="mb-0 mt-1">TOTAL</label></strong>
-                                                                      </div>
-                                                               </div>
-                                                               <div class="ui-g-7 p-0  ribbon">
-                                                                      <div class="ui-g-12 pb-0 ">
-                                                                             <strong> <label style="color: #0BC9EC"
-                                                                                           class="mb-0 mt-1">{{vehiculoDTO.total | currency: "CAD":"symbol-narrow":".0-0"}}</label></strong>
-                                                                      </div>
-                                                               </div>
-                                                        </div>
-                                                 </div>
-                                          </div>
-                                          <div class="ui-g">
-                                                 <div class="ui-g-8 p-2 ">
-                                                        <div class="ui-g-12 p-0">
-                                                               <strong> <span class="lbl-pay">Datos del
-                                                                             tomador(propietario)</span></strong>
-                                                        </div>
-                                                        <div class="ui-g-12 barra ml-0 mr-0 pt-0"></div>
-                                                        <form [formGroup]="tomadorForm">
-                                                               <div class="ui-g-12 ">
-                                                                      <!-- tipo identificacion -->
-                                                                      <div class="ui-g-6 p-0">
-                                                                             <div class="ui-g-12 pb-0">
-                                                                                    <label for="tipoin"
-                                                                                           class="lbl ml-0 mb-0">Tipo de
-                                                                                           Identificación*</label>
-                                                                             </div>
-                                                                             <div class="ui-g-12 pt-0 pb-0">
-                                                                                    <p-dropdown
-                                                                                           formControlName="tipoDocumento"
-                                                                                           [styleClass]="(isSubmit && (!tomadorForm.get('tipoDocumento').value)) ? 'w-100 dropdown-app requerido' : 'w-100 dropdown-app'"
-                                                                                           placeholder="Seleccione una Opción"
-                                                                                           [options]="itemsTipoDocumento"
-                                                                                           inputId="tipoin"
-                                                                                           name="tipoin"
-                                                                                           title="Tipo de Identificación"
-                                                                                           styleClass="w-100 dropdown-app">
-                                                                                    </p-dropdown>
-                                                                             </div>
-                                                                      </div>
-                                                                      <!-- nro identificacion -->
-                                                                      <div class="ui-g-6 p-0">
-                                                                             <div class="ui-g-12 pb-0">
-                                                                                    <label for="nrodocu"
-                                                                                           class="lbl ml-1 mb-0">Número
-                                                                                           de
-                                                                                           identificación*</label>
-                                                                             </div>
-                                                                             <div class="ui-g-12 pt-0 pb-0">
-                                                                                    <div
-                                                                                           class="inner-addon left-addon-user">
-                                                                                           <input id="nrodocu"
-                                                                                                  formControlName="numeroDocumento"
-                                                                                                  [ngClass]="{'requerido': (isSubmit && (!tomadorForm.get('numeroDocumento').value))}"
-                                                                                                  (keypress)="keyPressNumber($event)"
-                                                                                                  class="input-app-sm w-100"
-                                                                                                  type="text"
-                                                                                                  pKeyFilter="pint"
-                                                                                                  title="Identificación del tomador" />
-                                                                                    </div>
-                                                                             </div>
-                                                                      </div>
-                                                               </div>
-                                                               <div class="ui-g-12 ">
-                                                                      <div class="ui-g-6 p-0">
-                                                                             <div class="ui-g-12 pb-0">
-                                                                                    <label for="nombre"
-                                                                                           class="lbl ml-1 mb-0">Nombres*</label>
-                                                                             </div>
-                                                                             <div class="ui-g-12 pt-0 pb-0">
-                                                                                    <div
-                                                                                           class="inner-addon left-addon-user">
-                                                                                           <input id="nombre"
-                                                                                                  formControlName="nombres"
-                                                                                                  [ngClass]="{'requerido': (isSubmit && (!tomadorForm.get('nombres').value))}"
-                                                                                                  (keypress)="keyPressChart($event)"
-                                                                                                  class="input-app-sm w-100"
-                                                                                                  type="text"
-                                                                                                  title="Nombre del tomador" />
-                                                                                    </div>
-                                                                             </div>
-                                                                      </div>
-                                                                      <div class="ui-g-6 p-0">
-                                                                             <div class="ui-g-12 pb-0">
-                                                                                    <label for="apellido"
-                                                                                           class="lbl ml-1 mb-0">Apellidos*</label>
-                                                                             </div>
-                                                                             <div class="ui-g-12 pt-0 pb-0">
-                                                                                    <div
-                                                                                           class="inner-addon left-addon-user">
-                                                                                           <input id="apellido"
-                                                                                                  formControlName="apellidos"
-                                                                                                  [ngClass]="{'requerido': (isSubmit && (!tomadorForm.get('apellidos').value))}"
-                                                                                                  (keypress)="keyPressChart($event)"
-                                                                                                  class="input-app-sm w-100"
-                                                                                                  type="text"
-                                                                                                  title="Apellido del tomador" />
-                                                                                    </div>
-                                                                             </div>
-                                                                      </div>
-                                                               </div>
-                                                               <div class="ui-g-12 ">
-                                                                      <div class="ui-g-6 p-0">
-                                                                             <div class="ui-g-12 pb-0">
-                                                                                    <label for="fnaci"
-                                                                                           class="lbl ml-1 mb-0">Fecha
-                                                                                           de
-                                                                                           nacimiento*</label>
-                                                                             </div>
-                                                                             <div class="ui-g-12 pt-0 pb-0">
-                                                                                    <div class="inner-addon left-addon">
-                                                                                           <i [ngClass]=" 'text-dark' "
-                                                                                                  class="fa fa-calendar  font-size-16 aico copy"></i>
-                                                                                           <p-calendar
-                                                                                                  formControlName="fechaNacimiento"
-                                                                                                  [styleClass]="(isSubmit && (!tomadorForm.get('fechaNacimiento').value)) ? 'w-100 dropdown-app requerido' : 'w-100 dropdown-app'"
-                                                                                                  name="finit"
-                                                                                                  inputId="fnaci"
-                                                                                                  [locale]="CALENDAR_SPANISH"
-                                                                                                  showButtonBar="true"
-                                                                                                  [readonlyInput]="false"
-                                                                                                  inputStyleClass="calendar-app-sm font-new-roman"
-                                                                                                  [monthNavigator]="true"
-                                                                                                  [yearNavigator]="true"
-                                                                                                  yearRange="1900:2030"
-                                                                                                  dateFormat="yy-mm-dd"
-                                                                                                  title="Fecha nacimiento del tomador"
-                                                                                                  placeholder="">
-                                                                                           </p-calendar>
-                                                                                    </div>
-                                                                             </div>
-                                                                      </div>
-                                                                      <div class="ui-g-6 p-0">
-                                                                             <div class="ui-g-12 pb-0">
-                                                                                    <label for="ciudad"
-                                                                                           class="lbl ml-1 mb-0">Ciudad*</label>
-                                                                             </div>
-                                                                             <div class="ui-g-12 pt-0 pb-0">
-                                                                                    <div
-                                                                                           class="inner-addon left-addon-user">
-                                                                                           <input id="ciudad"
-                                                                                                  formControlName="ciudad"
-                                                                                                  [ngClass]="{'requerido': (isSubmit && (!tomadorForm.get('ciudad').value))}"
-                                                                                                  (keypress)="keyPressChart($event)"
-                                                                                                  class="input-app-sm w-100"
-                                                                                                  type="text"
-                                                                                                  title="Ciudad del tomador" />
-                                                                                    </div>
-                                                                             </div>
-                                                                      </div>
-                                                               </div>
-                                                               <div class="ui-g-12 ">
-
-                                                                      <div class="ui-g-6 p-0">
-                                                                             <div class="ui-g-12 pb-0">
-                                                                                    <label for="direccion"
-                                                                                           class="lbl ml-1 mb-0">Dirección*</label>
-                                                                             </div>
-                                                                             <div class="ui-g-12 pt-0 pb-0">
-                                                                                    <div
-                                                                                           class="inner-addon left-addon-user">
-                                                                                           <input id="direccion"
-                                                                                                  formControlName="direccion"
-                                                                                                  [ngClass]="{'requerido': (isSubmit && (!tomadorForm.get('direccion').value))}"
-                                                                                                  class="input-app-sm w-100"
-                                                                                                  type="text"
-                                                                                                  title="Dirección del tomador" />
-                                                                                    </div>
-                                                                             </div>
-                                                                      </div>
-                                                                      <div class="ui-g-6 p-0">
-                                                                             <div class="ui-g-12 pb-0">
-                                                                                    <label for="celular"
-                                                                                           class="lbl ml-1 mb-0">Celular*</label>
-                                                                             </div>
-                                                                             <div class="ui-g-12 pt-0 pb-0">
-                                                                                    <div
-                                                                                           class="inner-addon left-addon-user">
-                                                                                           <input type="text"
-                                                                                                  title="Identificación del Cliente"
-                                                                                                  [ngClass]="{'requerido': (isSubmit && (!tomadorForm.get('numeroCelular').value))}"
-                                                                                                  class="input-app-sm w-100"
-                                                                                                  minlength="10"
-                                                                                                  maxlength="10"
-                                                                                                  title="Celular del tomador"
-                                                                                                  formControlName="numeroCelular"
-                                                                                                  placeholder="">
-                                                                                           <div *ngIf="tomadorForm.get('numeroCelular').touched && tomadorForm.get('numeroCelular').invalid"
-                                                                                                  class="alert-mail">
-                                                                                                  <div
-                                                                                                         *ngIf="tomadorForm.get('numeroCelular').errors.pattern">
-                                                                                                         Por favor
-                                                                                                         ingrese un nú
-                                                                                                         mero de celular
-                                                                                                         correcto.</div>
-                                                                                           </div>
-
-
-                                                                                    </div>
-                                                                             </div>
-                                                                      </div>
-                                                               </div>
-                                                               <div class="ui-g-12 ">
-                                                                      <div class="ui-g-6 p-0">
-                                                                             <div class="ui-g-12 pb-0">
-                                                                                    <label for="correo"
-                                                                                           class="lbl ml-1 mb-0">Correo
-                                                                                           electrónico*</label>
-                                                                             </div>
-                                                                             <div class="ui-g-12 pt-0 pb-0">
-                                                                                    <div
-                                                                                           class="inner-addon left-addon-user">
-
-                                                                                           <input type="text"
-                                                                                                  id="correo"
-                                                                                                  class="input-app-sm w-100"
-                                                                                                  [ngClass]="{'requerido': tomadorForm.get('correo').errors?.email ||  (isSubmit && (!tomadorForm.get('correo').value))}"
-                                                                                                  title="Correo del tomador"
-                                                                                                  formControlName="correo"
-                                                                                                  title="Identificación del Cliente"
-                                                                                                  placeholder="">
-                                                                                           <span class="alert-mail"
-                                                                                                  *ngIf="tomadorForm.get('correo').errors?.email">Por
-                                                                                                  favor ingrese un email
-                                                                                                  valido</span>
-                                                                                    </div>
-                                                                             </div>
-                                                                      </div>
-                                                                      <div class="ui-g-6 p-0">
-                                                                             <div class="ui-g-12 pb-0">
-                                                                                    <label for="finicio"
-                                                                                           class="lbl ml-1 mb-0">Fecha
-                                                                                           inicio
-                                                                                           de vigencia*</label>
-                                                                             </div>
-                                                                             <div class="ui-g-12 pt-0 pb-0">
-                                                                                    <div class="inner-addon left-addon">
-                                                                                           <i [ngClass]=" 'text-dark' "
-                                                                                                  class="fa fa-calendar font-size-16 aico copy"></i>
-                                                                                           <p-calendar
-                                                                                                  formControlName="fechaInicioVigencia"
-                                                                                                  [styleClass]="(isSubmit && (!tomadorForm.get('fechaInicioVigencia').value)) ? 'w-100 dropdown-app requerido' : 'w-100 dropdown-app'"
-                                                                                                  name="finicio"
-                                                                                                  inputId="finicio"
-                                                                                                  [locale]="CALENDAR_SPANISH"
-                                                                                                  showButtonBar="true"
-                                                                                                  [readonlyInput]="false"
-                                                                                                  inputStyleClass="calendar-app-sm font-new-roman"
-                                                                                                  [monthNavigator]="true"
-                                                                                                  [yearNavigator]="true"
-                                                                                                  yearRange="2000:2030"
-                                                                                                  dateFormat="yy-mm-dd"
-                                                                                                  title="Fecha inicio vigencia"
-                                                                                                  placeholder="">
-                                                                                           </p-calendar>
-                                                                                    </div>
-                                                                             </div>
-                                                                      </div>
-                                                               </div>
-                                                        </form>
-                                                 </div>
-                                                 <div class="ui-g-4 p-2">
-                                                        <div class="ui-g-12 ml-2 p-0">
-                                                               <strong> <span class="lbl-pay">Datos del
-                                                                             vehículo</span></strong>
-                                                        </div>
-                                                        <div class="ui-g-12 barra ml-2 mr-0 pt-0">
-                                                        </div>
-                                                        <div class="ui-g-12 ">
-                                                               <p-fieldset>
-                                                                      <p-header>
-                                                                             <strong><span
-                                                                                           style="color:  #10538A; font-size: 70%">Información
-                                                                                           del vehículo</span></strong>
-                                                                      </p-header>
-                                                                      <div class="ui-g-12 p-0">
-                                                                             <strong> <span class="nro-sorteo-e pr-2">Tipo
-                                                                                           servicio:</span>
-                                                                             </strong>{{vehiculoDTO.tipoServicio}}
-                                                                      </div>
-                                                                      <div class="ui-g-12 p-0">
-                                                                             <strong> <span
-                                                                                           class="nro-sorteo-e pr-2">Cilindraje:</span>
-                                                                             </strong>{{vehiculoDTO.cilindraje}}
-                                                                      </div>
-                                                                      <div class="ui-g-12 p-0">
-                                                                             <strong> <span class="nro-sorteo-e pr-2">Número
-                                                                                           de motor:</span>
-                                                                             </strong>{{vehiculoDTO.numeroMotor}}
-                                                                      </div>
-                                                                      <div class="ui-g-12 p-0">
-                                                                             <strong> <span
-                                                                                           class="nro-sorteo-e pr-2">Pasajeros:</span>
-                                                                             </strong>{{vehiculoDTO.pasajeros}}
-                                                                      </div>
-                                                                      <div class="ui-g-12 p-0">
-                                                                             <strong> <span
-                                                                                           class="nro-sorteo-e pr-2">Clase:</span>
-                                                                             </strong>{{vehiculoDTO.clase}}
-                                                                      </div>
-                                                                      <div class="ui-g-12 p-0">
-                                                                             <strong> <span class="nro-sorteo-e pr-2">Tipo
-                                                                                           combustible:</span>
-                                                                             </strong>{{vehiculoDTO.tipoCombustible}}
-                                                                      </div>
-                                                                      <div class="ui-g-12 p-0">
-                                                                             <strong> <span
-                                                                                           class="nro-sorteo-e pr-2">VIN:</span>
-                                                                             </strong>{{vehiculoDTO.vin}}
-                                                                      </div>
-                                                               </p-fieldset>
-                                                               <div class="ui-g-12 ">
-                                                                      <div class="ui-g-2  pb-0">
-                                                                             <p-checkbox [(ngModel)]="autorizacion"
-                                                                                    binary="true"
-                                                                                    [ngClass]="{'requerido' : (isSubmit && (!autorizacion))}"
-                                                                                    inputId="chact"
-                                                                                    title="Autorización información">
-                                                                             </p-checkbox>
-                                                                      </div>
-                                                                      <div class="ui-g-10  pb-0">
-                                                                             <label style="color: #0BC9EC; font-size: 70%"
-                                                                                    for="chact">Autorizo el uso
-                                                                                    responsable de mi información y
-                                                                                    acepto términos y
-                                                                                    condiciones</label>
-                                                                      </div>
-                                                               </div>
-                                                               <div class="ui-g-12 p-0 text-center">
-                                                                      <button (click)="comprar()" class="btn-light-soat"
-                                                                             type="button" title="Comprar">
-                                                                             <label class="btn-label">COMPRAR</label>
-
-                                                                      </button>
-                                                               </div>
-                                                        </div>
-                                                 </div>
-                                          </div>
-
-
-                                   </div>
-                                   <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                                          <button matStepperPrevious type="button" class="btn-light-dark w-120-px"
-                                                 title="Permite regresar al paso anterior">
-                                                 <label class="btn-label"><i class="fa fa-hand-o-left"></i>
-                                                        Regresar</label>
-                                          </button>
-                                   </div>
-                            </mat-step>
-                            <mat-step>
-                                   <ng-template matStepLabel>Pago</ng-template>
-
-                                   <div class="ui-g">
-                                          <div class="ui-g-6 ui-g-nopad">
-                                                 <div class="ui-g-10">
-                                                        <p-card>
-                                                               <div class="ui-g">
-                                                                      <strong> <label
-                                                                                    class="titulopago">RESUMEN:</label>
-                                                                      </strong>
-                                                                      <div class="ui-g-12 barra ml-0 mr-0 pt-0"></div>
-                                                                      <div class="ui-g-12 p-0">
-                                                                             <strong> <span
-                                                                                           class="nro-sorteo-e pr-2">Clase:</span>
-                                                                             </strong>{{vehiculoDTO.clase}}
-                                                                      </div>
-                                                                      <div class="ui-g-12 p-0">
-                                                                             <strong> <span class="nro-sorteo-e pr-2">Tipo
-                                                                                           de
-                                                                                           servicio:</span>
-                                                                             </strong>{{vehiculoDTO.tipoServicio}}
-                                                                      </div>
-                                                                      <div class="ui-g-12 p-0">
-                                                                             <strong> <span
-                                                                                           class="nro-sorteo-e pr-2">Modelo:</span>
-                                                                             </strong>{{vehiculoDTO.modelo}}
-                                                                      </div>
-                                                                      <div class="ui-g-12 p-0">
-                                                                             <strong> <span
-                                                                                           class="nro-sorteo-e pr-2">Cilindraje:</span>
-                                                                             </strong>{{vehiculoDTO.cilindraje}}
-                                                                      </div>
-                                                                      <div class="ui-g-12 p-0">
-                                                                             <strong> <span
-                                                                                           class="nro-sorteo-e pr-2">Pasajeros:</span>
-                                                                             </strong>{{vehiculoDTO.pasajeros}}
-                                                                      </div>
-                                                                      <div class="ui-g-12 p-0">
-                                                                             <strong> <span
-                                                                                           class="nro-sorteo-e pr-2">Placa:</span>
-                                                                             </strong>{{vehiculoDTO.placa}}
-                                                                      </div>
-                                                                      <div class="ui-g-12 p-0">
-                                                                             <strong> <span
-                                                                                           class="nro-sorteo-e pr-2">Prepoliza:</span>
-                                                                             </strong>{{vehiculoDTO.prepoliza | currency: "CAD":"symbol-narrow":".0-0"}}
-                                                                      </div>
-                                                                      <div class="ui-g-12 p-0">
-                                                                             <strong> <span
-                                                                                           class="nro-sorteo-e pr-2">Prima:</span>
-                                                                             </strong>{{vehiculoDTO.prima | currency: "CAD":"symbol-narrow":".0-0"}}
-                                                                      </div>
-                                                                      <div class="ui-g-12 p-0">
-                                                                             <strong> <span
-                                                                                           class="nro-sorteo-e pr-2">Contribución:</span>
-                                                                             </strong>{{vehiculoDTO.contribucion | currency: "CAD":"symbol-narrow":".0-0"}}
-                                                                      </div>
-                                                                      <div class="ui-g-12 p-0">
-                                                                             <strong> <span
-                                                                                           class="nro-sorteo-e pr-2">RUNT:</span>
-                                                                             </strong>{{vehiculoDTO.runt | currency: "CAD":"symbol-narrow":".0-0"}}
-                                                                      </div>
-                                                                      <div class="ui-g-12 barra ml-0 mr-0 pt-0"></div>
-                                                                      <strong> <label class="titulopago">TOTAL A
-                                                                                    PAGAR:</label>
-                                                                      </strong>
-                                                               </div>
-                                                        </p-card>
-                                                 </div>
-                                                 <div class="ui-g-8">
-                                                        <div class="col-lg-0 col-md-0 col-sm-0 col-xs-0 pt-0">
-                                                               <button matStepperPrevious type="button"
-                                                                      class="btn-light-dark w-120-px"
-                                                                      title="Permite regresar al paso anterior">
-                                                                      <label class="btn-label"><i
-                                                                                    class="fa fa-hand-o-left"></i>
-                                                                             Regresar</label>
-                                                               </button>
-                                                               <button (click)="stepsoat.reset()" type="button"
-                                                               class="btn-less mr-2 ml-2 w-120-px"
-                                                               title="Permite regresar a la consulta de la placa">
-                                                               <label class="btn-size-admin"><i
-                                                                             class="fa fa-times"></i>
-                                                                      Salir</label>
-                                                               </button>
-                                                               
-                                                        </div>
-                                                 </div>
-                                          </div>
-                                          <div class="ui-g-6">
-
-                                              
-                                                 <div class="ui-g-7 text-left pb-0 pt-2 pr-3 pl-3">
-                                                        <br /><br /><br />  <br /><br />
-                                                        <button (click)="pagar()" class="btn-light-soat" type="button"
-                                                               title="Pagar">
-                                                               <label class="btn-label">PAGAR</label>
-                                                        </button>
-
-                                                 </div>
-                                             
-                                          </div>
-                                   </div>
-
-
-                            </mat-step>
-                     </mat-horizontal-stepper>
-
-              </div>
-
-
-
-
        </div>

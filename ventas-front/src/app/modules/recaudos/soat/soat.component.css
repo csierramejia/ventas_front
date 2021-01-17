@@ -280,7 +280,6 @@
   color: #2076bd;
 }
 
-
 .arrow-left {
   text-align: center;
   font-weight: bold;
@@ -305,8 +304,7 @@
 .ribbon {
   text-align: center;
   font-weight: bold;
-  height: 64px;
-
+  height: 68px;
   background: #eeeeee 0% 0% no-repeat padding-box;
   opacity: 2;
 }
@@ -315,9 +313,9 @@
   width: 100%;
   box-shadow: 0 1.5px 4px 0 rgba(20, 157, 183, 0.45) !important;
   border-radius: 15px;
-  background-color: #2076BD !important;
+  background-color: #2076bd !important;
   color: #f1f1f1;
-  padding: .30rem .8rem;
+  padding: 0.3rem 0.8rem;
   border: 0px;
   outline: 0px !important;
 }
@@ -326,8 +324,7 @@
   padding: 7px !important;
 }
 
-
-.alert-mail{
+.alert-mail {
   font-family: "Montserrat";
   font-weight: 800;
   font-style: normal;
@@ -345,23 +342,22 @@
     0 0 8px rgba(169, 68, 66, 0.6);
 }
 
-.titulopago{
+.titulopago {
   height: 15px;
   color: var(--unnamed-color-10538a);
   text-align: left;
   font: normal normal bold 20px/23px Montserrat;
   letter-spacing: 0px;
-  color: #10538A;
+  color: #10538a;
   opacity: 1;
-
 }
 
 .triangulo {
-  width: 0; 
-  height: 0; 
+  width: 0;
+  height: 0;
   border-left: 100px solid #f0ad4e;
   border-top: 50px solid transparent;
-  border-bottom: 50px solid transparent; 
+  border-bottom: 50px solid transparent;
 }
 
 .flecha {
@@ -370,7 +366,7 @@
   height: 64px;
   float: left;
   position: relative;
-   border: solid 1px #ccc;
+  border: solid 1px #ccc;
   border-right: none;
   background: #b80019 0% 0% no-repeat padding-box;
 }
@@ -383,27 +379,38 @@
   height: 37px;
   border-left: solid 1px #ccc;
   border-top: solid 1px #ccc;
-   -webkit-transform: rotate(134deg) skewX(-10deg) skewY(-10deg); 
+  -webkit-transform: rotate(134deg) skewX(-10deg) skewY(-10deg);
   transform: rotate(134deg) skewX(-10deg) skewY(-10deg);
   background: #b80019 0% 0% no-repeat padding-box;
-  content: '';
+  content: "";
 }
 
-:host ::ng-deep .mat-horizontal-content-container {
-  overflow: visible;
-}
-
-:host ::ng-deep .mat-horizontal-stepper-header {
+::ng-deep .mat-step-header[aria-labelledby="disabled_af"] {
   pointer-events: none !important;
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 
-:host ::ng-deep .mat-step-header[aria-selected="true"] {
-  background-color: #fff !important
+.btn-volver {
+  width: 113px;
+  height: 31px;
+  background: #0bc9ec 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 8px #149db773;
+  border-radius: 15px;
+  font: normal normal normal 11px/14px Montserrat;
+  letter-spacing: 0px;
+  color: #ffffff;
 }
 
-.pointer {
-	cursor: pointer;
+.boton-atras-fila {
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
-
-
-
+ .label-total{
+  height: 22px;
+  text-align: center;
+  font: normal normal bold 18px/22px Montserrat;
+  letter-spacing: 0px;
+  color: #0BC9EC;
+  opacity: 1;
+ }
