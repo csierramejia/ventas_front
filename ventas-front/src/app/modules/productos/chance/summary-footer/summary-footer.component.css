@@ -16,7 +16,7 @@
 
 #colilla-div{
     background: #B80019 0% 0% no-repeat padding-box;
-    width: 135px;
+    width: 130px;
     height: 87px;
     display: flex;
     float: left;
@@ -30,7 +30,7 @@
     border-top: 43.5px solid transparent;
     border-bottom: 43.5px solid transparent;
     border-left: 29.5px solid #B80019;
-    left: 135px;
+    left: 130px;
     position: absolute;
     clear: both;
 }
