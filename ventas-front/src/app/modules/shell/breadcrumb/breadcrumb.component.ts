@@ -3,7 +3,6 @@ import { ShellState } from './../../../states/shell/shell.state';
 import { CommonService } from "../../../utilities/common.service";
 import { MenuCarritoComponent } from '../../productos/genericos/menu-carrito/menu-carrito.component';
 import { ProductosService } from '../../productos/productos.service';
-import { Observable } from 'rxjs/Observable';
 
 /**
  * Miga de pan que se visualiza en el Shell de la aplicacion
@@ -16,14 +15,11 @@ import { Observable } from 'rxjs/Observable';
 })
 export class BreadcrumbComponent implements OnInit {
 
-  itemsCarrito: Observable<number>;
-
+  itemsCarrito = 0;
   @ViewChild(MenuCarritoComponent) menuCarritoComponent: MenuCarritoComponent;
-
   hoy = new Date();
   fechaActual = this.hoy.getDate() + '/' + (this.hoy.getMonth() + 1) + '/' + this.hoy.getFullYear();
   horaActual: Date;
-
 
   /**
    * @param shellState , se utiliza para obtener
@@ -37,8 +33,15 @@ export class BreadcrumbComponent implements OnInit {
       this.commonService.obtenerHora()
       .subscribe( data => this.horaActual = data );
 
-      this.itemsCarrito = JSON.parse(localStorage.getItem('chanceApuesta')).length;
-
+      this.commonService.obtenerItemsCarrito()
+      .subscribe( data => {
+        const res:any = data;
+        if(res){
+          this.itemsCarrito = res.length;
+        } else {
+          this.itemsCarrito = 0;
+        }
+      });
   }
 
 

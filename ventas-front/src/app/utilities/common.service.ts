@@ -33,16 +33,29 @@ export class CommonService {
 
 
   /**
-   * servicio qeu retorne la hora y fecha de la base de datos
-   * 
+   * servicio qeu retorne la hora y fecha de la base de datos( de momento se captura desde el cliente)
    */
-
   obtenerHora(): Observable<Date>{
-
     return new Observable(
         observer => {
               setInterval(() =>
                   observer.next(new Date())
+              , 1000);
+        }
+    );
+  }
+
+
+  /**
+   * @author Luis Fernando Hernandez
+   * @description Metodo que sirve para
+   * estar refrescando el carrito de compras
+   */
+  obtenerItemsCarrito(): Observable<Date>{
+    return new Observable(
+        observer => {
+              setInterval(() =>
+                  observer.next(JSON.parse(localStorage.getItem('chanceApuesta')))
               , 1000);
         }
     );

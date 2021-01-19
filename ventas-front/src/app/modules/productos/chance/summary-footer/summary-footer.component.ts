@@ -162,17 +162,13 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
       if(this.listaNumeros[index].unaCifraFilaCinco){ valorSumado = (valorSumado + parseInt(this.listaNumeros[index].unaCifraFilaCinco)); }
     }
 
-
-
-    if(this.loterias){
-      // const loteriasSeleccionadas = this.get_lotteriesSelected()
-      this.valueBet = (this.loteriaSeleccionadas.length * valorSumado);
-      this.valueVat = Math.floor(this.valueBet * this.inputVat) / 100;
-      this.valueBet = this.valueBet - this.valueVat;
-      this.valueBetTotal = Math.floor(this.valueBet + this.valueVat);
-    }
-
     
+    if(this.loterias){
+      const ivaNv = this.inputVat / 100 + 1
+      this.valueBetTotal = (this.loteriaSeleccionadas.length * valorSumado);
+      this.valueBet = this.valueBetTotal / ivaNv;
+      this.valueVat = this.valueBetTotal - this.valueBet;
+    }
 
   }
 

@@ -1,6 +1,5 @@
 #summary-footer{
-    /* width: 896px; */
-    height: 87px;
+    height: auto;
     background: transparent linear-gradient(90deg, #004C8B 0%, #068AF9 100%)
 }
 
@@ -17,7 +16,7 @@
 
 #colilla-div{
     background: #B80019 0% 0% no-repeat padding-box;
-    width: 135px;
+    width: 130px;
     height: 87px;
     display: flex;
     float: left;
@@ -31,7 +30,7 @@
     border-top: 43.5px solid transparent;
     border-bottom: 43.5px solid transparent;
     border-left: 29.5px solid #B80019;
-    left: 135px;
+    left: 130px;
     position: absolute;
     clear: both;
 }
@@ -92,4 +91,9 @@
 
 .ui-panel-title { 
     background: red;
+}
+
+
+.rowf{
+    flex-wrap: unset;
 }

@@ -7,22 +7,12 @@
     <ul class="navbar-nav ml-auto nav-flex-icons inline-li">
       <li class="nav-item inline-li">
         <i class="fa fa-clock-o icon fecha-carrito"></i>
-        <!-- <span>02/04/2020 15:28:09</span> -->
         <span class="fechaActual">{{ fechaActual }} {{horaActual | date: 'mediumTime'}}</span>
       </li>
-      <li 
-        class="fa fa-shopping-cart icon carrito" 
-        data-toggle="collapse" 
-        href="#collapseExample" 
-        role="button" 
-        aria-expanded="false" 
-        aria-controls="collapseExample"
-        id="li-cart" class="nav-item inline-li">
-          <i class="fa fa-shopping-cart icon carrito">
-            
-          </i>
-          <span class="chipItemsCart">{{ itemsCarrito  }}</span>
-      </li>
+      <span data-toggle="collapse" href="#collapseExample"  class="fa-stack fa-2x has-badge" [attr.data-count]="itemsCarrito">
+        <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
+        <i class="fa fa-shopping-cart fa-stack-2x red-cart"></i>
+      </span>
     </ul>
 
   </div>
@@ -33,6 +23,4 @@
 </p-messages>
 
 
-
-<!-- <app-menu-carrito></app-menu-carrito> -->
 

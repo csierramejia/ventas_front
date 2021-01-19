@@ -22,13 +22,6 @@
   font-weight: bold;
 }
 
-.icon {
-  color: #0083fe;
-  font-size: 20px;
-  margin-right: 5px;
-}
-
-
 .inline-li{
   display: inline-block;
 }
@@ -38,17 +31,12 @@
   padding-left: 40px;
 }
 
-.carrito{
-  font-size: 30px;
-}
-
 .fechaActual{
   font-size: 13px;
   font-family: Montserrat !important;
   letter-spacing: 0px;
   color: #000000;
 }
-
 
 .chipItemsCart{
   border-radius: 30px !important;
@@ -57,4 +45,41 @@
   font-family: Montserrat;
   color: #ffff;
   padding: 5px 5px 5px 5px;
+}
+
+.has-badge{
+  cursor: pointer;
+}
+
+.fa-stack[data-count]:after{
+  position:absolute;
+  right:0%;
+  top:0%;
+  content: attr(data-count);
+  font-size:37%;
+  padding:.6em;
+  border-radius:999px;
+  line-height:.75em;
+  color: white;
+  text-align:center;
+  min-width:2em;
+  font-weight:bold;
+  background: rgb(190, 30, 66);
+}
+.fa-circle {
+  color:#DF0000;
+}
+
+.red-cart {
+  color: #2076BD; 
+  background:#f6f8f8;
+}
+
+
+.fa-stack-2x{
+  font-size: 30px;
+}
+
+.fa-stack{
+  height: 1em;
 }

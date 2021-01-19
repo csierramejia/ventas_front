@@ -9,7 +9,6 @@ import { CommonService } from 'src/app/utilities/common.service';
 import { ClientesDTO } from 'src/app/dtos/productos/chance/clientes.dto';
 import { CrearClienteComponent } from '../../genericos/crear-cliente/crear-cliente.component';
 import * as moment from 'moment';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-apuesta-chance',
@@ -24,6 +23,8 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
   @Output() agregarNumeros: EventEmitter<any> = new EventEmitter();
   @Output() agregarCliente: EventEmitter<any> = new EventEmitter();
 
+
+  lengEspanol = {}
 
 
   @ViewChild(CrearClienteComponent) crearClienteChild: CrearClienteComponent;
@@ -120,6 +121,18 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.lengEspanol = {
+      firstDayOfWeek: 0,
+      dayNames: ["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"],
+      dayNamesShort: ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
+      dayNamesMin: ["Do","Lu","Ma","Mi","Ju","Vi","Sa"],
+      monthNames: [ "Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre" ],
+      monthNamesShort: [ "Ene", "Feb", "Mar", "Abr", "May", "Jun","Jul", "Ago", "Sep", "Oct", "Nov", "Dic" ],
+      today: 'Hoy',
+      clear: 'Limpiar',
+      dateFormat: 'mm/dd/yy',
+      weekHeader: 'Wk'
+    };
   }
 
 
