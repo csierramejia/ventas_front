@@ -29,7 +29,7 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
   subtotalGeneral = 0
   ivaGeneral = 0
   totalGeneral = 0
-  efectivo = 0
+  efectivo = '';
   devuelta = 0
   ivaServicio = 0
   correoCliente = ''
@@ -73,7 +73,7 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
   obtenerProductosChance() {
 
     this.productosChance = []
-    this.efectivo = 0
+    this.efectivo = ''
     this.devuelta = 0
     const productosChanceConst = JSON.parse(localStorage.getItem('chanceApuesta'))
 
@@ -154,7 +154,11 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
 
 
   calcularDevuelta(){
-    this.devuelta = this.efectivo - this.totalGeneral
+    let efectivoCalcular = parseInt(this.efectivo);
+    if(!efectivoCalcular){
+      efectivoCalcular = 0
+    }
+    this.devuelta = efectivoCalcular - this.totalGeneral
     if(this.devuelta >= 0){
       this.verBotonFinalizar = true;
     } else {
@@ -473,7 +477,7 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
     this.subtotalGeneral = 0
     this.ivaGeneral = 0
     this.totalGeneral = 0
-    this.efectivo = 0
+    this.efectivo = ''
     this.devuelta = 0
     localStorage.removeItem('chanceApuesta');
     this.menuCarrito.refrescarCarrito();

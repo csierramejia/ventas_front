@@ -4,7 +4,7 @@
     <span class="miga-modulo">{{shellState.breadCrumb.modulo}}</span>
     <span class="miga-url">{{shellState.breadCrumb.url}}</span>
 
-    <ul class="navbar-nav ml-auto nav-flex-icons inline-li">
+    <ul class="navbar-nav ml-auto nav-flex-icons inline-li" *ngIf="verCarrito">
       <li class="nav-item inline-li">
         <i class="fa fa-clock-o icon fecha-carrito"></i>
         <span class="fechaActual">{{ fechaActual }} {{horaActual | date: 'mediumTime'}}</span>

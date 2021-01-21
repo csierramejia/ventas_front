@@ -59,6 +59,7 @@ export class ChanceComponent implements OnInit {
 
   agregarProductos(event){
     this.menuCarrito.refrescarCarrito()
+    // this.apuestaChance.validarEstadoHabiltarCamposCliente();
   }
 
   editarProducto(event){

@@ -110,7 +110,7 @@ export class MenuCarritoComponent implements OnInit {
             _id:element._id,
             viewRepetir: false
           })
-          this.subtotal = Math.round(this.subtotal + element.apostado)
+          this.subtotal = Math.round(this.subtotal + element.total)
         });
         this.productos = newProductos;
       } else {

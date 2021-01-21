@@ -9,6 +9,7 @@ import { CommonService } from 'src/app/utilities/common.service';
 import { ClientesDTO } from 'src/app/dtos/productos/chance/clientes.dto';
 import { CrearClienteComponent } from '../../genericos/crear-cliente/crear-cliente.component';
 import * as moment from 'moment';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-apuesta-chance',
@@ -22,6 +23,8 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
   @Output() reiniciarEdit: EventEmitter<any> = new EventEmitter();
   @Output() agregarNumeros: EventEmitter<any> = new EventEmitter();
   @Output() agregarCliente: EventEmitter<any> = new EventEmitter();
+
+  stateDisabeld = false;
 
 
   lengEspanol = {}
@@ -110,7 +113,8 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
     this.productosService.consultarRutaImagenes().subscribe(
       responseDTO => {
         if(responseDTO){
-        this.rutaServidor = responseDTO.codigo;
+          this.rutaServidor = responseDTO.codigo;
+
         }
       },
       error => {
@@ -133,7 +137,26 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
       dateFormat: 'mm/dd/yy',
       weekHeader: 'Wk'
     };
+    // this.validarEstadoHabiltarCamposCliente()
   }
+  
+
+  // validarEstadoHabiltarCamposCliente() {
+  //   let infoCart = JSON.parse(localStorage.getItem('chanceApuesta'));
+  //   if( infoCart.length > 0 ) {
+  //     if ( infoCart[0].clienteOperacion.nombreCliente ) {
+  //       this.chanceForm.get('tipoDocumento').setValue(infoCart[0].clienteOperacion.tipoDocumento);
+  //       this.chanceForm.get('numeroDocumento').setValue(infoCart[0].clienteOperacion.numeroDocumento);
+  //       this.chanceForm.get('nombreCliente').setValue(infoCart[0].clienteOperacion.nombreCliente);
+  //       this.enabledCustomer = true;
+  //       this.stateDisabeld = true;
+  //     } else {
+  //       this.stateDisabeld = false;
+  //     }
+  //   } else {
+  //     this.stateDisabeld = false;
+  //   }
+  // }
 
 
   /**
@@ -722,7 +745,7 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
 
 
   repetir() {
-    this.borrarTodo();
+    this.borrarTodo(1);
     const chanceApuesta = JSON.parse(localStorage.getItem('chanceApuesta'))
 
     if(chanceApuesta.length > 0){
@@ -795,7 +818,7 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
 
 
 
-  borrarTodo() {
+  borrarTodo(event) {
     this.chanceForm.controls.numeroFilaUno.setValue('');
     this.chanceForm.controls.valorDirectoFilaUno.setValue('');
     this.chanceForm.controls.combinadoFilaUno.setValue('');
@@ -822,15 +845,14 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
     this.chanceForm.controls.dosCifrasFilaCinco.setValue('');
     this.chanceForm.controls.unaCifraFilaCinco.setValue('');
 
-    this.chanceForm.controls.tipoDocumento.setValue('');
-    this.chanceForm.controls.numeroDocumento.setValue('');
-    this.chanceForm.controls.nombreCliente.setValue('');
-    this.correoCustomer = '';
-    this.idCustomer = '';
+
 
     this.loterias = [];
     this.agregarLoterias.emit(this.loterias);
-    this.reiniciarEdit.emit(false);
+    if(event === 1){
+      this.reiniciarEdit.emit(false);
+    }
+    
     this.emitirNumeros();
 
 
@@ -913,10 +935,23 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
 
 
   editarProducto(event) {
-    this.borrarTodo()
+    this.borrarTodo(2)
+
     this.edit = true;
     const buscarApuestasEditar = JSON.parse(localStorage.getItem('chanceApuesta'))
     const apuestaEditar = buscarApuestasEditar.filter(buscarApuestaEditar => buscarApuestaEditar._id == event._id);
+
+
+    console.log('event');
+    console.log(apuestaEditar[0].clienteOperacion.nombreCliente);
+    console.log('event');
+
+    if (apuestaEditar[0].clienteOperacion.nombreCliente) {
+      this.enabledCustomer = true;
+      this.chanceForm.controls.nombreCliente.setValue(apuestaEditar[0].clienteOperacion.nombreCliente);
+      this.chanceForm.controls.tipoDocumento.setValue(apuestaEditar[0].clienteOperacion.tipoDocumento);
+      this.chanceForm.controls.numeroDocumento.setValue(apuestaEditar[0].clienteOperacion.numeroDocumento);
+    }
 
     this.loterias = apuestaEditar[0].loterias;
     const emitLoterias = {
@@ -1027,6 +1062,8 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
     this.dayBet = FechaUtil.stringToDate(FormatoMomentFecha.toString());
     this.getLotteries()
   }
+
+  
 
 
 

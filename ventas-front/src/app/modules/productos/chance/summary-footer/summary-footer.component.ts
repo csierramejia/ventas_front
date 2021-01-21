@@ -182,18 +182,18 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
         this.confirmacionAgregar.colilla = this.colilla
         this.confirmacionAgregar.numeros = this.concatenarNumeros(listaNumeros)
         this.confirmacionAgregar.loterias = this.concatenarLoterias(this.loterias)
-        this.confirmacionAgregar.apostado = this.valueBet
-        this.confirmacionAgregar.iva = this.valueVat
-        this.confirmacionAgregar.total = this.valueBetTotal
+        this.confirmacionAgregar.apostado = Math.round(this.valueBet)
+        this.confirmacionAgregar.iva = Math.round(this.valueVat)
+        this.confirmacionAgregar.total = Math.round(this.valueBetTotal)
       } else {
         this.confirmacionAgregar.isCreate = true;
         this.verConfirmacionPopap = true;
         this.confirmacionAgregar.colilla = this.colilla
         this.confirmacionAgregar.numeros = this.concatenarNumeros(listaNumeros)
         this.confirmacionAgregar.loterias = this.concatenarLoterias(this.loterias)
-        this.confirmacionAgregar.apostado = this.valueBet
-        this.confirmacionAgregar.iva = this.valueVat
-        this.confirmacionAgregar.total = this.valueBetTotal
+        this.confirmacionAgregar.apostado = Math.round(this.valueBet)
+        this.confirmacionAgregar.iva = Math.round(this.valueVat)
+        this.confirmacionAgregar.total = Math.round(this.valueBetTotal)
       }
     } else {
       this.messageService.add(MsjUtil.getToastErrorMedium('Valide que esta gestionando los campos necesarios para realizar la apuesta'));
@@ -316,7 +316,11 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
 
 
   irResumen() {
-    this.router.navigate([RouterConstant.NAVIGATE_REVISA_PAGO]);
+    if( JSON.parse(localStorage.getItem('chanceApuesta')).length > 0 ) {
+      this.router.navigate([RouterConstant.NAVIGATE_REVISA_PAGO]);
+    } else {
+      console.log('no hay apuestas agregadas');
+    }
   }
 
 
@@ -361,7 +365,19 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
         fechaSeleccionApuesta:this.fechaSeleccionApuesta
       }
 
-      const chanceApuesta:any = JSON.parse(localStorage.getItem('chanceApuesta'));
+      let chanceApuesta:any = JSON.parse(localStorage.getItem('chanceApuesta'));
+
+
+
+      if (chanceApuesta[0]) {
+        let actualizarCliente = chanceApuesta      
+        for (let index = 0; index < actualizarCliente.length; index++) {
+          actualizarCliente[index].clienteOperacion = this.clienteOperacion;
+        }
+        localStorage.setItem('chanceApuesta', JSON.stringify(actualizarCliente));
+        chanceApuesta = JSON.parse(localStorage.getItem('chanceApuesta'));
+      }
+
       const keyResponse = this.getKeyObject(this.infoEdit[0]._id, chanceApuesta);
       chanceApuesta[keyResponse]._id = productosEditar._id
       chanceApuesta[keyResponse].colilla = productosEditar.colilla
@@ -389,7 +405,18 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
         clienteOperacion:this.clienteOperacion,
         fechaSeleccionApuesta:this.fechaSeleccionApuesta
       }
-      const chanceApuesta = localStorage.getItem('chanceApuesta');
+
+      let chanceApuesta = localStorage.getItem('chanceApuesta');
+
+      if (JSON.parse(chanceApuesta)[0]) {
+        let actualizarCliente = JSON.parse(chanceApuesta)          
+        for (let index = 0; index < actualizarCliente.length; index++) {
+          actualizarCliente[index].clienteOperacion = this.clienteOperacion;
+        }
+        localStorage.setItem('chanceApuesta', JSON.stringify(actualizarCliente));
+        chanceApuesta = localStorage.getItem('chanceApuesta');
+      }
+
       if(chanceApuesta === null) {
         const arrayproductosAgregar = []
         arrayproductosAgregar.push(productosAgregar)
