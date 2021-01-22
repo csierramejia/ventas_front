@@ -49,13 +49,13 @@
             <div class="row ">
                 <div class="col-md-6 flex-col">
                     <div id="cicleOne">
-                        <img (click)="agregarCarritoF()" *ngIf="!edit" class="img-circle" src="../../../../../assets/img/svg/add-to-cart-l.svg" />
-                        <img (click)="agregarCarritoF()" *ngIf="edit" class="img-circle" src="../../../../../assets/img/svg/update.svg" />
+                        <img title="Agregar Juego" (click)="agregarCarritoF()" *ngIf="!edit" class="img-circle" src="../../../../../assets/img/svg/add-to-cart-l.svg" />
+                        <img title="Editar Juego" (click)="agregarCarritoF()" *ngIf="edit" class="img-circle" src="../../../../../assets/img/svg/update.svg" />
                     </div>
                 </div>
                 <div class="col-md-6 flex-col">
                     <div id="cicleTwo">
-                        <img (click)="irResumen()" class="img-circle" src="../../../../../assets/img/svg/money-l.svg" />
+                        <img title="Continuar al pago" (click)="irResumen()" class="img-circle" src="../../../../../assets/img/svg/money-l.svg" />
                     </div>
                 </div>
             </div>

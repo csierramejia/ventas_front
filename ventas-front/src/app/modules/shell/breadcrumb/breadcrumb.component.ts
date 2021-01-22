@@ -53,6 +53,8 @@ export class BreadcrumbComponent implements OnInit {
           this.verCarrito = false;
         }
       });    
+
+      console.log(shellState)
   }
 
 
