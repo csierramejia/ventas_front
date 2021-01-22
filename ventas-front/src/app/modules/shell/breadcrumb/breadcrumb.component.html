@@ -1,6 +1,7 @@
 <nav class="navbar-nav-l" aria-label="breadcrumb">
   <div class="breadcrumb miga-pan">
-    <i class="icon fa {{shellState.breadCrumb.icono}}"></i>
+    <img *ngIf="verCarrito" style="padding-right: 15px;" src="../../../../../assets/img/svg/smart-cart-2.svg" alt="" srcset="">
+    <i *ngIf="!verCarrito" class="icon fa {{shellState.breadCrumb.icono}}"></i>
     <span class="miga-modulo">{{shellState.breadCrumb.modulo}}</span>
     <span class="miga-url">{{shellState.breadCrumb.url}}</span>
 
