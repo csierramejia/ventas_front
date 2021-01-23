@@ -359,7 +359,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
     this.verConfirmacionPopap = false;
 
     const listaNumeros = this.obtenerFilasConApuesta(this.listaNumeros)
-    
+
     if(this.edit){
       const productosEditar = {
         _id: this.infoEdit[0]._id,
@@ -375,8 +375,6 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
       }
 
       let chanceApuesta:any = JSON.parse(localStorage.getItem('chanceApuesta'));
-
-
 
       if (chanceApuesta[0]) {
         let actualizarCliente = chanceApuesta      
@@ -402,6 +400,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
       this.agregarProductos.emit(true);
       this.borrarTodoReset.emit(true);
     } else {
+
       const productosAgregar = {
         _id: 'bet_' + Math.floor(Math.random() * 999999),
         colilla: this.colilla,
@@ -417,13 +416,15 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
 
       let chanceApuesta = localStorage.getItem('chanceApuesta');
 
-      if (JSON.parse(chanceApuesta)[0]) {
-        let actualizarCliente = JSON.parse(chanceApuesta)          
-        for (let index = 0; index < actualizarCliente.length; index++) {
-          actualizarCliente[index].clienteOperacion = this.clienteOperacion;
+      if(JSON.parse(chanceApuesta) != null){
+        if (JSON.parse(chanceApuesta)[0]) {
+          let actualizarCliente = JSON.parse(chanceApuesta)          
+          for (let index = 0; index < actualizarCliente.length; index++) {
+            actualizarCliente[index].clienteOperacion = this.clienteOperacion;
+          }
+          localStorage.setItem('chanceApuesta', JSON.stringify(actualizarCliente));
+          chanceApuesta = localStorage.getItem('chanceApuesta');
         }
-        localStorage.setItem('chanceApuesta', JSON.stringify(actualizarCliente));
-        chanceApuesta = localStorage.getItem('chanceApuesta');
       }
 
       if(chanceApuesta === null) {
