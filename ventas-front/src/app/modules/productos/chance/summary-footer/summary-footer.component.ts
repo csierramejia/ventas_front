@@ -320,14 +320,23 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
     let loterias = this.get_lotteriesSelected();
 
 
+
+
+
     if(numeros.length > 0 || loterias.length > 0) {
       this.messageService.add(MsjUtil.getMsjError('Por favor termine de diligenciar los campos o limpie el formulario para avanzar'));
     } else {
-      if( JSON.parse(localStorage.getItem('chanceApuesta')).length > 0 ) {
-        this.router.navigate([RouterConstant.NAVIGATE_REVISA_PAGO]);
+      
+      if(JSON.parse(localStorage.getItem('chanceApuesta')) != null){
+        if( JSON.parse(localStorage.getItem('chanceApuesta')).length > 0 ) {
+          this.router.navigate([RouterConstant.NAVIGATE_REVISA_PAGO]);
+        } else {
+          this.messageService.add(MsjUtil.getMsjError('no hay apuestas agregadas'));
+        }
       } else {
-        this.messageService.add(MsjUtil.getMsjError('no hay apuestas agregadas'));
+          this.messageService.add(MsjUtil.getMsjError('no hay apuestas agregadas'));
       }
+      
     }
     
   }
