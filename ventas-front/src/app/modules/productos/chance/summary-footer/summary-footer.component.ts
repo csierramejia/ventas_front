@@ -162,17 +162,13 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
       if(this.listaNumeros[index].unaCifraFilaCinco){ valorSumado = (valorSumado + parseInt(this.listaNumeros[index].unaCifraFilaCinco)); }
     }
 
-
-
-    if(this.loterias){
-      // const loteriasSeleccionadas = this.get_lotteriesSelected()
-      this.valueBet = (this.loteriaSeleccionadas.length * valorSumado);
-      this.valueVat = Math.floor(this.valueBet * this.inputVat) / 100;
-      this.valueBet = this.valueBet - this.valueVat;
-      this.valueBetTotal = Math.floor(this.valueBet + this.valueVat);
-    }
-
     
+    if(this.loterias){
+      const ivaNv = this.inputVat / 100 + 1
+      this.valueBetTotal = (this.loteriaSeleccionadas.length * valorSumado);
+      this.valueBet = this.valueBetTotal / ivaNv;
+      this.valueVat = this.valueBetTotal - this.valueBet;
+    }
 
   }
 
@@ -186,18 +182,18 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
         this.confirmacionAgregar.colilla = this.colilla
         this.confirmacionAgregar.numeros = this.concatenarNumeros(listaNumeros)
         this.confirmacionAgregar.loterias = this.concatenarLoterias(this.loterias)
-        this.confirmacionAgregar.apostado = this.valueBet
-        this.confirmacionAgregar.iva = this.valueVat
-        this.confirmacionAgregar.total = this.valueBetTotal
+        this.confirmacionAgregar.apostado = Math.round(this.valueBet)
+        this.confirmacionAgregar.iva = Math.round(this.valueVat)
+        this.confirmacionAgregar.total = Math.round(this.valueBetTotal)
       } else {
         this.confirmacionAgregar.isCreate = true;
         this.verConfirmacionPopap = true;
         this.confirmacionAgregar.colilla = this.colilla
         this.confirmacionAgregar.numeros = this.concatenarNumeros(listaNumeros)
         this.confirmacionAgregar.loterias = this.concatenarLoterias(this.loterias)
-        this.confirmacionAgregar.apostado = this.valueBet
-        this.confirmacionAgregar.iva = this.valueVat
-        this.confirmacionAgregar.total = this.valueBetTotal
+        this.confirmacionAgregar.apostado = Math.round(this.valueBet)
+        this.confirmacionAgregar.iva = Math.round(this.valueVat)
+        this.confirmacionAgregar.total = Math.round(this.valueBetTotal)
       }
     } else {
       this.messageService.add(MsjUtil.getToastErrorMedium('Valide que esta gestionando los campos necesarios para realizar la apuesta'));
@@ -320,7 +316,25 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
 
 
   irResumen() {
-    this.router.navigate([RouterConstant.NAVIGATE_REVISA_PAGO]);
+    let numeros = this.obtenerFilasConApuesta(this.listaNumeros);
+    let loterias = this.get_lotteriesSelected();
+
+    if(numeros.length > 0 || loterias.length > 0) {
+      this.messageService.add(MsjUtil.getMsjError('Por favor termine de diligenciar los campos o limpie el formulario para avanzar'));
+    } else {
+      
+      if(JSON.parse(localStorage.getItem('chanceApuesta')) != null){
+        if( JSON.parse(localStorage.getItem('chanceApuesta')).length > 0 ) {
+          this.router.navigate([RouterConstant.NAVIGATE_REVISA_PAGO]);
+        } else {
+          this.messageService.add(MsjUtil.getMsjError('no hay apuestas agregadas'));
+        }
+      } else {
+          this.messageService.add(MsjUtil.getMsjError('no hay apuestas agregadas'));
+      }
+      
+    }
+    
   }
 
 
@@ -350,7 +364,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
     this.verConfirmacionPopap = false;
 
     const listaNumeros = this.obtenerFilasConApuesta(this.listaNumeros)
-    
+
     if(this.edit){
       const productosEditar = {
         _id: this.infoEdit[0]._id,
@@ -365,7 +379,17 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
         fechaSeleccionApuesta:this.fechaSeleccionApuesta
       }
 
-      const chanceApuesta:any = JSON.parse(localStorage.getItem('chanceApuesta'));
+      let chanceApuesta:any = JSON.parse(localStorage.getItem('chanceApuesta'));
+
+      if (chanceApuesta[0]) {
+        let actualizarCliente = chanceApuesta      
+        for (let index = 0; index < actualizarCliente.length; index++) {
+          actualizarCliente[index].clienteOperacion = this.clienteOperacion;
+        }
+        localStorage.setItem('chanceApuesta', JSON.stringify(actualizarCliente));
+        chanceApuesta = JSON.parse(localStorage.getItem('chanceApuesta'));
+      }
+
       const keyResponse = this.getKeyObject(this.infoEdit[0]._id, chanceApuesta);
       chanceApuesta[keyResponse]._id = productosEditar._id
       chanceApuesta[keyResponse].colilla = productosEditar.colilla
@@ -381,6 +405,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
       this.agregarProductos.emit(true);
       this.borrarTodoReset.emit(true);
     } else {
+
       const productosAgregar = {
         _id: 'bet_' + Math.floor(Math.random() * 999999),
         colilla: this.colilla,
@@ -393,7 +418,20 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
         clienteOperacion:this.clienteOperacion,
         fechaSeleccionApuesta:this.fechaSeleccionApuesta
       }
-      const chanceApuesta = localStorage.getItem('chanceApuesta');
+
+      let chanceApuesta = localStorage.getItem('chanceApuesta');
+
+      if(JSON.parse(chanceApuesta) != null){
+        if (JSON.parse(chanceApuesta)[0]) {
+          let actualizarCliente = JSON.parse(chanceApuesta)          
+          for (let index = 0; index < actualizarCliente.length; index++) {
+            actualizarCliente[index].clienteOperacion = this.clienteOperacion;
+          }
+          localStorage.setItem('chanceApuesta', JSON.stringify(actualizarCliente));
+          chanceApuesta = localStorage.getItem('chanceApuesta');
+        }
+      }
+
       if(chanceApuesta === null) {
         const arrayproductosAgregar = []
         arrayproductosAgregar.push(productosAgregar)

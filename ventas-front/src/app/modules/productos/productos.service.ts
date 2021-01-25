@@ -16,6 +16,8 @@ import { NotificacionSoportePagoDTO } from 'src/app/dtos/correos/notificacion-so
 import { CorreosAPIConstant } from 'src/app/constants/apis/correos/correos-api-constant';
 import { LoteriaVirtualVentaResponseDTO } from 'src/app/dtos/productos/loteria-virtual/loteria-virtual-venta-response.dto';
 
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+
 /**
  * Service que contiene los procesos de negocio para la Loterias en el sistema
  */
@@ -166,4 +168,5 @@ export class ProductosService {
       data
     );
   }
+
 }

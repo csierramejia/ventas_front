@@ -29,7 +29,7 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
   subtotalGeneral = 0
   ivaGeneral = 0
   totalGeneral = 0
-  efectivo = 0
+  efectivo = '';
   devuelta = 0
   ivaServicio = 0
   correoCliente = ''
@@ -73,19 +73,19 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
   obtenerProductosChance() {
 
     this.productosChance = []
-    this.efectivo = 0
+    this.efectivo = ''
     this.devuelta = 0
     const productosChanceConst = JSON.parse(localStorage.getItem('chanceApuesta'))
+
     productosChanceConst.forEach(element => {
-      
       this.productosChance.push({
-        apostado:this.obtenerApostado(element.apostado),
+        apostado:Math.round(element.apostado),
         colilla:element.colilla,
         fechaActual:element.fechaActual,
-        iva:this.obtenerIvaCaluladoPorProducto(element.apostado),
+        iva:Math.round(element.iva),
         listaNumeros:this.concatenarNumeros(element.listaNumeros),
         loterias:this.concatenarLoterias(element.loterias),
-        total:element.total,
+        total:Math.round(element.total),
         _id:element._id
       });
 
@@ -93,17 +93,6 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
 
     this.calcularValores();
 
-  }
-
-
-  obtenerApostado(apostado){
-    let iva = Math.floor(apostado * this.ivaServicio) / 100;
-    return apostado - iva
-  }
-
-
-  obtenerIvaCaluladoPorProducto(apostado){
-    return Math.floor(apostado * this.ivaServicio) / 100;
   }
 
 
@@ -151,11 +140,12 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
     this.ivaGeneral = 0
     this.totalGeneral = 0
 
+
     if(this.productosChance){
       this.productosChance.forEach(element => {
-        this.subtotalGeneral = this.subtotalGeneral + element.apostado
-        this.ivaGeneral = this.ivaGeneral + element.iva
-        this.totalGeneral = this.totalGeneral + element.total
+        this.totalGeneral = Math.round(this.totalGeneral + element.total);
+        this.subtotalGeneral = Math.round(this.subtotalGeneral + element.apostado)
+        this.ivaGeneral = Math.round(this.ivaGeneral + element.iva)
       });
     }
     
@@ -164,7 +154,11 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
 
 
   calcularDevuelta(){
-    this.devuelta = this.efectivo - this.totalGeneral
+    let efectivoCalcular = parseInt(this.efectivo);
+    if(!efectivoCalcular){
+      efectivoCalcular = 0
+    }
+    this.devuelta = efectivoCalcular - this.totalGeneral
     if(this.devuelta >= 0){
       this.verBotonFinalizar = true;
     } else {
@@ -197,16 +191,20 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
       bet.bets = this.obtenerEstructuraDatosNumeros(productosDepurar[index].listaNumeros, productosDepurar[0].fechaSeleccionApuesta, bet.lotteries)
       bet.dataPlayed = productosDepurar[index].fechaActual
       bet.idCustomer = productosDepurar[index].clienteOperacion.idCustomer
-      bet.valueBetTotal = this.obtenerValorTotal(bet.bets, bet.lotteries.length)
-      bet.valueVat = this.obtenerIvaMetodo(bet.valueBetTotal)
-      bet.valueBet = bet.valueBetTotal - bet.valueVat
+      bet.valueBetTotal = Math.round(this.obtenerValorTotal(bet.bets, bet.lotteries.length))
+      bet.valueBet = Math.round(this.obtenerIvaIteracion(bet.valueBetTotal));
+      bet.valueVat = Math.round(bet.valueBetTotal - bet.valueBet);
       // guardamos el correo del usuario (para enviar desplendible de pago)
       this.correoCliente = productosDepurar[index].clienteOperacion.correoCustomer
       this.paySend.push(bet);
     }
- 
-
     this.hacerCompraServicio(this.paySend);
+  }
+
+
+  obtenerIvaIteracion(total){
+    const ivaNv = this.ivaServicio / 100 + 1
+    return total / ivaNv;
   }
 
 
@@ -256,18 +254,6 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
     }
     return cantidadLoterias * sumaTotal;
   }
-
-
-  // ivaServicio
-  /**
-   * @author Luis Hernandez
-   */
-  obtenerIvaMetodo(total) {
-    const calculoImpuesto=(this.ivaServicio/100) + 1
-    return total-(total / calculoImpuesto);
-  }
-
-
 
 
   obtenerEstructuraDatosNumeros(numerosIteras, fechaSorteo, loterias){
@@ -491,10 +477,22 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
     this.subtotalGeneral = 0
     this.ivaGeneral = 0
     this.totalGeneral = 0
-    this.efectivo = 0
+    this.efectivo = ''
     this.devuelta = 0
     localStorage.removeItem('chanceApuesta');
     this.menuCarrito.refrescarCarrito();
+  }
+
+  /**
+   * @author Luis Hernandez
+   * @description Funcion que permite valida que el usuario
+   * solo ingrese numeros en los campos donde se espera solo numeros
+   * @param e
+   */
+  permitirSoloNumeros(e) {
+    const key = window.Event ? e.which : e.keyCode;
+    e.key.replace(/\D|\-/, '');
+    return (key >= 48 && key <= 57);
   }
 
 

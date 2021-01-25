@@ -9,7 +9,7 @@ import { CommonService } from 'src/app/utilities/common.service';
 import { ClientesDTO } from 'src/app/dtos/productos/chance/clientes.dto';
 import { CrearClienteComponent } from '../../genericos/crear-cliente/crear-cliente.component';
 import * as moment from 'moment';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-apuesta-chance',
@@ -24,6 +24,10 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
   @Output() agregarNumeros: EventEmitter<any> = new EventEmitter();
   @Output() agregarCliente: EventEmitter<any> = new EventEmitter();
 
+  stateDisabeld = false;
+
+
+  lengEspanol = {}
 
 
   @ViewChild(CrearClienteComponent) crearClienteChild: CrearClienteComponent;
@@ -100,7 +104,8 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
   constructor(
     private productosService: ProductosService,
     protected messageService: MessageService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private currencyPipe: CurrencyPipe
   ) {
     super();
     // obtenemos el semanario
@@ -109,7 +114,8 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
     this.productosService.consultarRutaImagenes().subscribe(
       responseDTO => {
         if(responseDTO){
-        this.rutaServidor = responseDTO.codigo;
+          this.rutaServidor = responseDTO.codigo;
+
         }
       },
       error => {
@@ -120,7 +126,38 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.lengEspanol = {
+      firstDayOfWeek: 0,
+      dayNames: ["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"],
+      dayNamesShort: ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
+      dayNamesMin: ["Do","Lu","Ma","Mi","Ju","Vi","Sa"],
+      monthNames: [ "Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre" ],
+      monthNamesShort: [ "Ene", "Feb", "Mar", "Abr", "May", "Jun","Jul", "Ago", "Sep", "Oct", "Nov", "Dic" ],
+      today: 'Hoy',
+      clear: 'Limpiar',
+      dateFormat: 'mm/dd/yy',
+      weekHeader: 'Wk'
+    };
+    // this.validarEstadoHabiltarCamposCliente()
   }
+  
+
+  // validarEstadoHabiltarCamposCliente() {
+  //   let infoCart = JSON.parse(localStorage.getItem('chanceApuesta'));
+  //   if( infoCart.length > 0 ) {
+  //     if ( infoCart[0].clienteOperacion.nombreCliente ) {
+  //       this.chanceForm.get('tipoDocumento').setValue(infoCart[0].clienteOperacion.tipoDocumento);
+  //       this.chanceForm.get('numeroDocumento').setValue(infoCart[0].clienteOperacion.numeroDocumento);
+  //       this.chanceForm.get('nombreCliente').setValue(infoCart[0].clienteOperacion.nombreCliente);
+  //       this.enabledCustomer = true;
+  //       this.stateDisabeld = true;
+  //     } else {
+  //       this.stateDisabeld = false;
+  //     }
+  //   } else {
+  //     this.stateDisabeld = false;
+  //   }
+  // }
 
 
   /**
@@ -709,7 +746,7 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
 
 
   repetir() {
-    this.borrarTodo();
+    this.borrarTodo(1);
     const chanceApuesta = JSON.parse(localStorage.getItem('chanceApuesta'))
 
     if(chanceApuesta.length > 0){
@@ -782,7 +819,7 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
 
 
 
-  borrarTodo() {
+  borrarTodo(event) {
     this.chanceForm.controls.numeroFilaUno.setValue('');
     this.chanceForm.controls.valorDirectoFilaUno.setValue('');
     this.chanceForm.controls.combinadoFilaUno.setValue('');
@@ -809,15 +846,14 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
     this.chanceForm.controls.dosCifrasFilaCinco.setValue('');
     this.chanceForm.controls.unaCifraFilaCinco.setValue('');
 
-    this.chanceForm.controls.tipoDocumento.setValue('');
-    this.chanceForm.controls.numeroDocumento.setValue('');
-    this.chanceForm.controls.nombreCliente.setValue('');
-    this.correoCustomer = '';
-    this.idCustomer = '';
+
 
     this.loterias = [];
     this.agregarLoterias.emit(this.loterias);
-    this.reiniciarEdit.emit(false);
+    if(event === 1){
+      this.reiniciarEdit.emit(false);
+    }
+    
     this.emitirNumeros();
 
 
@@ -858,52 +894,63 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
     const numerosValores = [
       {
         numeroFilaUno: this.chanceForm.get('numeroFilaUno').value,
-        valorDirectoFilaUno: this.chanceForm.get('valorDirectoFilaUno').value,
-        combinadoFilaUno: this.chanceForm.get('combinadoFilaUno').value,
-        dosCifrasFilaUno: this.chanceForm.get('dosCifrasFilaUno').value,
-        unaCifraFilaUno: this.chanceForm.get('unaCifraFilaUno').value
+        valorDirectoFilaUno: this.chanceForm.get('valorDirectoFilaUno').value.replace(/[^a-zA-Z 0-9.]+/g,''),
+        combinadoFilaUno: this.chanceForm.get('combinadoFilaUno').value.replace(/[^a-zA-Z 0-9.]+/g,''),
+        dosCifrasFilaUno: this.chanceForm.get('dosCifrasFilaUno').value.replace(/[^a-zA-Z 0-9.]+/g,''),
+        unaCifraFilaUno: this.chanceForm.get('unaCifraFilaUno').value.replace(/[^a-zA-Z 0-9.]+/g,'')
       },
       {
         numeroFilaDos: this.chanceForm.get('numeroFilaDos').value,
-        valorDirectoFilaDos: this.chanceForm.get('valorDirectoFilaDos').value,
-        combinadoFilaDos: this.chanceForm.get('combinadoFilaDos').value,
-        dosCifrasFilaDos: this.chanceForm.get('dosCifrasFilaDos').value,
-        unaCifraFilaDos: this.chanceForm.get('unaCifraFilaDos').value
+        valorDirectoFilaDos: this.chanceForm.get('valorDirectoFilaDos').value.replace(/[^a-zA-Z 0-9.]+/g,''),
+        combinadoFilaDos: this.chanceForm.get('combinadoFilaDos').value.replace(/[^a-zA-Z 0-9.]+/g,''),
+        dosCifrasFilaDos: this.chanceForm.get('dosCifrasFilaDos').value.replace(/[^a-zA-Z 0-9.]+/g,''),
+        unaCifraFilaDos: this.chanceForm.get('unaCifraFilaDos').value.replace(/[^a-zA-Z 0-9.]+/g,'')
       },
       {
         numeroFilaTres: this.chanceForm.get('numeroFilaTres').value,
-        valorDirectoFilaTres: this.chanceForm.get('valorDirectoFilaTres').value,
-        combinadoFilaTres: this.chanceForm.get('combinadoFilaTres').value,
-        dosCifrasFilaTres: this.chanceForm.get('dosCifrasFilaTres').value,
-        unaCifraFilaTres: this.chanceForm.get('unaCifraFilaTres').value
+        valorDirectoFilaTres: this.chanceForm.get('valorDirectoFilaTres').value.replace(/[^a-zA-Z 0-9.]+/g,''),
+        combinadoFilaTres: this.chanceForm.get('combinadoFilaTres').value.replace(/[^a-zA-Z 0-9.]+/g,''),
+        dosCifrasFilaTres: this.chanceForm.get('dosCifrasFilaTres').value.replace(/[^a-zA-Z 0-9.]+/g,''),
+        unaCifraFilaTres: this.chanceForm.get('unaCifraFilaTres').value.replace(/[^a-zA-Z 0-9.]+/g,'')
       },
       {
         numeroFilaCuatro: this.chanceForm.get('numeroFilaCuatro').value,
-        valorDirectoFilaCuatro: this.chanceForm.get('valorDirectoFilaCuatro').value,
-        combinadoFilaCuatro: this.chanceForm.get('combinadoFilaCuatro').value,
-        dosCifrasFilaCuatro: this.chanceForm.get('dosCifrasFilaCuatro').value,
-        unaCifraFilaCuatro: this.chanceForm.get('unaCifraFilaCuatro').value
+        valorDirectoFilaCuatro: this.chanceForm.get('valorDirectoFilaCuatro').value.replace(/[^a-zA-Z 0-9.]+/g,''),
+        combinadoFilaCuatro: this.chanceForm.get('combinadoFilaCuatro').value.replace(/[^a-zA-Z 0-9.]+/g,''),
+        dosCifrasFilaCuatro: this.chanceForm.get('dosCifrasFilaCuatro').value.replace(/[^a-zA-Z 0-9.]+/g,''),
+        unaCifraFilaCuatro: this.chanceForm.get('unaCifraFilaCuatro').value.replace(/[^a-zA-Z 0-9.]+/g,'')
       },
       {
         numeroFilaCinco: this.chanceForm.get('numeroFilaCinco').value,
-        valorDirectoFilaCinco: this.chanceForm.get('valorDirectoFilaCinco').value,
-        combinadoFilaCinco: this.chanceForm.get('combinadoFilaCinco').value,
-        dosCifrasFilaCinco: this.chanceForm.get('dosCifrasFilaCinco').value,
-        unaCifraFilaCinco: this.chanceForm.get('unaCifraFilaCinco').value
+        valorDirectoFilaCinco: this.chanceForm.get('valorDirectoFilaCinco').value.replace(/[^a-zA-Z 0-9.]+/g,''),
+        combinadoFilaCinco: this.chanceForm.get('combinadoFilaCinco').value.replace(/[^a-zA-Z 0-9.]+/g,''),
+        dosCifrasFilaCinco: this.chanceForm.get('dosCifrasFilaCinco').value.replace(/[^a-zA-Z 0-9.]+/g,''),
+        unaCifraFilaCinco: this.chanceForm.get('unaCifraFilaCinco').value.replace(/[^a-zA-Z 0-9.]+/g,'')
       }
     ]
-
     this.agregarNumeros.emit(numerosValores);
-
   }
 
 
 
   editarProducto(event) {
-    this.borrarTodo()
+    this.borrarTodo(2)
+
     this.edit = true;
     const buscarApuestasEditar = JSON.parse(localStorage.getItem('chanceApuesta'))
     const apuestaEditar = buscarApuestasEditar.filter(buscarApuestaEditar => buscarApuestaEditar._id == event._id);
+
+
+    console.log('event');
+    console.log(apuestaEditar[0].clienteOperacion.nombreCliente);
+    console.log('event');
+
+    if (apuestaEditar[0].clienteOperacion.nombreCliente) {
+      this.enabledCustomer = true;
+      this.chanceForm.controls.nombreCliente.setValue(apuestaEditar[0].clienteOperacion.nombreCliente);
+      this.chanceForm.controls.tipoDocumento.setValue(apuestaEditar[0].clienteOperacion.tipoDocumento);
+      this.chanceForm.controls.numeroDocumento.setValue(apuestaEditar[0].clienteOperacion.numeroDocumento);
+    }
 
     this.loterias = apuestaEditar[0].loterias;
     const emitLoterias = {
@@ -1014,6 +1061,92 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
     this.dayBet = FechaUtil.stringToDate(FormatoMomentFecha.toString());
     this.getLotteries()
   }
+
+
+
+  transformAmount(event) {
+    switch (event) {
+      case 1:
+        this.transformAmountLo('valorDirectoFilaUno');
+        break;
+      case 2:
+        this.transformAmountLo('combinadoFilaUno');
+        break;
+      case 3:
+        this.transformAmountLo('dosCifrasFilaUno');
+        break;
+      case 4:
+        this.transformAmountLo('unaCifraFilaUno');
+        break;
+      case 5:
+        this.transformAmountLo('valorDirectoFilaDos');
+        break;
+      case 6:
+        this.transformAmountLo('combinadoFilaDos');
+        break;
+      case 7:
+        this.transformAmountLo('dosCifrasFilaDos');
+        break;
+      case 8:
+        this.transformAmountLo('unaCifraFilaDos');
+        break;
+      case 9:
+        this.transformAmountLo('valorDirectoFilaTres');
+        break;
+      case 10:
+        this.transformAmountLo('combinadoFilaTres');
+        break;
+      case 11:
+        this.transformAmountLo('dosCifrasFilaTres');
+        break;
+      case 12:
+        this.transformAmountLo('unaCifraFilaTres');
+        break;
+      case 13:
+        this.transformAmountLo('valorDirectoFilaCuatro');
+        break;
+      case 14:
+        this.transformAmountLo('combinadoFilaCuatro');
+        break;
+      case 15:
+        this.transformAmountLo('dosCifrasFilaCuatro');
+        break;
+      case 16:
+        this.transformAmountLo('unaCifraFilaCuatro');
+        break;
+      case 17:
+        this.transformAmountLo('valorDirectoFilaCinco');
+        break;
+      case 18:
+        this.transformAmountLo('combinadoFilaCinco');
+        break;
+      case 19:
+        this.transformAmountLo('dosCifrasFilaCinco');
+        break;
+      case 20:
+        this.transformAmountLo('unaCifraFilaCinco');
+        break;
+      default:
+        break;
+    }
+    
+  }
+
+
+  transformAmountLo(event){
+    let cadena = this.chanceForm.get(event).value;
+    if (cadena && cadena.includes("$")) {
+      cadena = cadena.substr(1, cadena.length);
+      cadena = cadena.substr(0, cadena.indexOf(',')) + cadena.slice(cadena.indexOf(',') + 1);
+      this.chanceForm.controls.event.setValue(cadena);
+      this.chanceForm.get(event).setValue(this.currencyPipe.transform(this.chanceForm.get(event).value, '$', 'symbol', '.0-0'));
+    }
+    else {
+      this.chanceForm.get(event).setValue(this.currencyPipe.transform(this.chanceForm.get(event).value, '$', 'symbol', '.0-0'));
+    }
+  }
+
+  
 
 
 

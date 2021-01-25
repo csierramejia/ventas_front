@@ -20,6 +20,7 @@ import { ConfirmacionAgregarCarritoComponent } from './genericos/confirmacion-ag
 
 
 import { CrearClienteComponent } from './genericos/crear-cliente/crear-cliente.component';
+import { BuscarClienteComponent } from './genericos/buscar-cliente/buscar-cliente.component';
 import { ApuestaMillonariaComponent } from './chance-millonario/apuesta-millonaria/apuesta-millonaria.component';
 import { SuperChanceComponent } from './super-chance/super-chance.component';
 import { ApuestaSuperComponent } from './super-chance/apuesta-super/apuesta-super.component';
@@ -46,6 +47,7 @@ import { MenuCarritoComponent } from './genericos/menu-carrito/menu-carrito.comp
     ConfirmacionAgregarCarritoComponent,
     SummaryFooterComponent,
     CrearClienteComponent,
+    BuscarClienteComponent,
     ApuestaMillonariaComponent,
     SuperChanceComponent,
     ApuestaSuperComponent,

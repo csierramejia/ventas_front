@@ -1,10 +1,6 @@
 .hea-titles{
-    top: 121px;
-    left: 252px;
-    width: 210px;
-    height: 19px;
     text-align: left;
-    font: normal normal 600 15px/19px Montserrat;
+    font: normal normal 600 13px Montserrat;
     letter-spacing: 0px;
     color: #111111;
     opacity: 1;
@@ -14,8 +10,8 @@
 .chipOptionDay{
     border-radius: 30px !important;
     font-size: 24px;
-    width: 44px;
-    height: 44px;
+    width: 40px;
+    height: 40px;
     box-shadow: 0px 3px 8px #149DB77A;
     background-color: #ffffff;
     line-height: 32px;
@@ -29,7 +25,7 @@
     border-radius: 15px;
     box-shadow: 0px 3px 8px #149DB773;
     background-color: #2076BD;
-    font-size: 12px;
+    font-size: 10px;
     padding: 0 .30rem 0 .6500rem;
     font-family: Montserrat;
     font-weight: normal;
@@ -48,7 +44,7 @@
     border-radius: 15px;
     box-shadow: 0px 3px 8px #BE1E42;
     background-color: #BE1E42;
-    font-size: 12px;
+    font-size: 10px;
     padding: 0 .30rem 0 .6500rem;
     font-family: Montserrat;
     font-weight: normal;
@@ -64,7 +60,7 @@
 }
 
 #content-bet{
-    padding-top: 30px;
+    padding-top: 15px;
 }
 
 

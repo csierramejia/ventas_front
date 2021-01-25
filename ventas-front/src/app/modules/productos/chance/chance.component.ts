@@ -53,12 +53,13 @@ export class ChanceComponent implements OnInit {
 
 
   borrarTodoReset(event) {
-    this.apuestaChance.borrarTodo();
+    this.apuestaChance.borrarTodo(1);
   }
 
 
   agregarProductos(event){
     this.menuCarrito.refrescarCarrito()
+    // this.apuestaChance.validarEstadoHabiltarCamposCliente();
   }
 
   editarProducto(event){

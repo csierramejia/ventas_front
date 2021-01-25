@@ -106,11 +106,11 @@ export class MenuCarritoComponent implements OnInit {
             iva:element.iva,
             listaNumeros:element.listaNumeros,
             loterias:loteriasSeleccionadas,
-            total:element.total,
+            total:Math.round(element.total),
             _id:element._id,
             viewRepetir: false
           })
-          this.subtotal = this.subtotal + element.apostado
+          this.subtotal = Math.round(this.subtotal + element.total)
         });
         this.productos = newProductos;
       } else {

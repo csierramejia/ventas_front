@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild  } from '@angular/core';
 import { ShellState } from './../../../states/shell/shell.state';
 import { CommonService } from "../../../utilities/common.service";
 import { MenuCarritoComponent } from '../../productos/genericos/menu-carrito/menu-carrito.component';
 import { ProductosService } from '../../productos/productos.service';
-import { Observable } from 'rxjs/Observable';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 /**
  * Miga de pan que se visualiza en el Shell de la aplicacion
@@ -16,7 +17,8 @@ import { Observable } from 'rxjs/Observable';
 })
 export class BreadcrumbComponent implements OnInit {
 
-  itemsCarrito: Observable<number>;
+  verCarrito = false;
+  itemsCarrito = 0;
   @ViewChild(MenuCarritoComponent) menuCarritoComponent: MenuCarritoComponent;
   hoy = new Date();
   fechaActual = this.hoy.getDate() + '/' + (this.hoy.getMonth() + 1) + '/' + this.hoy.getFullYear();
@@ -29,20 +31,35 @@ export class BreadcrumbComponent implements OnInit {
   constructor(
     public shellState: ShellState,
     private commonService: CommonService,
-    private productosService:ProductosService
+    private productosService:ProductosService,
+    private router: Router,
     ) {
-      this.commonService.obtenerHora()
-      .subscribe( data => this.horaActual = data );
+      router.events.pipe(
+        filter(event => event instanceof NavigationEnd)  
+      ).subscribe((event:any) => {
+        if(event.url === '/autenticado/productos/chance'){
+          this.verCarrito = true;
+          this.commonService.obtenerHora().subscribe(data => this.horaActual = data);
+          this.commonService.obtenerItemsCarrito()
+          .subscribe( data => {
+            const res:any = data;
+            if(res){
+              this.itemsCarrito = res.length;
+            } else {
+              this.itemsCarrito = 0;
+            }
+          });
+        } else {
+          this.verCarrito = false;
+        }
+      });    
 
-      if(JSON.parse(localStorage.getItem('chanceApuesta'))){
-        this.itemsCarrito = JSON.parse(localStorage.getItem('chanceApuesta')).length;
-      }
+      console.log(shellState)
   }
 
 
   ngOnInit(): void {
     setInterval(this.obtenerFechaHora, 1000);
-
   }
 
 

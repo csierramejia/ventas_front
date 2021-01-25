@@ -177,8 +177,7 @@ export class BolsaRecargasComponent extends CommonComponent implements OnInit, O
       this.valueBet=this.valueBet+parseInt(element.valor);
     });
 
-    const calculoImpuesto= Math.floor(this.inputVat/100) + 1
-    this.valueVat = this.valueBet / calculoImpuesto;
+    this.valueVat = Math.floor(this.valueBet * this.inputVat) / 100;
     this.valueBet = this.valueBet - this.valueVat;
 
     this.valueBetTotal = Math.floor(this.valueBet + this.valueVat);
