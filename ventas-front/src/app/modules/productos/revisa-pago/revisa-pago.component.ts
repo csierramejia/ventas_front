@@ -483,6 +483,18 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
     this.menuCarrito.refrescarCarrito();
   }
 
+  /**
+   * @author Luis Hernandez
+   * @description Funcion que permite valida que el usuario
+   * solo ingrese numeros en los campos donde se espera solo numeros
+   * @param e
+   */
+  permitirSoloNumeros(e) {
+    const key = window.Event ? e.which : e.keyCode;
+    e.key.replace(/\D|\-/, '');
+    return (key >= 48 && key <= 57);
+  }
+
 
   /**
    * Permite enviar la notificacion de soporte de pago

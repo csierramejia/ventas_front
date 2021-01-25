@@ -60,7 +60,7 @@
                                 <div class="container espacios-contenedor">
                                     <div class="row">
                                         <div class="col-md-4 left-totales"><span>EFECTIVO</span></div>
-                                        <div class="col-md-8"><input type="text" [(ngModel)]="efectivo" (change)="calcularDevuelta()" class="form-control input-efectivo"></div>
+                                        <div class="col-md-8"><input type="text" [(ngModel)]="efectivo" (keypress)="permitirSoloNumeros($event)" (change)="calcularDevuelta()" class="form-control input-efectivo"></div>
                                     </div>
                                     <div class="row espacio-total-devuelta">
                                         <div class="col-md-4 devuelva-estilo"><span>DEVUELTA</span></div>

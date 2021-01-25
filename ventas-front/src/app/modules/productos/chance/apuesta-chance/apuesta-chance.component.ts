@@ -894,43 +894,41 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
     const numerosValores = [
       {
         numeroFilaUno: this.chanceForm.get('numeroFilaUno').value,
-        valorDirectoFilaUno: this.chanceForm.get('valorDirectoFilaUno').value,
-        combinadoFilaUno: this.chanceForm.get('combinadoFilaUno').value,
-        dosCifrasFilaUno: this.chanceForm.get('dosCifrasFilaUno').value,
-        unaCifraFilaUno: this.chanceForm.get('unaCifraFilaUno').value
+        valorDirectoFilaUno: this.chanceForm.get('valorDirectoFilaUno').value.replace(/[^a-zA-Z 0-9.]+/g,''),
+        combinadoFilaUno: this.chanceForm.get('combinadoFilaUno').value.replace(/[^a-zA-Z 0-9.]+/g,''),
+        dosCifrasFilaUno: this.chanceForm.get('dosCifrasFilaUno').value.replace(/[^a-zA-Z 0-9.]+/g,''),
+        unaCifraFilaUno: this.chanceForm.get('unaCifraFilaUno').value.replace(/[^a-zA-Z 0-9.]+/g,'')
       },
       {
         numeroFilaDos: this.chanceForm.get('numeroFilaDos').value,
-        valorDirectoFilaDos: this.chanceForm.get('valorDirectoFilaDos').value,
-        combinadoFilaDos: this.chanceForm.get('combinadoFilaDos').value,
-        dosCifrasFilaDos: this.chanceForm.get('dosCifrasFilaDos').value,
-        unaCifraFilaDos: this.chanceForm.get('unaCifraFilaDos').value
+        valorDirectoFilaDos: this.chanceForm.get('valorDirectoFilaDos').value.replace(/[^a-zA-Z 0-9.]+/g,''),
+        combinadoFilaDos: this.chanceForm.get('combinadoFilaDos').value.replace(/[^a-zA-Z 0-9.]+/g,''),
+        dosCifrasFilaDos: this.chanceForm.get('dosCifrasFilaDos').value.replace(/[^a-zA-Z 0-9.]+/g,''),
+        unaCifraFilaDos: this.chanceForm.get('unaCifraFilaDos').value.replace(/[^a-zA-Z 0-9.]+/g,'')
       },
       {
         numeroFilaTres: this.chanceForm.get('numeroFilaTres').value,
-        valorDirectoFilaTres: this.chanceForm.get('valorDirectoFilaTres').value,
-        combinadoFilaTres: this.chanceForm.get('combinadoFilaTres').value,
-        dosCifrasFilaTres: this.chanceForm.get('dosCifrasFilaTres').value,
-        unaCifraFilaTres: this.chanceForm.get('unaCifraFilaTres').value
+        valorDirectoFilaTres: this.chanceForm.get('valorDirectoFilaTres').value.replace(/[^a-zA-Z 0-9.]+/g,''),
+        combinadoFilaTres: this.chanceForm.get('combinadoFilaTres').value.replace(/[^a-zA-Z 0-9.]+/g,''),
+        dosCifrasFilaTres: this.chanceForm.get('dosCifrasFilaTres').value.replace(/[^a-zA-Z 0-9.]+/g,''),
+        unaCifraFilaTres: this.chanceForm.get('unaCifraFilaTres').value.replace(/[^a-zA-Z 0-9.]+/g,'')
       },
       {
         numeroFilaCuatro: this.chanceForm.get('numeroFilaCuatro').value,
-        valorDirectoFilaCuatro: this.chanceForm.get('valorDirectoFilaCuatro').value,
-        combinadoFilaCuatro: this.chanceForm.get('combinadoFilaCuatro').value,
-        dosCifrasFilaCuatro: this.chanceForm.get('dosCifrasFilaCuatro').value,
-        unaCifraFilaCuatro: this.chanceForm.get('unaCifraFilaCuatro').value
+        valorDirectoFilaCuatro: this.chanceForm.get('valorDirectoFilaCuatro').value.replace(/[^a-zA-Z 0-9.]+/g,''),
+        combinadoFilaCuatro: this.chanceForm.get('combinadoFilaCuatro').value.replace(/[^a-zA-Z 0-9.]+/g,''),
+        dosCifrasFilaCuatro: this.chanceForm.get('dosCifrasFilaCuatro').value.replace(/[^a-zA-Z 0-9.]+/g,''),
+        unaCifraFilaCuatro: this.chanceForm.get('unaCifraFilaCuatro').value.replace(/[^a-zA-Z 0-9.]+/g,'')
       },
       {
         numeroFilaCinco: this.chanceForm.get('numeroFilaCinco').value,
-        valorDirectoFilaCinco: this.chanceForm.get('valorDirectoFilaCinco').value,
-        combinadoFilaCinco: this.chanceForm.get('combinadoFilaCinco').value,
-        dosCifrasFilaCinco: this.chanceForm.get('dosCifrasFilaCinco').value,
-        unaCifraFilaCinco: this.chanceForm.get('unaCifraFilaCinco').value
+        valorDirectoFilaCinco: this.chanceForm.get('valorDirectoFilaCinco').value.replace(/[^a-zA-Z 0-9.]+/g,''),
+        combinadoFilaCinco: this.chanceForm.get('combinadoFilaCinco').value.replace(/[^a-zA-Z 0-9.]+/g,''),
+        dosCifrasFilaCinco: this.chanceForm.get('dosCifrasFilaCinco').value.replace(/[^a-zA-Z 0-9.]+/g,''),
+        unaCifraFilaCinco: this.chanceForm.get('unaCifraFilaCinco').value.replace(/[^a-zA-Z 0-9.]+/g,'')
       }
     ]
-
     this.agregarNumeros.emit(numerosValores);
-
   }
 
 
@@ -1067,12 +1065,6 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
 
 
   transformAmount(event) {
-
-    // if(event === 1){
-    //   this.transformAmountOne();
-    // }
-
-
     switch (event) {
       case 1:
         this.transformAmountLo('valorDirectoFilaUno');
@@ -1139,6 +1131,7 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
     }
     
   }
+
 
   transformAmountLo(event){
     let cadena = this.chanceForm.get(event).value;

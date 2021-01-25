@@ -319,10 +319,6 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
     let numeros = this.obtenerFilasConApuesta(this.listaNumeros);
     let loterias = this.get_lotteriesSelected();
 
-
-
-
-
     if(numeros.length > 0 || loterias.length > 0) {
       this.messageService.add(MsjUtil.getMsjError('Por favor termine de diligenciar los campos o limpie el formulario para avanzar'));
     } else {
