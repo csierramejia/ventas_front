@@ -9,7 +9,7 @@ import { CommonService } from 'src/app/utilities/common.service';
 import { ClientesDTO } from 'src/app/dtos/productos/chance/clientes.dto';
 import { CrearClienteComponent } from '../../genericos/crear-cliente/crear-cliente.component';
 import * as moment from 'moment';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-apuesta-chance',
@@ -104,7 +104,8 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
   constructor(
     private productosService: ProductosService,
     protected messageService: MessageService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private currencyPipe: CurrencyPipe
   ) {
     super();
     // obtenemos el semanario
@@ -1061,6 +1062,95 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
     let FormatoMomentFecha = moment(new Date(event.toString())).format();
     this.dayBet = FechaUtil.stringToDate(FormatoMomentFecha.toString());
     this.getLotteries()
+  }
+
+
+
+  transformAmount(event) {
+
+    // if(event === 1){
+    //   this.transformAmountOne();
+    // }
+
+
+    switch (event) {
+      case 1:
+        this.transformAmountLo('valorDirectoFilaUno');
+        break;
+      case 2:
+        this.transformAmountLo('combinadoFilaUno');
+        break;
+      case 3:
+        this.transformAmountLo('dosCifrasFilaUno');
+        break;
+      case 4:
+        this.transformAmountLo('unaCifraFilaUno');
+        break;
+      case 5:
+        this.transformAmountLo('valorDirectoFilaDos');
+        break;
+      case 6:
+        this.transformAmountLo('combinadoFilaDos');
+        break;
+      case 7:
+        this.transformAmountLo('dosCifrasFilaDos');
+        break;
+      case 8:
+        this.transformAmountLo('unaCifraFilaDos');
+        break;
+      case 9:
+        this.transformAmountLo('valorDirectoFilaTres');
+        break;
+      case 10:
+        this.transformAmountLo('combinadoFilaTres');
+        break;
+      case 11:
+        this.transformAmountLo('dosCifrasFilaTres');
+        break;
+      case 12:
+        this.transformAmountLo('unaCifraFilaTres');
+        break;
+      case 13:
+        this.transformAmountLo('valorDirectoFilaCuatro');
+        break;
+      case 14:
+        this.transformAmountLo('combinadoFilaCuatro');
+        break;
+      case 15:
+        this.transformAmountLo('dosCifrasFilaCuatro');
+        break;
+      case 16:
+        this.transformAmountLo('unaCifraFilaCuatro');
+        break;
+      case 17:
+        this.transformAmountLo('valorDirectoFilaCinco');
+        break;
+      case 18:
+        this.transformAmountLo('combinadoFilaCinco');
+        break;
+      case 19:
+        this.transformAmountLo('dosCifrasFilaCinco');
+        break;
+      case 20:
+        this.transformAmountLo('unaCifraFilaCinco');
+        break;
+      default:
+        break;
+    }
+    
+  }
+
+  transformAmountLo(event){
+    let cadena = this.chanceForm.get(event).value;
+    if (cadena && cadena.includes("$")) {
+      cadena = cadena.substr(1, cadena.length);
+      cadena = cadena.substr(0, cadena.indexOf(',')) + cadena.slice(cadena.indexOf(',') + 1);
+      this.chanceForm.controls.event.setValue(cadena);
+      this.chanceForm.get(event).setValue(this.currencyPipe.transform(this.chanceForm.get(event).value, '$', 'symbol', '.0-0'));
+    }
+    else {
+      this.chanceForm.get(event).setValue(this.currencyPipe.transform(this.chanceForm.get(event).value, '$', 'symbol', '.0-0'));
+    }
   }
 
   

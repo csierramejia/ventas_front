@@ -49,13 +49,22 @@
             <div class="row ">
                 <div class="col-md-6 flex-col">
                     <div id="cicleOne">
-                        <img title="Agregar Juego" (click)="agregarCarritoF()" *ngIf="!edit" class="img-circle" src="../../../../../assets/img/svg/add-to-cart-l.svg" />
-                        <img title="Editar Juego" (click)="agregarCarritoF()" *ngIf="edit" class="img-circle" src="../../../../../assets/img/svg/update.svg" />
+                        <div class="accciones-btn" *ngIf="!edit">
+                            <img title="Agregar Juego" (click)="agregarCarritoF()" class="img-circle" src="../../../../../assets/img/svg/add-to-cart-l.svg" />
+                            <span>Agregar</span>
+                        </div>
+                        <div class="accciones-btn" *ngIf="edit">
+                            <img title="Editar Juego" (click)="agregarCarritoF()" class="img-circle" src="../../../../../assets/img/svg/update.svg" />
+                            <span>Actualizar</span>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-6 flex-col">
                     <div id="cicleTwo">
-                        <img title="Continuar al pago" (click)="irResumen()" class="img-circle" src="../../../../../assets/img/svg/money-l.svg" />
+                        <div class="accciones-btn">
+                            <img title="Continuar al pago" (click)="irResumen()" class="img-circle" src="../../../../../assets/img/svg/money-l.svg" />
+                            <span>Pagar</span>
+                        </div>
                     </div>
                 </div>
             </div>
