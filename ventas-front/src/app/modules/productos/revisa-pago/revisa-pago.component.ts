@@ -77,19 +77,24 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
     this.devuelta = 0
     const productosChanceConst = JSON.parse(localStorage.getItem('chanceApuesta'))
 
-    productosChanceConst.forEach(element => {
-      this.productosChance.push({
-        apostado:Math.round(element.apostado),
-        colilla:element.colilla,
-        fechaActual:element.fechaActual,
-        iva:Math.round(element.iva),
-        listaNumeros:this.concatenarNumeros(element.listaNumeros),
-        loterias:this.concatenarLoterias(element.loterias),
-        total:Math.round(element.total),
-        _id:element._id
-      });
+    // console.log(productosChanceConst);
 
-    });
+    if(productosChanceConst){
+      productosChanceConst.forEach(element => {
+        this.productosChance.push({
+          apostado:Math.round(element.apostado),
+          colilla:element.colilla,
+          fechaActual:element.fechaActual,
+          iva:Math.round(element.iva),
+          listaNumeros:this.concatenarNumeros(element.listaNumeros),
+          loterias:this.concatenarLoterias(element.loterias),
+          total:Math.round(element.total),
+          _id:element._id
+        });
+      });
+    }
+
+    
 
     this.calcularValores();
 
