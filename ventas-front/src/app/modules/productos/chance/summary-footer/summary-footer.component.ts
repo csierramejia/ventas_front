@@ -175,29 +175,82 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
 
   agregarCarritoF(): void {
     const listaNumeros = this.obtenerFilasConApuesta(this.listaNumeros)
-    if(this.colilla && this.fechaActual && this.loteriaSeleccionadas.length > 0 && listaNumeros.length > 0) {
-      if(this.edit){
-        this.confirmacionAgregar.isCreate = false;
-        this.verConfirmacionPopap = true;
-        this.confirmacionAgregar.colilla = this.colilla
-        this.confirmacionAgregar.numeros = this.concatenarNumeros(listaNumeros)
-        this.confirmacionAgregar.loterias = this.concatenarLoterias(this.loterias)
-        this.confirmacionAgregar.apostado = Math.round(this.valueBet)
-        this.confirmacionAgregar.iva = Math.round(this.valueVat)
-        this.confirmacionAgregar.total = Math.round(this.valueBetTotal)
-      } else {
-        this.confirmacionAgregar.isCreate = true;
-        this.verConfirmacionPopap = true;
-        this.confirmacionAgregar.colilla = this.colilla
-        this.confirmacionAgregar.numeros = this.concatenarNumeros(listaNumeros)
-        this.confirmacionAgregar.loterias = this.concatenarLoterias(this.loterias)
-        this.confirmacionAgregar.apostado = Math.round(this.valueBet)
-        this.confirmacionAgregar.iva = Math.round(this.valueVat)
-        this.confirmacionAgregar.total = Math.round(this.valueBetTotal)
-      }
+    if(this.validarCeros(listaNumeros)){
+      this.messageService.add(MsjUtil.getToastErrorMedium('Usted no puede colocar valores en 0'));
     } else {
-      this.messageService.add(MsjUtil.getToastErrorMedium('Valide que esta gestionando los campos necesarios para realizar la apuesta'));
+      if(this.colilla && this.fechaActual && this.loteriaSeleccionadas.length > 0 && listaNumeros.length > 0) {
+        if(this.edit){
+          this.confirmacionAgregar.isCreate = false;
+          this.verConfirmacionPopap = true;
+          this.confirmacionAgregar.colilla = this.colilla
+          this.confirmacionAgregar.numeros = this.concatenarNumeros(listaNumeros)
+          this.confirmacionAgregar.loterias = this.concatenarLoterias(this.loterias)
+          this.confirmacionAgregar.apostado = Math.round(this.valueBet)
+          this.confirmacionAgregar.iva = Math.round(this.valueVat)
+          this.confirmacionAgregar.total = Math.round(this.valueBetTotal)
+        } else {
+          this.confirmacionAgregar.isCreate = true;
+          this.verConfirmacionPopap = true;
+          this.confirmacionAgregar.colilla = this.colilla
+          this.confirmacionAgregar.numeros = this.concatenarNumeros(listaNumeros)
+          this.confirmacionAgregar.loterias = this.concatenarLoterias(this.loterias)
+          this.confirmacionAgregar.apostado = Math.round(this.valueBet)
+          this.confirmacionAgregar.iva = Math.round(this.valueVat)
+          this.confirmacionAgregar.total = Math.round(this.valueBetTotal)
+        }
+      } else {
+        this.messageService.add(MsjUtil.getToastErrorMedium('Valide que esta gestionando los campos necesarios para realizar la apuesta'));
+      }
     }
+
+
+    
+  }
+
+
+  /**
+   * @author Luis Fernando Hernandez
+   * @description Metodo que se encarga
+   * de validar si viene al algun valor en 0
+   */
+  validarCeros(listaNumeros){
+
+    let valorCero = false;
+
+    listaNumeros.forEach(element => {
+
+      if (parseInt(element.valorDirectoFilaUno) <= 0) { valorCero = true;}
+      if (parseInt(element.combinadoFilaUno) <= 0) { valorCero = true; }
+      if (parseInt(element.dosCifrasFilaUno) <= 0) { valorCero = true; }
+      if (parseInt(element.unaCifraFilaUno) <= 0) { valorCero = true; }
+
+      if (parseInt(element.valorDirectoFilaDos) <= 0) { valorCero = true;}
+      if (parseInt(element.combinadoFilaDos) <= 0) { valorCero = true; }
+      if (parseInt(element.dosCifrasFilaDos) <= 0) { valorCero = true; }
+      if (parseInt(element.unaCifraFilaDos) <= 0) { valorCero = true; }
+
+      if (parseInt(element.valorDirectoFilaTres) <= 0) { valorCero = true;}
+      if (parseInt(element.combinadoFilaTres) <= 0) { valorCero = true; }
+      if (parseInt(element.dosCifrasFilaTres) <= 0) { valorCero = true; }
+      if (parseInt(element.unaCifraFilaTres) <= 0) { valorCero = true; }
+
+      if (parseInt(element.valorDirectoFilaCuatro) <= 0) { valorCero = true;}
+      if (parseInt(element.combinadoFilaCuatro) <= 0) { valorCero = true; }
+      if (parseInt(element.dosCifrasFilaCuatro) <= 0) { valorCero = true; }
+      if (parseInt(element.unaCifraFilaCuatro) <= 0) { valorCero = true; }
+
+      if (parseInt(element.valorDirectoFilaCinco) <= 0) { valorCero = true;}
+      if (parseInt(element.combinadoFilaCinco) <= 0) { valorCero = true; }
+      if (parseInt(element.dosCifrasFilaCinco) <= 0) { valorCero = true; }
+      if (parseInt(element.unaCifraFilaCinco) <= 0) { valorCero = true; }
+
+
+    });
+
+
+    return valorCero;
+
+
   }
 
   concatenarNumeros(numeros){
