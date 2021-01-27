@@ -406,16 +406,13 @@
   padding-top: 20px;
   padding-bottom: 20px;
 }
- .label-total{
+.label-total {
   height: 22px;
   text-align: center;
   font: normal normal bold 18px/22px Montserrat;
   letter-spacing: 0px;
-  color: #0BC9EC;
+  color: #0bc9ec;
   opacity: 1;
- }
-
- 
-
+}
 
 

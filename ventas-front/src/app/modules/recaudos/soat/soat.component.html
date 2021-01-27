@@ -155,7 +155,7 @@
                                                                                                   inputId="tipoin"
                                                                                                   name="tipoin"
                                                                                                   title="Tipo de Identificación"
-                                                                                                  styleClass="w-100 dropdown-app">
+                                                                                                 styleClass="w-100 dropdown-app">
                                                                                            </p-dropdown>
                                                                                     </div>
                                                                              </div>
@@ -177,7 +177,8 @@
                                                                                                          class="input-app-sm w-100"
                                                                                                          type="text"
                                                                                                          pKeyFilter="pint"
-                                                                                                         title="Identificación del tomador" />
+                                                                                                         maxlength="10"
+                                                                                                         title="Identificación del tomador"/>
                                                                                            </div>
                                                                                     </div>
                                                                              </div>
@@ -300,7 +301,7 @@
                                                                                            <div
                                                                                                   class="inner-addon left-addon-user">
                                                                                                   <input type="text"
-                                                                                                         title="Identificación del Cliente"
+                                                                                                         title="Celular del Cliente"
                                                                                                          [ngClass]="{'requerido': (isSubmit && (!tomadorForm.get('numeroCelular').value))}"
                                                                                                          class="input-app-sm w-100"
                                                                                                          minlength="10"
@@ -344,7 +345,7 @@
                                                                                                          [ngClass]="{'requerido': tomadorForm.get('correo').errors?.email ||  (isSubmit && (!tomadorForm.get('correo').value))}"
                                                                                                          title="Correo del tomador"
                                                                                                          formControlName="correo"
-                                                                                                         title="Identificación del Cliente"
+                                                                                                         title="Correo del tomador"
                                                                                                          placeholder="">
                                                                                                   <span class="alert-mail"
                                                                                                          *ngIf="tomadorForm.get('correo').errors?.email">Por
@@ -544,9 +545,19 @@
                                                                              </div>
                                                                              <div class="ui-g-12 barra ml-0 mr-0 pt-0">
                                                                              </div>
+                                                                             <div class="ui-g-12 p-0">
+                                                                                    <div class="ui-g-7 p-0">
                                                                              <strong> <label class="titulopago">TOTAL A
-                                                                                           PAGAR:</label>
+                                                                                           PAGAR:                                                                                     </label>
                                                                              </strong>
+                                                                             </div>
+                                                                             <div class="ui-g-5 p-0 text-right">
+                                                                                    <strong> <label class="titulopago">{{vehiculoDTO.total | currency: "CAD":"symbol-narrow":".0-0"}}
+                                                                                    </label>
+                                                                             </strong>
+                                                                           
+                                                                                    </div>
+                                                                             </div>
                                                                       </div>
                                                                </p-card>
                                                         </div>
