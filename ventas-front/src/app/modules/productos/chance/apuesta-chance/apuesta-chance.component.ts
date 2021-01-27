@@ -26,6 +26,12 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
 
   stateDisabeld = false;
 
+  numeroUno = false;
+  numeroDos = false;
+  numeroTres = false;
+  numeroCuatro = false;
+  numeroCinco = false;
+
 
   lengEspanol = {}
 
@@ -138,27 +144,8 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
       dateFormat: 'mm/dd/yy',
       weekHeader: 'Wk'
     };
-    // this.validarEstadoHabiltarCamposCliente()
   }
   
-
-  // validarEstadoHabiltarCamposCliente() {
-  //   let infoCart = JSON.parse(localStorage.getItem('chanceApuesta'));
-  //   if( infoCart.length > 0 ) {
-  //     if ( infoCart[0].clienteOperacion.nombreCliente ) {
-  //       this.chanceForm.get('tipoDocumento').setValue(infoCart[0].clienteOperacion.tipoDocumento);
-  //       this.chanceForm.get('numeroDocumento').setValue(infoCart[0].clienteOperacion.numeroDocumento);
-  //       this.chanceForm.get('nombreCliente').setValue(infoCart[0].clienteOperacion.nombreCliente);
-  //       this.enabledCustomer = true;
-  //       this.stateDisabeld = true;
-  //     } else {
-  //       this.stateDisabeld = false;
-  //     }
-  //   } else {
-  //     this.stateDisabeld = false;
-  //   }
-  // }
-
 
   /**
    * @author Luis Hernandez
@@ -166,7 +153,6 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
    * @param day
    */
   get_date_bet(day) {
-    console.log(day.date)
     this.dayBet = day.date;
     const fechaA = this.fechaActual;
     const fechaB = FechaUtil.stringToDate(this.dayBet.toString());
@@ -702,45 +688,116 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
     document.getElementById('unaCifraFilaCinco').style.backgroundColor = '#EFEFEF';
   }
 
+  onFocus(event){
+    switch (event) {
+      case 1:
+        this.numeroUno = true;
+        this.numeroDos = false;
+        this.numeroTres = false;
+        this.numeroCuatro = false;
+        this.numeroCinco = false;
+        break;
+      case 2:
+        this.numeroUno = false;
+        this.numeroDos = true;
+        this.numeroTres = false;
+        this.numeroCuatro = false;
+        this.numeroCinco = false;
+        break;
+      case 3:
+        this.numeroUno = false;
+        this.numeroDos = false;
+        this.numeroTres = true;
+        this.numeroCuatro = false;
+        this.numeroCinco = false;
+        break;
+      case 4:
+        this.numeroUno = false;
+        this.numeroDos = false;
+        this.numeroTres = false;
+        this.numeroCuatro = true;
+        this.numeroCinco = false;
+        break;
+      case 5:
+        this.numeroUno = false;
+        this.numeroDos = false;
+        this.numeroTres = false;
+        this.numeroCuatro = false;
+        this.numeroCinco = true;
+        break;
+      default:
+        break;
+    }
+  }
+
 
   aleatorioTresCifras() {
-    if (this.chanceForm.get('numeroFilaUno').value == '') {
+    if(this.numeroUno){
       this.chanceForm.controls.numeroFilaUno.setValue(Math.round(Math.random() * (100 - 999) + 999));
       this.habilitarDeshabilitarSegunCifras(this.chanceForm.get('numeroFilaUno').value, 1);
-    } else if (this.chanceForm.get('numeroFilaDos').value == '') {
+    }
+    if(this.numeroDos){
       this.chanceForm.controls.numeroFilaDos.setValue(Math.round(Math.random() * (100 - 999) + 999));
       this.habilitarDeshabilitarSegunCifras(this.chanceForm.get('numeroFilaDos').value, 2);
-    } else if (this.chanceForm.get('numeroFilaTres').value == '') {
+    }
+    if(this.numeroTres){
       this.chanceForm.controls.numeroFilaTres.setValue(Math.round(Math.random() * (100 - 999) + 999));
       this.habilitarDeshabilitarSegunCifras(this.chanceForm.get('numeroFilaTres').value, 3);
-    } else if (this.chanceForm.get('numeroFilaCuatro').value == '') {
+    }
+    if(this.numeroCuatro){
       this.chanceForm.controls.numeroFilaCuatro.setValue(Math.round(Math.random() * (100 - 999) + 999));
       this.habilitarDeshabilitarSegunCifras(this.chanceForm.get('numeroFilaCuatro').value, 4);
-    } else if (this.chanceForm.get('numeroFilaCinco').value == '') {
+    }
+    if(this.numeroCinco){
       this.chanceForm.controls.numeroFilaCinco.setValue(Math.round(Math.random() * (100 - 999) + 999));
-      this.habilitarDeshabilitarSegunCifras(this.chanceForm.get('numeroFilaCinco').value, 4);
+      this.habilitarDeshabilitarSegunCifras(this.chanceForm.get('numeroFilaCinco').value, 5);
     }
     this.emitirNumeros();
   }
 
   aleatorioCuatroCifras() {
-    if (this.chanceForm.get('numeroFilaUno').value == '') {
+
+
+    if(this.numeroUno){
       this.chanceForm.controls.numeroFilaUno.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
       this.habilitarDeshabilitarSegunCifras(this.chanceForm.get('numeroFilaUno').value, 1);
-    } else if (this.chanceForm.get('numeroFilaDos').value == '') {
+    }
+    if(this.numeroDos){
       this.chanceForm.controls.numeroFilaDos.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
       this.habilitarDeshabilitarSegunCifras(this.chanceForm.get('numeroFilaDos').value, 2);
-    } else if (this.chanceForm.get('numeroFilaTres').value == '') {
+    }
+    if(this.numeroTres){
       this.chanceForm.controls.numeroFilaTres.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
       this.habilitarDeshabilitarSegunCifras(this.chanceForm.get('numeroFilaTres').value, 3);
-    } else if (this.chanceForm.get('numeroFilaCuatro').value == '') {
+    }
+    if(this.numeroCuatro){
       this.chanceForm.controls.numeroFilaCuatro.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
       this.habilitarDeshabilitarSegunCifras(this.chanceForm.get('numeroFilaCuatro').value, 4);
-    } else if (this.chanceForm.get('numeroFilaCinco').value == '') {
+    }
+    if(this.numeroCinco){
       this.chanceForm.controls.numeroFilaCinco.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
       this.habilitarDeshabilitarSegunCifras(this.chanceForm.get('numeroFilaCinco').value, 5);
     }
     this.emitirNumeros();
+
+
+    // if (this.chanceForm.get('numeroFilaUno').value == '') {
+    //   this.chanceForm.controls.numeroFilaUno.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
+    //   this.habilitarDeshabilitarSegunCifras(this.chanceForm.get('numeroFilaUno').value, 1);
+    // } else if (this.chanceForm.get('numeroFilaDos').value == '') {
+    //   this.chanceForm.controls.numeroFilaDos.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
+    //   this.habilitarDeshabilitarSegunCifras(this.chanceForm.get('numeroFilaDos').value, 2);
+    // } else if (this.chanceForm.get('numeroFilaTres').value == '') {
+    //   this.chanceForm.controls.numeroFilaTres.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
+    //   this.habilitarDeshabilitarSegunCifras(this.chanceForm.get('numeroFilaTres').value, 3);
+    // } else if (this.chanceForm.get('numeroFilaCuatro').value == '') {
+    //   this.chanceForm.controls.numeroFilaCuatro.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
+    //   this.habilitarDeshabilitarSegunCifras(this.chanceForm.get('numeroFilaCuatro').value, 4);
+    // } else if (this.chanceForm.get('numeroFilaCinco').value == '') {
+    //   this.chanceForm.controls.numeroFilaCinco.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
+    //   this.habilitarDeshabilitarSegunCifras(this.chanceForm.get('numeroFilaCinco').value, 5);
+    // }
+    // this.emitirNumeros();
   }
 
 
@@ -891,43 +948,74 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
 
 
   emitirNumeros() {
-    const numerosValores = [
-      {
-        numeroFilaUno: this.chanceForm.get('numeroFilaUno').value,
-        valorDirectoFilaUno: this.chanceForm.get('valorDirectoFilaUno').value.replace(/[^a-zA-Z 0-9.]+/g,''),
-        combinadoFilaUno: this.chanceForm.get('combinadoFilaUno').value.replace(/[^a-zA-Z 0-9.]+/g,''),
-        dosCifrasFilaUno: this.chanceForm.get('dosCifrasFilaUno').value.replace(/[^a-zA-Z 0-9.]+/g,''),
-        unaCifraFilaUno: this.chanceForm.get('unaCifraFilaUno').value.replace(/[^a-zA-Z 0-9.]+/g,'')
-      },
-      {
-        numeroFilaDos: this.chanceForm.get('numeroFilaDos').value,
-        valorDirectoFilaDos: this.chanceForm.get('valorDirectoFilaDos').value.replace(/[^a-zA-Z 0-9.]+/g,''),
-        combinadoFilaDos: this.chanceForm.get('combinadoFilaDos').value.replace(/[^a-zA-Z 0-9.]+/g,''),
-        dosCifrasFilaDos: this.chanceForm.get('dosCifrasFilaDos').value.replace(/[^a-zA-Z 0-9.]+/g,''),
-        unaCifraFilaDos: this.chanceForm.get('unaCifraFilaDos').value.replace(/[^a-zA-Z 0-9.]+/g,'')
-      },
-      {
-        numeroFilaTres: this.chanceForm.get('numeroFilaTres').value,
-        valorDirectoFilaTres: this.chanceForm.get('valorDirectoFilaTres').value.replace(/[^a-zA-Z 0-9.]+/g,''),
-        combinadoFilaTres: this.chanceForm.get('combinadoFilaTres').value.replace(/[^a-zA-Z 0-9.]+/g,''),
-        dosCifrasFilaTres: this.chanceForm.get('dosCifrasFilaTres').value.replace(/[^a-zA-Z 0-9.]+/g,''),
-        unaCifraFilaTres: this.chanceForm.get('unaCifraFilaTres').value.replace(/[^a-zA-Z 0-9.]+/g,'')
-      },
-      {
-        numeroFilaCuatro: this.chanceForm.get('numeroFilaCuatro').value,
-        valorDirectoFilaCuatro: this.chanceForm.get('valorDirectoFilaCuatro').value.replace(/[^a-zA-Z 0-9.]+/g,''),
-        combinadoFilaCuatro: this.chanceForm.get('combinadoFilaCuatro').value.replace(/[^a-zA-Z 0-9.]+/g,''),
-        dosCifrasFilaCuatro: this.chanceForm.get('dosCifrasFilaCuatro').value.replace(/[^a-zA-Z 0-9.]+/g,''),
-        unaCifraFilaCuatro: this.chanceForm.get('unaCifraFilaCuatro').value.replace(/[^a-zA-Z 0-9.]+/g,'')
-      },
-      {
-        numeroFilaCinco: this.chanceForm.get('numeroFilaCinco').value,
-        valorDirectoFilaCinco: this.chanceForm.get('valorDirectoFilaCinco').value.replace(/[^a-zA-Z 0-9.]+/g,''),
-        combinadoFilaCinco: this.chanceForm.get('combinadoFilaCinco').value.replace(/[^a-zA-Z 0-9.]+/g,''),
-        dosCifrasFilaCinco: this.chanceForm.get('dosCifrasFilaCinco').value.replace(/[^a-zA-Z 0-9.]+/g,''),
-        unaCifraFilaCinco: this.chanceForm.get('unaCifraFilaCinco').value.replace(/[^a-zA-Z 0-9.]+/g,'')
-      }
+    
+    let numerosValores:any = [
+      {numeroFilaUno: this.chanceForm.get('numeroFilaUno').value},
+      {numeroFilaDos: this.chanceForm.get('numeroFilaDos').value},
+      {numeroFilaTres: this.chanceForm.get('numeroFilaTres').value},
+      {numeroFilaCuatro: this.chanceForm.get('numeroFilaCuatro').value},
+      {numeroFilaCinco: this.chanceForm.get('numeroFilaCinco').value}
     ]
+    if(this.chanceForm.get('valorDirectoFilaUno').value){
+      numerosValores[0].valorDirectoFilaUno = this.chanceForm.get('valorDirectoFilaUno').value.replace(/[^a-zA-Z 0-9.]+/g,'')
+    }
+    if(this.chanceForm.get('combinadoFilaUno').value){
+      numerosValores[0].combinadoFilaUno = this.chanceForm.get('combinadoFilaUno').value.replace(/[^a-zA-Z 0-9.]+/g,'')
+    }
+    if(this.chanceForm.get('dosCifrasFilaUno').value){
+      numerosValores[0].dosCifrasFilaUno = this.chanceForm.get('dosCifrasFilaUno').value.replace(/[^a-zA-Z 0-9.]+/g,'')
+    }
+    if(this.chanceForm.get('unaCifraFilaUno').value){
+      numerosValores[0].unaCifraFilaUno = this.chanceForm.get('unaCifraFilaUno').value.replace(/[^a-zA-Z 0-9.]+/g,'')
+    }
+    if(this.chanceForm.get('valorDirectoFilaDos').value){
+      numerosValores[0].valorDirectoFilaDos = this.chanceForm.get('valorDirectoFilaDos').value.replace(/[^a-zA-Z 0-9.]+/g,'')
+    }
+    if(this.chanceForm.get('combinadoFilaDos').value){
+      numerosValores[0].combinadoFilaDos = this.chanceForm.get('combinadoFilaDos').value.replace(/[^a-zA-Z 0-9.]+/g,'')
+    }
+    if(this.chanceForm.get('dosCifrasFilaDos').value){
+      numerosValores[0].dosCifrasFilaDos = this.chanceForm.get('dosCifrasFilaDos').value.replace(/[^a-zA-Z 0-9.]+/g,'')
+    }
+    if(this.chanceForm.get('unaCifraFilaDos').value){
+      numerosValores[0].unaCifraFilaDos = this.chanceForm.get('unaCifraFilaDos').value.replace(/[^a-zA-Z 0-9.]+/g,'')
+    }
+    if(this.chanceForm.get('valorDirectoFilaTres').value){
+      numerosValores[0].valorDirectoFilaTres = this.chanceForm.get('valorDirectoFilaTres').value.replace(/[^a-zA-Z 0-9.]+/g,'')
+    }
+    if(this.chanceForm.get('combinadoFilaTres').value){
+      numerosValores[0].combinadoFilaTres = this.chanceForm.get('combinadoFilaTres').value.replace(/[^a-zA-Z 0-9.]+/g,'')
+    }
+    if(this.chanceForm.get('dosCifrasFilaTres').value){
+      numerosValores[0].dosCifrasFilaDos = this.chanceForm.get('dosCifrasFilaTres').value.replace(/[^a-zA-Z 0-9.]+/g,'')
+    }
+    if(this.chanceForm.get('unaCifraFilaTres').value){
+      numerosValores[0].unaCifraFilaTres = this.chanceForm.get('unaCifraFilaTres').value.replace(/[^a-zA-Z 0-9.]+/g,'')
+    }
+    if(this.chanceForm.get('valorDirectoFilaCuatro').value){
+      numerosValores[0].valorDirectoFilaCuatro = this.chanceForm.get('valorDirectoFilaCuatro').value.replace(/[^a-zA-Z 0-9.]+/g,'')
+    }
+    if(this.chanceForm.get('combinadoFilaCuatro').value){
+      numerosValores[0].combinadoFilaCuatro = this.chanceForm.get('combinadoFilaCuatro').value.replace(/[^a-zA-Z 0-9.]+/g,'')
+    }
+    if(this.chanceForm.get('dosCifrasFilaCuatro').value){
+      numerosValores[0].dosCifrasFilaDos = this.chanceForm.get('dosCifrasFilaCuatro').value.replace(/[^a-zA-Z 0-9.]+/g,'')
+    }
+    if(this.chanceForm.get('unaCifraFilaCuatro').value){
+      numerosValores[0].unaCifraFilaCuatro = this.chanceForm.get('unaCifraFilaCuatro').value.replace(/[^a-zA-Z 0-9.]+/g,'')
+    }
+    if(this.chanceForm.get('valorDirectoFilaCinco').value){
+      numerosValores[0].valorDirectoFilaCinco = this.chanceForm.get('valorDirectoFilaCinco').value.replace(/[^a-zA-Z 0-9.]+/g,'')
+    }
+    if(this.chanceForm.get('combinadoFilaCinco').value){
+      numerosValores[0].combinadoFilaCinco = this.chanceForm.get('combinadoFilaCinco').value.replace(/[^a-zA-Z 0-9.]+/g,'')
+    }
+    if(this.chanceForm.get('dosCifrasFilaCinco').value){
+      numerosValores[0].dosCifrasFilaDos = this.chanceForm.get('dosCifrasFilaCinco').value.replace(/[^a-zA-Z 0-9.]+/g,'')
+    }
+    if(this.chanceForm.get('unaCifraFilaCinco').value){
+      numerosValores[0].unaCifraFilaCinco = this.chanceForm.get('unaCifraFilaCinco').value.replace(/[^a-zA-Z 0-9.]+/g,'')
+    }
     this.agregarNumeros.emit(numerosValores);
   }
 
@@ -939,11 +1027,6 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
     this.edit = true;
     const buscarApuestasEditar = JSON.parse(localStorage.getItem('chanceApuesta'))
     const apuestaEditar = buscarApuestasEditar.filter(buscarApuestaEditar => buscarApuestaEditar._id == event._id);
-
-
-    console.log('event');
-    console.log(apuestaEditar[0].clienteOperacion.nombreCliente);
-    console.log('event');
 
     if (apuestaEditar[0].clienteOperacion.nombreCliente) {
       this.enabledCustomer = true;
@@ -1134,15 +1217,21 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
 
 
   transformAmountLo(event){
-    let cadena = this.chanceForm.get(event).value;
+    let limpiarCadena = this.chanceForm.get(event).value.replace(/[^a-zA-Z 0-9.]+/g,'')
+    let cadena = limpiarCadena;
     if (cadena && cadena.includes("$")) {
       cadena = cadena.substr(1, cadena.length);
       cadena = cadena.substr(0, cadena.indexOf(',')) + cadena.slice(cadena.indexOf(',') + 1);
-      this.chanceForm.controls.event.setValue(cadena);
-      this.chanceForm.get(event).setValue(this.currencyPipe.transform(this.chanceForm.get(event).value, '$', 'symbol', '.0-0'));
+      let pipe =  this.currencyPipe.transform(limpiarCadena, '$', 'symbol', '.0-0')
+      if(pipe){
+        this.chanceForm.get(event).setValue(pipe);
+      }
     }
     else {
-      this.chanceForm.get(event).setValue(this.currencyPipe.transform(this.chanceForm.get(event).value, '$', 'symbol', '.0-0'));
+      let pipe = this.currencyPipe.transform(limpiarCadena, '$', 'symbol', '.0-0')
+      if(pipe){
+        this.chanceForm.get(event).setValue(pipe);
+      }
     }
   }
 

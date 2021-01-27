@@ -480,7 +480,7 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
     this.efectivo = ''
     this.devuelta = 0
     localStorage.removeItem('chanceApuesta');
-    this.menuCarrito.refrescarCarrito();
+    // this.menuCarrito.refrescarCarrito();
   }
 
   /**
