@@ -397,6 +397,7 @@ export class SoatComponent extends CommonComponent implements OnInit, OnDestroy 
     this.tomadorForm.get('numeroCelular').setValue('');
     this.tomadorForm.get('correo').setValue('');
     this.tomadorForm.get('fechaInicioVigencia').setValue('');
+    this.autorizacion = false;
 
   }
 
