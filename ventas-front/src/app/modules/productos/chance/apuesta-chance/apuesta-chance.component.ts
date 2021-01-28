@@ -153,6 +153,7 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
    * @param day
    */
   get_date_bet(day) {
+    delete this.pCalendarioValor
     this.dayBet = day.date;
     const fechaA = this.fechaActual;
     const fechaB = FechaUtil.stringToDate(this.dayBet.toString());
