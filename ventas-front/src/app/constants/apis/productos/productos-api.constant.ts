@@ -19,6 +19,10 @@ export class ProductosAPIConstant {
   /** Nombre del REST para la administracion de loterias virtual */
   static readonly LOTERIAS_VIRTUAL: string = 'loteria/virtual/';
 
+  /** PATH que contiene los procesos de negocio para los horarios */
+  static readonly HORARIO: string = 'admin/horario/';  
+
+
   /** URL del recurso para para obtener las loterias virtual */
   static readonly URL_GET_LOTERIAS_VIRTUAL: string =
     AppDomainConstant.URI_GATEWAY +
@@ -131,5 +135,10 @@ export class ProductosAPIConstant {
        AppDomainConstant.URI_GATEWAY +
        ProductosAPIConstant.MODALIDADES_RECARGAS +
        'consultarOperadores';
+
+       static readonly URL_EXISTE_PROGRAMACION: string =
+       AppDomainConstant.URI_GATEWAY +
+       ProductosAPIConstant.HORARIO +
+       'obtenerProgramacion';
 
 }

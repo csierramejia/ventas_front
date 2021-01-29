@@ -1178,3 +1178,9 @@ body {
   border: 0 none;
   background-color: #F8F9FA;
 }
+
+.disabled-div {
+  pointer-events: none;
+  opacity: 0.4;
+}
+

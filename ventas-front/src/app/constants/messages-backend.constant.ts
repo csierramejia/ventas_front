@@ -46,4 +46,8 @@ export class MessagesBackendConstant {
 
     static readonly SIN_ASOCIACION_COMISION_PRODUCTOS_EMPRESA: string =
     'Sin asociación de comisiones para los productos seleccionados de la empresa ';
+
+    /** Mensaje cuando el USER intenta ingresar y no tiene programación */
+    static readonly PROGRAMACION_NULA: string = 'No tiene programación de horario para la hora especifica.';
+
 }

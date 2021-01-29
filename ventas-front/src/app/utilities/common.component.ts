@@ -147,6 +147,7 @@ export class CommonComponent {
         businessMsj = MessagesBackendConstant.SIN_ASOCIACION_COMISION_PRODUCTOS_EMPRESA;
         break;
       }
+     
     }
     return businessMsj;
   }
