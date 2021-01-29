@@ -6,7 +6,7 @@ import { MsjUtil } from 'src/app/utilities/messages.util';
 import { CommonComponent } from 'src/app/utilities/common.component';
 import { FechaUtil } from 'src/app/utilities/fecha-util';
 import { CommonService } from 'src/app/utilities/common.service';
-// import { ClientesDTO } from 'src/app/dtos/productos/chance/clientes.dto';
+import { ClientesDTO } from 'src/app/dtos/productos/chance/clientes.dto';
 import { CrearClienteComponent } from '../../genericos/crear-cliente/crear-cliente.component';
 import * as moment from 'moment';
 import { CurrencyPipe } from '@angular/common';
@@ -1076,38 +1076,38 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
    * existe o no el cliente, si este no existe se
    * levanta un popup para su posterior creación
    */
-  // validExistClient(): void {
+  validExistClient(): void {
 
-  //   if (this.chanceForm.get('tipoDocumento').value && this.chanceForm.get('numeroDocumento').value) {
-  //     const clientesDTO: ClientesDTO = new ClientesDTO();
-  //     this.enabledCustomer = false;
-  //     this.chanceForm.controls.nombreCliente.setValue('');
-  //     clientesDTO.numeroDocumento = this.chanceForm.get('numeroDocumento').value;
-  //     clientesDTO.tipoDocumento = this.chanceForm.get('tipoDocumento').value;
-  //     this.productosService.clienteApuesta(clientesDTO).subscribe(
-  //       clienteData => {
-  //         const responseCliente: any = clienteData;
-  //         if (responseCliente.existe) {
-  //           const name = responseCliente.primerNombre + ' ' + responseCliente.segundoNombre + ' ' + responseCliente.primerApellido;
-  //           this.idCustomer = responseCliente.idCliente;
-  //           this.correoCustomer = responseCliente.correo;
-  //           this.chanceForm.controls.nombreCliente.setValue(name);
-  //           this.enabledCustomer = true;
-  //           this.emitirCliente(1);
-  //         } else {
-  //           this.crearClienteChild.clienteForm.get('tipoDocumento').setValue(this.chanceForm.get('tipoDocumento').value);
-  //           this.crearClienteChild.clienteForm.get('numeroDocumento').setValue(this.chanceForm.get('numeroDocumento').value);
-  //           this.displayModalCreate = true;
-  //           this.emitirCliente(2);
-  //         }
-  //       },
-  //       error => {
-  //         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
-  //       }
-  //     );
-  //   }
+    if (this.chanceForm.get('tipoDocumento').value && this.chanceForm.get('numeroDocumento').value) {
+      const clientesDTO: ClientesDTO = new ClientesDTO();
+      this.enabledCustomer = false;
+      this.chanceForm.controls.nombreCliente.setValue('');
+      clientesDTO.numeroDocumento = this.chanceForm.get('numeroDocumento').value;
+      clientesDTO.tipoDocumento = this.chanceForm.get('tipoDocumento').value;
+      this.productosService.clienteApuesta(clientesDTO).subscribe(
+        clienteData => {
+          const responseCliente: any = clienteData;
+          if (responseCliente.existe) {
+            const name = responseCliente.primerNombre + ' ' + responseCliente.segundoNombre + ' ' + responseCliente.primerApellido;
+            this.idCustomer = responseCliente.idCliente;
+            this.correoCustomer = responseCliente.correo;
+            this.chanceForm.controls.nombreCliente.setValue(name);
+            this.enabledCustomer = true;
+            this.emitirCliente(1);
+          } else {
+            this.crearClienteChild.clienteForm.get('tipoDocumento').setValue(this.chanceForm.get('tipoDocumento').value);
+            this.crearClienteChild.clienteForm.get('numeroDocumento').setValue(this.chanceForm.get('numeroDocumento').value);
+            this.displayModalCreate = true;
+            this.emitirCliente(2);
+          }
+        },
+        error => {
+          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+        }
+      );
+    }
 
-  // }
+  }
 
 
   emitirCliente(event) {
