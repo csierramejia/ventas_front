@@ -1,51 +1,68 @@
+.styleInput{
+    width: 232px;
+    height: 31px;
+    background: #F2F2F2 0% 0% no-repeat padding-box;
+    border-radius: 15px;
+}
+
 .typeIdentification{
-    top: 269px;
-    left: 514px;
+    width: 144px;
+    height: 31px;
     background: #F2F2F2 0% 0% no-repeat padding-box;
     border-radius: 15px;
-    opacity: 1;
 }
 
-.inputFormCreate{
-    background: #F2F2F2 0% 0% no-repeat padding-box;
-    border-radius: 15px;
-    opacity: 1;
+.textoH{
+    text-align: left;
+    font: normal normal 600 15px Montserrat;
+    letter-spacing: 0px;
+    color: #333333;
 }
 
-
-.titleCreate{
-    font-family: "Montserrat";
-    font-weight: 800;
-    font-style: normal;
-    font-family: Montserrat;
-    font-size: 15px;
-    color: #999999;
-    opacity: 1;
+.filaInfo{
+    margin-top: 20px;
 }
 
 
-.alert-mail{
-    font-family: "Montserrat";
-    font-weight: 800;
-    font-style: normal;
-    font-size: 15px;
-    color: red;
+.textoCliente{
+    text-align: left;
+    font: normal normal 600 16px Montserrat;
+    color: #333333;
+    padding-left: 12px;
 }
 
 
-.alert-input{
-    border: 1px solid #f00;
+.actionsBt{
+    text-align: center;
 }
-
 
 .btnActions{
-    text-align: left;
-    font: Regular 11px/14px Montserrat;
-    letter-spacing: 0px;
-    color: #888181;
-    opacity: 1;
+    width: 134px;
+    background: #F2F2F2 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 8px #149DB773;
+    border-radius: 15px;
+    color: black;
+    margin-right: 25px;
 }
 
-.btnActions:hover{
-    color: #0083FE;
+
+.btnAceptar{
+    width: 134px;
+    background: #2076BD 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 8px #149DB773;
+    border-radius: 15px;
+    color: #ffffff;
+}
+
+.imgAccciones{
+    width: 12px;
+}
+
+.filaAcciones{
+    padding-top: 60px;
+    padding-bottom: 30px;
+}
+
+.fa-check-circle-o{
+    font-size: 20px;
 }

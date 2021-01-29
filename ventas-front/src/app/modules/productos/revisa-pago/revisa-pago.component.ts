@@ -77,8 +77,6 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
     this.devuelta = 0
     const productosChanceConst = JSON.parse(localStorage.getItem('chanceApuesta'))
 
-    // console.log(productosChanceConst);
-
     if(productosChanceConst){
       productosChanceConst.forEach(element => {
         this.productosChance.push({
@@ -94,10 +92,7 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
       });
     }
 
-    
-
     this.calcularValores();
-
   }
 
 
@@ -159,17 +154,25 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
 
 
   calcularDevuelta(){
-    let efectivoCalcular = parseInt(this.efectivo);
-    if(!efectivoCalcular){
-      efectivoCalcular = 0
-    }
-    this.devuelta = efectivoCalcular - this.totalGeneral
-    if(this.devuelta >= 0){
-      this.verBotonFinalizar = true;
+    this.devuelta = 0
+
+    if(this.efectivo){
+      let efectivoCalcular = parseInt(this.efectivo);
+      if(!efectivoCalcular){
+        efectivoCalcular = 0
+      }
+      this.devuelta = efectivoCalcular - this.totalGeneral
+      if(this.devuelta >= 0){
+        this.verBotonFinalizar = true;
+      } else {
+        this.verBotonFinalizar = false;
+        this.messageService.add(MsjUtil.getToastErrorMedium('El valor recibido no puede ser menor al total a pagar'));
+      }
     } else {
       this.verBotonFinalizar = false;
       this.messageService.add(MsjUtil.getToastErrorMedium('El valor recibido no puede ser menor al total a pagar'));
     }
+    
   }
 
 

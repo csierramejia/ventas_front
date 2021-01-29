@@ -67,7 +67,7 @@
 #content-lot{
     top: 258px;
     left: 253px;
-    width: 361px;
+    width: 410px;
     height: 244px;
     background: #FFFFFF 0% 0% no-repeat padding-box;
     border-radius: 5px;
@@ -151,6 +151,7 @@
 
 .labelloteria{
     width: 60px;
+    font-size: 11px !important;
     text-transform: uppercase;
     height: 16px;
     text-align: left;

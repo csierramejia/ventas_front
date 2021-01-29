@@ -1,67 +1,51 @@
-  <form [formGroup]="clienteForm">
-    <div class="container-fluid">
-        <h1 class="titleCreate">CREAR CLIENTE</h1>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                  <select formControlName="tipoDocumento" class="form-control typeIdentification" id="exampleFormControlSelect1">
-                    <option value="option">Tipo de documento</option>  
-                    <option value="CC">Cédula</option>
-                    <option value="TI">Tarjeta de identidad</option>
-                  </select>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                  <input type="text" formControlName="numeroDocumento" (keypress)="keyPressNumber($event)"  class="form-control inputFormCreate" placeholder="Número de documento">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                  <input type="text" type="text" formControlName="primerNombre" (keypress)="keyPressChart($event)" class="form-control inputFormCreate" placeholder="Primer Nombre">
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                  <input type="text" formControlName="segundoNombre" (keypress)="keyPressChart($event)" class="form-control inputFormCreate" placeholder="Segundo Nombre">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                  <input type="text" formControlName="primerApellido" (keypress)="keyPressChart($event)" class="form-control inputFormCreate" placeholder="Primer Apellido">
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                  <input type="text" class="form-control inputFormCreate" (keypress)="keyPressChart($event)" formControlName="segundoApellido" placeholder="Segundo Apellido">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                  <input type="text" [ngClass]="{'alert-input': clienteForm.get('correo').errors?.email}" class="form-control inputFormCreate" formControlName="correo" placeholder="Correo electrónico">
-                  <span class="alert-mail" *ngIf="clienteForm.get('correo').errors?.email">por favor ingrese un email valido</span>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                  <input type="text" [ngClass]="{'alert-input': !clienteForm.get('numeroCelular').valid}" class="form-control inputFormCreate" minlength="10" maxlength="10" (keypress)="keyPressNumber($event)" formControlName="numeroCelular" placeholder="Número celular">
-                  <span class="alert-mail" *ngIf="!clienteForm.get('numeroCelular').valid">por favor ingrese un numero de celular correcto</span>
-                </div>
-            </div>
-        </div>
 
-        <div class="row float-right">
-            <button type="button" (click)="closePopupE()" class="btn btn-outline-light btnActions">Cancelar</button>
-            <button type="button" (click)="validCreateCustomerE()" class="btn btn-outline-light btnActions">Registrar</button>
+    <div class="container-fluid">
+      <div class="info-client">
+        <form [formGroup]="clienteForm">
+            <div class="row filaInfo">
+                <div class="col-md-4">
+                    <div class="form-group">
+                      <label class="textoH">Tipo Identificación</label>
+                        <select (change)="validExistClient()" formControlName="tipoDocumento" class="form-control typeIdentification">
+                            <option value="" selected>Tipo</option>
+                            <option value="CC">CC</option>
+                            <option value="TI">TI</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label class="textoH">Identificación del Cliente</label>
+                        <input (keypress)="permitirSoloNumeros($event)" (change)="validExistClient()" formControlName="numeroDocumento" type="text" class="form-control styleInput" placeholder="Identificación">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" *ngIf="enabledCustomer">
+              <div class="col-md-12">
+                <img class="img-aletorio"  src="../../../../../assets/img/svg/userv.svg" />
+                <span class="textoCliente">{{ nombreCliente }}</span>
+              </div>
+            </div>
+        </form>
+      </div>
+
+
+       
+
+      <div class="row filaAcciones">
+        <div class="col-md-12 actionsBt">
+          <button type="button" (click)="closePopupE()" class="btn btnActions">
+            Cancelar
+            <img class="imgAccciones" src="../../../../../assets/img/svg/letter-x-x.svg" alt="" srcset="">
+          </button>
+
+
+          <button *ngIf="enabledCustomer" type="button" (click)="closePopupE()" class="btn btnAceptar">
+            Aceptar
+            <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+          </button>
+
         </div>
+      </div>
     </div>
