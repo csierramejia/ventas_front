@@ -5,12 +5,12 @@
 
 #summary-cart{
     background: #FFFFFF 0% 0% no-repeat padding-box;
-    /* padding-top: 10px; */
     height: 87px;
 }
 
 #row-summary{
     margin-right:auto !important;
+    padding-top: 50px;
 }
 
 

@@ -137,7 +137,7 @@
     
     
                 <!-- ABRE INFO CLIENTE -->
-                <div class="info-client">
+                <!-- <div class="info-client">
                     <form [formGroup]="chanceForm">
                         <div class="row">
                             <div class="col-md-2">
@@ -161,7 +161,7 @@
                             </div>
                         </div>
                     </form>
-                </div>
+                </div> -->
                 <!-- / CIERRA SELECCION DE LOTERIAS Y NUMEROS QUE APUESTAN -->
             </div>
 
@@ -172,6 +172,16 @@
                 (closePopup)="closeModal($event)" 
                 (createCustomer)="createCustomer($event)">
             </app-crear-cliente>
+        </p-dialog>
+
+
+
+        <p-dialog [(visible)]="displayModalBuscarCliente" header="CONSULTA DE CLIENTE" [style]="{width: '664px'}">
+            <app-buscar-cliente
+                (closeModalCliente)="closeModalCliente($event)"
+                (closeModalClienteVerCreacion)="closeModalClienteVerCreacion($event)"
+                (searchCustomer)="searchCustomer($event)">
+            </app-buscar-cliente>
         </p-dialog>
         
 

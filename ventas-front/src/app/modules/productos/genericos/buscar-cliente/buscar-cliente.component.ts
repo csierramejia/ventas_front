@@ -1,11 +1,12 @@
-import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CommonComponent } from 'src/app/utilities/common.component';
 import { ProductosService } from '../../productos.service';
 import { MessageService } from 'primeng/api';
 import { ShellState } from 'src/app/states/shell/shell.state';
 import { MsjUtil } from 'src/app/utilities/messages.util';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { ClientesDTO } from 'src/app/dtos/productos/chance/clientes.dto';
+
 
 @Component({
   selector: 'app-buscar-cliente',
@@ -17,23 +18,25 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 export class BuscarClienteComponent extends CommonComponent implements OnInit, OnDestroy {
 
   // tslint:disable-next-line: no-output-native
-  @Output() closePopup: EventEmitter<any> = new EventEmitter();
-  @Output() createCustomer: EventEmitter<any> = new EventEmitter();
+  @Output() closeModalCliente: EventEmitter<any> = new EventEmitter();
+  @Output() closeModalClienteVerCreacion: EventEmitter<any> = new EventEmitter();
+  @Output() searchCustomer: EventEmitter<any> = new EventEmitter();
 
 
-  // validEmail = false;
+
+  enabledCustomer = false;
+  idCustomer = '';
+  nombreCliente = '';
+  private correoCustomer: string;
+
 
   clienteForm = new FormGroup({
-    tipoDocumento: new FormControl('', [Validators.required]),
-    numeroDocumento: new FormControl('', [Validators.required]),
-    primerNombre: new FormControl('', [Validators.required]),
-    segundoNombre: new FormControl(''),
-    primerApellido: new FormControl('', [Validators.required]),
-    segundoApellido: new FormControl(''),
-    correo: new FormControl('', [Validators.required, Validators.email]),
-    numeroCelular: new FormControl('', [Validators.required]),
-
+    tipoDocumento: new FormControl(''),
+    numeroDocumento: new FormControl(''),
+    nombreCliente: new FormControl(''),
   });
+
+
 
   constructor(
     private productosService: ProductosService,
@@ -54,77 +57,9 @@ export class BuscarClienteComponent extends CommonComponent implements OnInit, O
    * para que posteriormente cerrar el modal
    */
   closePopupE(): void {
-    this.closePopup.emit(false);
+    this.closeModalCliente.emit(false);
   }
 
-
-  /**
-   * @author Luis Hernandez
-   * @description Metodo que se encarga de validar
-   * si van los campos obligatorios para posteriormente
-   * pasar a crear el cliente
-   */
-  validCreateCustomerE(): void {
-    this.messageService.clear();
-    if (
-      this.clienteForm.get('tipoDocumento').valid &&
-      this.clienteForm.get('tipoDocumento').value !== 'option' &&
-      this.clienteForm.get('numeroDocumento').valid &&
-      this.clienteForm.get('primerNombre').valid &&
-      this.clienteForm.get('primerApellido').valid &&
-      this.clienteForm.get('numeroCelular').valid &&
-      this.clienteForm.get('correo').valid
-      ) {
-        const clientSend = {
-          tipoDocumento : this.clienteForm.get('tipoDocumento').value,
-          numeroDocumento: this.clienteForm.get('numeroDocumento').value,
-          primerNombre: this.clienteForm.get('primerNombre').value,
-          segundoNombre: this.clienteForm.get('segundoNombre').value,
-          primerApellido : this.clienteForm.get('primerApellido').value,
-          segundoApellido : this.clienteForm.get('segundoApellido').value,
-          celular : this.clienteForm.get('numeroCelular').value,
-          correo : this.clienteForm.get('correo').value,
-        };
-        this.createCustomerService(clientSend);
-    } else {
-      this.messageService.add(MsjUtil.getToastErrorMedium('Por favor diligenciar todos los campos'));
-    }
-  }
-
-
-  /**
-   * @author Luis Hernandez
-   * @param clientSend
-   * @description Metodo que se encarga de crear el cliente
-   */
-  createCustomerService(clientSend): void {
-
-    this.productosService.registrarCliente(clientSend).subscribe(
-      clienteData => {
-        const responseCliente: any = clienteData;
-        if (responseCliente.idPersona) {
-          this.messageService.add(MsjUtil.getToastSuccessMedium('Cliente Registrado'));
-          this.cleanInputs();
-          this.createCustomerE(responseCliente);
-        } else {
-          this.messageService.add(MsjUtil.getToastErrorMedium('Problemas al registrar el cliente'));
-        }
-      },
-      error => {
-        this.messageService.add(MsjUtil.getToastErrorMedium(this.showMensajeError(error)));
-      }
-    );
-  }
-
-
-  /**
-   * @author Luis Hernandez
-   * @param customer
-   * @description Metodo que se encarga de enviar el cliente que fue creado
-   */
-  createCustomerE(customer): void {
-    this.createCustomer.emit(customer);
-  }
 
 
   /**
@@ -133,47 +68,69 @@ export class BuscarClienteComponent extends CommonComponent implements OnInit, O
    * solo ingrese numeros en los campos donde se espera solo numeros
    * @param e
    */
-  keyPressNumber(e) {
+  permitirSoloNumeros(e) {
     const key = window.Event ? e.which : e.keyCode;
     e.key.replace(/\D|\-/, '');
     return (key >= 48 && key <= 57);
   }
 
 
+
   /**
    * @author Luis Hernandez
-   * @description Funcion que permite valida que el usuario
-   * solo ingrese letras en los campos donde se espera solo letras
-   * @param e
+   * @description Metodo que se encarga de validar si
+   * existe o no el cliente, si este no existe se
+   * levanta un popup para su posterior creación
    */
-  keyPressChart(e) {
-    const filtro = '1234567890'; // Caracteres invalidos
-    for (let i = 0; i < e.key.length; i++) {
-      console.log(filtro.indexOf(e.key.charAt(i)) === -1);
-      if (filtro.indexOf(e.key.charAt(i)) === -1) {
-        return true;
-      } else {
-        return false;
-      }
+  validExistClient(): void {
+
+    if (this.clienteForm.get('tipoDocumento').value && this.clienteForm.get('numeroDocumento').value) {
+      const clientesDTO: ClientesDTO = new ClientesDTO();
+      this.enabledCustomer = false;
+      this.clienteForm.controls.nombreCliente.setValue('');
+      clientesDTO.numeroDocumento = this.clienteForm.get('numeroDocumento').value;
+      clientesDTO.tipoDocumento = this.clienteForm.get('tipoDocumento').value;
+      this.productosService.clienteApuesta(clientesDTO).subscribe(
+        clienteData => {
+          const responseCliente: any = clienteData;
+          if (responseCliente.existe) {
+            const name = responseCliente.primerNombre + ' ' + responseCliente.segundoNombre + ' ' + responseCliente.primerApellido;
+            this.idCustomer = responseCliente.idCliente;
+            this.correoCustomer = responseCliente.correo;
+            this.nombreCliente = name;
+            this.clienteForm.controls.nombreCliente.setValue(name);
+            this.enabledCustomer = true;
+
+            // OJO FALTA DEFINIR ESTOOOOOOOOO
+            // this.emitirCliente(1);
+
+            let infoCliente = {
+              idCustomer: this.idCustomer,
+              correoCustomer: this.correoCustomer,
+              nombreCliente: this.nombreCliente,
+              emitirCliente: 1
+            }
+
+            this.searchCustomer.emit(infoCliente)
+          } else {
+            let infoCliente = {
+              tipoDocumento: this.clienteForm.get('tipoDocumento').value,
+              numeroDocumento: this.clienteForm.get('numeroDocumento').value,
+              emitirCliente: 2
+            }
+            this.closeModalClienteVerCreacion.emit(infoCliente)
+          }
+        },
+        error => {
+          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+        }
+      );
     }
+
   }
 
 
-  /**
-   * @author Luis Hernandez
-   * @description Metodo que se encarga de limpiar los campos
-   */
-  cleanInputs(): void {
-    this.clienteForm.get('tipoDocumento').setValue('');
-    this.clienteForm.get('numeroDocumento').setValue('');
-    this.clienteForm.get('primerNombre').setValue('');
-    this.clienteForm.get('segundoNombre').setValue('');
-    this.clienteForm.get('primerApellido').setValue('');
-    this.clienteForm.get('segundoApellido').setValue('');
-    this.clienteForm.get('correo').setValue('');
-    this.clienteForm.get('numeroCelular').setValue('');
-  }
-
+  
 
   /**
    * Se utiliza para limpiar los mensajes visualizados pantalla y titulos

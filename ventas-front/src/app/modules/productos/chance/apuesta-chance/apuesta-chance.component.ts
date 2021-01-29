@@ -6,7 +6,7 @@ import { MsjUtil } from 'src/app/utilities/messages.util';
 import { CommonComponent } from 'src/app/utilities/common.component';
 import { FechaUtil } from 'src/app/utilities/fecha-util';
 import { CommonService } from 'src/app/utilities/common.service';
-import { ClientesDTO } from 'src/app/dtos/productos/chance/clientes.dto';
+// import { ClientesDTO } from 'src/app/dtos/productos/chance/clientes.dto';
 import { CrearClienteComponent } from '../../genericos/crear-cliente/crear-cliente.component';
 import * as moment from 'moment';
 import { CurrencyPipe } from '@angular/common';
@@ -39,6 +39,10 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
   @ViewChild(CrearClienteComponent) crearClienteChild: CrearClienteComponent;
 
   pCalendarioValor: Date;
+
+  // displayModalBuscarCliente = true;
+  displayModalBuscarCliente = false;
+
 
   /** Es el correo del cliente quien hace la compra */
   private correoCustomer: string;
@@ -957,6 +961,7 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
       {numeroFilaCuatro: this.chanceForm.get('numeroFilaCuatro').value},
       {numeroFilaCinco: this.chanceForm.get('numeroFilaCinco').value}
     ]
+
     if(this.chanceForm.get('valorDirectoFilaUno').value){
       numerosValores[0].valorDirectoFilaUno = this.chanceForm.get('valorDirectoFilaUno').value.replace(/[^a-zA-Z 0-9.]+/g,'')
     }
@@ -969,53 +974,68 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
     if(this.chanceForm.get('unaCifraFilaUno').value){
       numerosValores[0].unaCifraFilaUno = this.chanceForm.get('unaCifraFilaUno').value.replace(/[^a-zA-Z 0-9.]+/g,'')
     }
+
+
     if(this.chanceForm.get('valorDirectoFilaDos').value){
-      numerosValores[0].valorDirectoFilaDos = this.chanceForm.get('valorDirectoFilaDos').value.replace(/[^a-zA-Z 0-9.]+/g,'')
+      numerosValores[1].valorDirectoFilaDos = this.chanceForm.get('valorDirectoFilaDos').value.replace(/[^a-zA-Z 0-9.]+/g,'')
     }
     if(this.chanceForm.get('combinadoFilaDos').value){
-      numerosValores[0].combinadoFilaDos = this.chanceForm.get('combinadoFilaDos').value.replace(/[^a-zA-Z 0-9.]+/g,'')
+      numerosValores[1].combinadoFilaDos = this.chanceForm.get('combinadoFilaDos').value.replace(/[^a-zA-Z 0-9.]+/g,'')
     }
     if(this.chanceForm.get('dosCifrasFilaDos').value){
-      numerosValores[0].dosCifrasFilaDos = this.chanceForm.get('dosCifrasFilaDos').value.replace(/[^a-zA-Z 0-9.]+/g,'')
+      numerosValores[1].dosCifrasFilaDos = this.chanceForm.get('dosCifrasFilaDos').value.replace(/[^a-zA-Z 0-9.]+/g,'')
     }
     if(this.chanceForm.get('unaCifraFilaDos').value){
-      numerosValores[0].unaCifraFilaDos = this.chanceForm.get('unaCifraFilaDos').value.replace(/[^a-zA-Z 0-9.]+/g,'')
+      numerosValores[1].unaCifraFilaDos = this.chanceForm.get('unaCifraFilaDos').value.replace(/[^a-zA-Z 0-9.]+/g,'')
     }
+
+
+
+
+
+
     if(this.chanceForm.get('valorDirectoFilaTres').value){
-      numerosValores[0].valorDirectoFilaTres = this.chanceForm.get('valorDirectoFilaTres').value.replace(/[^a-zA-Z 0-9.]+/g,'')
+      numerosValores[2].valorDirectoFilaTres = this.chanceForm.get('valorDirectoFilaTres').value.replace(/[^a-zA-Z 0-9.]+/g,'')
     }
     if(this.chanceForm.get('combinadoFilaTres').value){
-      numerosValores[0].combinadoFilaTres = this.chanceForm.get('combinadoFilaTres').value.replace(/[^a-zA-Z 0-9.]+/g,'')
+      numerosValores[2].combinadoFilaTres = this.chanceForm.get('combinadoFilaTres').value.replace(/[^a-zA-Z 0-9.]+/g,'')
     }
     if(this.chanceForm.get('dosCifrasFilaTres').value){
-      numerosValores[0].dosCifrasFilaDos = this.chanceForm.get('dosCifrasFilaTres').value.replace(/[^a-zA-Z 0-9.]+/g,'')
+      numerosValores[2].dosCifrasFilaDos = this.chanceForm.get('dosCifrasFilaTres').value.replace(/[^a-zA-Z 0-9.]+/g,'')
     }
     if(this.chanceForm.get('unaCifraFilaTres').value){
-      numerosValores[0].unaCifraFilaTres = this.chanceForm.get('unaCifraFilaTres').value.replace(/[^a-zA-Z 0-9.]+/g,'')
+      numerosValores[2].unaCifraFilaTres = this.chanceForm.get('unaCifraFilaTres').value.replace(/[^a-zA-Z 0-9.]+/g,'')
     }
+
+
+
     if(this.chanceForm.get('valorDirectoFilaCuatro').value){
-      numerosValores[0].valorDirectoFilaCuatro = this.chanceForm.get('valorDirectoFilaCuatro').value.replace(/[^a-zA-Z 0-9.]+/g,'')
+      numerosValores[3].valorDirectoFilaCuatro = this.chanceForm.get('valorDirectoFilaCuatro').value.replace(/[^a-zA-Z 0-9.]+/g,'')
     }
     if(this.chanceForm.get('combinadoFilaCuatro').value){
-      numerosValores[0].combinadoFilaCuatro = this.chanceForm.get('combinadoFilaCuatro').value.replace(/[^a-zA-Z 0-9.]+/g,'')
+      numerosValores[3].combinadoFilaCuatro = this.chanceForm.get('combinadoFilaCuatro').value.replace(/[^a-zA-Z 0-9.]+/g,'')
     }
     if(this.chanceForm.get('dosCifrasFilaCuatro').value){
-      numerosValores[0].dosCifrasFilaDos = this.chanceForm.get('dosCifrasFilaCuatro').value.replace(/[^a-zA-Z 0-9.]+/g,'')
+      numerosValores[3].dosCifrasFilaDos = this.chanceForm.get('dosCifrasFilaCuatro').value.replace(/[^a-zA-Z 0-9.]+/g,'')
     }
     if(this.chanceForm.get('unaCifraFilaCuatro').value){
-      numerosValores[0].unaCifraFilaCuatro = this.chanceForm.get('unaCifraFilaCuatro').value.replace(/[^a-zA-Z 0-9.]+/g,'')
+      numerosValores[3].unaCifraFilaCuatro = this.chanceForm.get('unaCifraFilaCuatro').value.replace(/[^a-zA-Z 0-9.]+/g,'')
     }
+
+
+
+
     if(this.chanceForm.get('valorDirectoFilaCinco').value){
-      numerosValores[0].valorDirectoFilaCinco = this.chanceForm.get('valorDirectoFilaCinco').value.replace(/[^a-zA-Z 0-9.]+/g,'')
+      numerosValores[4].valorDirectoFilaCinco = this.chanceForm.get('valorDirectoFilaCinco').value.replace(/[^a-zA-Z 0-9.]+/g,'')
     }
     if(this.chanceForm.get('combinadoFilaCinco').value){
-      numerosValores[0].combinadoFilaCinco = this.chanceForm.get('combinadoFilaCinco').value.replace(/[^a-zA-Z 0-9.]+/g,'')
+      numerosValores[4].combinadoFilaCinco = this.chanceForm.get('combinadoFilaCinco').value.replace(/[^a-zA-Z 0-9.]+/g,'')
     }
     if(this.chanceForm.get('dosCifrasFilaCinco').value){
-      numerosValores[0].dosCifrasFilaDos = this.chanceForm.get('dosCifrasFilaCinco').value.replace(/[^a-zA-Z 0-9.]+/g,'')
+      numerosValores[4].dosCifrasFilaDos = this.chanceForm.get('dosCifrasFilaCinco').value.replace(/[^a-zA-Z 0-9.]+/g,'')
     }
     if(this.chanceForm.get('unaCifraFilaCinco').value){
-      numerosValores[0].unaCifraFilaCinco = this.chanceForm.get('unaCifraFilaCinco').value.replace(/[^a-zA-Z 0-9.]+/g,'')
+      numerosValores[4].unaCifraFilaCinco = this.chanceForm.get('unaCifraFilaCinco').value.replace(/[^a-zA-Z 0-9.]+/g,'')
     }
     this.agregarNumeros.emit(numerosValores);
   }
@@ -1056,38 +1076,38 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
    * existe o no el cliente, si este no existe se
    * levanta un popup para su posterior creación
    */
-  validExistClient(): void {
+  // validExistClient(): void {
 
-    if (this.chanceForm.get('tipoDocumento').value && this.chanceForm.get('numeroDocumento').value) {
-      const clientesDTO: ClientesDTO = new ClientesDTO();
-      this.enabledCustomer = false;
-      this.chanceForm.controls.nombreCliente.setValue('');
-      clientesDTO.numeroDocumento = this.chanceForm.get('numeroDocumento').value;
-      clientesDTO.tipoDocumento = this.chanceForm.get('tipoDocumento').value;
-      this.productosService.clienteApuesta(clientesDTO).subscribe(
-        clienteData => {
-          const responseCliente: any = clienteData;
-          if (responseCliente.existe) {
-            const name = responseCliente.primerNombre + ' ' + responseCliente.segundoNombre + ' ' + responseCliente.primerApellido;
-            this.idCustomer = responseCliente.idCliente;
-            this.correoCustomer = responseCliente.correo;
-            this.chanceForm.controls.nombreCliente.setValue(name);
-            this.enabledCustomer = true;
-            this.emitirCliente(1);
-          } else {
-            this.crearClienteChild.clienteForm.get('tipoDocumento').setValue(this.chanceForm.get('tipoDocumento').value);
-            this.crearClienteChild.clienteForm.get('numeroDocumento').setValue(this.chanceForm.get('numeroDocumento').value);
-            this.displayModalCreate = true;
-            this.emitirCliente(2);
-          }
-        },
-        error => {
-          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
-        }
-      );
-    }
+  //   if (this.chanceForm.get('tipoDocumento').value && this.chanceForm.get('numeroDocumento').value) {
+  //     const clientesDTO: ClientesDTO = new ClientesDTO();
+  //     this.enabledCustomer = false;
+  //     this.chanceForm.controls.nombreCliente.setValue('');
+  //     clientesDTO.numeroDocumento = this.chanceForm.get('numeroDocumento').value;
+  //     clientesDTO.tipoDocumento = this.chanceForm.get('tipoDocumento').value;
+  //     this.productosService.clienteApuesta(clientesDTO).subscribe(
+  //       clienteData => {
+  //         const responseCliente: any = clienteData;
+  //         if (responseCliente.existe) {
+  //           const name = responseCliente.primerNombre + ' ' + responseCliente.segundoNombre + ' ' + responseCliente.primerApellido;
+  //           this.idCustomer = responseCliente.idCliente;
+  //           this.correoCustomer = responseCliente.correo;
+  //           this.chanceForm.controls.nombreCliente.setValue(name);
+  //           this.enabledCustomer = true;
+  //           this.emitirCliente(1);
+  //         } else {
+  //           this.crearClienteChild.clienteForm.get('tipoDocumento').setValue(this.chanceForm.get('tipoDocumento').value);
+  //           this.crearClienteChild.clienteForm.get('numeroDocumento').setValue(this.chanceForm.get('numeroDocumento').value);
+  //           this.displayModalCreate = true;
+  //           this.emitirCliente(2);
+  //         }
+  //       },
+  //       error => {
+  //         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+  //       }
+  //     );
+  //   }
 
-  }
+  // }
 
 
   emitirCliente(event) {
@@ -1116,6 +1136,40 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
    */
   closeModal(event): void {
     this.displayModalCreate = event;
+  }
+
+
+  /**
+   * @author Luis Hernandez
+   * @param event
+   * @description Metodo que se encarga de
+   * recibir el false que emite el componente
+   * que contiene el html del fomulario de
+   * buscar cliente
+   */
+  closeModalCliente(event): void {
+    this.displayModalBuscarCliente = event;
+  }
+
+
+  closeModalClienteVerCreacion(event): void {
+
+    this.crearClienteChild.clienteForm.get('tipoDocumento').setValue(event.tipoDocumento);
+    this.crearClienteChild.clienteForm.get('numeroDocumento').setValue(event.numeroDocumento);
+    this.displayModalBuscarCliente = false;
+    this.displayModalCreate = true;
+    this.emitirCliente(event.emitirCliente);
+
+  }
+
+  searchCustomer(event): void {
+
+    this.idCustomer = event.idCustomer;
+    this.correoCustomer = event.correoCustomer;
+    this.chanceForm.controls.nombreCliente.setValue(event.nombreCliente);
+    this.displayModalBuscarCliente = false;
+    // this.enabledCustomer = true;
+    this.emitirCliente(event.emitirCliente);
   }
 
 
