@@ -17,4 +17,10 @@ export class UsuarioDTO {
 
     /** Es el segundo apellido del usuario */
     public segundoApellido: string;
+
+    /** Oficina a la pertenece el usuario */
+    public idOficina: number;
+
+    /** Punto de venta al que pertenece el usuario */
+    public idPuntoVenta: number;
 }
