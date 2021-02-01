@@ -2,10 +2,14 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { SummaryFooterComponent } from './summary-footer/summary-footer.component';
 import { ApuestaChanceComponent } from './apuesta-chance/apuesta-chance.component';
 import { MenuCarritoComponent } from '../genericos/menu-carrito/menu-carrito.component';
+import { ProductosService } from '../productos.service';
+
 @Component({
   selector: 'app-chance',
   templateUrl: './chance.component.html',
-  styleUrls: ['./chance.component.css']
+  styleUrls: ['./chance.component.css'],
+  providers: [ProductosService]
+
 })
 export class ChanceComponent implements OnInit {
 
@@ -14,7 +18,7 @@ export class ChanceComponent implements OnInit {
   @ViewChild(ApuestaChanceComponent) apuestaChance: ApuestaChanceComponent;
   @ViewChild(MenuCarritoComponent, {static: true}) menuCarrito: MenuCarritoComponent;
 
-  constructor() {
+  constructor(private productosService: ProductosService) {
 
    }
 
@@ -66,5 +70,7 @@ export class ChanceComponent implements OnInit {
     this.summaryFooter.editarProducto(event)
     this.apuestaChance.editarProducto(event)
   }
+
+
 
 }

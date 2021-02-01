@@ -237,7 +237,7 @@ export class BolsaRecargasComponent extends CommonComponent implements OnInit, O
           this.creatingBet.emit(true);
 
         } else {
-          this.messageService.add(MsjUtil.getMsjError('Problemas con la transacción'));
+          this.messageService.add(MsjUtil.getMsjError(responseApuesta.mensaje));
         }
       },
       error => {

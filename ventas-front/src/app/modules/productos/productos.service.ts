@@ -169,4 +169,12 @@ export class ProductosService {
     );
   }
 
+  public consultarProgramacion(idUsuario): Observable<boolean> {
+    return this.http.post<boolean>(
+      ProductosAPIConstant.URL_EXISTE_PROGRAMACION,
+      idUsuario
+    );
+  }
+
+
 }
