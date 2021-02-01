@@ -5,6 +5,13 @@
     <span class="miga-modulo">{{shellState.breadCrumb.modulo}}</span>
     <span class="miga-url">{{shellState.breadCrumb.url}}</span>
 
+    <div class="infoCliente" *ngIf="verCarrito">
+      <img class="img-class" src="../../../../../assets/img/svg/userT.svg" />
+      <span class="text-cliente" *ngIf="clienteOperacion && clienteOperacion.nombreCliente">{{clienteOperacion.nombreCliente}}</span>
+      <span class="text-cliente" *ngIf="!clienteOperacion || !clienteOperacion.nombreCliente">Desconocido</span>
+      <i class="fa fa-plus-circle float-right" *ngIf="!clienteOperacion || !clienteOperacion.nombreCliente" (click)="agregarCliente()" aria-hidden="true"></i>
+    </div>
+    <i class="fa fa-trash tras-del" aria-hidden="true" *ngIf="verCarrito && clienteOperacion && clienteOperacion.nombreCliente" (click)="eliminarCliente()"></i>
     <ul class="navbar-nav ml-auto nav-flex-icons inline-li" *ngIf="verCarrito">
       <li class="nav-item inline-li">
         <i class="fa fa-clock-o icon fecha-carrito"></i>

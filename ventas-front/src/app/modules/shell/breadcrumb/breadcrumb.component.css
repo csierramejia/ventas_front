@@ -83,3 +83,34 @@
 .fa-stack{
   height: 1em;
 }
+
+.infoCliente {
+  margin-left: auto !important;
+  width: 300px;
+  height: 30px;
+  background: #2076BD 0% 0% no-repeat padding-box;
+  border-radius: 31px;
+}
+
+.fa-plus-circle {
+  color: #ffff;
+  font-size: 18px;
+  padding: 6px;
+  cursor: pointer;
+}
+
+.img-class{
+  padding: 6px;
+}
+
+
+.text-cliente{
+  font: normal normal 600 14px Montserrat;
+  color: #FFFFFF;
+}
+
+.tras-del{
+  color: red;
+  font-size: 25px;
+  cursor: pointer;
+}

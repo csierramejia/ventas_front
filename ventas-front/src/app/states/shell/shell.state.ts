@@ -13,12 +13,24 @@ import { AutenticacionResponseDTO } from 'src/app/dtos/seguridad/autenticacion/a
 import { VentanaModalModel } from 'src/app/model-component/ventana-modal.model';
 import { SessionStoreUtil } from 'src/app/utilities/session-store.util';
 import { TipoEventoConstant } from 'src/app/constants/tipo-evento.constant';
+import { Observable, Subject } from "rxjs";
 
 /**
  * Se utiliza para administrar el estado del Shell de la aplicacion
  */
 @Injectable({ providedIn: 'root' })
 export class ShellState {
+
+  /**----------- LUIS FERNANDO HERNANDEZ CALDERON---------- */
+  private subject = new Subject<any>();
+
+  /**----------- LUIS FERNANDO HERNANDEZ CALDERON---------- */
+  private subjectDelete = new Subject<any>();
+
+
+  /**----------- LUIS FERNANDO HERNANDEZ CALDERON---------- */
+  private subjectAgregar = new Subject<any>();
+
 
   /** Administra el estado de la pantalla del dispositivo */
   public screen: ScreenST;
@@ -51,6 +63,8 @@ export class ShellState {
     private idle: Idle,
     private keepalive: Keepalive, ) {
 
+    // this.addUsuario$.subscribe(status => window.localStorage.setItem('addUsuario', status)); 
+
     // Estado para notificar el tamanio de la pantalla
     this.screen = new ScreenST();
 
@@ -69,6 +83,45 @@ export class ShellState {
     // Se inicia el time out si existe una autenticacion
     this.initTimeOut();
   }
+
+
+  /* evento que se encarga de notificar al
+   * observable de que han seleccionado un 
+   * nuevo cliente*/
+  enviarEventoCliente(event) {
+    this.subject.next(event);
+  }
+
+
+  /* evento que se encarga de notificar al
+   * observable de que ha eliminado un 
+   * cliente*/
+  borrarEventoCliente(event) {
+    this.subjectDelete.next(event);
+  }
+
+
+  /* evento que se encarga de notificar al
+   * observable de que ha eliminado un 
+   * cliente*/
+  agregarEventoCliente(event) {
+    this.subjectAgregar.next(event);
+  }
+
+
+  getEventoClienteAgregar(): Observable<any> {
+    return this.subjectAgregar.asObservable();
+  }
+
+  getEventoCliente(): Observable<any> {
+    return this.subject.asObservable();
+  }
+
+
+  getEventoClienteBorrar(): Observable<any> {
+    return this.subjectDelete.asObservable();
+  }
+  /**--------------LUIS FERNANDO HERNANDEZ------------- */
 
   /**
    *

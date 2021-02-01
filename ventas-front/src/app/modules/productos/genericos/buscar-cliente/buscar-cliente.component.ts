@@ -61,6 +61,20 @@ export class BuscarClienteComponent extends CommonComponent implements OnInit, O
   }
 
 
+  aceptarPopupE(): void {
+    let infoCliente = {
+      idCustomer: this.idCustomer,
+      correoCustomer: this.correoCustomer,
+      nombreCliente: this.nombreCliente,
+      numeroDocumento: this.clienteForm.get('numeroDocumento').value,
+      tipoDocumento: this.clienteForm.get('tipoDocumento').value,
+      emitirCliente: 1
+    }
+
+    this.searchCustomer.emit(infoCliente)
+  }
+
+
 
   /**
    * @author Luis Hernandez
@@ -104,14 +118,7 @@ export class BuscarClienteComponent extends CommonComponent implements OnInit, O
             // OJO FALTA DEFINIR ESTOOOOOOOOO
             // this.emitirCliente(1);
 
-            let infoCliente = {
-              idCustomer: this.idCustomer,
-              correoCustomer: this.correoCustomer,
-              nombreCliente: this.nombreCliente,
-              emitirCliente: 1
-            }
-
-            this.searchCustomer.emit(infoCliente)
+            
           } else {
             let infoCliente = {
               tipoDocumento: this.clienteForm.get('tipoDocumento').value,
