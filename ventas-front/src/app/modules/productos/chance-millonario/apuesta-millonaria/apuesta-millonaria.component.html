@@ -1,255 +1,162 @@
-<div class="container-fluid">
-    <div class="row calendarRow">
-        <div class="col-md-6">
-            <label class="numeroserie">Número de serie {{numeroSerie}}</label><br>
-        </div>
-        <div class="col-md-6">
-            <p class="clock-icon">
-                <label class="diaActual">{{ fechaMostrar | date: 'dd/MM/yyyy HH:mm:ss'}}</label>
-            </p>
-        </div>
-    </div>
-    <div class="row calendarRow">
-        <div class="col-md-7">
-            <label class="betDayDate">Seleccione el día del sorteo</label><br>
-            <span class="badge badge-secondary chipOptionDay" *ngFor="let day of days" [id]="day.name"
-                (click)="get_date_bet(day)">
-                {{day.text}}
-            </span>
-        </div>
-        <div class="col-md-5 calendarDate" *ngIf="dayBet">
-            <p class="calendar-icon">
-                <label class="dayBet">Día del sorteo {{ dayBet | date: 'dd/MM/yyyy'}}</label>
-            </p>
-        </div>
-    </div>
-</div>
-
-
-
-<form [formGroup]="chanceForm">
-    <div class="card cardBet">
-        <div class="card-header titleBetCard">
-            <a data-toggle="collapse" href="#collapse-example2" aria-expanded="true" aria-controls="collapse-example2"
-                id="heading-example2" class="d-block">
-                Juego
-                <i class="fa fa-chevron-down"></i>
-            </a>
-        </div>
-
-
-        <div id="collapse-example2" class="collapse show" aria-labelledby="heading-example2">
-            <div class="card-body">
-                <div class="container-fluid">
-
-                    <div class="row">
-                        <div class="row col-md-5">
-                        <div class="col-md-6">
-                            <label class="col-form-label">Modalidad</label>
-                            <div class="form-check">
-                                <label class="form-check-label" style="padding-right: 8px;" for="radioUno">3
-                                    Cifras</label>
-                                <input formControlName="radioUno" (change)="seleccion(3)" type="radio" name="radioUno"
-                                    class="radioAzul radiomodal" [value]="3">
-
-                            </div>
-                        </div>
-                        <div class="col-md-6" style="top: 35px;left: -15px;">
-                            <div class="form-check">
-                                <label class="form-check-label" style="padding-right: 8px;" for="radioUno">4
-                                    Cifras</label>
-                                <input (change)="seleccion(4)" class="radioAzul radiomodal" formControlName="radioUno"
-                                    type="radio" name="radioUno" [value]="4">
-
-                            </div>
-                        </div>
-                    </div>
-                        <div class="col-md-3">
-                            <label class="titleInput" for="identificacion">Tipo Identificación</label>
-                            <div class="form-group">
-                                <select (change)="validExistClient()" formControlName="tipoDocumento"
-                                    class="form-control typeIdentification">
-                                    <option value="CC">CC</option>
-                                    <option value="TI">TI</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <label class="titleInput" for="identificacion">Identificación</label>
-                            <div class="form-group has-feedback">
-                                <i class="fa fa-user form-control-feedback"></i>
-                                <input type="text" (keypress)="keyPressNumber($event)" (change)="validExistClient()" formControlName="numeroDocumento" class="form-control styleInput" placeholder="Cedula">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 padColLable" *ngIf="enabledCustomer">
-                            <div class="form-group has-feedback elemClient">
-                                <i class="fa fa-check-square inputSuccess"></i>
-                                <input type="text" class="form-control styleInputClient" formControlName="nombreCliente"
-                                    placeholder="Cliente">
-                            </div>
-                        </div>
-                    </div>
-
-                    <hr>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <label class="titleInput" for="aleatorio">JUEGO AUTOMATICO</label>
-                            <div class="form-group has-feedback">
-                                <button (click)="generar()" type="button" class="btn btn-random botonesApuesta">
-                                    GENERAR <i class="fa fa-random" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="form-group has-feedback">
-                                <button (click)="limpiar()" type="button" class="btn btn-random botonesApuesta">
-                                    LIMPIAR <i class="fa fa-trash" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <label class="titleInput" for="aleatorio">NÚMEROS A JUGAR</label>
-                            <div class="form-group has-feedback" style="display: -webkit-box">
-                                <input type="text" minlength="3" maxlength="4" (keypress)="keyPressNumber($event)"
-                                    formControlName="numeroA" class="form-control styleInput">
-                                <div class="input-group-append">
-                                    <a style="margin-left: 5px" (click)="generrarA()">
-                                        <i class="fa fa-random aleatorio" aria-hidden="true"></i>
-                                    </a>
-                                    <a style="margin-left: 5px" (click)="limpiarA()">
-                                        <i class="fa fa-trash papelera" aria-hidden="true"></i>
-                                    </a>
-                                </div>
-                            </div>
-
-                            <div class="form-group has-feedback" style="display: -webkit-box">
-                                <input type="text" minlength="3" maxlength="4" (keypress)="keyPressNumber($event)"
-                                    formControlName="numeroB" class="form-control styleInput">
-                                <div class="input-group-append">
-                                    <a style="margin-left: 5px" (click)="generrarB()">
-                                        <i class="fa fa-random aleatorio" aria-hidden="true"></i>
-                                    </a>
-                                    <a style="margin-left: 5px" (click)="limpiarB()">
-                                        <i class="fa fa-trash papelera" aria-hidden="true"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="form-group has-feedback" style="display: -webkit-box">
-                                <input type="text" minlength="3" maxlength="4" (keypress)="keyPressNumber($event)"
-                                    formControlName="numeroC" class="form-control styleInput">
-                                <div class="input-group-append">
-                                    <a style="margin-left: 5px" (click)="generrarC()">
-                                        <i class="fa fa-random aleatorio" aria-hidden="true"></i>
-                                    </a>
-                                    <a style="margin-left: 5px" (click)="limpiarC()">
-                                        <i class="fa fa-trash papelera" aria-hidden="true"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="form-group has-feedback" style="display: -webkit-box">
-                                <input type="text" minlength="3" maxlength="4" (keypress)="keyPressNumber($event)"
-                                    formControlName="numeroD" class="form-control styleInput">
-                                <div class="input-group-append">
-                                    <a style="margin-left: 5px" (click)="generrarD()">
-                                        <i class="fa fa-random aleatorio" aria-hidden="true"></i>
-                                    </a>
-                                    <a style="margin-left: 5px" (click)="limpiarD()">
-                                        <i class="fa fa-trash papelera" aria-hidden="true"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="form-group has-feedback" style="display: -webkit-box">
-                                <input type="text" minlength="3" maxlength="4" (keypress)="keyPressNumber($event)"
-                                    formControlName="numeroE" class="form-control styleInput">
-                                <div class="input-group-append">
-                                    <a style="margin-left: 5px" (click)="generrarE()">
-                                        <i class="fa fa-random aleatorio" aria-hidden="true"></i>
-                                    </a>
-                                    <a style="margin-left: 5px" (click)="limpiarE()">
-                                        <i class="fa fa-trash papelera" aria-hidden="true"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-5 px-5">
-                            <label class="titleValores" for="aleatorio">CHANCE MILLONARIO</label>
-                            <div *ngFor="let enum of valoresModalidades">
-                                <label for="valorApostado">
-                                    <input [value]='enum' class="radioAzul" type="radio" name="valorApostado"
-                                        formControlName="valorApostado">
-                                    {{enum  | currency}}
-                                </label>
-                            </div>
-
-
-
-                        </div>
-                    </div>
-
-
-                    <hr>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-
-</form>
-
-
-
-<div class="card">
-    <div class="card-header titleBetCard">
-        <a data-toggle="collapse" href="#collapse-example" aria-expanded="true" aria-controls="collapse-example"
-            id="heading-example" class="d-block">
-            Seleccionar Loterias
-            <i class="fa fa-chevron-down"></i>
-
-        </a>
-    </div>
-
-
-    <div id="collapse-example" class="collapse show" aria-labelledby="heading-example">
-        <div class="card-body">
+      
             <div class="container-fluid">
+                <!-- ABRE SEMANARIO Y BOTONES HEADER -->
                 <div class="row">
-                    <div class="col-md-2" class="colLot" *ngFor="let loteria of loterias">
-                        <input type="checkbox" (click)="toggleVisibility(loteria)" [(ngModel)]="loteria.checked" />
-                        <label class="labelloteria">{{loteria.nombre}}</label>
-                        <br>
-                        <img class="loteriastamanio" [src]="loteria.url" />
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <span class="hea-titles">Seleccione el día del sorteo</span>
+                        <hr/>
+                        <span 
+                            class="badge badge-secondary chipOptionDay" 
+                            *ngFor="let day of days"
+                            [id]="day.name"
+                            (click)="get_date_bet(day)">
+                            {{day.text}}
+                        </span>
+                        <p-calendar
+                            [locale]="lengEspanol"
+                            [(ngModel)]="pCalendarioValor"
+                            [inputStyle]="{'width':'142px', 'height':'40px', 'padding-left':'20px','background':'url(../../../../../assets/img/svg/calendar-blue.svg) 100px 3px no-repeat #ffff', 'box-shadow':'0px 3px 6px #149DB77A', 'border-radius':'25px'}"
+                            (onSelect)="obtenerFechaCalendario(pCalendarioValor)"
+                            class="calendar-control"
+                            placeholder="Otro día"
+                            showOn="button"
+                            [readonlyInput]="true"
+                            yearRange="2020:2021"
+                            [monthNavigator]="true"
+                            [yearNavigator]="true"
+                            dateFormat="yy-mm-dd"
+                            [showIcon]="false">
+                        </p-calendar>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <span class="hea-titles">Juego Automático</span>
+                        <hr/>
+                        <img class="img-aletorio" (click)="aleatorioTresCifras()" src="../../../../../assets/img/svg/Grupo_299.svg" />
+                        <img class="img-aletorio" (click)="aleatorioCuatroCifras()" src="../../../../../assets/img/svg/Grupo_300.svg" />
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <span class="hea-titles">Ultima Apuesta</span>
+                        <hr/>
+                        <button (click)="repetir()" type="button" class="btn btn-random">
+                            REPETIR <i class="fa fa-repeat" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                        <button (click)="borrarTodo(1)" type="button" class="btn btn-random-red">
+                            BORRAR TODO
+                        </button>
                     </div>
                 </div>
+                <!-- / CIERRA SEMANARIO Y BOTONES HEADER -->
+    
+                <!-- ABRE SELECCION DE LOTERIAS Y NUMEROS QUE APUESTAN -->
+                <div id="content-bet" class="row">
+                    <div class="col-md-5" style="position: static;">
+                        <span class="title-lot-bet">Loterias del día</span>
+                        <div id="content-lot">
+                            <div class="row select-all-a">
+                                <div class="col-md-6"></div>
+                                <div class="col-md-6" *ngIf="loterias.length > 0">
+                                    <span (click)="cambioSeleccion(1)" class="title-lot-bet">Seleccionar todas</span>
+                                    <p-inputSwitch (click)="cambioSeleccion(2)" [(ngModel)]="checked"></p-inputSwitch>
+                                </div>
+    
+    
+                                <div class="container-fluid">
+                                    <div id="fila-loteiras" class="row">
+                                        <div class="col-md-4" style="position: static;" *ngFor="let loteria of loterias">
+                                            <!-- <p-checkbox (onChange)="toggleVisibility(loteria)" [formControl]="loteria.checked"></p-checkbox>
+                                            <label class="labelloteria">{{loteria.nombreCorto}}</label> -->
+                                            <input (mouseenter)="op1.toggle($event)" (mouseleave)="op1.toggle($event)" type="checkbox"(click)="toggleVisibility(loteria)" [(ngModel)]="loteria.checked"/>
+                                            <label (mouseenter)="op1.toggle($event)" (mouseleave)="op1.toggle($event)" class="labelloteria" (click)="toggleVisibility(loteria)">{{loteria.nombreCorto}}</label>
+                                            <p-overlayPanel #op1>
+                                                <img [src]="loteria.url" style="width: 60px;" alt="Galleria 1" />
+                                            </p-overlayPanel>
+                                        </div>
+                                    </div>
+                                </div>
+    
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-7">
+                        <div class="row fls">
+                            <div class="col-md-2"><span class="title-lot-bet">Número</span></div>
+                            <div class="col-md-2"><span class="title-lot-bet">Directo</span></div>
+                            <div class="col-md-2"><span class="title-lot-bet">Combinado</span></div>
+                            <div class="col-md-2"><span class="title-lot-bet">2 Cifras</span></div>
+                            <div class="col-md-2"><span class="title-lot-bet">1 Cifras</span></div>
+                            <div class="col-md-2"></div>
+                        </div>
+                        <form [formGroup]="chanceForm"> 
+                        <div class="row fls">
+                            <div class="col-md-2"><input id="numeroFilaUno" (focus)="onFocus(1)" autocomplete="off" formControlName="numeroFilaUno" type="text" maxlength="4"  (keypress)="permitirSoloNumeros($event)" (change)="habilitarDeshabilitarSegunCifras($event.target.value, 1)" class="input-bet"></div>
+                            <div class="col-md-2"><input id="valorDirectoFilaUno" maxlength="6" (blur)="transformAmount(1)" autocomplete="off" formControlName="valorDirectoFilaUno" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input id="combinadoFilaUno" maxlength="6" (blur)="transformAmount(2)" autocomplete="off" formControlName="combinadoFilaUno" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input id="dosCifrasFilaUno" maxlength="6" (blur)="transformAmount(3)" autocomplete="off" formControlName="dosCifrasFilaUno" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input id="unaCifraFilaUno" maxlength="6" (blur)="transformAmount(4)" autocomplete="off" formControlName="unaCifraFilaUno" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><i (click)="borrarFilaUno()"  class="fa fa-trash tras-del" aria-hidden="true"></i></div>
+                        </div>
+                        <div class="row fls">
+                            <div class="col-md-2"><input id="numeroFilaDos" (focus)="onFocus(2)" autocomplete="off" formControlName="numeroFilaDos" type="text" maxlength="4" (keypress)="permitirSoloNumeros($event)" (change)="habilitarDeshabilitarSegunCifras($event.target.value, 2)" class="input-bet"></div>
+                            <div class="col-md-2"><input id="valorDirectoFilaDos" maxlength="6" autocomplete="off" (blur)="transformAmount(5)" formControlName="valorDirectoFilaDos" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input id="combinadoFilaDos" maxlength="6" autocomplete="off" (blur)="transformAmount(6)" formControlName="combinadoFilaDos" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input id="dosCifrasFilaDos" maxlength="6" autocomplete="off" (blur)="transformAmount(7)" formControlName="dosCifrasFilaDos" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input id="unaCifraFilaDos" maxlength="6" autocomplete="off" (blur)="transformAmount(8)" formControlName="unaCifraFilaDos" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><i (click)="borrarFilaDos()" class="fa fa-trash tras-del" aria-hidden="true"></i></div>
+                        </div>
+                        <div class="row fls">
+                            <div class="col-md-2"><input id="numeroFilaTres" (focus)="onFocus(3)" autocomplete="off" formControlName="numeroFilaTres" type="text" maxlength="4"  (keypress)="permitirSoloNumeros($event)" (change)="habilitarDeshabilitarSegunCifras($event.target.value, 3)" class="input-bet"></div>
+                            <div class="col-md-2"><input id="valorDirectoFilaTres" maxlength="6" autocomplete="off" (blur)="transformAmount(9)" formControlName="valorDirectoFilaTres" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input id="combinadoFilaTres" maxlength="6" autocomplete="off" (blur)="transformAmount(10)" formControlName="combinadoFilaTres" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input id="dosCifrasFilaTres" maxlength="6" autocomplete="off" (blur)="transformAmount(11)" formControlName="dosCifrasFilaTres" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input id="unaCifraFilaTres" maxlength="6" autocomplete="off" (blur)="transformAmount(12)" formControlName="unaCifraFilaTres" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><i (click)="borrarFilaTres()" class="fa fa-trash tras-del" aria-hidden="true"></i></div>
+                        </div>
+                        <div class="row fls">
+                            <div class="col-md-2"><input id="numeroFilaCuatro" (focus)="onFocus(4)" autocomplete="off" formControlName="numeroFilaCuatro" type="text" maxlength="4" (keypress)="permitirSoloNumeros($event)" (change)="habilitarDeshabilitarSegunCifras($event.target.value, 4)" class="input-bet"></div>
+                            <div class="col-md-2"><input id="valorDirectoFilaCuatro" maxlength="6" autocomplete="off" (blur)="transformAmount(13)" formControlName="valorDirectoFilaCuatro" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input id="combinadoFilaCuatro" maxlength="6" autocomplete="off" (blur)="transformAmount(14)" formControlName="combinadoFilaCuatro" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input id="dosCifrasFilaCuatro" maxlength="6" autocomplete="off" (blur)="transformAmount(15)" formControlName="dosCifrasFilaCuatro" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input id="unaCifraFilaCuatro" maxlength="6" autocomplete="off" (blur)="transformAmount(16)" formControlName="unaCifraFilaCuatro" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><i (click)="borrarFilaCuatro()" class="fa fa-trash tras-del" aria-hidden="true"></i></div>
+                        </div>
+                        <div class="row fls">
+                            <div class="col-md-2"><input id="numeroFilaCinco" (focus)="onFocus(5)" autocomplete="off" formControlName="numeroFilaCinco" type="text" maxlength="4" (keypress)="permitirSoloNumeros($event)" (change)="habilitarDeshabilitarSegunCifras($event.target.value, 5)" class="input-bet"></div>
+                            <div class="col-md-2"><input id="valorDirectoFilaCinco" maxlength="6" autocomplete="off" (blur)="transformAmount(17)" formControlName="valorDirectoFilaCinco" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input id="combinadoFilaCinco" maxlength="6" autocomplete="off" (blur)="transformAmount(18)" formControlName="combinadoFilaCinco" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input id="dosCifrasFilaCinco" maxlength="6" autocomplete="off" (blur)="transformAmount(19)" formControlName="dosCifrasFilaCinco" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><input id="unaCifraFilaCinco" maxlength="6" autocomplete="off" (blur)="transformAmount(20)" formControlName="unaCifraFilaCinco" (keypress)="permitirSoloNumeros($event)" (change)="emitirNumeros()" class="input-bet"></div>
+                            <div class="col-md-2"><i (click)="borrarFilaCinco()" class="fa fa-trash tras-del" aria-hidden="true"></i></div>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- / CIERRA SELECCION DE LOTERIAS Y NUMEROS QUE APUESTAN -->
             </div>
-        </div>
-
-        <hr>
-        <div class="row float-right element-actions-btns" *ngIf="dayBet">
-           <button (click)="selectUnmarkAll()"  type="button" class="btn btn-random">
-                Limpiar todas <i class="fa fa-plus" aria-hidden="true"></i>
-            </button>
-
-            <button (click)="aleatorioLoterias()"  type="button" class="btn btn-random">
-                AUTOMATICAS <i class="fa fa-random" aria-hidden="true"></i>
-            </button>
-
-            <button *ngIf="btnAdd" (click)="validarLoterias()" type="button" class="btn btn-random">
-                AGREGAR <i class="fa fa-plus" aria-hidden="true"></i>
-            </button>
-            <button *ngIf="btnEdit" (click)="validarLoterias()" type="button" class="btn btn-random">
-                ACTUALIZAR <i class="fa fa-plus" aria-hidden="true"></i>
-            </button>
-        </div>
-
-
-    </div>
-</div>
 
 
 
-<p-dialog [(visible)]="displayModalCreate" [style]="{width: '464px'}">
-    <app-crear-cliente (closePopup)="closeModal($event)" (createCustomer)="createCustomer($event)">
-    </app-crear-cliente>
-</p-dialog>
+        <p-dialog [(visible)]="displayModalCreate" [style]="{width: '464px'}">
+            <app-crear-cliente 
+                (closePopup)="closeModal($event)" 
+                (createCustomer)="createCustomer($event)">
+            </app-crear-cliente>
+        </p-dialog>
+
+
+
+        <p-dialog [(visible)]="displayModalBuscarCliente" header="CONSULTA DE CLIENTE" [style]="{width: '664px'}">
+            <app-buscar-cliente
+                (closeModalCliente)="closeModalCliente($event)"
+                (closeModalClienteVerCreacion)="closeModalClienteVerCreacion($event)"
+                (searchCustomer)="searchCustomer($event)">
+            </app-buscar-cliente>
+        </p-dialog>
+        
+
+    
+
+    
+

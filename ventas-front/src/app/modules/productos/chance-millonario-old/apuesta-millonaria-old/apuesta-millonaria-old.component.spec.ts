@@ -1,19 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ChanceMillonarioComponent } from './chance-millonario.component';
 
-describe('ChanceMillonarioComponent', () => {
-  let component: ChanceMillonarioComponent;
-  let fixture: ComponentFixture<ChanceMillonarioComponent>;
+import { DirectoComponent } from './directo.component';
+
+describe('DirectoComponent', () => {
+  let component: DirectoComponent;
+  let fixture: ComponentFixture<DirectoComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ChanceMillonarioComponent ]
+      declarations: [ DirectoComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ChanceMillonarioComponent);
+    fixture = TestBed.createComponent(DirectoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

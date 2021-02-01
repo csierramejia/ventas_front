@@ -1,19 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ChanceMillonarioComponent } from './chance-millonario.component';
 
-describe('ChanceMillonarioComponent', () => {
-  let component: ChanceMillonarioComponent;
-  let fixture: ComponentFixture<ChanceMillonarioComponent>;
+import { SummaryFooterComponent } from './summary-footer.component';
+
+describe('SummaryFooterComponent', () => {
+  let component: SummaryFooterComponent;
+  let fixture: ComponentFixture<SummaryFooterComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ChanceMillonarioComponent ]
+      declarations: [ SummaryFooterComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ChanceMillonarioComponent);
+    fixture = TestBed.createComponent(SummaryFooterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
