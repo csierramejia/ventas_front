@@ -10,7 +10,7 @@ import { MenuCarritoComponent } from '../genericos/menu-carrito/menu-carrito.com
 export class ChanceComponent implements OnInit {
 
   // esto aplica para chance
-  @ViewChild(SummaryFooterComponent) summaryFooter: SummaryFooterComponent;
+  @ViewChild(SummaryFooterComponent, {static: true}) summaryFooter: SummaryFooterComponent;
   @ViewChild(ApuestaChanceComponent) apuestaChance: ApuestaChanceComponent;
   @ViewChild(MenuCarritoComponent, {static: true}) menuCarrito: MenuCarritoComponent;
 

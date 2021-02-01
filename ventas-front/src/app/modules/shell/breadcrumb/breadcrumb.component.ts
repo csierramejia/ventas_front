@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild  } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ShellState } from './../../../states/shell/shell.state';
 import { CommonService } from "../../../utilities/common.service";
 import { MenuCarritoComponent } from '../../productos/genericos/menu-carrito/menu-carrito.component';
@@ -17,6 +17,8 @@ import { filter } from 'rxjs/operators';
 })
 export class BreadcrumbComponent implements OnInit {
 
+  subscription: any;
+  clienteOperacion:any;
   verCarrito = false;
   itemsCarrito = 0;
   @ViewChild(MenuCarritoComponent) menuCarritoComponent: MenuCarritoComponent;
@@ -52,14 +54,23 @@ export class BreadcrumbComponent implements OnInit {
         } else {
           this.verCarrito = false;
         }
-      });    
+      });
 
-      console.log(shellState)
+
+      // subscribe evento busqueda de cliente
+      this.subscription = this.shellState.getEventoCliente().subscribe(evento => { 
+        if(evento){
+          this.obtenerInfoCliente()
+        }
+      });
+
   }
+
 
 
   ngOnInit(): void {
     setInterval(this.obtenerFechaHora, 1000);
+    this.obtenerInfoCliente();
   }
 
 
@@ -67,6 +78,37 @@ export class BreadcrumbComponent implements OnInit {
     let hoy = new Date();
     this.fechaActual = hoy.getDate() + '/' + (hoy.getMonth() + 1) + '/' + hoy.getFullYear();
   }
+
+
+  /**
+   * @author Luis Fernando Hernandez
+   * @description Metodo que se encarga
+   * de obtener la información del cliente
+   * que reposa en el localstorage
+   */
+  obtenerInfoCliente(){
+    this.clienteOperacion = JSON.parse(localStorage.getItem('clienteOperacion'))
+  }
+
+
+  agregarCliente(){
+    this.shellState.agregarEventoCliente(true);
+  }
+
+
+  eliminarCliente(){
+    localStorage.removeItem('clienteOperacion');
+    delete this.clienteOperacion;
+    // llamamos evento observable que se encarga notificar a la apuesta que se borro el cliente
+    this.shellState.borrarEventoCliente(true);
+  }
+
+
+
+
+
+
+  
 
 
 }

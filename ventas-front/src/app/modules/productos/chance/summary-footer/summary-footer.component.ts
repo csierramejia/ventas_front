@@ -117,8 +117,18 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
   }
 
 
-  setCliente(event){
+  setCliente(event) {
     this.clienteOperacion = event;
+    let chanceApuesta = JSON.parse(localStorage.getItem('chanceApuesta')) 
+    if(chanceApuesta){
+      if(chanceApuesta.length > 0){
+        for (let index = 0; index < chanceApuesta.length; index++) {
+          chanceApuesta[index].clienteOperacion = this.clienteOperacion;
+        }
+        localStorage.setItem('chanceApuesta', JSON.stringify(chanceApuesta));
+      }
+    }
+
   }
 
 

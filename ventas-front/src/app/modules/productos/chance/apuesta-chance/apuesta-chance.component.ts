@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy, ViewChild, AfterContentChecked } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { ProductosService } from '../../productos.service';
 import { MessageService } from 'primeng/api';
@@ -10,6 +10,7 @@ import { ClientesDTO } from 'src/app/dtos/productos/chance/clientes.dto';
 import { CrearClienteComponent } from '../../genericos/crear-cliente/crear-cliente.component';
 import * as moment from 'moment';
 import { CurrencyPipe } from '@angular/common';
+import { ShellState } from '../../../../states/shell/shell.state';
 
 @Component({
   selector: 'app-apuesta-chance',
@@ -17,7 +18,7 @@ import { CurrencyPipe } from '@angular/common';
   styleUrls: ['./apuesta-chance.component.css'],
   providers: [ProductosService, CommonService]
 })
-export class ApuestaChanceComponent extends CommonComponent implements OnInit {
+export class ApuestaChanceComponent extends CommonComponent implements OnInit  {
 
   @Output() agregarLoterias: EventEmitter<any> = new EventEmitter();
   @Output() reiniciarEdit: EventEmitter<any> = new EventEmitter();
@@ -32,7 +33,7 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
   numeroCuatro = false;
   numeroCinco = false;
 
-
+  subscription: any;
   lengEspanol = {}
 
 
@@ -40,8 +41,7 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
 
   pCalendarioValor: Date;
 
-  // displayModalBuscarCliente = true;
-  displayModalBuscarCliente = false;
+  displayModalBuscarCliente = true;
 
 
   /** Es el correo del cliente quien hace la compra */
@@ -115,6 +115,7 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
     private productosService: ProductosService,
     protected messageService: MessageService,
     private fb: FormBuilder,
+    public shellState: ShellState,
     private currencyPipe: CurrencyPipe
   ) {
     super();
@@ -125,13 +126,27 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
       responseDTO => {
         if(responseDTO){
           this.rutaServidor = responseDTO.codigo;
-
         }
       },
       error => {
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
       }
     );
+
+    // subscribe evento busqueda de cliente
+    this.subscription = this.shellState.getEventoClienteBorrar().subscribe(evento => { 
+      if(evento){
+        this.obtenerInfoClienteBorrado()
+      }
+    });
+
+    // subscribe evento busqueda de cliente
+    this.subscription = this.shellState.getEventoClienteAgregar().subscribe(evento => { 
+      if(evento){
+        this.validExistenciaClienteLocalStorage()
+      }
+    });
+
   }
 
 
@@ -148,6 +163,41 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
       dateFormat: 'mm/dd/yy',
       weekHeader: 'Wk'
     };
+
+    this.validExistenciaClienteLocalStorage();
+
+  }
+
+  obtenerInfoClienteBorrado() {
+    this.idCustomer = '';
+    this.correoCustomer = '';
+    this.chanceForm.controls.nombreCliente.setValue('');
+    this.chanceForm.controls.tipoDocumento.setValue('');
+    this.chanceForm.controls.numeroDocumento.setValue('');
+    this.displayModalBuscarCliente = false;
+    this.emitirCliente(2)
+  }
+
+
+  validExistenciaClienteLocalStorage(){
+    let clienteOperacion = JSON.parse(localStorage.getItem('clienteOperacion'))
+    if(clienteOperacion){
+      if (clienteOperacion.idCustomer) {
+        this.idCustomer = clienteOperacion.idCustomer;
+        this.correoCustomer = clienteOperacion.correoCustomer;
+        this.chanceForm.controls.nombreCliente.setValue(clienteOperacion.nombreCliente);
+        this.chanceForm.controls.tipoDocumento.setValue(clienteOperacion.tipoDocumento);
+        this.chanceForm.controls.numeroDocumento.setValue(clienteOperacion.numeroDocumento);
+        this.displayModalBuscarCliente = false;
+        this.emitirCliente(1)
+      } else {
+        this.displayModalBuscarCliente = true;
+        this.emitirCliente(2)
+      }
+    } else {
+      this.displayModalBuscarCliente = true;
+      this.emitirCliente(2)
+    }
   }
   
 
@@ -323,9 +373,6 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
       }
     }
 
-    
-
-
     if (this.checked) {
       for (let index = 0; index < this.loterias.length; index++) {
         this.loterias[index].checked = true;
@@ -479,6 +526,7 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
     }
   }
 
+
   revisarFilaTres(value): void {
     if (String(value).length === 4 || String(value).length === 3) {
       this.chanceForm.get('valorDirectoFilaTres').enable();
@@ -609,8 +657,6 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
   }
 
 
-
-
   borrarFilaUno() {
     this.chanceForm.get('numeroFilaUno').setValue('');
     this.chanceForm.get('valorDirectoFilaUno').setValue('');
@@ -625,8 +671,6 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
     document.getElementById('combinadoFilaUno').style.backgroundColor = '#EFEFEF';
     document.getElementById('dosCifrasFilaUno').style.backgroundColor = '#EFEFEF';
     document.getElementById('unaCifraFilaUno').style.backgroundColor = '#EFEFEF';
-
-
   }
 
   borrarFilaDos() {
@@ -761,8 +805,6 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
   }
 
   aleatorioCuatroCifras() {
-
-
     if(this.numeroUno){
       this.chanceForm.controls.numeroFilaUno.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
       this.habilitarDeshabilitarSegunCifras(this.chanceForm.get('numeroFilaUno').value, 1);
@@ -784,25 +826,6 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
       this.habilitarDeshabilitarSegunCifras(this.chanceForm.get('numeroFilaCinco').value, 5);
     }
     this.emitirNumeros();
-
-
-    // if (this.chanceForm.get('numeroFilaUno').value == '') {
-    //   this.chanceForm.controls.numeroFilaUno.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
-    //   this.habilitarDeshabilitarSegunCifras(this.chanceForm.get('numeroFilaUno').value, 1);
-    // } else if (this.chanceForm.get('numeroFilaDos').value == '') {
-    //   this.chanceForm.controls.numeroFilaDos.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
-    //   this.habilitarDeshabilitarSegunCifras(this.chanceForm.get('numeroFilaDos').value, 2);
-    // } else if (this.chanceForm.get('numeroFilaTres').value == '') {
-    //   this.chanceForm.controls.numeroFilaTres.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
-    //   this.habilitarDeshabilitarSegunCifras(this.chanceForm.get('numeroFilaTres').value, 3);
-    // } else if (this.chanceForm.get('numeroFilaCuatro').value == '') {
-    //   this.chanceForm.controls.numeroFilaCuatro.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
-    //   this.habilitarDeshabilitarSegunCifras(this.chanceForm.get('numeroFilaCuatro').value, 4);
-    // } else if (this.chanceForm.get('numeroFilaCinco').value == '') {
-    //   this.chanceForm.controls.numeroFilaCinco.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
-    //   this.habilitarDeshabilitarSegunCifras(this.chanceForm.get('numeroFilaCinco').value, 5);
-    // }
-    // this.emitirNumeros();
   }
 
 
@@ -1070,46 +1093,6 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
 
 
 
-  /**
-   * @author Luis Hernandez
-   * @description Metodo que se encarga de validar si
-   * existe o no el cliente, si este no existe se
-   * levanta un popup para su posterior creación
-   */
-  validExistClient(): void {
-
-    if (this.chanceForm.get('tipoDocumento').value && this.chanceForm.get('numeroDocumento').value) {
-      const clientesDTO: ClientesDTO = new ClientesDTO();
-      this.enabledCustomer = false;
-      this.chanceForm.controls.nombreCliente.setValue('');
-      clientesDTO.numeroDocumento = this.chanceForm.get('numeroDocumento').value;
-      clientesDTO.tipoDocumento = this.chanceForm.get('tipoDocumento').value;
-      this.productosService.clienteApuesta(clientesDTO).subscribe(
-        clienteData => {
-          const responseCliente: any = clienteData;
-          if (responseCliente.existe) {
-            const name = responseCliente.primerNombre + ' ' + responseCliente.segundoNombre + ' ' + responseCliente.primerApellido;
-            this.idCustomer = responseCliente.idCliente;
-            this.correoCustomer = responseCliente.correo;
-            this.chanceForm.controls.nombreCliente.setValue(name);
-            this.enabledCustomer = true;
-            this.emitirCliente(1);
-          } else {
-            this.crearClienteChild.clienteForm.get('tipoDocumento').setValue(this.chanceForm.get('tipoDocumento').value);
-            this.crearClienteChild.clienteForm.get('numeroDocumento').setValue(this.chanceForm.get('numeroDocumento').value);
-            this.displayModalCreate = true;
-            this.emitirCliente(2);
-          }
-        },
-        error => {
-          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
-        }
-      );
-    }
-
-  }
-
-
   emitirCliente(event) {
     if (event === 1) {
       let clienteInfo = {
@@ -1163,12 +1146,25 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit {
   }
 
   searchCustomer(event): void {
-
     this.idCustomer = event.idCustomer;
     this.correoCustomer = event.correoCustomer;
     this.chanceForm.controls.nombreCliente.setValue(event.nombreCliente);
+    this.chanceForm.controls.tipoDocumento.setValue(event.tipoDocumento);
+    this.chanceForm.controls.numeroDocumento.setValue(event.numeroDocumento);
+
+    let clienteOperacion = {
+      correoCustomer : this.correoCustomer,
+      idCustomer : this.idCustomer,
+      nombreCliente: event.nombreCliente,
+      numeroDocumento: event.numeroDocumento,
+      tipoDocumento: event.tipoDocumento
+    }
+    localStorage.setItem('clienteOperacion', JSON.stringify(clienteOperacion));
     this.displayModalBuscarCliente = false;
-    // this.enabledCustomer = true;
+
+    // llamamos evento observable que se encarga notificar al navbar nuevo cliente
+    this.shellState.enviarEventoCliente(true);
+
     this.emitirCliente(event.emitirCliente);
   }
 
