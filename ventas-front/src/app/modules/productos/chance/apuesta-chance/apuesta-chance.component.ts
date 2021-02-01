@@ -972,6 +972,37 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit  {
     document.getElementById('combinadoFilaCinco').style.backgroundColor = '#EFEFEF';
     document.getElementById('dosCifrasFilaCinco').style.backgroundColor = '#EFEFEF';
     document.getElementById('unaCifraFilaCinco').style.backgroundColor = '#EFEFEF';
+
+
+    const chipL = document.getElementById('lun');
+    chipL.style.backgroundColor = '#FFFFFF';
+    chipL.style.color = '#BE1E42';
+
+    const chipM = document.getElementById('mar');
+    chipM.style.backgroundColor = '#FFFFFF';
+    chipM.style.color = '#BE1E42';
+
+    const chipMi = document.getElementById('mie');
+    chipMi.style.backgroundColor = '#FFFFFF';
+    chipMi.style.color = '#BE1E42';
+
+    const chipJ = document.getElementById('jue');
+    chipJ.style.backgroundColor = '#FFFFFF';
+    chipJ.style.color = '#BE1E42';
+
+    const chipV = document.getElementById('vie');
+    chipV.style.backgroundColor = '#FFFFFF';
+    chipV.style.color = '#BE1E42';
+
+    const chipS = document.getElementById('sab');
+    chipS.style.backgroundColor = '#FFFFFF';
+    chipS.style.color = '#BE1E42';
+
+    const chipD = document.getElementById('dom');
+    chipD.style.backgroundColor = '#FFFFFF';
+    chipD.style.color = '#BE1E42';
+
+
   }
 
 
