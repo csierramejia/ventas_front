@@ -147,6 +147,11 @@ export class CommonComponent {
         businessMsj = MessagesBackendConstant.SIN_ASOCIACION_COMISION_PRODUCTOS_EMPRESA;
         break;
       }
+
+      case MessagesBackendKeyConstant.KEY_PROGRAMACION_NULA: {
+        businessMsj = MessagesBackendConstant.PROGRAMACION_NULA;
+        break;
+      }
      
     }
     return businessMsj;
