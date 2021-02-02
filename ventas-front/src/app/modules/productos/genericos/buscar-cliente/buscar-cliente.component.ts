@@ -57,7 +57,16 @@ export class BuscarClienteComponent extends CommonComponent implements OnInit, O
    * para que posteriormente cerrar el modal
    */
   closePopupE(): void {
+    this.limpiarDatos();
     this.closeModalCliente.emit(false);
+  }
+
+
+  limpiarDatos(){
+    this.nombreCliente = '';
+    this.clienteForm.controls.tipoDocumento.setValue('');
+    this.clienteForm.controls.numeroDocumento.setValue('');
+    this.clienteForm.controls.nombreCliente.setValue('');
   }
 
 
@@ -70,7 +79,7 @@ export class BuscarClienteComponent extends CommonComponent implements OnInit, O
       tipoDocumento: this.clienteForm.get('tipoDocumento').value,
       emitirCliente: 1
     }
-
+    this.limpiarDatos();
     this.searchCustomer.emit(infoCliente)
   }
 
