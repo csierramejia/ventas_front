@@ -76,15 +76,25 @@ export class ProductosAPIConstant {
 
 
   /** URL del recurso para hacer compra */
+  // static readonly URL_REGISTRAR_APUESTA: string =
+  // AppDomainConstant.URI_GATEWAY +
+  // ProductosAPIConstant.LOTERIAS_API +
+  // 'registrarApuesta';
+
   static readonly URL_REGISTRAR_APUESTA: string =
-  AppDomainConstant.URI_GATEWAY +
+  'http://localhost:8181/' +
   ProductosAPIConstant.LOTERIAS_API +
   'registrarApuesta';
 
 
   /** URL del recurso para hacer compra version 2 */
+  // static readonly URL_REGISTRAR_APUESTAS: string =
+  // AppDomainConstant.URI_GATEWAY +
+  // ProductosAPIConstant.LOTERIAS_API +
+  // 'registrarApuestas';
+
   static readonly URL_REGISTRAR_APUESTAS: string =
-  AppDomainConstant.URI_GATEWAY +
+  'http://localhost:8181/' +
   ProductosAPIConstant.LOTERIAS_API +
   'registrarApuestas';
 
