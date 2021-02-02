@@ -284,8 +284,8 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
       idUser: this.shellState.userAccount.auth.usuario.idUsuario,
       datePlayed: this.cartItems[0].dataPlayed,
       idCustomer: this.cartItems[0].idCustomer,
-      valueBet : this.valueBet,
-      valueVat : this.valueVat,
+      valueBet : Math.round(this.valueBet),
+      valueVat : Math.round(this.valueVat),
       valueBetTotal : this.valueBetTotal,
       bets: null,
       lotteries : this.lotteries,
@@ -306,18 +306,24 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
         betDetail.apuestaE = element.apuestaE;
         betDetail.valueBet= element.valorApostado;
         const calculoImpuesto=(this.inputVat/100) + 1
-        betDetail.valueVat = this.valueBet-(this.valueBet / calculoImpuesto);
+        betDetail.valueVat =  betDetail.valueBet-( betDetail.valueBet/ calculoImpuesto);
+        betDetail.valueVat=Math.round(betDetail.valueVat);
+        betDetail.valueBet=Math.round(betDetail.valueBet);
       } else if (element.modalidad == null && element.numeroSuper) {
         betDetail.numeroSuper = element.numeroSuper;
         betDetail.valueBet= element.valorApostado;
         const calculoImpuesto=(this.inputVat/100) + 1
-        betDetail.valueVat = this.valueBet-(this.valueBet / calculoImpuesto);
+        betDetail.valueVat =  betDetail.valueBet-( betDetail.valueBet / calculoImpuesto);
+        betDetail.valueVat=Math.round(betDetail.valueVat);
+        betDetail.valueBet=Math.round(betDetail.valueBet);
       } else if (element.modalidad == null && element.numeroAstro) {
         betDetail.numeroAstro = element.numeroAstro;
         betDetail.valueBet= element.valorApostado;
         const calculoImpuesto=(this.inputVat/100) + 1
-        betDetail.valueVat = this.valueBet-(this.valueBet / calculoImpuesto);
+        betDetail.valueVat =  betDetail.valueBet-( betDetail.valueBet / calculoImpuesto);
         betDetail.zignos = element.zignos;
+        betDetail.valueVat=Math.round(betDetail.valueVat);
+        betDetail.valueBet=Math.round(betDetail.valueBet);
       } else {
       betDetail.numberPlayed = element.numberPlayed;
       if (String(element.numberPlayed).length === 4) {

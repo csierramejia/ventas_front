@@ -29,6 +29,10 @@ export class MessagesBackendKeyConstant {
   static readonly KEY_SIN_ASOCIACION_PRODUCTOS_EMPRESA_SELECCIONADA: string = '0021';
   static readonly KEY_SIN_ASOCIACION_COMISION_PRODUCTOS_EMPRESA: string = '0022';
 
+  /** Programación nula. Inténtalo de nuevo. */
+  static readonly KEY_PROGRAMACION_NULA: string = 'security-0002';
+
+
 
 }
 

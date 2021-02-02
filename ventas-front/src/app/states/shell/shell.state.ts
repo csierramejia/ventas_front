@@ -163,6 +163,9 @@ export class ShellState {
 
     // se redirecciona al LOGIN
     this.router.navigate([RouterConstant.NAVIGATE_LOGIN]);
+
+    // limpiar localstorage
+    localStorage.clear();
   }
 
   /**

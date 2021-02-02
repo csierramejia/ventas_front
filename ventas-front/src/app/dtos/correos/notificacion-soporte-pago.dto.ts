@@ -33,4 +33,7 @@ export class NotificacionSoportePagoDTO {
 
   /** Identificador del usuario quien hace la notificacion */
   public idUsuario: number;
+  
+  /** Valor del impuesto */
+  public impuesto: number;
 }
