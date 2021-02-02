@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { SummaryFooterComponent } from './summary-footer/summary-footer.component';
+import { SummaryFooterComponent } from '../genericos/summary-footer/summary-footer.component';
 import { ApuestaChanceComponent } from './apuesta-chance/apuesta-chance.component';
 import { MenuCarritoComponent } from '../genericos/menu-carrito/menu-carrito.component';
 import { ProductosService } from '../productos.service';

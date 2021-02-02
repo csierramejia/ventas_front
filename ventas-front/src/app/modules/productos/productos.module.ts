@@ -15,7 +15,7 @@ import {OverlayPanelModule} from 'primeng/overlaypanel';
 
 // OJOS QUITAR ESTE COMPONENTE
 import { BolsaComponent } from './genericos/bolsa/bolsa.component';
-import { SummaryFooterComponent } from './chance/summary-footer/summary-footer.component';
+import { SummaryFooterComponent } from './genericos/summary-footer/summary-footer.component';
 import { ConfirmacionAgregarCarritoComponent } from './genericos/confirmacion-agregar-carrito/confirmacion-agregar-carrito.component';
 
 

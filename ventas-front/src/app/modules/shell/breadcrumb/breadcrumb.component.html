@@ -15,7 +15,7 @@
     <ul class="navbar-nav ml-auto nav-flex-icons inline-li" *ngIf="verCarrito">
       <li class="nav-item inline-li">
         <i class="fa fa-clock-o icon fecha-carrito"></i>
-        <span class="fechaActual">{{ fechaActual }} {{horaActual | date: 'mediumTime'}}</span>
+        <span class="fechaActual">{{ fechaActual }} {{ horaActual | date: 'mediumTime' }}</span>
       </li>
       <span data-toggle="collapse" href="#collapseExample"  class="fa-stack fa-2x has-badge" [attr.data-count]="itemsCarrito">
         <i class="fa fa-circle fa-stack-2x fa-inverse"></i>

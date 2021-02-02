@@ -39,7 +39,7 @@ export class BreadcrumbComponent implements OnInit {
       router.events.pipe(
         filter(event => event instanceof NavigationEnd)  
       ).subscribe((event:any) => {
-        if(event.url === '/autenticado/productos/chance'){
+        if(event.url === '/autenticado/productos/chance' || event.url === '/autenticado/productos/chance-millonario'){
           this.verCarrito = true;
           this.commonService.obtenerHora().subscribe(data => this.horaActual = data);
           this.commonService.obtenerItemsCarrito()

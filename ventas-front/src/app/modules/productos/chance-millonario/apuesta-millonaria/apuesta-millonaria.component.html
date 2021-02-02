@@ -31,15 +31,20 @@
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                         <span class="hea-titles">Juego Automático</span>
                         <hr/>
-                        <img class="img-aletorio" (click)="aleatorioTresCifras()" src="../../../../../assets/img/svg/Grupo_299.svg" />
-                        <img class="img-aletorio" (click)="aleatorioCuatroCifras()" src="../../../../../assets/img/svg/Grupo_300.svg" />
+                        <button (click)="repetir()" type="button" class="btn cuatrocifrasbtn">
+                            4 Cifras
+                        </button>
+
+                        
+                        <!-- <img class="img-aletorio" (click)="aleatorioTresCifras()" src="../../../../../assets/img/svg/Grupo_299.svg" />
+                        <img class="img-aletorio" (click)="aleatorioCuatroCifras()" src="../../../../../assets/img/svg/Grupo_300.svg" /> -->
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                        <span class="hea-titles">Ultima Apuesta</span>
+                        <!-- <span class="hea-titles">Ultima Apuesta</span>
                         <hr/>
                         <button (click)="repetir()" type="button" class="btn btn-random">
                             REPETIR <i class="fa fa-repeat" aria-hidden="true"></i>
-                        </button>
+                        </button> -->
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                         <button (click)="borrarTodo(1)" type="button" class="btn btn-random-red">
@@ -80,7 +85,7 @@
                         </div>
                     </div>
                     
-                    <div class="col-md-7">
+                    <!-- <div class="col-md-7">
                         <div class="row fls">
                             <div class="col-md-2"><span class="title-lot-bet">Número</span></div>
                             <div class="col-md-2"><span class="title-lot-bet">Directo</span></div>
@@ -131,7 +136,7 @@
                             <div class="col-md-2"><i (click)="borrarFilaCinco()" class="fa fa-trash tras-del" aria-hidden="true"></i></div>
                         </div>
                         </form>
-                    </div>
+                    </div> -->
                 </div>
                 <!-- / CIERRA SELECCION DE LOTERIAS Y NUMEROS QUE APUESTAN -->
             </div>

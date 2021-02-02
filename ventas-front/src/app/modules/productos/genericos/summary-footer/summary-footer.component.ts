@@ -11,7 +11,6 @@ import { ConfirmacionAgregarCarritoComponent } from '../../genericos/confirmacio
 
 
 
-
 @Component({
   selector: 'app-summary-footer',
   templateUrl: './summary-footer.component.html',
