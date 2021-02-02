@@ -22,4 +22,10 @@ export class LoteriaVirtualVentaDTO {
 
   /** Es el detalle de la venta */
   public detalles: Array<LoteriaVirtualVentaDetalleDTO>;
+
+  /** Id de la oficina a la que pertenece el usuario */
+  public idOficina: number;
+
+  /** ID del punto de venta al que pertence el usuario */
+  public idPuntoVenta: number;
 }
