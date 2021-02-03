@@ -290,7 +290,9 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
       bets: null,
       lotteries : this.lotteries,
       canal: null,
-      producto: this.producto
+      producto: this.producto,
+      idOficina: this.shellState.userAccount.auth.usuario.idOficina,
+      idPuntoVenta: this.shellState.userAccount.auth.usuario.idPuntoVenta
     };
 
     this.cartItems.forEach(element => {

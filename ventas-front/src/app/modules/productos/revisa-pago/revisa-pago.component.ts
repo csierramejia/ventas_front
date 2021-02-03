@@ -194,7 +194,7 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
     this.paySend = [];
     const productosDepurar = JSON.parse(localStorage.getItem('chanceApuesta'))
     for (let index = 0; index < productosDepurar.length; index++) {
-      const bet = { bets:null, canal: 'WEB', dataPlayed:null, idCustomer:null, idUser:this.shellState.userAccount.auth.usuario.idUsuario, lotteries:null, producto:this.producto, valueBet:null, valueBetTotal:null, valueVat:null};
+      const bet = { bets:null, canal: 'WEB', dataPlayed:null, idCustomer:null, idUser:this.shellState.userAccount.auth.usuario.idUsuario, lotteries:null, producto:this.producto, valueBet:null, valueBetTotal:null, valueVat:null,idOficina:null,idPuntoVenta:null};
       bet.lotteries = this.obtenerLoteriasSeleccionadas(productosDepurar[index].loterias)
       bet.bets = this.obtenerEstructuraDatosNumeros(productosDepurar[index].listaNumeros, productosDepurar[0].fechaSeleccionApuesta, bet.lotteries)
       bet.dataPlayed = productosDepurar[index].fechaActual
@@ -202,6 +202,9 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
       bet.valueBetTotal = Math.round(this.obtenerValorTotal(bet.bets, bet.lotteries.length))
       bet.valueBet = Math.round(this.obtenerIvaIteracion(bet.valueBetTotal));
       bet.valueVat = Math.round(bet.valueBetTotal - bet.valueBet);
+      bet.idOficina = this.shellState.userAccount.auth.usuario.idOficina;
+      bet.idPuntoVenta = this.shellState.userAccount.auth.usuario.idPuntoVenta
+     
       // guardamos el correo del usuario (para enviar desplendible de pago)
       this.correoCliente = productosDepurar[index].clienteOperacion.correoCustomer
       this.paySend.push(bet);
