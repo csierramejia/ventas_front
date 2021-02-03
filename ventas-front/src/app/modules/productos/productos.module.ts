@@ -11,6 +11,7 @@ import {CardModule} from 'primeng/card';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {DialogModule} from 'primeng/dialog';
 import {SidebarModule} from 'primeng/sidebar';
+import { SelectButtonModule } from 'primeng/selectbutton';
 import {OverlayPanelModule} from 'primeng/overlaypanel';
 
 // OJOS QUITAR ESTE COMPONENTE
@@ -94,6 +95,7 @@ import { MenuCarritoComponent } from './genericos/menu-carrito/menu-carrito.comp
     SharedModule,
     CardModule,
     DialogModule,
+    SelectButtonModule,
     SidebarModule,
     OverlayPanelModule,
     InputSwitchModule,

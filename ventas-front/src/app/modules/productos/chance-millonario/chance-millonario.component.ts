@@ -56,7 +56,7 @@ export class ChanceMillonarioComponent implements OnInit {
 
 
   borrarTodoReset(event) {
-    this.apuestaChanceMillonario.borrarTodo(1);
+    // this.apuestaChanceMillonario.borrarTodo(1);
   }
 
 
@@ -66,7 +66,7 @@ export class ChanceMillonarioComponent implements OnInit {
 
   editarProducto(event){
     this.summaryFooter.editarProducto(event)
-    this.apuestaChanceMillonario.editarProducto(event)
+    // this.apuestaChanceMillonario.editarProducto(event)
   }
 
 
