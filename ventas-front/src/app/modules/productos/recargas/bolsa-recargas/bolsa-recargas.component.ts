@@ -211,7 +211,9 @@ export class BolsaRecargasComponent extends CommonComponent implements OnInit, O
       valueBetTotal : this.valueBetTotal,
       recargas: null,
       canal: "WEB",
-      producto: "RECARGAS"
+      producto: "RECARGAS",
+      idOficina: this.shellState.userAccount.auth.usuario.idOficina,
+      idPuntoVenta: this.shellState.userAccount.auth.usuario.idPuntoVenta
     };
 
     this.cartItems.forEach(element => {
