@@ -385,14 +385,14 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
           this.creatingBet.emit(true);
         } 
         else if(responseApuesta.mensaje){
-          this.messageService.add(MsjUtil.getToastErrorMedium(responseApuesta.mensaje));
+          this.messageService.add(MsjUtil.getToastErrorLng(responseApuesta.mensaje));
         }
         else {
           this.messageService.add(MsjUtil.getToastErrorMedium('Problemas con la transacción'));
         }
       },
       error => {
-        this.messageService.add(MsjUtil.getToastErrorMedium(this.showMensajeError(error)));
+        this.messageService.add(MsjUtil.getToastErrorLng(this.showMensajeError(error)));
       }
     );
 
@@ -477,7 +477,7 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
   private enviarNotificacionSoportePago(data: NotificacionSoportePagoDTO): void {
     this.productosService.enviarNotificacionSoportePagoChance(data).subscribe(
       (response) => {},
-      (error) => { this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error))); }
+      (error) => { this.messageService.add(MsjUtil.getToastErrorMedium(this.showMensajeError(error))); }
     );
   }
 }
