@@ -49,7 +49,7 @@
 }
 
 :host ::ng-deep #menuUserSettings .ui-menuitem-text {
-  font-family: Montserrat !important;
+  font: normal normal normal 15px/16px Montserrat;
   font-size: 14px;
   color: #ffffff
 }
