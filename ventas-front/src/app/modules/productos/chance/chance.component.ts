@@ -68,6 +68,12 @@ export class ChanceComponent implements OnInit {
   }
 
   editarProducto(event){
+
+    console.log('event');
+    console.log(event);
+    console.log('event');
+
+
     this.summaryFooter.editarProducto(event)
     this.apuestaChance.editarProducto(event)
   }
