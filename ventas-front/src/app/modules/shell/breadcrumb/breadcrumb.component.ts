@@ -26,6 +26,9 @@ export class BreadcrumbComponent implements OnInit {
   fechaActual = this.hoy.getDate() + '/' + (this.hoy.getMonth() + 1) + '/' + this.hoy.getFullYear();
   horaActual: Date;
 
+  urlChance = '/autenticado/productos/chance';
+  urlMillonario = '/autenticado/productos/chance-millonario';
+
   /**
    * @param shellState , se utiliza para obtener
    * los valores de la miga de pan
@@ -36,24 +39,44 @@ export class BreadcrumbComponent implements OnInit {
     private productosService:ProductosService,
     private router: Router,
     ) {
+      
       router.events.pipe(
         filter(event => event instanceof NavigationEnd)  
       ).subscribe((event:any) => {
-        if(event.url === '/autenticado/productos/chance' || event.url === '/autenticado/productos/chance-millonario'){
-          this.verCarrito = true;
-          this.commonService.obtenerHora().subscribe(data => this.horaActual = data);
-          this.commonService.obtenerItemsCarrito()
-          .subscribe( data => {
-            const res:any = data;
-            if(res){
-              this.itemsCarrito = res.length;
-            } else {
-              this.itemsCarrito = 0;
+        this.commonService.obtenerHora().subscribe(data => this.horaActual = data);
+        this.verCarrito = true;
+        this.itemsCarrito = 0;
+        if(event.url == this.urlChance) {
+          this.obtenerInfoCarrito('chanceApuesta');
+          this.shellState.getEventoCarrito().subscribe(evento => { 
+            if(evento){
+              this.obtenerInfoCarrito('chanceApuesta')
             }
           });
-        } else {
-          this.verCarrito = false;
+
+        } else if(event.url == this.urlMillonario){
+          this.obtenerInfoCarrito('chanceApuestaMillonario');
+          this.shellState.getEventoCarrito().subscribe(evento => { 
+            if(evento){
+              this.obtenerInfoCarrito('chanceApuestaMillonario')
+            }
+          });
         }
+
+        // this.commonService.obtenerHora().subscribe(data => this.horaActual = data);
+        // if(event.url === '/autenticado/productos/chance'){
+        //   this.itemsCarrito = 0;
+        //     this.verCarrito = true;
+        //     this.commonService.obtenerItemsCarritoChance()
+        //     .subscribe( data => {
+        //       const res:any = data;
+        //       if(res){
+        //         this.itemsCarrito = res.length;
+        //       } else {
+        //         this.itemsCarrito = 0;
+        //       }
+        //     });
+        // }
       });
 
 
@@ -63,6 +86,9 @@ export class BreadcrumbComponent implements OnInit {
           this.obtenerInfoCliente()
         }
       });
+
+
+      
 
   }
 
@@ -88,6 +114,26 @@ export class BreadcrumbComponent implements OnInit {
    */
   obtenerInfoCliente(){
     this.clienteOperacion = JSON.parse(localStorage.getItem('clienteOperacion'))
+  }
+
+
+
+  /**
+   * @author Luis Fernando Hernandez
+   * @description Metodo que se encarga
+   * de obtener la información del cliente
+   * que reposa en el localstorage
+   */
+  obtenerInfoCarrito(producto){
+    this.itemsCarrito = 0;
+    this.verCarrito = true;
+    let res:any = JSON.parse(localStorage.getItem(producto))
+    if(res){
+      this.itemsCarrito = res.length;
+    } else {
+      this.itemsCarrito = 0;
+    }
+
   }
 
 

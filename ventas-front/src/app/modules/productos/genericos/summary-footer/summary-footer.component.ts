@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy, ViewChild, Input } from '@angular/core';
 import { CommonComponent } from 'src/app/utilities/common.component';
 import { ShellState } from 'src/app/states/shell/shell.state';
 import { MessageService, ConfirmationService } from 'primeng/api';
@@ -23,6 +23,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
   @Output() borrarTodoReset: EventEmitter<any> = new EventEmitter();
   @Output() agregarProductos: EventEmitter<any> = new EventEmitter();
   @ViewChild(ConfirmacionAgregarCarritoComponent) confirmacionAgregar: ConfirmacionAgregarCarritoComponent;
+  @Input() productoParent: string;
 
   clienteOperacion = {correoCustomer:null, idCustomer:null, nombreCliente:null, numeroDocumento:null, tipoDocumento:null}
   edit = false;
@@ -51,19 +52,26 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
     private shellState: ShellState,
     private commonService: CommonService
   ) {
-    super();
-    this.productosService.consultarNumeroSerieApuesta("CHANCE").subscribe(
-      numeroSerie => {
-        this.colilla=numeroSerie.codigo;
-      },
-      error => {
-        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
-      }
-    );
+    super();   
   }
 
   ngOnInit(): void {
+    this.obtenerColilla()
     this.obtenerIva();
+  }
+
+
+  obtenerColilla(){
+    if(this.productoParent === 'chance') {
+      this.productosService.consultarNumeroSerieApuesta("CHANCE").subscribe(
+        numeroSerie => {
+          this.colilla=numeroSerie.codigo;
+        },
+        error => {
+          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+        }
+      );
+    }
   }
 
   /**
@@ -127,7 +135,6 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
         localStorage.setItem('chanceApuesta', JSON.stringify(chanceApuesta));
       }
     }
-
   }
 
 
@@ -138,6 +145,23 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
    * @description Metodo que se encarga de recalcular el valor de la apuesta
    */
   obtenerValoresTotales(): void {
+
+    switch (this.productoParent) {
+      case 'chance':
+        this.obtenerValoresTotalesChance();
+        break;
+      case 'chance-millonario':
+      
+        break;
+      default:
+        break;
+    }
+  
+
+  }
+
+
+  obtenerValoresTotalesChance(){
 
     this.valueVat = 0;
     this.valueBetTotal = 0;
@@ -182,7 +206,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
   }
 
 
-  agregarCarritoF(): void {
+  agregarCarritoF(): void { 
 
     
 
@@ -229,9 +253,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
   validarCeros(listaNumeros){
 
     let valorCero = false;
-
     listaNumeros.forEach(element => {
-
       if (parseInt(element.valorDirectoFilaUno) <= 0) { valorCero = true;}
       if (parseInt(element.combinadoFilaUno) <= 0) { valorCero = true; }
       if (parseInt(element.dosCifrasFilaUno) <= 0) { valorCero = true; }
@@ -256,14 +278,8 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
       if (parseInt(element.combinadoFilaCinco) <= 0) { valorCero = true; }
       if (parseInt(element.dosCifrasFilaCinco) <= 0) { valorCero = true; }
       if (parseInt(element.unaCifraFilaCinco) <= 0) { valorCero = true; }
-
-
     });
-
-
     return valorCero;
-
-
   }
 
   concatenarNumeros(numeros){
@@ -511,6 +527,11 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
       this.borrarTodoReset.emit(true);
       
     }
+
+
+    ////////////////////////////////////////
+    /////////////// ACA SUBCR /////////////
+    this.shellState.enviarEventoCarrito(true);
 
     this.valueVat = 0;
     this.valueBetTotal = 0;

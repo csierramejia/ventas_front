@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { RouterConstant } from '../../../../constants/router.constant';
 import { MessageService } from 'primeng/api';
@@ -18,9 +18,9 @@ import { ProductosService } from '../../productos.service';
 export class MenuCarritoComponent implements OnInit {
 
   @Output() editarProducto: EventEmitter<any> = new EventEmitter();
-
+  // variable que nos sirve para identificar sobre que producto debe trabajar el componente si chance, chance millonario, etc
+  @Input() productoParent: string;
   cantidadRepetir = 1;
-
   productos = [];
   subtotal = 0
  
@@ -30,33 +30,47 @@ export class MenuCarritoComponent implements OnInit {
     private productosService:ProductosService,
     private commonService: CommonService) {}
 
-
- 
+  
   ngOnInit(): void {
     this.refrescarCarrito()
   }
 
 
-
-
   borrarApuesta(id) {
-    const productosBorrar = JSON.parse(localStorage.getItem('chanceApuesta'))
-    const keyResponse = this.getKeyObject(id, productosBorrar);
-    if ( keyResponse  !== -1 ) {
-      productosBorrar.splice( keyResponse , 1 );
+    switch (this.productoParent) {
+      case 'chance':
+        this.borrarApuestaChance(id);
+        break;
+      case 'chance-millonario':
+      
+        break;
+      default:
+        break;
     }
-    localStorage.setItem('chanceApuesta', JSON.stringify(productosBorrar));
-    this.refrescarCarrito();
   }
 
 
-  
   editarApuesta(producto) {
     this.editarProducto.emit(producto)
   }
 
 
   duplicarApuesta(id) {
+    switch (this.productoParent) {
+      case 'chance':
+        this.duplicarApuestaChance(id);
+        break;
+      case 'chance-millonario':
+      
+        break;
+      default:
+        break;
+    }
+  }
+
+
+
+  duplicarApuestaChance(id){
     const productosDuplicar = JSON.parse(localStorage.getItem('chanceApuesta'))
     const result = productosDuplicar.filter(productoDuplicar => productoDuplicar._id == id);
     for (let index = 0; index < this.cantidadRepetir; index++) {
@@ -84,19 +98,27 @@ export class MenuCarritoComponent implements OnInit {
 
 
   refrescarCarrito(){
+    switch (this.productoParent) {
+      case 'chance':
+        this.refrescarCarritoChance();
+        break;
+      case 'chance-millonario':
+      
+        break;
+      default:
+        break;
+    }
+  }
+
+
+  refrescarCarritoChance() {
     this.subtotal = 0;
-    this.productos = []
-
+    this.productos = [];
     if( JSON.parse(localStorage.getItem('chanceApuesta')) ){
-
       if(JSON.parse(localStorage.getItem('chanceApuesta')).length > 0) {
-
         const iteracionLocalStorageProductos = JSON.parse(localStorage.getItem('chanceApuesta'));
         const newProductos = []
-
-   
         iteracionLocalStorageProductos.forEach(element => {
-
           const loteriasSeleccionadas = this.get_lotteriesSelected(element.loterias)
           newProductos.push({
             apostado:element.apostado,
@@ -117,6 +139,17 @@ export class MenuCarritoComponent implements OnInit {
         this.productos = []
       }
     }
+  }
+
+
+  borrarApuestaChance(id) {
+    const productosBorrar = JSON.parse(localStorage.getItem('chanceApuesta'))
+    const keyResponse = this.getKeyObject(id, productosBorrar);
+    if ( keyResponse  !== -1 ) {
+      productosBorrar.splice( keyResponse , 1 );
+    }
+    localStorage.setItem('chanceApuesta', JSON.stringify(productosBorrar));
+    this.refrescarCarrito();
 
 
   }
@@ -149,7 +182,7 @@ export class MenuCarritoComponent implements OnInit {
   }
 
 
-
+  ////////// ----------------- FALTA REVISAR PARA IDENTIFICAR TIPO GENERICO ------------------- ////////////
   aumentarDuplicidad(){
     if(this.cantidadRepetir < 5){
       this.cantidadRepetir = this.cantidadRepetir + 1;
@@ -174,6 +207,7 @@ export class MenuCarritoComponent implements OnInit {
   verResumenCompra(): void {
     this.router.navigate([RouterConstant.NAVIGATE_REVISA_PAGO]);
   }
+  ////////// ----------------- FALTA REVISAR PARA IDENTIFICAR TIPO GENERICO ------------------- ////////////
 
 
 

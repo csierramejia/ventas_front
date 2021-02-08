@@ -32,6 +32,15 @@ export class ShellState {
   private subjectAgregar = new Subject<any>();
 
 
+
+
+  /**
+   * @author Luis Fernando Hernandez
+   * @description variable que nos va permitir capturar evento del carrito
+   */
+  private subjectCarrito = new Subject<any>();
+
+
   /** Administra el estado de la pantalla del dispositivo */
   public screen: ScreenST;
 
@@ -94,6 +103,15 @@ export class ShellState {
 
 
   /* evento que se encarga de notificar al
+   * observable de que han seleccionado un 
+   * nuevo cliente*/
+  enviarEventoCarrito(event) {
+    this.subjectCarrito.next(event);
+  }
+
+
+
+  /* evento que se encarga de notificar al
    * observable de que ha eliminado un 
    * cliente*/
   borrarEventoCliente(event) {
@@ -121,6 +139,13 @@ export class ShellState {
   getEventoClienteBorrar(): Observable<any> {
     return this.subjectDelete.asObservable();
   }
+
+
+
+  getEventoCarrito(): Observable<any> {
+    return this.subjectCarrito.asObservable();
+  }
+
   /**--------------LUIS FERNANDO HERNANDEZ------------- */
 
   /**

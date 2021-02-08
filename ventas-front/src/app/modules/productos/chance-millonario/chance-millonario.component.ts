@@ -18,6 +18,8 @@ export class ChanceMillonarioComponent implements OnInit {
   @ViewChild(ApuestaMillonariaComponent) apuestaChanceMillonario: ApuestaMillonariaComponent;
   @ViewChild(MenuCarritoComponent, {static: true}) menuCarrito: MenuCarritoComponent;
 
+  productoChanceMillonario = 'chance-millonario'
+
   constructor(private productosService: ProductosService) {
   }
 

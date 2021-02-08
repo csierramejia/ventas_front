@@ -18,6 +18,7 @@ export class ChanceComponent implements OnInit {
   @ViewChild(ApuestaChanceComponent) apuestaChance: ApuestaChanceComponent;
   @ViewChild(MenuCarritoComponent, {static: true}) menuCarrito: MenuCarritoComponent;
 
+  productoChance = 'chance'
   constructor(private productosService: ProductosService) {
 
    }
