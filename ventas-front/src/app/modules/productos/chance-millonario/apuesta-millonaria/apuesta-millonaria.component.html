@@ -65,7 +65,7 @@
                                         <div class="col-md-4" style="position: static;" *ngFor="let loteria of loterias">
                                             <!-- <p-checkbox (onChange)="toggleVisibility(loteria)" [formControl]="loteria.checked"></p-checkbox>
                                             <label class="labelloteria">{{loteria.nombreCorto}}</label> -->
-                                            <input (mouseenter)="op1.toggle($event)" (mouseleave)="op1.toggle($event)" type="checkbox"(click)="toggleVisibility(loteria)" [(ngModel)]="loteria.checked"/>
+                                            <input [id]="'loteriaid'+loteria.idLoteria" (mouseenter)="op1.toggle($event)" (mouseleave)="op1.toggle($event)" type="checkbox" (click)="toggleVisibility(loteria)" [(ngModel)]="loteria.checked"/>
                                             <label (mouseenter)="op1.toggle($event)" (mouseleave)="op1.toggle($event)" class="labelloteria" (click)="toggleVisibility(loteria)">{{loteria.nombreCorto}}</label>
                                             <p-overlayPanel #op1>
                                                 <img [src]="loteria.url" style="width: 60px;" alt="Galleria 1" />

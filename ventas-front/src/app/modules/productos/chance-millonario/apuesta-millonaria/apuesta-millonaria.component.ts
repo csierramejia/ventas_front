@@ -278,32 +278,56 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
    * @param loteria
    */
   toggleVisibility(loteria): void {
-
     const keyResponse = this.getKeyObject(loteria.idLoteria);
-
-    if (this.loterias[keyResponse].checked === true) {
-      this.loterias[keyResponse].checked = false;
+    if(this.obtenerLoteriasSeleccionadas()){
+      
+      if (this.loterias[keyResponse].checked === true) {
+        this.loterias[keyResponse].checked = false;
+      } else {
+        this.loterias[keyResponse].checked = true;
+      }
+      let valid = true;
+      this.loterias.forEach(element => {
+        if (!element.checked) { valid = false; }
+      });
+      if (valid) {
+        this.checked = true;
+      } else {
+        this.checked = false;
+      }
+      const emitLoterias = {
+        loterias: this.loterias,
+        fechaSeleccionApuesta: this.dayBet
+      }
+      this.agregarLoterias.emit(emitLoterias);
     } else {
-      this.loterias[keyResponse].checked = true;
+      this.loterias[keyResponse].checked = false
+      let ele = document.getElementById("loteriaid"+loteria.idLoteria) as HTMLInputElement;
+      ele.checked = false;
     }
+    
+  }
 
-    let valid = true;
+
+
+  obtenerLoteriasSeleccionadas(){
+
+    let cant = 0
+
     this.loterias.forEach(element => {
-      if (!element.checked) { valid = false; }
+
+      if(element.checked){
+        cant = cant + 1;
+      }
     });
 
-    if (valid) {
-      this.checked = true;
+
+    if(cant < 2){
+      return true;
     } else {
-      this.checked = false;
+      return false;
     }
 
-    const emitLoterias = {
-      loterias: this.loterias,
-      fechaSeleccionApuesta: this.dayBet
-    }
-
-    this.agregarLoterias.emit(emitLoterias);
   }
 
 
@@ -324,9 +348,10 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
     }
 
     if (this.checked) {
-      for (let index = 0; index < this.loterias.length; index++) {
-        this.loterias[index].checked = true;
-      }
+      let aleatorio= Math.round(Math.random() * (this.loterias.length-1 - 0) + 0);
+      this.loterias[aleatorio].checked=true;
+      aleatorio=aleatorio= Math.round(Math.random() * (this.loterias.length-1 - 0) + 0);
+      this.loterias[aleatorio].checked=true;
       this.checked = true;
     } else {
       for (let index = 0; index < this.loterias.length; index++) {
