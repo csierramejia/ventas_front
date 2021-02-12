@@ -33,7 +33,7 @@
                         <hr/>
                         <div class="row">
                             <p-selectButton (click)="obtenerNumeroModalidad()" [options]="arrayCifrasSeleted" [(ngModel)]="selectedCifras" optionLabel="name"></p-selectButton>
-                            <img (click)="generarAletorios('all', selectedCifras.code)" class="img-aletorio" src="../../../../../assets/img/svg/Grupo_301.svg" />
+                            <img *ngIf="selectedCifras.code" (click)="generarAletorios('all', selectedCifras.code, 0)" class="img-aletorio" src="../../../../../assets/img/svg/Grupo_301.svg" />
                         </div>
                     </div>
                     <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">

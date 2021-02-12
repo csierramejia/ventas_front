@@ -618,28 +618,34 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
   }
 
 
-  generarAletorios(event, numeroCifras){
-    if(event == 'all'){
-      let arrayAletorios = []
-      if(numeroCifras == '3C'){
-        for (let index = 0; index < 5; index++) {
-          arrayAletorios.push(Math.round(Math.random() * (100 - 999) + 999))
-        }
-      } else if(numeroCifras == '4C'){
-        for (let index = 0; index < 5; index++) {
-          arrayAletorios.push(Math.round(Math.random() * (1000 - 9999) + 9999))
-        }
-      }
-      console.log(arrayAletorios);
-    } else if(event == 'one'){
-      let aletorio = 0;
-      if(numeroCifras == '3C'){
-        aletorio = Math.round(Math.random() * (100 - 999) + 999);
-      } else if(numeroCifras == '4C'){
-        aletorio = Math.round(Math.random() * (1000 - 9999) + 9999);
-      }
-      console.log(aletorio);
-    }
+  generarAletorios(event, numeroCifras, fila){
+    // if(numeroCifras){
+    //   if(event == 'all'){
+    //     let arrayAletorios = []
+    //     if(numeroCifras == '3C'){
+    //       for (let index = 0; index < 5; index++) {
+    //         arrayAletorios.push(Math.round(Math.random() * (100 - 999) + 999))
+    //       }
+    //     } else if(numeroCifras == '4C'){
+    //       for (let index = 0; index < 5; index++) {
+    //         arrayAletorios.push(Math.round(Math.random() * (1000 - 9999) + 9999))
+    //       }
+    //     }
+    //     this.chanceForm.controls.numeroFilaUno.setValue(arrayAletorios[0]);
+    //     this.chanceForm.controls.numeroFilaDos.setValue(arrayAletorios[1]);
+    //     this.chanceForm.controls.numeroFilaTres.setValue(arrayAletorios[2]);
+    //     this.chanceForm.controls.numeroFilaCuatro.setValue(arrayAletorios[3]);
+    //     this.chanceForm.controls.numeroFilaCinco.setValue(arrayAletorios[4]);
+    //   } else if(event == 'one'){
+    //     let aletorio = 0;
+    //     if(numeroCifras == '3C'){
+    //       aletorio = Math.round(Math.random() * (100 - 999) + 999);
+    //     } else if(numeroCifras == '4C'){
+    //       aletorio = Math.round(Math.random() * (1000 - 9999) + 9999);
+    //     }
+    //     console.log(aletorio);
+    //   }
+    // }
   }
 
 
