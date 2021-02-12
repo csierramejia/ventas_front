@@ -37,6 +37,7 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
   ];
   pCalendarioValor: Date;
   displayModalBuscarCliente = true;
+  valoresModalidades:any;
   /** Es el correo del cliente quien hace la compra */
   private correoCustomer: string;
   enabledCustomer = false;
@@ -50,6 +51,7 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
   rutaServidor: string;
   loteriasSeleccionadas = [];
   checked = false;
+  maxlengthV = 0
   days = [
     { text: 'L', name: 'lun', date: null },
     { text: 'M', name: 'mar', date: null },
@@ -61,9 +63,15 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
   ];
 
   chanceForm = new FormGroup({
+    numeroFilaUno: new FormControl({ value: '', disabled: true }),
+    numeroFilaDos: new FormControl({ value: '', disabled: true }),
+    numeroFilaTres: new FormControl({ value: '', disabled: true }),
+    numeroFilaCuatro: new FormControl({ value: '', disabled: true }),
+    numeroFilaCinco: new FormControl({ value: '', disabled: true }),
     tipoDocumento: new FormControl(''),
     numeroDocumento: new FormControl(''),
     nombreCliente: new FormControl(''),
+    valoresModalidades: new FormControl([]),
   });
 
   constructor(
@@ -120,6 +128,35 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
     };
 
     this.validExistenciaClienteLocalStorage();
+  }
+
+
+  obtenerNumeroModalidad(){
+    this.borrarTodo(2);
+    if(this.selectedCifras.code === '4C'){
+      this.maxlengthV = 4;
+      this.consultarValoresModalidad(4);
+    } else if(this.selectedCifras.code === '3C'){
+      this.maxlengthV = 3;
+      this.consultarValoresModalidad(3);
+    }
+    this.chanceForm.get('numeroFilaUno').enable();
+    this.chanceForm.get('numeroFilaDos').enable();
+    this.chanceForm.get('numeroFilaTres').enable();
+    this.chanceForm.get('numeroFilaCuatro').enable();
+    this.chanceForm.get('numeroFilaCinco').enable();
+  }
+
+  consultarValoresModalidad(evento){
+    this.valoresModalidades=[];
+      this.productosService.consultarValoresModalidad("CHANCE MILLONARIO",evento).subscribe(
+        valoresData => {
+         this.valoresModalidades=valoresData;
+        },
+        error => {
+          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+        }
+      );
   }
 
 
@@ -279,7 +316,8 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
    */
   toggleVisibility(loteria): void {
     const keyResponse = this.getKeyObject(loteria.idLoteria);
-    if(this.obtenerLoteriasSeleccionadas()){
+    let lotSelec = this.obtenerLoteriasSeleccionadas()
+    if(lotSelec < 2){
       
       if (this.loterias[keyResponse].checked === true) {
         this.loterias[keyResponse].checked = false;
@@ -295,39 +333,38 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
       } else {
         this.checked = false;
       }
-      const emitLoterias = {
-        loterias: this.loterias,
-        fechaSeleccionApuesta: this.dayBet
-      }
-      this.agregarLoterias.emit(emitLoterias);
+      
+      
     } else {
       this.loterias[keyResponse].checked = false
       let ele = document.getElementById("loteriaid"+loteria.idLoteria) as HTMLInputElement;
       ele.checked = false;
     }
-    
+
+    const emitLoterias = {
+      loterias: this.loterias,
+      fechaSeleccionApuesta: this.dayBet
+    }
+    this.agregarLoterias.emit(emitLoterias);
   }
 
 
 
   obtenerLoteriasSeleccionadas(){
-
     let cant = 0
-
     this.loterias.forEach(element => {
-
       if(element.checked){
         cant = cant + 1;
       }
     });
+    return cant;
+  }
 
 
-    if(cant < 2){
-      return true;
-    } else {
-      return false;
+  limpiaLoterias(){
+    for (let index = 0; index < this.loterias.length; index++) {
+      this.loterias[index].checked = false;
     }
-
   }
 
 
@@ -348,10 +385,18 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
     }
 
     if (this.checked) {
-      let aleatorio= Math.round(Math.random() * (this.loterias.length-1 - 0) + 0);
+      this.limpiaLoterias();
+      let aleatorio = this.generarAletorio()
       this.loterias[aleatorio].checked=true;
-      aleatorio=aleatorio= Math.round(Math.random() * (this.loterias.length-1 - 0) + 0);
-      this.loterias[aleatorio].checked=true;
+      let aleatorio2 = aleatorio = this.generarAletorio()
+      if(aleatorio == aleatorio2){
+        aleatorio2 = aleatorio = this.generarAletorio()
+        this.loterias[aleatorio2].checked=true;
+      } else {
+        this.loterias[aleatorio2].checked=true;
+      }
+
+      
       this.checked = true;
     } else {
       for (let index = 0; index < this.loterias.length; index++) {
@@ -366,6 +411,11 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
     }
 
     this.agregarLoterias.emit(emitLoterias);
+  }
+
+
+  generarAletorio(){
+    return Math.round(Math.random() * (this.loterias.length-1 - 0) + 0);
   }
 
 
@@ -497,6 +547,99 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
     return this.loterias.map((e) => {
       return e.idLoteria;
     }).indexOf(idLoteria);
+  }
+
+
+  emitirNumeros() {
+    let numerosValores:any = [
+      {numeroFilaUno: this.chanceForm.get('numeroFilaUno').value},
+      {numeroFilaDos: this.chanceForm.get('numeroFilaDos').value},
+      {numeroFilaTres: this.chanceForm.get('numeroFilaTres').value},
+      {numeroFilaCuatro: this.chanceForm.get('numeroFilaCuatro').value},
+      {numeroFilaCinco: this.chanceForm.get('numeroFilaCinco').value}
+    ]
+    this.agregarNumeros.emit(numerosValores);
+  }
+
+
+
+
+  borrarTodo(event) {
+
+    // delete this.selectedCifras;
+
+    this.chanceForm.controls.numeroFilaUno.setValue('');
+    this.chanceForm.controls.numeroFilaDos.setValue('');
+    this.chanceForm.controls.numeroFilaTres.setValue('');
+    this.chanceForm.controls.numeroFilaCuatro.setValue('');
+    this.chanceForm.controls.numeroFilaCinco.setValue('');
+    
+
+
+    this.loterias = [];
+    this.agregarLoterias.emit(this.loterias);
+    if(event === 1){
+      this.reiniciarEdit.emit(false);
+    }
+    
+    this.emitirNumeros();
+
+
+    document.getElementById('numeroFilaUno').focus();
+    
+
+    const chipL = document.getElementById('lun');
+    chipL.style.backgroundColor = '#FFFFFF';
+    chipL.style.color = '#BE1E42';
+
+    const chipM = document.getElementById('mar');
+    chipM.style.backgroundColor = '#FFFFFF';
+    chipM.style.color = '#BE1E42';
+
+    const chipMi = document.getElementById('mie');
+    chipMi.style.backgroundColor = '#FFFFFF';
+    chipMi.style.color = '#BE1E42';
+
+    const chipJ = document.getElementById('jue');
+    chipJ.style.backgroundColor = '#FFFFFF';
+    chipJ.style.color = '#BE1E42';
+
+    const chipV = document.getElementById('vie');
+    chipV.style.backgroundColor = '#FFFFFF';
+    chipV.style.color = '#BE1E42';
+
+    const chipS = document.getElementById('sab');
+    chipS.style.backgroundColor = '#FFFFFF';
+    chipS.style.color = '#BE1E42';
+
+    const chipD = document.getElementById('dom');
+    chipD.style.backgroundColor = '#FFFFFF';
+    chipD.style.color = '#BE1E42';
+  }
+
+
+  generarAletorios(event, numeroCifras){
+    if(event == 'all'){
+      let arrayAletorios = []
+      if(numeroCifras == '3C'){
+        for (let index = 0; index < 5; index++) {
+          arrayAletorios.push(Math.round(Math.random() * (100 - 999) + 999))
+        }
+      } else if(numeroCifras == '4C'){
+        for (let index = 0; index < 5; index++) {
+          arrayAletorios.push(Math.round(Math.random() * (1000 - 9999) + 9999))
+        }
+      }
+      console.log(arrayAletorios);
+    } else if(event == 'one'){
+      let aletorio = 0;
+      if(numeroCifras == '3C'){
+        aletorio = Math.round(Math.random() * (100 - 999) + 999);
+      } else if(numeroCifras == '4C'){
+        aletorio = Math.round(Math.random() * (1000 - 9999) + 9999);
+      }
+      console.log(aletorio);
+    }
   }
 
 

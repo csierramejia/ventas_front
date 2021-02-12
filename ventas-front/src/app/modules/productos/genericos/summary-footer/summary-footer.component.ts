@@ -151,7 +151,9 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
         this.obtenerValoresTotalesChance();
         break;
       case 'chance-millonario':
-      
+        console.log('this.listaNumeros chance millonario')
+        console.log(this.listaNumeros)
+        console.log('this.listaNumeros chance millonario')
         break;
       default:
         break;

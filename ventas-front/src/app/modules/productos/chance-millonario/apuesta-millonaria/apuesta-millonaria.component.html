@@ -32,8 +32,8 @@
                         <span class="hea-titles">Juego Automático</span>
                         <hr/>
                         <div class="row">
-                            <p-selectButton [options]="arrayCifrasSeleted" [(ngModel)]="selectedCifras" optionLabel="name"></p-selectButton>
-                            <img class="img-aletorio" src="../../../../../assets/img/svg/Grupo_301.svg" />
+                            <p-selectButton (click)="obtenerNumeroModalidad()" [options]="arrayCifrasSeleted" [(ngModel)]="selectedCifras" optionLabel="name"></p-selectButton>
+                            <img (click)="generarAletorios('all', selectedCifras.code)" class="img-aletorio" src="../../../../../assets/img/svg/Grupo_301.svg" />
                         </div>
                     </div>
                     <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
@@ -55,7 +55,7 @@
                             <div class="row select-all-a">
                                 <div class="col-md-6"></div>
                                 <div class="col-md-6" *ngIf="loterias.length > 0">
-                                    <span (click)="cambioSeleccion(1)" class="title-lot-bet">Seleccionar todas</span>
+                                    <span (click)="cambioSeleccion(1)" class="title-lot-bet">Seleccionar aletorias</span>
                                     <p-inputSwitch (click)="cambioSeleccion(2)" [(ngModel)]="checked"></p-inputSwitch>
                                 </div>
     
@@ -78,34 +78,40 @@
                         </div>
                     </div>
                     
-                    <div class="col-md-7">
+                    <div [formGroup]="chanceForm" class="col-md-7">
                         <div class="row">
                             <div class="col-md-5">
                                 <b>Modalidad</b><br/>
+                                <div *ngFor="let enum of valoresModalidades">
+                                    <label for="valorApostado">
+                                        <input [value]='enum' class="radioAzul" type="radio" name="valoresModalidades" formControlName="valoresModalidades">
+                                        {{enum  | currency}}
+                                    </label>
+                                </div>
                             </div>
                             <div class="col-md-7">
                                 <b>Número</b><br/>
-                                <input id="numeroFilaUno" autocomplete="off" type="text" maxlength="4"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
+                                <input id="numeroFilaUno" formControlName="numeroFilaUno" autocomplete="off" type="text" [maxlength]="maxlengthV" (keypress)="permitirSoloNumeros($event)" class="input-bet">
                                 <img class="img-aletorio" *ngIf="selectedCifras && selectedCifras.code == '3C'" src="../../../../../assets/img/svg/Grupo_306.svg" />
                                 <img class="img-aletorio" *ngIf="selectedCifras && selectedCifras.code == '4C'" src="../../../../../assets/img/svg/Grupo_303.svg" />
                                 <i class="fa fa-trash tras-del" aria-hidden="true"></i>
                                 <br/>
-                                <input id="numeroFilaDos" autocomplete="off" type="text" maxlength="4"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
+                                <input id="numeroFilaDos" formControlName="numeroFilaDos" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
                                 <img class="img-aletorio" *ngIf="selectedCifras && selectedCifras.code == '3C'" src="../../../../../assets/img/svg/Grupo_306.svg" />
                                 <img class="img-aletorio" *ngIf="selectedCifras && selectedCifras.code == '4C'" src="../../../../../assets/img/svg/Grupo_303.svg" />
                                 <i class="fa fa-trash tras-del" aria-hidden="true"></i>
                                 <br/>
-                                <input id="numeroFilaTres" autocomplete="off" type="text" maxlength="4"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
+                                <input id="numeroFilaTres" formControlName="numeroFilaTres" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
                                 <img class="img-aletorio" *ngIf="selectedCifras && selectedCifras.code == '3C'" src="../../../../../assets/img/svg/Grupo_306.svg" />
                                 <img class="img-aletorio" *ngIf="selectedCifras && selectedCifras.code == '4C'" src="../../../../../assets/img/svg/Grupo_303.svg" />
                                 <i class="fa fa-trash tras-del" aria-hidden="true"></i>
                                 <br/>
-                                <input id="numeroFilaCuatro" autocomplete="off" type="text" maxlength="4"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
+                                <input id="numeroFilaCuatro" formControlName="numeroFilaCuatro" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
                                 <img class="img-aletorio" *ngIf="selectedCifras && selectedCifras.code == '3C'" src="../../../../../assets/img/svg/Grupo_306.svg" />
                                 <img class="img-aletorio" *ngIf="selectedCifras && selectedCifras.code == '4C'" src="../../../../../assets/img/svg/Grupo_303.svg" />
                                 <i class="fa fa-trash tras-del" aria-hidden="true"></i>
                                 <br/>
-                                <input id="numeroFilaCinco" autocomplete="off" type="text" maxlength="4"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
+                                <input id="numeroFilaCinco" formControlName="numeroFilaCinco" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
                                 <img class="img-aletorio" *ngIf="selectedCifras && selectedCifras.code == '3C'" src="../../../../../assets/img/svg/Grupo_306.svg" />
                                 <img class="img-aletorio" *ngIf="selectedCifras && selectedCifras.code == '4C'" src="../../../../../assets/img/svg/Grupo_303.svg" />
                                 <i class="fa fa-trash tras-del" aria-hidden="true"></i>
