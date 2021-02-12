@@ -282,7 +282,7 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
     if(this.seleccionado==3){
       this.chanceForm.controls.numeroA.setValue(Math.round(Math.random() * (100 - 999) + 999 ) );
     }
-    else if(this.seleccionado==4){
+    else if(this.seleccionado==1){
       this.chanceForm.controls.numeroA.setValue(Math.round(Math.random() * (1000 - 9999) + 9999 ));
     }
     else{
@@ -296,7 +296,7 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
     if(this.seleccionado==3){
       this.chanceForm.controls.numeroB.setValue(Math.round(Math.random() * (100 - 999) + 999 ) );
     }
-    else if(this.seleccionado==4){
+    else if(this.seleccionado==1){
       this.chanceForm.controls.numeroB.setValue(Math.round(Math.random() * (1000 - 9999) + 9999 ));
     }
     else{
@@ -310,7 +310,7 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
     if(this.seleccionado==3){
       this.chanceForm.controls.numeroC.setValue(Math.round(Math.random() * (100 - 999) + 999 ) );
     }
-    else if(this.seleccionado==4){
+    else if(this.seleccionado==1){
       this.chanceForm.controls.numeroC.setValue(Math.round(Math.random() * (1000 - 9999) + 9999 ));
     }
     else{
@@ -324,7 +324,7 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
     if(this.seleccionado==3){
       this.chanceForm.controls.numeroD.setValue(Math.round(Math.random() * (100 - 999) + 999 ) );
     }
-    else if(this.seleccionado==4){
+    else if(this.seleccionado==1){
       this.chanceForm.controls.numeroD.setValue(Math.round(Math.random() * (1000 - 9999) + 9999 ));
     }
     else{
@@ -338,7 +338,7 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
     if(this.seleccionado==3){
       this.chanceForm.controls.numeroE.setValue(Math.round(Math.random() * (100 - 999) + 999 ) );
     }
-    else if(this.seleccionado==4){
+    else if(this.seleccionado==1){
       this.chanceForm.controls.numeroE.setValue(Math.round(Math.random() * (1000 - 9999) + 9999 ));
     }
     else{
@@ -353,7 +353,7 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
       this.chanceForm.controls.numeroD.setValue(Math.round(Math.random() * (100 - 999) + 999 ) );
       this.chanceForm.controls.numeroE.setValue(Math.round(Math.random() * (100 - 999) + 999 ) );
       }
-    else if(this.seleccionado==4){
+    else if(this.seleccionado==1){
       this.chanceForm.controls.numeroA.setValue(Math.round(Math.random() * (1000 - 9999) + 9999 ));
       this.chanceForm.controls.numeroB.setValue(Math.round(Math.random() * (1000 - 9999) + 9999 ));
       this.chanceForm.controls.numeroC.setValue(Math.round(Math.random() * (1000 - 9999) + 9999 ));
@@ -573,7 +573,7 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
         valida=true;
       }
     }
-    else if(this.seleccionado==4){
+    else if(this.seleccionado==1){
       if(this.chanceForm.get('numeroA').value.toString().length != 4){
         valida=true;
       }
@@ -640,7 +640,7 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
         _id: 'bet_' + Math.floor(Math.random() * 999999),
         idCustomer: this.idCustomer,
         correoCustomer: this.correoCustomer,
-        modalidad: this.seleccionado==4 ? '4 Cifras' : '3 Cifras',
+        modalidad: this.seleccionado==1 ? '4 Cifras' : '3 Cifras',
         numberPlayed:null,
         valorApostado: this.chanceForm.get('valorApostado').value,
         apuestaA: this.chanceForm.get('numeroA').value,
@@ -684,7 +684,7 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
         _id: this.esDuplicado ? 'bet_' + Math.floor(Math.random() * 999999) : this.idEdit,
         documentCustomer: this.chanceForm.get('numeroDocumento').value,
         nameCustomer: this.chanceForm.get('nombreCliente').value,
-        modalidad: this.seleccionado==4 ? '4 Cifras' : '3 Cifras',
+        modalidad: this.seleccionado==1 ? '4 Cifras' : '3 Cifras',
         numberPlayed:null,
         apuestaA: this.chanceForm.get('numeroA').value,
         apuestaB: this.chanceForm.get('numeroB').value,
