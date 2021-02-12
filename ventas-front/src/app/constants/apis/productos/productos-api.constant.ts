@@ -77,7 +77,7 @@ export class ProductosAPIConstant {
 
   /** URL del recurso para hacer compra */
   static readonly URL_REGISTRAR_APUESTA: string =
-  'http://localhost:8181/' +
+  AppDomainConstant.URI_GATEWAY  +
   ProductosAPIConstant.LOTERIAS_API +
   'registrarApuesta';
 
@@ -89,7 +89,7 @@ export class ProductosAPIConstant {
 
   /** URL del recurso para hacer compra version 2 */
   static readonly URL_REGISTRAR_APUESTAS: string =
-  'http://localhost:8181/'+
+  AppDomainConstant.URI_GATEWAY +
   ProductosAPIConstant.LOTERIAS_API +
   'registrarApuestas';
 
