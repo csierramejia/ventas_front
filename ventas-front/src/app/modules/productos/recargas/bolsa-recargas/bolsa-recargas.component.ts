@@ -176,11 +176,8 @@ export class BolsaRecargasComponent extends CommonComponent implements OnInit, O
     this.cartItems.forEach(element => {
       this.valueBet=this.valueBet+parseInt(element.valor);
     });
-
-    this.valueVat = Math.floor(this.valueBet * this.inputVat) / 100;
-    this.valueBet = this.valueBet - this.valueVat;
-
-    this.valueBetTotal = Math.floor(this.valueBet + this.valueVat);
+    this.valueVat=0;
+    this.valueBetTotal =this.valueBet;
   }
 
   payTransaction(): void {

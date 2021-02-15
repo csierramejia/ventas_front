@@ -135,12 +135,9 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
 
 
   calcularValores() {
-
     this.subtotalGeneral = 0
     this.ivaGeneral = 0
     this.totalGeneral = 0
-
-
     if(this.productosChance){
       this.productosChance.forEach(element => {
         this.totalGeneral = Math.round(this.totalGeneral + element.total);
@@ -148,14 +145,12 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
         this.ivaGeneral = Math.round(this.ivaGeneral + element.iva)
       });
     }
-    
   }
 
 
 
   calcularDevuelta(){
     this.devuelta = 0
-
     if(this.efectivo){
       let efectivoCalcular = parseInt(this.efectivo);
       if(!efectivoCalcular){
@@ -172,7 +167,6 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
       this.verBotonFinalizar = false;
       this.messageService.add(MsjUtil.getToastErrorMedium('El valor recibido no puede ser menor al total a pagar'));
     }
-    
   }
 
 
@@ -193,6 +187,7 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
   depurarInfo(){
     this.paySend = [];
     const productosDepurar = JSON.parse(localStorage.getItem('chanceApuesta'))
+
     for (let index = 0; index < productosDepurar.length; index++) {
       const bet = { bets:null, canal: 'WEB', dataPlayed:null, idCustomer:null, idUser:this.shellState.userAccount.auth.usuario.idUsuario, lotteries:null, producto:this.producto, valueBet:null, valueBetTotal:null, valueVat:null,idOficina:this.shellState.userAccount.auth.usuario.idOficina,idPuntoVenta:this.shellState.userAccount.auth.usuario.idPuntoVenta};
       bet.lotteries = this.obtenerLoteriasSeleccionadas(productosDepurar[index].loterias)
@@ -204,7 +199,6 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
       bet.valueVat = Math.round(bet.valueBetTotal - bet.valueBet);
       bet.idOficina = this.shellState.userAccount.auth.usuario.idOficina;
       bet.idPuntoVenta = this.shellState.userAccount.auth.usuario.idPuntoVenta
-     
       // guardamos el correo del usuario (para enviar desplendible de pago)
       this.correoCliente = productosDepurar[index].clienteOperacion.correoCustomer
       this.paySend.push(bet);
@@ -224,10 +218,8 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
       apuestaData => {
         const responseApuesta: any = apuestaData;
         if (responseApuesta.exito) {
-
           // se muestra el mensaje exitoso
           this.messageService.add(MsjUtil.getToastSuccessMedium('Transacción exitosa'));
-
           // se envia la notificacion
           if (this.correoCliente) {
             const notificacion: NotificacionSoportePagoDTO = apuestaData.notificacionSoportePago;
@@ -237,7 +229,6 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
               this.enviarNotificacionSoportePago(notificacion);
             }
           }
-
           // se limpia la data ingresada
           // this.cleanCartValues();
           // this.creatingBet.emit(true);
@@ -268,12 +259,9 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
 
 
   obtenerEstructuraDatosNumeros(numerosIteras, fechaSorteo, loterias){
-
     const numeros = [];
-
-    for (let index = 0; index < numerosIteras.length; index++) {
-
-      if(index === 0){
+    numerosIteras.forEach(element => {
+      if (element.numeroFilaUno) { 
         numeros.push({
           apuestaA: null,
           apuestaB: null,
@@ -283,20 +271,19 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
           details: null,
           fechaSorteo: fechaSorteo,
           lotteries: loterias,
-          numberPlayed: numerosIteras[index].numeroFilaUno,
+          numberPlayed: element.numeroFilaUno,
           numeroAstro: null,
           numeroSuper: null,
           valueBet: null,
           valueVat: null,
           zignos: null,
-          combinado: numerosIteras[index].combinadoFilaUno,
-          dosCifras: numerosIteras[index].dosCifrasFilaUno,
-          unaCifra: numerosIteras[index].unaCifraFilaUno,
-          valorDirecto: numerosIteras[index].valorDirectoFilaUno,
+          combinado: element.combinadoFilaUno,
+          dosCifras: element.dosCifrasFilaUno,
+          unaCifra: element.unaCifraFilaUno,
+          valorDirecto: element.valorDirectoFilaUno,
         })
       }
-
-      if(index === 1){
+      if (element.numeroFilaDos) { 
         numeros.push({
           apuestaA: null,
           apuestaB: null,
@@ -306,21 +293,41 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
           details: null,
           fechaSorteo: fechaSorteo,
           lotteries: loterias,
-          numberPlayed: numerosIteras[index].numeroFilaDos,
+          numberPlayed: element.numeroFilaDos,
           numeroAstro: null,
           numeroSuper: null,
           valueBet: null,
           valueVat: null,
           zignos: null,
-          combinado: numerosIteras[index].combinadoFilaDos,
-          dosCifras: numerosIteras[index].dosCifrasFilaDos,
-          unaCifra: numerosIteras[index].unaCifraFilaDos,
-          valorDirecto: numerosIteras[index].valorDirectoFilaDos,
-          
+          combinado: element.combinadoFilaDos,
+          dosCifras: element.dosCifrasFilaDos,
+          unaCifra: element.unaCifraFilaDos,
+          valorDirecto: element.valorDirectoFilaDos,
         })
       }
-
-      if(index === 2){
+      if (element.numeroFilaTres) { 
+          numeros.push({
+          apuestaA: null,
+          apuestaB: null,
+          apuestaC: null,
+          apuestaD: null,
+          apuestaE: null,
+          details: null,
+          fechaSorteo: fechaSorteo,
+          lotteries: loterias,
+          numberPlayed: element.numeroFilaTres,
+          numeroAstro: null,
+          numeroSuper: null,
+          valueBet: null,
+          valueVat: null,
+          zignos: null,
+          combinado: element.combinadoFilaTres,
+          dosCifras: element.dosCifrasFilaTres,
+          unaCifra: element.unaCifraFilaTres,
+          valorDirecto: element.valorDirectoFilaTres
+        })
+      }
+      if (element.numeroFilaCuatro) { 
         numeros.push({
           apuestaA: null,
           apuestaB: null,
@@ -330,20 +337,19 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
           details: null,
           fechaSorteo: fechaSorteo,
           lotteries: loterias,
-          numberPlayed: numerosIteras[index].numeroFilaTres,
+          numberPlayed: element.numeroFilaCuatro,
           numeroAstro: null,
           numeroSuper: null,
           valueBet: null,
           valueVat: null,
           zignos: null,
-          combinado: numerosIteras[index].combinadoFilaTres,
-          dosCifras: numerosIteras[index].dosCifrasFilaTres,
-          unaCifra: numerosIteras[index].unaCifraFilaTres,
-          valorDirecto: numerosIteras[index].valorDirectoFilaTres
+          combinado: element.combinadoFilaCuatro,
+          dosCifras: element.dosCifrasFilaCuatro,
+          unaCifra: element.unaCifraFilaCuatro,
+          valorDirecto: element.valorDirectoFilaCuatro,
         })
       }
-
-      if(index === 3){
+      if (element.numeroFilaCinco) { 
         numeros.push({
           apuestaA: null,
           apuestaB: null,
@@ -353,56 +359,27 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
           details: null,
           fechaSorteo: fechaSorteo,
           lotteries: loterias,
-          numberPlayed: numerosIteras[index].numeroFilaCuatro,
+          numberPlayed: element.numeroFilaCinco,
           numeroAstro: null,
           numeroSuper: null,
           valueBet: null,
           valueVat: null,
           zignos: null,
-          combinado: numerosIteras[index].combinadoFilaCuatro,
-          dosCifras: numerosIteras[index].dosCifrasFilaCuatro,
-          unaCifra: numerosIteras[index].unaCifraFilaCuatro,
-          valorDirecto: numerosIteras[index].valorDirectoFilaCuatro,
+          combinado: element.combinadoFilaCinco,
+          dosCifras: element.dosCifrasFilaCinco,
+          unaCifra: element.unaCifraFilaCinco,
+          valorDirecto: element.valorDirectoFilaCinco,
         })
       }
-
-      if(index === 4){
-        numeros.push({
-          apuestaA: null,
-          apuestaB: null,
-          apuestaC: null,
-          apuestaD: null,
-          apuestaE: null,
-          details: null,
-          fechaSorteo: fechaSorteo,
-          lotteries: loterias,
-          numberPlayed: numerosIteras[index].numeroFilaCinco,
-          numeroAstro: null,
-          numeroSuper: null,
-          valueBet: null,
-          valueVat: null,
-          zignos: null,
-          combinado: numerosIteras[index].combinadoFilaCinco,
-          dosCifras: numerosIteras[index].dosCifrasFilaCinco,
-          unaCifra: numerosIteras[index].unaCifraFilaCinco,
-          valorDirecto: numerosIteras[index].valorDirectoFilaCinco,
-        })
-      }
-
-    }
-
+    });
     return this.obtenerTipoJuego(numeros);
-
   }
 
 
   obtenerTipoJuego(numeros){
-
     let cont = 0
-
     numeros.forEach(element => {
       const detalles = []
-
       if (String(element.numberPlayed).length === 4) {
         if (element.valorDirecto) { detalles.push({code: 1, valor: element.valorDirecto});}
         if (element.combinado) { detalles.push({code: 2, valor: element.combinado});}
@@ -456,7 +433,6 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
         }
       });
     }
-    
     return loteriasSeleccionadas;
   }
 
@@ -476,7 +452,6 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
   }
 
 
-
   volverAtras(): void {
     this.router.navigate([RouterConstant.NAVIGATE_CHANCE]);
   }
@@ -491,7 +466,6 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
     this.efectivo = ''
     this.devuelta = 0
     localStorage.removeItem('chanceApuesta');
-    // this.menuCarrito.refrescarCarrito();
   }
 
   /**
@@ -526,6 +500,4 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
   }
 
   
-
-
 }

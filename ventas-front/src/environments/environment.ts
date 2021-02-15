@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   serverApiUrl: 'http://localhost:8181/'
-  //serverApiUrl: 'https://gateway2.logiiblue.com/'
+  // serverApiUrl: 'https://gateway2.logiiblue.com/'
 };
 
 /*

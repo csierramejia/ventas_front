@@ -13,7 +13,7 @@
 
       <div class="row">
         <div class="col-md-10">
-          <span class="fecha-sorteo-text-numero-loterias">Fecha sorteo:</span> <span class="fecha-sorteo">{{ producto.fechaActual }}</span><br/>
+          <span class="fecha-sorteo-text-numero-loterias">Fecha sorteo:</span> <span class="fecha-sorteo">{{ producto.fechaSeleccionApuesta | date: 'dd/MM/yyyy' }}</span><br/>
           <span class="fecha-sorteo-text-numero-loterias">Números: {{ producto.listaNumeros.length }}</span> <span class="fecha-sorteo-text-numero-loterias espacio-loterias">Loterías: {{ producto.loterias.length }}</span><br/>
         </div>
         <div class="col-md-2">
