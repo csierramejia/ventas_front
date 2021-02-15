@@ -14,6 +14,7 @@ import { VentanaModalModel } from 'src/app/model-component/ventana-modal.model';
 import { SessionStoreUtil } from 'src/app/utilities/session-store.util';
 import { TipoEventoConstant } from 'src/app/constants/tipo-evento.constant';
 import { Observable, Subject } from "rxjs";
+import * as moment from 'moment';
 
 /**
  * Se utiliza para administrar el estado del Shell de la aplicacion
@@ -53,6 +54,9 @@ export class ShellState {
   /** cuenta regresiva para el timeout */
   public countdownIdle: string;
 
+  /** Datos del usuario */
+  public auth: AutenticacionResponseDTO;
+
   /**
    * @param router, se utiliza para ser notificado cuando el router cambia
    * @param idle, se utiliza para activar el timeout
@@ -62,8 +66,13 @@ export class ShellState {
     private router: Router,
     private idle: Idle,
     private keepalive: Keepalive, ) {
-
     // this.addUsuario$.subscribe(status => window.localStorage.setItem('addUsuario', status)); 
+
+     this.auth = SessionStoreUtil.auth(TipoEventoConstant.GET);
+    setInterval(() => {
+      this.validaProgramacion();
+      
+    }, 300000);
 
     // Estado para notificar el tamanio de la pantalla
     this.screen = new ScreenST();
@@ -232,9 +241,35 @@ export class ShellState {
    * existe una autenticacion en el session store
    */
   private initTimeOut() {
-    const auth: AutenticacionResponseDTO = SessionStoreUtil.auth(TipoEventoConstant.GET);
-    if (auth && auth.usuario && auth.usuario.idUsuario) {
+   
+    if (this.auth && this.auth.usuario && this.auth.usuario.idUsuario) {
       this.idle.watch();
     }
   }
+
+
+  /**
+   * Método que permite verificar si la programación del vendedor aún está activa
+   */
+  private validaProgramacion(): void {
+    // se cierra sesion cuando se cumple timeout
+     if (this.auth && this.auth.usuario && this.auth.usuario.horaFinal) {
+     const horaActual = moment(moment().format('HH:mm:ss'), 'HH:mm:ss');
+     const horaProgramada = moment(this.auth.usuario.horaFinal, 'HH:mm:ss');
+ 
+     if (horaProgramada) {
+    
+       const result = (moment(horaActual).isAfter(moment(horaProgramada)));
+       console.log(result);
+       if (result) {
+     
+        this.cerrarSesion();
+        
+       }
+     }
+   }
+ }
+ 
+
+
 }

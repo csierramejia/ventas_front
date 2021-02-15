@@ -12,6 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SelectivePreload } from './directives/preload/selective-preload';
 import { PrivilegiosGuard } from './auth-guard/privilegios.guard';
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
+import { MomentModule } from 'ngx-moment';
 /**
  * Modulo principal de la aplicacion, contiene
  * todos los componentes y modulos de inicio
@@ -26,7 +27,8 @@ import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
     HttpClientModule,
     BrowserModule,
     BrowserAnimationsModule,
-    NgIdleKeepaliveModule.forRoot()
+    NgIdleKeepaliveModule.forRoot(),
+    MomentModule
   ],
   providers: [
     {

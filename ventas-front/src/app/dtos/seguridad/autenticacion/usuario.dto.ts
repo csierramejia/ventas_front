@@ -23,4 +23,8 @@ export class UsuarioDTO {
 
     /** Punto de venta al que pertenece el usuario */
     public idPuntoVenta: number;
+
+     /** Almacena la hora final de programación*/ 
+	public horaFinal: string;
+
 }
