@@ -103,7 +103,7 @@ export class MenuCarritoComponent implements OnInit {
         this.refrescarCarritoChance();
         break;
       case 'chance-millonario':
-      
+        this.refrescarCarritoChanceMillonario();
         break;
       default:
         break;
@@ -117,6 +117,38 @@ export class MenuCarritoComponent implements OnInit {
     if( JSON.parse(localStorage.getItem('chanceApuesta')) ){
       if(JSON.parse(localStorage.getItem('chanceApuesta')).length > 0) {
         const iteracionLocalStorageProductos = JSON.parse(localStorage.getItem('chanceApuesta'));
+        const newProductos = []
+        iteracionLocalStorageProductos.forEach(element => {
+          const loteriasSeleccionadas = this.get_lotteriesSelected(element.loterias)
+          newProductos.push({
+            apostado:element.apostado,
+            colilla:element.colilla,
+            fechaActual:element.fechaActual,
+            fechaSeleccionApuesta:element.fechaSeleccionApuesta,
+            iva:element.iva,
+            listaNumeros:element.listaNumeros,
+            loterias:loteriasSeleccionadas,
+            total:Math.round(element.total),
+            _id:element._id,
+            viewRepetir: false
+          })
+          this.subtotal = Math.round(this.subtotal + element.total)
+        });
+        this.productos = newProductos;
+      } else {
+        this.productos = []
+      }
+    }
+  }
+
+
+
+  refrescarCarritoChanceMillonario() {
+    this.subtotal = 0;
+    this.productos = [];
+    if( JSON.parse(localStorage.getItem('chanceApuestaMillonario')) ){
+      if(JSON.parse(localStorage.getItem('chanceApuestaMillonario')).length > 0) {
+        const iteracionLocalStorageProductos = JSON.parse(localStorage.getItem('chanceApuestaMillonario'));
         const newProductos = []
         iteracionLocalStorageProductos.forEach(element => {
           const loteriasSeleccionadas = this.get_lotteriesSelected(element.loterias)
