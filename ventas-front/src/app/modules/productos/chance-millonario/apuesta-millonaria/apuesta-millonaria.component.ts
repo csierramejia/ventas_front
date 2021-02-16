@@ -25,6 +25,7 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
   @Output() reiniciarEdit: EventEmitter<any> = new EventEmitter();
   @Output() agregarNumeros: EventEmitter<any> = new EventEmitter();
   @Output() agregarCliente: EventEmitter<any> = new EventEmitter();
+  @Output() agregarModalidad: EventEmitter<any> = new EventEmitter();
   @ViewChild(CrearClienteComponent) crearClienteChild: CrearClienteComponent;
 
   stateDisabeld = false;
@@ -38,6 +39,8 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
   pCalendarioValor: Date;
   displayModalBuscarCliente = true;
   valoresModalidades:any;
+  // valoresModalidades = [2000,5000,6000]
+
   /** Es el correo del cliente quien hace la compra */
   private correoCustomer: string;
   enabledCustomer = false;
@@ -449,6 +452,11 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
   }
 
 
+  emitirModalidad(modalidad){
+    this.agregarModalidad.emit(modalidad);
+  }
+
+
   /**
    * @author Luis Hernandez
    * @param event
@@ -619,34 +627,98 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
 
 
   generarAletorios(event, numeroCifras, fila){
-    // if(numeroCifras){
-    //   if(event == 'all'){
-    //     let arrayAletorios = []
-    //     if(numeroCifras == '3C'){
-    //       for (let index = 0; index < 5; index++) {
-    //         arrayAletorios.push(Math.round(Math.random() * (100 - 999) + 999))
-    //       }
-    //     } else if(numeroCifras == '4C'){
-    //       for (let index = 0; index < 5; index++) {
-    //         arrayAletorios.push(Math.round(Math.random() * (1000 - 9999) + 9999))
-    //       }
-    //     }
-    //     this.chanceForm.controls.numeroFilaUno.setValue(arrayAletorios[0]);
-    //     this.chanceForm.controls.numeroFilaDos.setValue(arrayAletorios[1]);
-    //     this.chanceForm.controls.numeroFilaTres.setValue(arrayAletorios[2]);
-    //     this.chanceForm.controls.numeroFilaCuatro.setValue(arrayAletorios[3]);
-    //     this.chanceForm.controls.numeroFilaCinco.setValue(arrayAletorios[4]);
-    //   } else if(event == 'one'){
-    //     let aletorio = 0;
-    //     if(numeroCifras == '3C'){
-    //       aletorio = Math.round(Math.random() * (100 - 999) + 999);
-    //     } else if(numeroCifras == '4C'){
-    //       aletorio = Math.round(Math.random() * (1000 - 9999) + 9999);
-    //     }
-    //     console.log(aletorio);
-    //   }
-    // }
+
+    if(numeroCifras){
+      if(event == 'all'){
+        let arrayAletorios = []
+        if(numeroCifras == '3C'){
+          for (let index = 0; index < 5; index++) {
+            arrayAletorios.push(Math.round(Math.random() * (100 - 999) + 999))
+          }
+        } else if(numeroCifras == '4C'){
+          for (let index = 0; index < 5; index++) {
+            arrayAletorios.push(Math.round(Math.random() * (1000 - 9999) + 9999))
+          }
+        }
+        this.chanceForm.controls.numeroFilaUno.setValue(arrayAletorios[0]);
+        this.chanceForm.controls.numeroFilaDos.setValue(arrayAletorios[1]);
+        this.chanceForm.controls.numeroFilaTres.setValue(arrayAletorios[2]);
+        this.chanceForm.controls.numeroFilaCuatro.setValue(arrayAletorios[3]);
+        this.chanceForm.controls.numeroFilaCinco.setValue(arrayAletorios[4]);
+      } else if(event == 'one'){
+        let aletorio = 0;
+        if(numeroCifras == '3C'){
+          aletorio = Math.round(Math.random() * (100 - 999) + 999);
+          this.printFilaAletorio(aletorio, fila);
+        } else if(numeroCifras == '4C'){
+          aletorio = Math.round(Math.random() * (1000 - 9999) + 9999);
+          this.printFilaAletorio(aletorio, fila);
+        }
+      }
+    }
+    this.emitirNumeros();
   }
+
+
+  printFilaAletorio(numero, fila){
+    switch (fila) {
+      case 1:
+        this.chanceForm.controls.numeroFilaUno.setValue(numero);
+        break;
+      case 2:
+        this.chanceForm.controls.numeroFilaDos.setValue(numero);
+        break;
+      case 3:
+        this.chanceForm.controls.numeroFilaTres.setValue(numero);
+        break;
+      case 4:
+        this.chanceForm.controls.numeroFilaCuatro.setValue(numero);
+        break;
+      case 5:
+        this.chanceForm.controls.numeroFilaCinco.setValue(numero);
+        break;
+      default:
+        break;
+    }
+  }
+
+
+  borrarFilaUno() {
+    this.chanceForm.get('numeroFilaUno').setValue('');
+    this.emitirNumeros()
+    document.getElementById('numeroFilaUno').focus();
+  }
+
+
+  borrarFilaDos() {
+    this.chanceForm.get('numeroFilaDos').setValue('');
+    this.emitirNumeros()
+    document.getElementById('numeroFilaDos').focus();
+  }
+
+
+  borrarFilaTres() {
+    this.chanceForm.get('numeroFilaTres').setValue('');
+    this.emitirNumeros();
+    document.getElementById('numeroFilaTres').focus();
+  }
+
+
+  borrarFilaCuatro() {
+    this.chanceForm.get('numeroFilaCuatro').setValue('');
+    this.emitirNumeros()
+    document.getElementById('numeroFilaCuatro').focus();
+  }
+
+
+  borrarFilaCinco() {
+    this.chanceForm.get('numeroFilaCinco').setValue('');
+    this.emitirNumeros();
+    document.getElementById('numeroFilaCinco').focus();
+  }
+
+
+
 
 
 }

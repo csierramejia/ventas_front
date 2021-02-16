@@ -62,8 +62,19 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
 
 
   obtenerColilla(){
+    
+
     if(this.productoParent === 'chance') {
       this.productosService.consultarNumeroSerieApuesta("CHANCE").subscribe(
+        numeroSerie => {
+          this.colilla=numeroSerie.codigo;
+        },
+        error => {
+          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+        }
+      );
+    } else if(this.productoParent === 'chance-millonario'){
+      this.productosService.consultarNumeroSerieApuesta("CHANCE MILLONARIO").subscribe(
         numeroSerie => {
           this.colilla=numeroSerie.codigo;
         },
@@ -140,26 +151,29 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
 
 
 
+  setModalidad(event) {
+    this.valueBetTotal = event;
+    this.obtenerValoresTotales();
+  }
+
+
+
+
   /**
    * @author Luis Hernandez
    * @description Metodo que se encarga de recalcular el valor de la apuesta
    */
   obtenerValoresTotales(): void {
-
     switch (this.productoParent) {
       case 'chance':
         this.obtenerValoresTotalesChance();
         break;
       case 'chance-millonario':
-        console.log('this.listaNumeros chance millonario')
-        console.log(this.listaNumeros)
-        console.log('this.listaNumeros chance millonario')
+        this.obtenerValoresTotalesChanceMillonario();
         break;
       default:
         break;
     }
-  
-
   }
 
 
@@ -208,10 +222,49 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
   }
 
 
-  agregarCarritoF(): void { 
+
+  obtenerValoresTotalesChanceMillonario(){
+
+    // this.valueVat = 0;
+    // this.valueBetTotal = 0;
+    // this.valueBet = 0;
+    // let valorSumado = 0;
 
     
 
+    
+    if(this.loterias){
+      const ivaNv = this.inputVat / 100 + 1
+      this.valueBet = this.valueBetTotal / ivaNv;
+      this.valueVat = this.valueBetTotal - this.valueBet;
+    }
+
+  }
+
+
+  agregarCarritoF(): void { 
+
+    switch (this.productoParent) {
+      case 'chance':
+        this.agregarCarritoFChance();
+        break;
+      case 'chance-millonario':
+        this.agregarCarritoFChanceMillonario();
+        break;
+      default:
+        break;
+    }
+
+    
+
+    
+
+
+    
+  }
+
+
+  agregarCarritoFChance(): void {
     const listaNumeros = this.obtenerFilasConApuesta(this.listaNumeros)
 
     if(this.validarCeros(listaNumeros)){
@@ -241,9 +294,43 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
         this.messageService.add(MsjUtil.getToastErrorMedium('Valide que esta gestionando los campos necesarios para realizar la apuesta'));
       }
     }
+  }
 
+
+
+  agregarCarritoFChanceMillonario(): void {
+    const listaNumeros = this.obtenerFilasConApuesta(this.listaNumeros)
 
     
+
+    if(this.validarCeros(listaNumeros)){
+      this.messageService.add(MsjUtil.getToastErrorMedium('Usted no puede colocar valores en 0'));
+    } else {
+      if(this.colilla && this.fechaActual && this.loteriaSeleccionadas.length > 0 && listaNumeros.length > 0) {
+
+        if(this.edit){
+          this.confirmacionAgregar.isCreate = false;
+          this.verConfirmacionPopap = true;
+          this.confirmacionAgregar.colilla = this.colilla
+          this.confirmacionAgregar.numeros = this.concatenarNumeros(listaNumeros)
+          this.confirmacionAgregar.loterias = this.concatenarLoterias(this.loterias)
+          this.confirmacionAgregar.apostado = Math.round(this.valueBet)
+          this.confirmacionAgregar.iva = Math.round(this.valueVat)
+          this.confirmacionAgregar.total = Math.round(this.valueBetTotal)
+        } else {
+          this.confirmacionAgregar.isCreate = true;
+          this.verConfirmacionPopap = true;
+          this.confirmacionAgregar.colilla = this.colilla
+          this.confirmacionAgregar.numeros = this.concatenarNumeros(listaNumeros)
+          this.confirmacionAgregar.loterias = this.concatenarLoterias(this.loterias)
+          this.confirmacionAgregar.apostado = Math.round(this.valueBet)
+          this.confirmacionAgregar.iva = Math.round(this.valueVat)
+          this.confirmacionAgregar.total = Math.round(this.valueBetTotal)
+        }
+      } else {
+        this.messageService.add(MsjUtil.getToastErrorMedium('Valide que esta gestionando los campos necesarios para realizar la apuesta'));
+      }
+    }
   }
 
 
@@ -443,6 +530,127 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
    * el evento de crear o edit para agregar al carrito el producto
    */
   eventoCrearEditar (event): void {
+    switch (this.productoParent) {
+      case 'chance':
+        this.eventoCrearEditarChance();
+        break;
+      case 'chance-millonario':
+        this.eventoCrearEditarChanceMillonario();
+        break;
+      default:
+        break;
+    }
+  }
+
+
+  eventoCrearEditarChanceMillonario(): void {
+
+    this.confirmacionAgregar.isCreate = false;
+    this.verConfirmacionPopap = false;
+    const listaNumeros = this.obtenerFilasConApuesta(this.listaNumeros)
+    console.log('listaNumeros eventoCrearEditarChanceMillonario');
+    console.log(listaNumeros);
+    console.log('listaNumeros eventoCrearEditarChanceMillonario');
+
+
+
+    if(this.edit){
+      // const productosEditar = {
+      //   _id: this.infoEdit[0]._id,
+      //   colilla: this.colilla,
+      //   fechaActual: this.fechaActual,
+      //   loterias: this.loterias,
+      //   apostado: this.valueBet,
+      //   iva: this.valueVat,
+      //   total: this.valueBetTotal,
+      //   listaNumeros:listaNumeros,
+      //   clienteOperacion:this.clienteOperacion,
+      //   fechaSeleccionApuesta:this.fechaSeleccionApuesta
+      // }
+
+      // let chanceApuesta:any = JSON.parse(localStorage.getItem('chanceApuesta'));
+
+      // if (chanceApuesta[0]) {
+      //   let actualizarCliente = chanceApuesta      
+      //   for (let index = 0; index < actualizarCliente.length; index++) {
+      //     actualizarCliente[index].clienteOperacion = this.clienteOperacion;
+      //   }
+      //   localStorage.setItem('chanceApuesta', JSON.stringify(actualizarCliente));
+      //   chanceApuesta = JSON.parse(localStorage.getItem('chanceApuesta'));
+      // }
+
+      // const keyResponse = this.getKeyObject(this.infoEdit[0]._id, chanceApuesta);
+      // chanceApuesta[keyResponse]._id = productosEditar._id
+      // chanceApuesta[keyResponse].colilla = productosEditar.colilla
+      // chanceApuesta[keyResponse].fechaActual = productosEditar.fechaActual
+      // chanceApuesta[keyResponse].loterias = productosEditar.loterias
+      // chanceApuesta[keyResponse].apostado = productosEditar.apostado
+      // chanceApuesta[keyResponse].iva = productosEditar.iva
+      // chanceApuesta[keyResponse].total = productosEditar.total
+      // chanceApuesta[keyResponse].listaNumeros = productosEditar.listaNumeros
+      // chanceApuesta[keyResponse].fechaSeleccionApuesta = productosEditar.fechaSeleccionApuesta
+      // localStorage.setItem('chanceApuesta', JSON.stringify(chanceApuesta));
+      // this.cleanFooter()
+      // this.agregarProductos.emit(true);
+      // this.borrarTodoReset.emit(true);
+    } else {
+
+      const productosAgregar = {
+        _id: 'bet_' + Math.floor(Math.random() * 999999),
+        colilla: this.colilla,
+        fechaActual: this.fechaActual,
+        loterias: this.loterias,
+        apostado: this.valueBet,
+        iva: this.valueVat,
+        total: this.valueBetTotal,
+        listaNumeros:listaNumeros,
+        clienteOperacion:this.clienteOperacion,
+        fechaSeleccionApuesta:this.fechaSeleccionApuesta
+      }
+
+      let chanceApuestaMillonario = localStorage.getItem('chanceApuestaMillonario');
+
+      if(JSON.parse(chanceApuestaMillonario) != null){
+        if (JSON.parse(chanceApuestaMillonario)[0]) {
+          let actualizarCliente = JSON.parse(chanceApuestaMillonario)          
+          for (let index = 0; index < actualizarCliente.length; index++) {
+            actualizarCliente[index].clienteOperacion = this.clienteOperacion;
+          }
+          localStorage.setItem('chanceApuestaMillonario', JSON.stringify(actualizarCliente));
+          chanceApuestaMillonario = localStorage.getItem('chanceApuestaMillonario');
+        }
+      }
+
+      if(chanceApuestaMillonario === null) {
+        const arrayproductosAgregar = []
+        arrayproductosAgregar.push(productosAgregar)
+        localStorage.setItem('chanceApuestaMillonario', JSON.stringify(arrayproductosAgregar));
+      } else {
+        const chanceAp = JSON.parse(localStorage.getItem('chanceApuestaMillonario'));
+        chanceAp.push(productosAgregar);
+        localStorage.setItem('chanceApuestaMillonario', JSON.stringify(chanceAp));
+      }
+      this.agregarProductos.emit(true);
+      this.borrarTodoReset.emit(true);
+      
+    }
+
+
+    //////////////////////////////////////
+    ///////////// ACA SUBCR /////////////
+    this.shellState.enviarEventoCarrito(true);
+
+    this.valueVat = 0;
+    this.valueBetTotal = 0;
+
+
+
+  }
+
+
+
+  eventoCrearEditarChance(): void {
+
     this.confirmacionAgregar.isCreate = false;
     this.verConfirmacionPopap = false;
 
@@ -530,13 +738,12 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
     }
 
 
-    ////////////////////////////////////////
-    /////////////// ACA SUBCR /////////////
+    //////////////////////////////////////
+    ///////////// ACA SUBCR /////////////
     this.shellState.enviarEventoCarrito(true);
 
     this.valueVat = 0;
     this.valueBetTotal = 0;
-
   }
 
 

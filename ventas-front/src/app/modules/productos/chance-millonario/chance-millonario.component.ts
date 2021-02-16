@@ -57,6 +57,10 @@ export class ChanceMillonarioComponent implements OnInit {
   }
 
 
+  agregarModalidad(event) {
+    this.summaryFooter.setModalidad(event);
+  }
+
   borrarTodoReset(event) {
     // this.apuestaChanceMillonario.borrarTodo(1);
   }

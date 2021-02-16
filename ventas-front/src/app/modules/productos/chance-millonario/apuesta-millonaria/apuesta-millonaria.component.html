@@ -33,14 +33,14 @@
                         <hr/>
                         <div class="row">
                             <p-selectButton (click)="obtenerNumeroModalidad()" [options]="arrayCifrasSeleted" [(ngModel)]="selectedCifras" optionLabel="name"></p-selectButton>
-                            <img *ngIf="selectedCifras.code" (click)="generarAletorios('all', selectedCifras.code, 0)" class="img-aletorio" src="../../../../../assets/img/svg/Grupo_301.svg" />
+                            <img *ngIf="selectedCifras" (click)="generarAletorios('all', selectedCifras.code, 0)" class="img-aletorio" src="../../../../../assets/img/svg/Grupo_301.svg" />
                         </div>
                     </div>
                     <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
                         
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                        <button type="button" class="btn btn-random-red">
+                        <button (click)="borrarTodo(1)" type="button" class="btn btn-random-red">
                             BORRAR TODO
                         </button>
                     </div>
@@ -83,7 +83,7 @@
                             <div class="col-md-5">
                                 <b>Modalidad</b><br/>
                                 <div *ngFor="let enum of valoresModalidades">
-                                    <label for="valorApostado">
+                                    <label (click)="emitirModalidad(enum)" for="valorApostado">
                                         <input [value]='enum' class="radioAzul" type="radio" name="valoresModalidades" formControlName="valoresModalidades">
                                         {{enum  | currency}}
                                     </label>
@@ -91,30 +91,30 @@
                             </div>
                             <div class="col-md-7">
                                 <b>Número</b><br/>
-                                <input id="numeroFilaUno" formControlName="numeroFilaUno" autocomplete="off" type="text" [maxlength]="maxlengthV" (keypress)="permitirSoloNumeros($event)" class="input-bet">
-                                <img class="img-aletorio" *ngIf="selectedCifras && selectedCifras.code == '3C'" src="../../../../../assets/img/svg/Grupo_306.svg" />
-                                <img class="img-aletorio" *ngIf="selectedCifras && selectedCifras.code == '4C'" src="../../../../../assets/img/svg/Grupo_303.svg" />
-                                <i class="fa fa-trash tras-del" aria-hidden="true"></i>
+                                <input id="numeroFilaUno" (change)="emitirNumeros()" formControlName="numeroFilaUno" autocomplete="off" type="text" [maxlength]="maxlengthV" (keypress)="permitirSoloNumeros($event)" class="input-bet">
+                                <img class="img-aletorio" (click)="generarAletorios('one', '3C', 1)" *ngIf="selectedCifras && selectedCifras.code == '3C'" src="../../../../../assets/img/svg/Grupo_306.svg" />
+                                <img class="img-aletorio" (click)="generarAletorios('one', '4C', 1)" *ngIf="selectedCifras && selectedCifras.code == '4C'" src="../../../../../assets/img/svg/Grupo_303.svg" />
+                                <i (click)="borrarFilaUno()" class="fa fa-trash tras-del" aria-hidden="true"></i>
                                 <br/>
-                                <input id="numeroFilaDos" formControlName="numeroFilaDos" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
-                                <img class="img-aletorio" *ngIf="selectedCifras && selectedCifras.code == '3C'" src="../../../../../assets/img/svg/Grupo_306.svg" />
-                                <img class="img-aletorio" *ngIf="selectedCifras && selectedCifras.code == '4C'" src="../../../../../assets/img/svg/Grupo_303.svg" />
-                                <i class="fa fa-trash tras-del" aria-hidden="true"></i>
+                                <input id="numeroFilaDos" (change)="emitirNumeros()" formControlName="numeroFilaDos" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
+                                <img class="img-aletorio" (click)="generarAletorios('one', '3C', 2)" *ngIf="selectedCifras && selectedCifras.code == '3C'" src="../../../../../assets/img/svg/Grupo_306.svg" />
+                                <img class="img-aletorio" (click)="generarAletorios('one', '4C', 2)" *ngIf="selectedCifras && selectedCifras.code == '4C'" src="../../../../../assets/img/svg/Grupo_303.svg" />
+                                <i (click)="borrarFilaDos()" class="fa fa-trash tras-del" aria-hidden="true"></i>
                                 <br/>
-                                <input id="numeroFilaTres" formControlName="numeroFilaTres" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
-                                <img class="img-aletorio" *ngIf="selectedCifras && selectedCifras.code == '3C'" src="../../../../../assets/img/svg/Grupo_306.svg" />
-                                <img class="img-aletorio" *ngIf="selectedCifras && selectedCifras.code == '4C'" src="../../../../../assets/img/svg/Grupo_303.svg" />
-                                <i class="fa fa-trash tras-del" aria-hidden="true"></i>
+                                <input id="numeroFilaTres" (change)="emitirNumeros()" formControlName="numeroFilaTres" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
+                                <img class="img-aletorio" (click)="generarAletorios('one', '3C', 3)" *ngIf="selectedCifras && selectedCifras.code == '3C'" src="../../../../../assets/img/svg/Grupo_306.svg" />
+                                <img class="img-aletorio" (click)="generarAletorios('one', '4C', 3)" *ngIf="selectedCifras && selectedCifras.code == '4C'" src="../../../../../assets/img/svg/Grupo_303.svg" />
+                                <i (click)="borrarFilaTres()" class="fa fa-trash tras-del" aria-hidden="true"></i>
                                 <br/>
-                                <input id="numeroFilaCuatro" formControlName="numeroFilaCuatro" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
-                                <img class="img-aletorio" *ngIf="selectedCifras && selectedCifras.code == '3C'" src="../../../../../assets/img/svg/Grupo_306.svg" />
-                                <img class="img-aletorio" *ngIf="selectedCifras && selectedCifras.code == '4C'" src="../../../../../assets/img/svg/Grupo_303.svg" />
-                                <i class="fa fa-trash tras-del" aria-hidden="true"></i>
+                                <input id="numeroFilaCuatro" (change)="emitirNumeros()" formControlName="numeroFilaCuatro" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
+                                <img class="img-aletorio" (click)="generarAletorios('one', '3C', 4)" *ngIf="selectedCifras && selectedCifras.code == '3C'" src="../../../../../assets/img/svg/Grupo_306.svg" />
+                                <img class="img-aletorio" (click)="generarAletorios('one', '4C', 4)" *ngIf="selectedCifras && selectedCifras.code == '4C'" src="../../../../../assets/img/svg/Grupo_303.svg" />
+                                <i (click)="borrarFilaCuatro()" class="fa fa-trash tras-del" aria-hidden="true"></i>
                                 <br/>
-                                <input id="numeroFilaCinco" formControlName="numeroFilaCinco" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
-                                <img class="img-aletorio" *ngIf="selectedCifras && selectedCifras.code == '3C'" src="../../../../../assets/img/svg/Grupo_306.svg" />
-                                <img class="img-aletorio" *ngIf="selectedCifras && selectedCifras.code == '4C'" src="../../../../../assets/img/svg/Grupo_303.svg" />
-                                <i class="fa fa-trash tras-del" aria-hidden="true"></i>
+                                <input id="numeroFilaCinco" (change)="emitirNumeros()" formControlName="numeroFilaCinco" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
+                                <img class="img-aletorio" (click)="generarAletorios('one', '3C', 5)" *ngIf="selectedCifras && selectedCifras.code == '3C'" src="../../../../../assets/img/svg/Grupo_306.svg" />
+                                <img class="img-aletorio" (click)="generarAletorios('one', '4C', 5)" *ngIf="selectedCifras && selectedCifras.code == '4C'" src="../../../../../assets/img/svg/Grupo_303.svg" />
+                                <i (click)="borrarFilaCinco()" class="fa fa-trash tras-del" aria-hidden="true"></i>
                             </div>
                             <!-- <div class="col-md-3">
                                 acciones
