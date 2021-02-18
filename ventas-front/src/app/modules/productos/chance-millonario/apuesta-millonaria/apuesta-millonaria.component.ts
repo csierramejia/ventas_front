@@ -683,6 +683,37 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
   }
 
 
+  editarProducto(event) {
+    this.borrarTodo(2)
+
+    this.edit = true;
+    const buscarApuestasEditar = JSON.parse(localStorage.getItem('chanceApuestaMillonario'))
+    const apuestaEditar = buscarApuestasEditar.filter(buscarApuestaEditar => buscarApuestaEditar._id == event._id);
+
+    console.log('apuestaEditar');
+    console.log(apuestaEditar);
+    console.log('apuestaEditar');
+
+
+    if (apuestaEditar[0].clienteOperacion.nombreCliente) {
+      this.enabledCustomer = true;
+      this.chanceForm.controls.nombreCliente.setValue(apuestaEditar[0].clienteOperacion.nombreCliente);
+      this.chanceForm.controls.tipoDocumento.setValue(apuestaEditar[0].clienteOperacion.tipoDocumento);
+      this.chanceForm.controls.numeroDocumento.setValue(apuestaEditar[0].clienteOperacion.numeroDocumento);
+    }
+
+    this.loterias = apuestaEditar[0].loterias;
+    const emitLoterias = {
+      loterias: this.loterias,
+      fechaSeleccionApuesta: apuestaEditar[0].fechaSeleccionApuesta
+    }
+
+    this.agregarLoterias.emit(emitLoterias);
+    // this.infoEdit = apuestaEditar;
+
+    // this.setNumerosEvento(apuestaEditar[0].listaNumeros);
+  }
+
   borrarFilaUno() {
     this.chanceForm.get('numeroFilaUno').setValue('');
     this.emitirNumeros()

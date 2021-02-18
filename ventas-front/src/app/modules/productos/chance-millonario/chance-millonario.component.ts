@@ -72,7 +72,7 @@ export class ChanceMillonarioComponent implements OnInit {
 
   editarProducto(event){
     this.summaryFooter.editarProducto(event)
-    // this.apuestaChanceMillonario.editarProducto(event)
+    this.apuestaChanceMillonario.editarProducto(event)
   }
 
 

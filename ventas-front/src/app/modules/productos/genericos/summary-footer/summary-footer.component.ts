@@ -255,12 +255,6 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
         break;
     }
 
-    
-
-    
-
-
-    
   }
 
 
@@ -445,12 +439,43 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
 
 
   editarProducto(event){
+
+    switch (this.productoParent) {
+      case 'chance':
+        this.editarProductoChance(event);
+        break;
+      case 'chance-millonario':
+        this.editarProductoChanceMillonario(event);
+        break;
+      default:
+        break;
+    }
+
+    
+  }
+
+
+
+  editarProductoChance(event){
     this.edit = true;
     const buscarApuestasEditar = JSON.parse(localStorage.getItem('chanceApuesta'))
     const apuestaEditar = buscarApuestasEditar.filter(buscarApuestaEditar => buscarApuestaEditar._id == event._id);
     this.infoEdit = apuestaEditar;
     this.colilla = apuestaEditar[0].colilla
     this.fechaActual = apuestaEditar[0].fechaActual
+  }
+
+
+
+  editarProductoChanceMillonario(event){
+    
+    this.edit = true;
+    const buscarApuestasEditar = JSON.parse(localStorage.getItem('chanceApuestaMillonario'))
+    const apuestaEditar = buscarApuestasEditar.filter(buscarApuestaEditar => buscarApuestaEditar._id == event._id);
+    this.infoEdit = apuestaEditar;
+    this.colilla = apuestaEditar[0].colilla
+    this.fechaActual = apuestaEditar[0].fechaActual
+
   }
 
 
