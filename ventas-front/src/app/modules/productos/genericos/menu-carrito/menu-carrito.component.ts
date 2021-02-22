@@ -42,7 +42,7 @@ export class MenuCarritoComponent implements OnInit {
         this.borrarApuestaChance(id);
         break;
       case 'chance-millonario':
-      
+        this.borrarApuestaChanceMillonario(id);
         break;
       default:
         break;
@@ -61,7 +61,7 @@ export class MenuCarritoComponent implements OnInit {
         this.duplicarApuestaChance(id);
         break;
       case 'chance-millonario':
-      
+        this.duplicarApuestaChanceMillonario(id);
         break;
       default:
         break;
@@ -78,6 +78,19 @@ export class MenuCarritoComponent implements OnInit {
       const newLocalstorage = JSON.parse(localStorage.getItem('chanceApuesta'));
       newLocalstorage.push(result[0]);
       localStorage.setItem('chanceApuesta', JSON.stringify(newLocalstorage));
+    }
+    this.refrescarCarrito();
+  }
+
+
+  duplicarApuestaChanceMillonario(id){
+    const productosDuplicar = JSON.parse(localStorage.getItem('chanceApuestaMillonario'))
+    const result = productosDuplicar.filter(productoDuplicar => productoDuplicar._id == id);
+    for (let index = 0; index < this.cantidadRepetir; index++) {
+      result[0]._id = 'bet_' + Math.floor(Math.random() * 999999)
+      const newLocalstorage = JSON.parse(localStorage.getItem('chanceApuestaMillonario'));
+      newLocalstorage.push(result[0]);
+      localStorage.setItem('chanceApuestaMillonario', JSON.stringify(newLocalstorage));
     }
     this.refrescarCarrito();
   }
@@ -182,8 +195,17 @@ export class MenuCarritoComponent implements OnInit {
     }
     localStorage.setItem('chanceApuesta', JSON.stringify(productosBorrar));
     this.refrescarCarrito();
+  }
 
 
+  borrarApuestaChanceMillonario(id) {
+    const productosBorrar = JSON.parse(localStorage.getItem('chanceApuestaMillonario'))
+    const keyResponse = this.getKeyObject(id, productosBorrar);
+    if ( keyResponse  !== -1 ) {
+      productosBorrar.splice( keyResponse , 1 );
+    }
+    localStorage.setItem('chanceApuestaMillonario', JSON.stringify(productosBorrar));
+    this.refrescarCarrito();
   }
 
 
@@ -237,7 +259,19 @@ export class MenuCarritoComponent implements OnInit {
   }
 
   verResumenCompra(): void {
-    this.router.navigate([RouterConstant.NAVIGATE_REVISA_PAGO]);
+
+    switch (this.productoParent) {
+      case 'chance':
+        this.router.navigate([RouterConstant.NAVIGATE_REVISA_PAGO], { queryParams: { producto: 'chance' } });
+        break;
+      case 'chance-millonario':
+        this.router.navigate([RouterConstant.NAVIGATE_REVISA_PAGO], { queryParams: { producto: 'chance-millonario' } });
+        break;
+      default:
+        break;
+    }
+
+    
   }
   ////////// ----------------- FALTA REVISAR PARA IDENTIFICAR TIPO GENERICO ------------------- ////////////
 

@@ -8,6 +8,8 @@ import { MsjUtil } from 'src/app/utilities/messages.util';
 import { CommonComponent } from 'src/app/utilities/common.component';
 import { NotificacionSoportePagoDTO } from 'src/app/dtos/correos/notificacion-soporte-pago.dto';
 import { MenuCarritoComponent } from '../genericos/menu-carrito/menu-carrito.component';
+import { ActivatedRoute } from '@angular/router';
+import 'rxjs/add/operator/filter';
 
 @Component({
   selector: 'app-revisa-pago',
@@ -33,13 +35,14 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
   devuelta = 0
   ivaServicio = 0
   correoCliente = ''
-
+  productoParent: string;
   verBotonFinalizar = false;
 
 
   constructor(
     private productosService: ProductosService,
     private router: Router,
+    private routeActiv: ActivatedRoute,
     protected messageService: MessageService,
     private shellState: ShellState
   ) {
@@ -47,7 +50,25 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
   }
 
   ngOnInit(): void {
-    this.obtenerIva();
+    
+    this.routeActiv.queryParams
+      .filter(params => params.producto)
+      .subscribe(params => {
+        this.productoParent = params.producto;
+        switch (this.productoParent) {
+          case 'chance':
+            this.producto = "CHANCE";
+            break;
+          case 'chance-millonario':
+            this.producto = "CHANCE";
+            break;
+          default:
+            break;
+        }
+        this.obtenerIva();
+      }
+    );
+
   }
 
   /**
@@ -60,7 +81,16 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
       impuestoData => {
         // tslint:disable-next-line: radix
         this.ivaServicio = parseInt(impuestoData.descripcion);
-        this.obtenerProductosChance()
+        switch (this.productoParent) {
+          case 'chance':
+            this.obtenerProductosChance()
+            break;
+          case 'chance-millonario':
+            this.obtenerProductosChanceMillonario()
+            break;
+          default:
+            break;
+        }
       },
       error => {
         console.log(error);
@@ -92,6 +122,29 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
       });
     }
 
+    this.calcularValores();
+  }
+
+
+  obtenerProductosChanceMillonario() {
+    this.productosChance = []
+    this.efectivo = ''
+    this.devuelta = 0
+    const productosChanceConst = JSON.parse(localStorage.getItem('chanceApuestaMillonario'))
+    if(productosChanceConst){
+      productosChanceConst.forEach(element => {
+        this.productosChance.push({
+          apostado:Math.round(element.apostado),
+          colilla:element.colilla,
+          fechaActual:element.fechaActual,
+          iva:Math.round(element.iva),
+          listaNumeros:this.concatenarNumeros(element.listaNumeros),
+          loterias:this.concatenarLoterias(element.loterias),
+          total:Math.round(element.total),
+          _id:element._id
+        });
+      });
+    }
     this.calcularValores();
   }
 
@@ -173,6 +226,20 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
 
 
   borrarApuesta(id) {
+    switch (this.productoParent) {
+      case 'chance':
+        this.borrarApuestaChance(id)
+        break;
+      case 'chance-millonario':
+        this.borrarApuestaChanceMillonario(id)
+        break;
+      default:
+        break;
+    }
+  }
+
+
+  borrarApuestaChance(id){
     const productosBorrar = JSON.parse(localStorage.getItem('chanceApuesta'))
     const keyResponse = this.getKeyObject(id, productosBorrar);
     if ( keyResponse  !== -1 ) {
@@ -182,9 +249,33 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
     this.obtenerProductosChance();
   }
 
+  borrarApuestaChanceMillonario(id){
+    const productosBorrar = JSON.parse(localStorage.getItem('chanceApuestaMillonario'))
+    const keyResponse = this.getKeyObject(id, productosBorrar);
+    if ( keyResponse  !== -1 ) {
+      productosBorrar.splice( keyResponse , 1 );
+    }
+    localStorage.setItem('chanceApuestaMillonario', JSON.stringify(productosBorrar));
+    this.obtenerProductosChanceMillonario();
+  }
+
 
 
   depurarInfo(){
+    switch (this.productoParent) {
+      case 'chance':
+        this.depurarInfoChance()
+        break;
+      case 'chance-millonario':
+        this.depurarInfoChanceMillonario()
+        break;
+      default:
+        break;
+    }
+  }
+
+
+  depurarInfoChance() {
     this.paySend = [];
     const productosDepurar = JSON.parse(localStorage.getItem('chanceApuesta'))
 
@@ -207,6 +298,38 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
   }
 
 
+  depurarInfoChanceMillonario() {
+
+    this.paySend = [];
+    const productosDepurar = JSON.parse(localStorage.getItem('chanceApuestaMillonario'))
+
+    for (let index = 0; index < productosDepurar.length; index++) {
+      const bet = { bets:null, canal: 'WEB', dataPlayed:null, idCustomer:null, idUser:this.shellState.userAccount.auth.usuario.idUsuario, lotteries:null, producto:this.producto, valueBet:null, valueBetTotal:null, valueVat:null,idOficina:this.shellState.userAccount.auth.usuario.idOficina,idPuntoVenta:this.shellState.userAccount.auth.usuario.idPuntoVenta};
+      bet.lotteries = this.obtenerLoteriasSeleccionadas(productosDepurar[index].loterias)
+      bet.bets = this.obtenerEstructuraDatosNumeros(productosDepurar[index].listaNumeros, productosDepurar[0].fechaSeleccionApuesta, bet.lotteries)
+      bet.dataPlayed = productosDepurar[index].fechaActual
+      bet.idCustomer = productosDepurar[index].clienteOperacion.idCustomer
+
+      //////////// -----------------------!!!!!!!!-------------------- /////////////////////////////////
+      bet.valueBet = Math.round(productosDepurar[index].apostado);
+      bet.valueBetTotal = Math.round(productosDepurar[index].total);
+      bet.valueVat = Math.round(productosDepurar[index].iva);
+      //////////// ----------------------!!!!!!!--------------------- /////////////////////////////////
+
+      bet.idOficina = this.shellState.userAccount.auth.usuario.idOficina;
+      bet.idPuntoVenta = this.shellState.userAccount.auth.usuario.idPuntoVenta
+
+
+      // guardamos el correo del usuario (para enviar desplendible de pago)
+      this.correoCliente = productosDepurar[index].clienteOperacion.correoCustomer
+      this.paySend.push(bet);
+    }
+    this.hacerCompraServicio(this.paySend);
+
+  }
+  
+
+
   obtenerIvaIteracion(total){
     const ivaNv = this.ivaServicio / 100 + 1
     return total / ivaNv;
@@ -214,38 +337,62 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
 
 
   hacerCompraServicio(paySend){
-    this.productosService.registrarApuestas(paySend).subscribe(
-      apuestaData => {
-        const responseApuesta: any = apuestaData;
-        if (responseApuesta.exito) {
-          // se muestra el mensaje exitoso
-          this.messageService.add(MsjUtil.getToastSuccessMedium('Transacción exitosa'));
-          // se envia la notificacion
-          if (this.correoCliente) {
-            const notificacion: NotificacionSoportePagoDTO = apuestaData.notificacionSoportePago;
-            if (notificacion) {
-              notificacion.correoDestino = this.correoCliente;
-              notificacion.idUsuario = this.shellState.userAccount.auth.usuario.idUsuario;
-              this.enviarNotificacionSoportePago(notificacion);
-            }
-          }
-          // se limpia la data ingresada
-          // this.cleanCartValues();
-          // this.creatingBet.emit(true);
-          this.limpiarCarrito();
-        } 
-        else if(responseApuesta.mensaje){
-          this.messageService.add(MsjUtil.getToastErrorLng(responseApuesta.mensaje));
-        }
-        else {
-          this.messageService.add(MsjUtil.getToastErrorMedium('Problemas con la transacción'));
-        }
-      },
-      error => {
-        this.messageService.add(MsjUtil.getToastErrorLng(this.showMensajeError(error)));
-      }
-    );
+    switch (this.productoParent) {
+      case 'chance':
+        this.hacerCompraServicioChance(paySend)
+        break;
+      case 'chance-millonario':
+        this.hacerCompraServicioChanceMillonario(paySend)
+        break;
+      default:
+        break;
+    }
   }
+
+
+  hacerCompraServicioChance(paySend){
+    console.log('CHANCE');
+    console.log(paySend);
+    console.log('CHANCE');
+    // this.productosService.registrarApuestas(paySend).subscribe(
+    //   apuestaData => {
+    //     const responseApuesta: any = apuestaData;
+    //     if (responseApuesta.exito) {
+    //       // se muestra el mensaje exitoso
+    //       this.messageService.add(MsjUtil.getToastSuccessMedium('Transacción exitosa'));
+    //       // se envia la notificacion
+    //       if (this.correoCliente) {
+    //         const notificacion: NotificacionSoportePagoDTO = apuestaData.notificacionSoportePago;
+    //         if (notificacion) {
+    //           notificacion.correoDestino = this.correoCliente;
+    //           notificacion.idUsuario = this.shellState.userAccount.auth.usuario.idUsuario;
+    //           this.enviarNotificacionSoportePago(notificacion);
+    //         }
+    //       }
+
+    //       this.limpiarCarrito();
+    //     } 
+    //     else if(responseApuesta.mensaje){
+    //       this.messageService.add(MsjUtil.getToastErrorLng(responseApuesta.mensaje));
+    //     }
+    //     else {
+    //       this.messageService.add(MsjUtil.getToastErrorMedium('Problemas con la transacción'));
+    //     }
+    //   },
+    //   error => {
+    //     this.messageService.add(MsjUtil.getToastErrorLng(this.showMensajeError(error)));
+    //   }
+    // );
+  }
+
+
+
+  hacerCompraServicioChanceMillonario(paySend){
+    console.log('CHANCE MILLONARIO');
+    console.log(paySend);
+    console.log('CHANCE MILLONARIO');
+  }
+
 
   obtenerValorTotal(bets, cantidadLoterias){
     let sumaTotal = 0
@@ -453,7 +600,16 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
 
 
   volverAtras(): void {
-    this.router.navigate([RouterConstant.NAVIGATE_CHANCE]);
+    switch (this.productoParent) {
+      case 'chance':
+        this.router.navigate([RouterConstant.NAVIGATE_CHANCE]);
+        break;
+      case 'chance-millonario':
+        this.router.navigate([RouterConstant.NAVIGATE_CHANCE_MILLONARIO]);
+        break;
+      default:
+        break;
+    }
   }
 
 

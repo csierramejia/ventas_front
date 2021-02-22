@@ -514,25 +514,54 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
 
 
   irResumen() {
+    switch (this.productoParent) {
+      case 'chance':
+        this.irResumenChance();
+        break;
+      case 'chance-millonario':
+        this.irResumenChanceMillonario();
+        break;
+      default:
+        break;
+    }
+  }
+
+
+  irResumenChance() {
     let numeros = this.obtenerFilasConApuesta(this.listaNumeros);
     let loterias = this.get_lotteriesSelected();
-
     if(numeros.length > 0 || loterias.length > 0) {
       this.messageService.add(MsjUtil.getMsjError('Por favor termine de diligenciar los campos o limpie el formulario para avanzar'));
     } else {
-      
-      if(JSON.parse(localStorage.getItem('chanceApuesta')) != null){
+      if(JSON.parse(localStorage.getItem('chanceApuesta')) != null) {
         if( JSON.parse(localStorage.getItem('chanceApuesta')).length > 0 ) {
-          this.router.navigate([RouterConstant.NAVIGATE_REVISA_PAGO]);
+          this.router.navigate([RouterConstant.NAVIGATE_REVISA_PAGO], { queryParams: { producto: 'chance' } });
         } else {
           this.messageService.add(MsjUtil.getMsjError('no hay apuestas agregadas'));
         }
       } else {
           this.messageService.add(MsjUtil.getMsjError('no hay apuestas agregadas'));
       }
-      
     }
-    
+  }
+
+
+  irResumenChanceMillonario() {
+    let numeros = this.obtenerFilasConApuesta(this.listaNumeros);
+    let loterias = this.get_lotteriesSelected();
+    if(numeros.length > 0 || loterias.length > 0) {
+      this.messageService.add(MsjUtil.getMsjError('Por favor termine de diligenciar los campos o limpie el formulario para avanzar'));
+    } else {
+      if(JSON.parse(localStorage.getItem('chanceApuestaMillonario')) != null){
+        if( JSON.parse(localStorage.getItem('chanceApuestaMillonario')).length > 0 ) {
+          this.router.navigate([RouterConstant.NAVIGATE_REVISA_PAGO], { queryParams: { producto: 'chance-millonario' } });
+        } else {
+          this.messageService.add(MsjUtil.getMsjError('no hay apuestas agregadas'));
+        }
+      } else {
+          this.messageService.add(MsjUtil.getMsjError('no hay apuestas agregadas'));
+      }
+    }
   }
 
 
