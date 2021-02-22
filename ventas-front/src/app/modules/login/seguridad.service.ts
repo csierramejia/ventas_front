@@ -6,6 +6,7 @@ import { AutenticacionResponseDTO } from 'src/app/dtos/seguridad/autenticacion/a
 import { AutenticacionAPIConstant } from 'src/app/constants/apis/seguridad/autenticacion-api.constant';
 import { BienvenidaResponseDTO } from 'src/app/dtos/seguridad/bienvenida/bienvenida-response.dto';
 import { BienvenidaRequestDTO } from 'src/app/dtos/seguridad/bienvenida/bienvenida-request.dto';
+import { PapeleriaRolloDTO } from 'src/app/dtos/transversal/papeleria-rollo.dto';
 
 /**
  * Clase que contiene los procesos de negocio para la autenticacion en el sistema
@@ -16,7 +17,7 @@ export class SeguridadService {
   /**
    * @param HTTP para hacer las peticiones a los servicios REST
    */
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   /**
    * Servicio que permite soportar el proceso de iniciar sesion
@@ -42,6 +43,18 @@ export class SeguridadService {
     return this.http.post<BienvenidaResponseDTO>(
       AutenticacionAPIConstant.URL_BIENVENIDA,
       data
+    );
+  }
+
+  /**
+   * Método encargado de obtner la lista de rollos asociados a un vendedor
+   * @param idVendedor 
+   * @return DTO con los datos de los rollos
+   */
+  public obtenerSeriesVendedor(idVendedor: number): Observable<PapeleriaRolloDTO[]> {
+    return this.http.post<PapeleriaRolloDTO[]>(
+      AutenticacionAPIConstant.URL_SERIES_VENDEDOR,
+      idVendedor
     );
   }
 }

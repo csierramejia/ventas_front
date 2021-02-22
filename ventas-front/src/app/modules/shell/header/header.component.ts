@@ -29,6 +29,7 @@ import {
 })
 export class HeaderComponent implements OnInit {
 
+  
   /** Son los items a mostrar en el menu de user-settings */
   public items: MenuItem[];
 
@@ -47,6 +48,8 @@ export class HeaderComponent implements OnInit {
    * Se construye el menu de configuracion de cuenta
    */
   ngOnInit() {
+  
+
     this.construirItemsUser();
   }
 

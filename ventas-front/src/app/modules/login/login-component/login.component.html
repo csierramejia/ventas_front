@@ -66,7 +66,7 @@
         <div class="ui-g-12 mb-0 pb-0 text-center">
           <div class="inner-addon left-addon">
             <i class="fa fa-user-circle aico user-icon"></i>
-            <button type="submit" style="background-color: #2076BD !important;background-image:none !important" class="btn btn-primary w-100">
+            <button type="submit" style="background-color: #2076BD !important;background-image:none !important" class="btn btn-login w-100">
               <span class="font-montse  mr-2 font-size-12 font-weight-bold">INICIAR SESIÓN</span>
             </button>
             <p class="mb-0 li mt-2">Recuperar contraseña</p>
@@ -84,3 +84,83 @@
     <p class="mb-0">Copyright companyname.co - 2020</p>
   </div>
 </div>
+
+
+<ng-container *ngIf="modalOperatividad ">
+  <p-dialog header="PUNTO DE VENTA" modal="true" [(visible)]="modalOperatividad.isShowModal"
+    (onHide)="modalOperatividad.closeModal()" [style]="{ width: '45vw' }">
+    <h3 class="titleCreate">Ingrese la serie para iniciar operaciones:</h3>
+
+    <div class="ui-g">
+      <div class="ui-g-12 p-0 pb-2 pt-0">
+      <div class="ui-g-3 p-0 pr-2">
+        <div class="ui-g-12 p-0">
+          <label for="invetipo" class="lbltitle">SERIE 1</label>
+        </div>
+        <div class="ui-g-12 p-0">
+          <input
+            [(ngModel)]="serieOperacion.serie"
+            [disabled]="true"
+            id="serieUno"
+            pKeyFilter="pint"
+            class="input-app-sm w-100"
+            type="text"
+            title="Serie1"
+            maxlength="4"
+            [ngClass]="{'requerido' :  (isSubmit && (!serieOperacion.serie))}"/>   
+        </div>
+        </div>
+      
+        <div class="ui-g-5 p-0 pl-2">
+          <div class="ui-g-12 p-0">
+            <label for="invcantidad" class="lbltitle">SERIE 2</label>
+          </div>
+          <div class="ui-g-12 p-0">
+            <input
+            [(ngModel)]="serieOperacion.rangoInicial"
+            [disabled]="true"
+            id="serieDos"
+            pKeyFilter="pint"
+            class="input-app-sm w-100"
+            type="text"
+            title="Serie2"
+            maxlength="8"
+            [ngClass]="{'requerido' :  (isSubmit && (!serieOperacion.rangoInicial))}"/>   
+           </div>
+            </div>
+            <div class="ui-g-4 p-0 pl-2">
+              </div>
+           </div>
+
+    <h3 class="titleCreate">Pepelería asignada</h3>
+
+    <div  class="ui-g-12 p-0 pb-2 pt-0">
+      <ul>
+        <li class="puntero" *ngFor="let serie of listaSeries" (click)="seleccionarSerie(serie)">{{ serie.serie}}-{{ serie.rangoInicial}}</li>
+      </ul>
+    </div>
+
+
+
+
+    <div class="ui-g-12 barra ml-1 mr-1 pt-1"></div>
+    <div class="ui-g-12 p-0 pb-2 pt-2">
+      <div class="ui-g-12 p-0 text-center">
+        <button (click)="modalOperatividad.closeModal()" type="button" class="btn-less mr-3 w-120-px"
+          title="Permite cerrar esta ventana">
+          <label class="font-montse  mr-2 font-size-12 font-weight-bold">Cancelar</label>
+          <i class="fa fa-times btn-icon font-size-20 pl-2"></i>
+        </button>
+        <button (click)="iniciarOperacion(formLogin)" type="button" class="btn-light w-120-px"
+          title="Permite guardar el saldo de salida">
+          <label class="font-montse  mr-2 font-size-12 font-weight-bold">Aceptar</label>
+          <i class="fa fa-check-circle btn-icon font-size-20 pl-2"></i>
+        </button>
+      </div>
+    </div>
+
+    </div>
+    </p-dialog>
+    </ng-container>
+
+    

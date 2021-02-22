@@ -1,3 +1,4 @@
+import { PapeleriaRolloDTO } from '../../transversal/papeleria-rollo.dto';
 import { UsuarioDTO } from './usuario.dto';
 
 /**
@@ -7,4 +8,6 @@ export class AutenticacionResponseDTO {
 
     /** son los datos del usuario autenticado */
     public usuario: UsuarioDTO;
+
+   
 }

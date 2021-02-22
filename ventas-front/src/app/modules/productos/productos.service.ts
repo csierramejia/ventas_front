@@ -15,6 +15,8 @@ import { LoteriaVirtualVentaDTO } from 'src/app/dtos/productos/loteria-virtual/l
 import { NotificacionSoportePagoDTO } from 'src/app/dtos/correos/notificacion-soporte-pago.dto';
 import { CorreosAPIConstant } from 'src/app/constants/apis/correos/correos-api-constant';
 import { LoteriaVirtualVentaResponseDTO } from 'src/app/dtos/productos/loteria-virtual/loteria-virtual-venta-response.dto';
+import { FiltroOperacionDTO } from 'src/app/dtos/transversal/filtro-operacion.dto';
+import { RolloColillaDTO} from 'src/app/dtos/transversal/rollo-colilla.dto'
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
@@ -169,10 +171,25 @@ export class ProductosService {
     );
   }
 
+  /**
+   * Método que permite consultar la vigencia de prorgamción del vendedor
+   * @param idUsuario 
+   */
   public consultarProgramacion(idUsuario): Observable<boolean> {
     return this.http.post<boolean>(
       ProductosAPIConstant.URL_EXISTE_PROGRAMACION,
       idUsuario
+    );
+  }
+
+  /**
+   * Método encargado de consultar el número en que va la colilla
+   * @param filtro 
+   */
+  public consultarColilla(filtro: FiltroOperacionDTO): Observable<RolloColillaDTO> {
+    return this.http.post<RolloColillaDTO>(
+      ProductosAPIConstant.URL_COLILLA_ROLLO,
+      filtro
     );
   }
 
