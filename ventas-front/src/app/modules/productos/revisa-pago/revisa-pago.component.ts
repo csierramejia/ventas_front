@@ -23,9 +23,7 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
   
 
   // OJO ESTE PRODUCTO VA A SER CAMBIANTE SEGUN EL PRODUCTO
-  // NOTA : DE MOMENTO SE VA A DEJAR QUEMADO COMO CHANCE PERO CUANDO ENTREN LOS DEMAS PRODUCTOS HAY QUE SETEARLO
-  // producto = null;
-  producto = "CHANCE";
+  producto = "";
   paySend = []
   productosChance = []
   subtotalGeneral = 0
@@ -60,7 +58,7 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
             this.producto = "CHANCE";
             break;
           case 'chance-millonario':
-            this.producto = "CHANCE";
+            this.producto = "CHANCE_MILLONARIO";
             break;
           default:
             break;
@@ -337,61 +335,54 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
 
 
   hacerCompraServicio(paySend){
-    switch (this.productoParent) {
-      case 'chance':
-        this.hacerCompraServicioChance(paySend)
-        break;
-      case 'chance-millonario':
-        this.hacerCompraServicioChanceMillonario(paySend)
-        break;
-      default:
-        break;
-    }
-  }
 
+    // switch (this.productoParent) {
+    //   case 'chance':
+    //     this.hacerCompraServicioChance(paySend)
+    //     break;
+    //   case 'chance-millonario':
+    //     this.hacerCompraServicioChanceMillonario(paySend)
+    //     break;
+    //   default:
+    //     break;
+    // }
 
-  hacerCompraServicioChance(paySend){
-    console.log('CHANCE');
-    console.log(paySend);
-    console.log('CHANCE');
-    // this.productosService.registrarApuestas(paySend).subscribe(
-    //   apuestaData => {
-    //     const responseApuesta: any = apuestaData;
-    //     if (responseApuesta.exito) {
-    //       // se muestra el mensaje exitoso
-    //       this.messageService.add(MsjUtil.getToastSuccessMedium('Transacción exitosa'));
-    //       // se envia la notificacion
-    //       if (this.correoCliente) {
-    //         const notificacion: NotificacionSoportePagoDTO = apuestaData.notificacionSoportePago;
-    //         if (notificacion) {
-    //           notificacion.correoDestino = this.correoCliente;
-    //           notificacion.idUsuario = this.shellState.userAccount.auth.usuario.idUsuario;
-    //           this.enviarNotificacionSoportePago(notificacion);
-    //         }
-    //       }
-
-    //       this.limpiarCarrito();
-    //     } 
-    //     else if(responseApuesta.mensaje){
-    //       this.messageService.add(MsjUtil.getToastErrorLng(responseApuesta.mensaje));
-    //     }
-    //     else {
-    //       this.messageService.add(MsjUtil.getToastErrorMedium('Problemas con la transacción'));
-    //     }
-    //   },
-    //   error => {
-    //     this.messageService.add(MsjUtil.getToastErrorLng(this.showMensajeError(error)));
-    //   }
-    // );
+    this.productosService.registrarApuestas(paySend).subscribe(
+      apuestaData => {
+        const responseApuesta: any = apuestaData;
+        if (responseApuesta.exito) {
+          // se muestra el mensaje exitoso
+          this.messageService.add(MsjUtil.getToastSuccessMedium('Transacción exitosa'));
+          // se envia la notificacion
+          if (this.correoCliente) {
+            const notificacion: NotificacionSoportePagoDTO = apuestaData.notificacionSoportePago;
+            if (notificacion) {
+              notificacion.correoDestino = this.correoCliente;
+              notificacion.idUsuario = this.shellState.userAccount.auth.usuario.idUsuario;
+              this.enviarNotificacionSoportePago(notificacion);
+            }
+          }
+          this.limpiarCarrito();
+        } 
+        else if(responseApuesta.mensaje){
+          this.messageService.add(MsjUtil.getToastErrorLng(responseApuesta.mensaje));
+        }
+        else {
+          this.messageService.add(MsjUtil.getToastErrorMedium('Problemas con la transacción'));
+        }
+      },
+      error => {
+        this.messageService.add(MsjUtil.getToastErrorLng(this.showMensajeError(error)));
+      }
+    );
   }
 
 
 
-  hacerCompraServicioChanceMillonario(paySend){
-    console.log('CHANCE MILLONARIO');
-    console.log(paySend);
-    console.log('CHANCE MILLONARIO');
-  }
+
+
+
+  
 
 
   obtenerValorTotal(bets, cantidadLoterias){
