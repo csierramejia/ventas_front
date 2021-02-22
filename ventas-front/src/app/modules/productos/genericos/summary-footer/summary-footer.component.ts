@@ -34,6 +34,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
   valueBetTotal = 0;
   listaNumeros = [];
   producto = null;
+  selectedCifras: any;
   loterias = [];
   loteriaSeleccionadas = [];
   colilla = '';
@@ -152,7 +153,8 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
 
 
   setModalidad(event) {
-    this.valueBetTotal = event;
+    this.valueBetTotal = event.modalidad;
+    this.selectedCifras = event.selectedCifras;
     this.obtenerValoresTotales();
   }
 
@@ -224,21 +226,19 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
 
 
   obtenerValoresTotalesChanceMillonario(){
-
-    // this.valueVat = 0;
-    // this.valueBetTotal = 0;
-    // this.valueBet = 0;
-    // let valorSumado = 0;
-
-    
-
-    
     if(this.loterias){
       const ivaNv = this.inputVat / 100 + 1
       this.valueBet = this.valueBetTotal / ivaNv;
       this.valueVat = this.valueBetTotal - this.valueBet;
     }
+  }
 
+
+  limpiar(){
+    this.valueVat = 0;
+    this.valueBetTotal = 0;
+    this.valueBet = 0;
+    // let valorSumado = 0;
   }
 
 
@@ -439,7 +439,6 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
 
 
   editarProducto(event){
-
     switch (this.productoParent) {
       case 'chance':
         this.editarProductoChance(event);
@@ -450,8 +449,6 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
       default:
         break;
     }
-
-    
   }
 
 
@@ -476,6 +473,11 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
     this.colilla = apuestaEditar[0].colilla
     this.fechaActual = apuestaEditar[0].fechaActual
 
+    // estar pendiente de estas asignaciones de variables !!
+    this.valueBet = apuestaEditar[0].apostado
+    this.valueVat = apuestaEditar[0].iva
+    this.valueBetTotal = apuestaEditar[0].total
+    // estar pendiente de estas asignaciones de variables !!
   }
 
 
@@ -573,51 +575,47 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
     this.confirmacionAgregar.isCreate = false;
     this.verConfirmacionPopap = false;
     const listaNumeros = this.obtenerFilasConApuesta(this.listaNumeros)
-    console.log('listaNumeros eventoCrearEditarChanceMillonario');
-    console.log(listaNumeros);
-    console.log('listaNumeros eventoCrearEditarChanceMillonario');
-
-
 
     if(this.edit){
-      // const productosEditar = {
-      //   _id: this.infoEdit[0]._id,
-      //   colilla: this.colilla,
-      //   fechaActual: this.fechaActual,
-      //   loterias: this.loterias,
-      //   apostado: this.valueBet,
-      //   iva: this.valueVat,
-      //   total: this.valueBetTotal,
-      //   listaNumeros:listaNumeros,
-      //   clienteOperacion:this.clienteOperacion,
-      //   fechaSeleccionApuesta:this.fechaSeleccionApuesta
-      // }
+      const productosEditar = {
+        _id: this.infoEdit[0]._id,
+        colilla: this.colilla,
+        fechaActual: this.fechaActual,
+        loterias: this.loterias,
+        apostado: this.valueBet,
+        iva: this.valueVat,
+        total: this.valueBetTotal,
+        listaNumeros:listaNumeros,
+        clienteOperacion:this.clienteOperacion,
+        selectedCifras: this.selectedCifras,
+        fechaSeleccionApuesta:this.fechaSeleccionApuesta
+      }
 
-      // let chanceApuesta:any = JSON.parse(localStorage.getItem('chanceApuesta'));
+      let chanceApuesta:any = JSON.parse(localStorage.getItem('chanceApuestaMillonario'));
 
-      // if (chanceApuesta[0]) {
-      //   let actualizarCliente = chanceApuesta      
-      //   for (let index = 0; index < actualizarCliente.length; index++) {
-      //     actualizarCliente[index].clienteOperacion = this.clienteOperacion;
-      //   }
-      //   localStorage.setItem('chanceApuesta', JSON.stringify(actualizarCliente));
-      //   chanceApuesta = JSON.parse(localStorage.getItem('chanceApuesta'));
-      // }
+      if (chanceApuesta[0]) {
+        let actualizarCliente = chanceApuesta      
+        for (let index = 0; index < actualizarCliente.length; index++) {
+          actualizarCliente[index].clienteOperacion = this.clienteOperacion;
+        }
+        localStorage.setItem('chanceApuestaMillonario', JSON.stringify(actualizarCliente));
+        chanceApuesta = JSON.parse(localStorage.getItem('chanceApuestaMillonario'));
+      }
 
-      // const keyResponse = this.getKeyObject(this.infoEdit[0]._id, chanceApuesta);
-      // chanceApuesta[keyResponse]._id = productosEditar._id
-      // chanceApuesta[keyResponse].colilla = productosEditar.colilla
-      // chanceApuesta[keyResponse].fechaActual = productosEditar.fechaActual
-      // chanceApuesta[keyResponse].loterias = productosEditar.loterias
-      // chanceApuesta[keyResponse].apostado = productosEditar.apostado
-      // chanceApuesta[keyResponse].iva = productosEditar.iva
-      // chanceApuesta[keyResponse].total = productosEditar.total
-      // chanceApuesta[keyResponse].listaNumeros = productosEditar.listaNumeros
-      // chanceApuesta[keyResponse].fechaSeleccionApuesta = productosEditar.fechaSeleccionApuesta
-      // localStorage.setItem('chanceApuesta', JSON.stringify(chanceApuesta));
-      // this.cleanFooter()
-      // this.agregarProductos.emit(true);
-      // this.borrarTodoReset.emit(true);
+      const keyResponse = this.getKeyObject(this.infoEdit[0]._id, chanceApuesta);
+      chanceApuesta[keyResponse]._id = productosEditar._id
+      chanceApuesta[keyResponse].colilla = productosEditar.colilla
+      chanceApuesta[keyResponse].fechaActual = productosEditar.fechaActual
+      chanceApuesta[keyResponse].loterias = productosEditar.loterias
+      chanceApuesta[keyResponse].apostado = productosEditar.apostado
+      chanceApuesta[keyResponse].iva = productosEditar.iva
+      chanceApuesta[keyResponse].total = productosEditar.total
+      chanceApuesta[keyResponse].listaNumeros = productosEditar.listaNumeros
+      chanceApuesta[keyResponse].fechaSeleccionApuesta = productosEditar.fechaSeleccionApuesta
+      localStorage.setItem('chanceApuestaMillonario', JSON.stringify(chanceApuesta));
+      this.cleanFooter()
+      this.agregarProductos.emit(true);
+      this.borrarTodoReset.emit(true);
     } else {
 
       const productosAgregar = {
@@ -630,6 +628,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
         total: this.valueBetTotal,
         listaNumeros:listaNumeros,
         clienteOperacion:this.clienteOperacion,
+        selectedCifras: this.selectedCifras,
         fechaSeleccionApuesta:this.fechaSeleccionApuesta
       }
 

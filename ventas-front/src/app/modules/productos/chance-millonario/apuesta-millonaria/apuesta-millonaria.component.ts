@@ -453,7 +453,11 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
 
 
   emitirModalidad(modalidad){
-    this.agregarModalidad.emit(modalidad);
+    let modalidadEmitir = {
+      modalidad:modalidad,
+      selectedCifras:this.selectedCifras
+    }
+    this.agregarModalidad.emit(modalidadEmitir);
   }
 
 
@@ -571,10 +575,18 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
 
 
 
+  
+
+
+
 
   borrarTodo(event) {
 
-    // delete this.selectedCifras;
+    if(event === 3){
+      delete this.selectedCifras;
+    }
+    
+    delete this.valoresModalidades;
 
     this.chanceForm.controls.numeroFilaUno.setValue('');
     this.chanceForm.controls.numeroFilaDos.setValue('');
@@ -624,6 +636,10 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
     chipD.style.backgroundColor = '#FFFFFF';
     chipD.style.color = '#BE1E42';
   }
+
+
+
+  
 
 
   generarAletorios(event, numeroCifras, fila){
@@ -690,9 +706,9 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
     const buscarApuestasEditar = JSON.parse(localStorage.getItem('chanceApuestaMillonario'))
     const apuestaEditar = buscarApuestasEditar.filter(buscarApuestaEditar => buscarApuestaEditar._id == event._id);
 
-    console.log('apuestaEditar');
+    console.log('apuestaEditar!!!!!!!!!!!!');
     console.log(apuestaEditar);
-    console.log('apuestaEditar');
+    console.log('apuestaEditar!!!!!!!!!!!!');
 
 
     if (apuestaEditar[0].clienteOperacion.nombreCliente) {
@@ -702,6 +718,20 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
       this.chanceForm.controls.numeroDocumento.setValue(apuestaEditar[0].clienteOperacion.numeroDocumento);
     }
 
+
+
+    if(apuestaEditar[0].selectedCifras){
+      this.selectedCifras = apuestaEditar[0].selectedCifras
+      if(apuestaEditar[0].selectedCifras.code === '4C'){
+        this.maxlengthV = 4;
+        this.consultarValoresModalidad(4);
+      } else if(apuestaEditar[0].selectedCifras.code === '3C'){
+        this.maxlengthV = 3;
+        this.consultarValoresModalidad(3);
+      }
+      this.chanceForm.get('valoresModalidades').setValue(apuestaEditar[0].total);
+    }
+
     this.loterias = apuestaEditar[0].loterias;
     const emitLoterias = {
       loterias: this.loterias,
@@ -709,9 +739,9 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
     }
 
     this.agregarLoterias.emit(emitLoterias);
-    // this.infoEdit = apuestaEditar;
+    this.infoEdit = apuestaEditar;
 
-    // this.setNumerosEvento(apuestaEditar[0].listaNumeros);
+    this.setNumerosEvento(apuestaEditar[0].listaNumeros);
   }
 
   borrarFilaUno() {
@@ -746,6 +776,30 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
     this.chanceForm.get('numeroFilaCinco').setValue('');
     this.emitirNumeros();
     document.getElementById('numeroFilaCinco').focus();
+  }
+
+
+
+
+  setNumerosEvento(numeros){
+    numeros.forEach(element => {
+      if (element.numeroFilaUno) {
+        this.chanceForm.get('numeroFilaUno').setValue(element.numeroFilaUno);
+      }
+      if (element.numeroFilaDos) {
+        this.chanceForm.get('numeroFilaDos').setValue(element.numeroFilaDos);
+      }
+      if (element.numeroFilaTres) {
+        this.chanceForm.get('numeroFilaTres').setValue(element.numeroFilaTres);
+      }
+      if (element.numeroFilaCuatro) {
+        this.chanceForm.get('numeroFilaCuatro').setValue(element.numeroFilaCuatro);
+      }
+      if (element.numeroFilaCinco) {
+        this.chanceForm.get('numeroFilaCinco').setValue(element.numeroFilaCinco);
+      }
+    });
+    this.emitirNumeros();
   }
 
 
