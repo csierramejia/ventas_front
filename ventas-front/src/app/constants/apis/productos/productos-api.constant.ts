@@ -77,7 +77,7 @@ export class ProductosAPIConstant {
 
   /** URL del recurso para hacer compra */
   static readonly URL_REGISTRAR_APUESTA: string =
-  AppDomainConstant.URI_GATEWAY +
+  AppDomainConstant.URI_GATEWAY  +
   ProductosAPIConstant.LOTERIAS_API +
   'registrarApuesta';
 
