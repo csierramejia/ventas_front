@@ -138,7 +138,7 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
     this.borrarTodo(2);
     if(this.selectedCifras.code === '4C'){
       this.maxlengthV = 4;
-      this.consultarValoresModalidad(4);
+      this.consultarValoresModalidad(1);
     } else if(this.selectedCifras.code === '3C'){
       this.maxlengthV = 3;
       this.consultarValoresModalidad(3);
