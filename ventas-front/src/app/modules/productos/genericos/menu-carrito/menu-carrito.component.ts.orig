@@ -131,6 +131,11 @@ export class MenuCarritoComponent implements OnInit {
       if(JSON.parse(localStorage.getItem('chanceApuesta')).length > 0) {
         const iteracionLocalStorageProductos = JSON.parse(localStorage.getItem('chanceApuesta'));
         const newProductos = []
+<<<<<<< HEAD
+
+       
+=======
+>>>>>>> 14a99972eb08ec0e52dbc78dbb940b443968b45b
         iteracionLocalStorageProductos.forEach(element => {
           const loteriasSeleccionadas = this.get_lotteriesSelected(element.loterias)
           newProductos.push({
@@ -143,12 +148,7 @@ export class MenuCarritoComponent implements OnInit {
             loterias:loteriasSeleccionadas,
             total:Math.round(element.total),
             _id:element._id,
-            viewRepetir: false,
-            serie: element.serie,
-            colillaActual:element.colillaActual,
-            idRollo: element.idRollo,
-            idVendedor:element.idUsuario,
-        
+            viewRepetir: false
           })
           this.subtotal = Math.round(this.subtotal + element.total)
         });
@@ -186,9 +186,11 @@ export class MenuCarritoComponent implements OnInit {
             idRollo: element.idRollo,
             idVendedor:element.idUsuario,
           })
+        
           this.subtotal = Math.round(this.subtotal + element.total)
         });
         this.productos = newProductos;
+    
       } else {
         this.productos = []
       }

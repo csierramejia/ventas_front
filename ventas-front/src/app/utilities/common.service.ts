@@ -51,15 +51,15 @@ export class CommonService {
    * @description Metodo que sirve para
    * estar refrescando el carrito de compras
    */
-  obtenerItemsCarrito(): Observable<Date>{
-    return new Observable(
-        observer => {
-              setInterval(() =>
-                  observer.next(JSON.parse(localStorage.getItem('chanceApuesta')))
-              , 1000);
-        }
-    );
-  }
+  // obtenerItemsCarritoChance(): Observable<Date>{
+  //   return new Observable(
+  //       observer => {
+  //             setInterval(() =>
+  //                 observer.next(JSON.parse(localStorage.getItem('chanceApuesta')))
+  //             , 1000);
+  //       }
+  //   );
+  // }
 
 
   

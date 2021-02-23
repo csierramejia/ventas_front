@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DirectoComponent } from './directo.component';
+import { ApuestaMillonariaComponent } from './apuesta-millonaria.component';
 
-describe('DirectoComponent', () => {
-  let component: DirectoComponent;
-  let fixture: ComponentFixture<DirectoComponent>;
+describe('ApuestaMillonariaComponent', () => {
+  let component: ApuestaMillonariaComponent;
+  let fixture: ComponentFixture<ApuestaMillonariaComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DirectoComponent ]
+      declarations: [ ApuestaMillonariaComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DirectoComponent);
+    fixture = TestBed.createComponent(ApuestaMillonariaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

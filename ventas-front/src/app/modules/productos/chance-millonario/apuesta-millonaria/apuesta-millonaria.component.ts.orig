@@ -6,12 +6,20 @@ import { MessageService } from 'primeng/api';
 import { MsjUtil } from 'src/app/utilities/messages.util';
 import { CommonComponent } from 'src/app/utilities/common.component';
 import { FechaUtil } from 'src/app/utilities/fecha-util';
+<<<<<<< HEAD
+import { AutenticacionResponseDTO } from 'src/app/dtos/seguridad/autenticacion/autenticacion-response.dto';
+import { SessionStoreUtil } from 'src/app/utilities/session-store.util';
+import { TipoEventoConstant } from 'src/app/constants/tipo-evento.constant';
+import { FiltroOperacionDTO} from 'src/app/dtos/transversal/filtro-operacion.dto';
+import { RolloColillaDTO} from 'src/app/dtos/transversal/rollo-colilla.dto'
+=======
 import { CommonService } from 'src/app/utilities/common.service';
 import { ClientesDTO } from 'src/app/dtos/productos/chance/clientes.dto';
 import { CrearClienteComponent } from '../../genericos/crear-cliente/crear-cliente.component';
 import * as moment from 'moment';
 import { CurrencyPipe } from '@angular/common';
 import { ShellState } from '../../../../states/shell/shell.state';
+>>>>>>> 14a99972eb08ec0e52dbc78dbb940b443968b45b
 
 @Component({
   selector: 'app-apuesta-millonaria',
@@ -27,6 +35,10 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
   @Output() agregarCliente: EventEmitter<any> = new EventEmitter();
   @Output() agregarModalidad: EventEmitter<any> = new EventEmitter();
   @ViewChild(CrearClienteComponent) crearClienteChild: CrearClienteComponent;
+   /** Dto que contiene los datos de la autenticacion */
+   private auth: AutenticacionResponseDTO;
+
+   public rolloColilla : RolloColillaDTO;
 
   stateDisabeld = false;
   subscription: any;
@@ -85,6 +97,31 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
     private currencyPipe: CurrencyPipe
   ) {
     super();
+<<<<<<< HEAD
+    this.auth = SessionStoreUtil.auth(TipoEventoConstant.GET);
+   // obtemos el esquema de fechas para que el usuario puede saleccionar el dia de la apuesta a realizar
+    const dayWeek = this.getDayWeek();
+  //  this.setDays(dayWeek);
+  this.setDaysServicio();
+  this.fechaMostrar=new Date();
+  this.productosService.consultarRutaImagenes().subscribe(
+    responseDTO => {
+      if(responseDTO){
+      this.rutaServidor = responseDTO.codigo;
+      }
+    },
+    error => {
+      this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+    }
+  );
+  this.obtenerNumeroColilla();
+  }
+
+  ngOnInit(): void {
+    this.esDuplicado=false;
+    this.fechaActual=new Date();
+       
+=======
     // obtenemos el semanario
     this.setDaysServicio();
 
@@ -113,6 +150,7 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
       }
     });
 
+>>>>>>> 14a99972eb08ec0e52dbc78dbb940b443968b45b
   }
 
 
@@ -417,8 +455,51 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
   }
 
 
+<<<<<<< HEAD
+  }
+  /**
+   * @author Luis Hernandez
+   * @description funcion que se encarga de
+   * emitir la apuesta al componente bolsa
+   */
+  addBetSend(): void {
+      this.addBet.emit({
+        action: 1,
+        // lotteries: this.lotteriesSelected,
+        _id: 'bet_' + Math.floor(Math.random() * 999999),
+        idCustomer: this.idCustomer,
+        correoCustomer: this.correoCustomer,
+        modalidad: this.seleccionado==1 ? '4 Cifras' : '3 Cifras',
+        numberPlayed:null,
+        valorApostado: this.chanceForm.get('valorApostado').value,
+        apuestaA: this.chanceForm.get('numeroA').value,
+        apuestaB: this.chanceForm.get('numeroB').value,
+        apuestaC: this.chanceForm.get('numeroC').value,
+        apuestaD: this.chanceForm.get('numeroD').value,
+        apuestaE: this.chanceForm.get('numeroE').value,
+        dataPlayed: this.dayBet,
+        nombresLoteria:this.nombresLoterias(),
+        loterias:this.lotteriesSelected,
+        colilla:  this.numeroSerie,
+        serie:  this.rolloColilla.serie,
+        colillaActual: this.rolloColilla.colillaActual,
+        idRollo:  this.auth.usuario.idRollo,
+        idVendedor: this.auth.usuario.idUsuario,
+      });
+      this.cleanInputs();
+      if(this.idCustomer){
+          this.enabledCustomer = true;
+      }
+      else{
+        this.enabledCustomer = false;
+      }
+     
+      this.selectUnmarkAllBol=false;
+    
+=======
   generarAletorio(){
     return Math.round(Math.random() * (this.loterias.length-1 - 0) + 0);
+>>>>>>> 14a99972eb08ec0e52dbc78dbb940b443968b45b
   }
 
 
@@ -428,10 +509,45 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
    * solo ingrese numeros en los campos donde se espera solo numeros
    * @param e
    */
+<<<<<<< HEAD
+  editBetSend() {
+      this.addBet.emit({
+        action:this.esDuplicado ? 1 : 0,
+        _id: this.esDuplicado ? 'bet_' + Math.floor(Math.random() * 999999) : this.idEdit,
+        documentCustomer: this.chanceForm.get('numeroDocumento').value,
+        nameCustomer: this.chanceForm.get('nombreCliente').value,
+        modalidad: this.seleccionado==1 ? '4 Cifras' : '3 Cifras',
+        numberPlayed:null,
+        apuestaA: this.chanceForm.get('numeroA').value,
+        apuestaB: this.chanceForm.get('numeroB').value,
+        valorApostado: this.chanceForm.get('valorApostado').value,
+        apuestaC: this.chanceForm.get('numeroC').value,
+        apuestaD: this.chanceForm.get('numeroD').value,
+        apuestaE: this.chanceForm.get('numeroE').value,
+        nombresLoteria:this.nombresLoterias(),
+        dataPlayed: this.dayBet,
+        loterias:this.lotteriesSelected,
+        colilla:  this.numeroSerie,
+        serie:  this.rolloColilla.serie,
+        colillaActual: this.rolloColilla.colillaActual,
+        idRollo:  this.auth.usuario.idRollo,
+        idVendedor: this.auth.usuario.idUsuario,
+      });
+      this.cleanInputs();
+      if(this.chanceForm.get('nombreCliente').value){
+          this.enabledCustomer = true;
+      }
+      else{
+        this.enabledCustomer = false;
+      }
+      this.selectUnmarkAllBol=false;
+    
+=======
   permitirSoloNumeros(e) {
     const key = window.Event ? e.which : e.keyCode;
     e.key.replace(/\D|\-/, '');
     return (key >= 48 && key <= 57);
+>>>>>>> 14a99972eb08ec0e52dbc78dbb940b443968b45b
   }
 
 
@@ -803,7 +919,31 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
   }
 
 
+<<<<<<< HEAD
+  /**
+  * Método encargado de consulta la última colilla para venta
+  */
+ public obtenerNumeroColilla(): void {
+  const filtro = new FiltroOperacionDTO;
+  filtro.idRollo = this.auth.usuario.idRollo;
+  filtro.idVendedor = this.auth.usuario.idUsuario;
+  if (filtro.idRollo) {
+  this.productosService.consultarColilla(filtro).subscribe(
+    colilla => {
+      this.rolloColilla = new RolloColillaDTO;
+      this.rolloColilla = colilla;
+      this.numeroSerie = colilla.serie + colilla.rangoColilla;
+    },
+    error => {
+      this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+    }
+  );
+  }
+
+}
+=======
 
 
+>>>>>>> 14a99972eb08ec0e52dbc78dbb940b443968b45b
 
 }

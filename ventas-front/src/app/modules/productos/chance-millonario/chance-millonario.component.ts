@@ -1,19 +1,26 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { SummaryFooterComponent } from '../genericos/summary-footer/summary-footer.component';
 import { ApuestaMillonariaComponent } from './apuesta-millonaria/apuesta-millonaria.component';
-import { BolsaComponent } from '../genericos/bolsa/bolsa.component';
+import { MenuCarritoComponent } from '../genericos/menu-carrito/menu-carrito.component';
+import { ProductosService } from '../productos.service';
 
 @Component({
   selector: 'app-chance-millonario',
   templateUrl: './chance-millonario.component.html',
-  styleUrls: ['./chance-millonario.component.css']
+  styleUrls: ['./chance-millonario.component.css'],
+  providers: [ProductosService]
+
 })
 export class ChanceMillonarioComponent implements OnInit {
 
-  @ViewChild(BolsaComponent) bolsaChild: BolsaComponent;
-  @ViewChild(ApuestaMillonariaComponent) apuestaMillonariaComponent: ApuestaMillonariaComponent;
+  // esto aplica para chance
+  @ViewChild(SummaryFooterComponent, {static: true}) summaryFooter: SummaryFooterComponent;
+  @ViewChild(ApuestaMillonariaComponent) apuestaChanceMillonario: ApuestaMillonariaComponent;
+  @ViewChild(MenuCarritoComponent, {static: true}) menuCarrito: MenuCarritoComponent;
 
-  constructor() {
+  productoChanceMillonario = 'chance-millonario'
 
+  constructor(private productosService: ProductosService) {
   }
 
   ngOnInit(): void {
@@ -23,53 +30,53 @@ export class ChanceMillonarioComponent implements OnInit {
   /**
    * @author Luis Hernandez
    * @param event
-   * @description Metodo que se engarda de recibir
-   * la informacion del chance que viene del
-   * componente apuesta y lo envia para el
-   * componente bolsa
-   */
-  addBet(event): void {
-    this.bolsaChild.validCreateAndEdit(event);
-  }
-
-  /**
-   * @author Luis Hernandez
-   * @param event
    * @description funcion que se encarga de setear las loterias en la bolsa
    */
-  addLotteries(event): void {
-    this.bolsaChild.setLotteries(event);
-    this.bolsaChild.setProducto("CHANCE_MILLONARIO")
+  agregarLoterias(event): void {
+    this.summaryFooter.setLoterias(event);
+    this.summaryFooter.setProducto('CHANCE');
   }
-
-
 
 
   /**
    * @author Luis Hernandez
    * @param event
-   * @description Metodo que se engarda de recibir
-   * la informacion del chance que viene del
-   * componente bolsa y lo envia para el
-   * componente chance
+   * @description funcion que se encarga de setear la variable 
    */
-  editBet(event): void {
-      this.apuestaMillonariaComponent.editBetSendEmit(event);
-    
+  reiniciarEdit(event){
+    this.summaryFooter.edit = event;
   }
 
 
-
-  /**
-   * @author Luis Hernandez
-   * @param event
-   * @description Metodo que se engarda de notificar
-   * que la transaccion esta ok
-   */
-  creatingBet(event): void {
-      this.apuestaMillonariaComponent.createBetSendEmit(event);
-    
+  agregarNumeros(event) {
+    this.summaryFooter.setNumeros(event);
   }
+
+  agregarCliente(event) {
+    this.summaryFooter.setCliente(event);
+  }
+
+
+  agregarModalidad(event) {
+    this.summaryFooter.setModalidad(event);
+  }
+
+  borrarTodoReset(event) {
+    this.apuestaChanceMillonario.borrarTodo(3);
+    this.summaryFooter.limpiar();
+
+  }
+
+
+  agregarProductos(event){
+    this.menuCarrito.refrescarCarrito()
+  }
+
+  editarProducto(event){
+    this.summaryFooter.editarProducto(event)
+    this.apuestaChanceMillonario.editarProducto(event)
+  }
+
 
 
 }

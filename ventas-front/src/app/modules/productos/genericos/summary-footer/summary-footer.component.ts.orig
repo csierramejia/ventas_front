@@ -16,7 +16,6 @@ import { RolloColillaDTO} from 'src/app/dtos/transversal/rollo-colilla.dto'
 
 
 
-
 @Component({
   selector: 'app-summary-footer',
   templateUrl: './summary-footer.component.html',
@@ -30,11 +29,11 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
   @Output() agregarProductos: EventEmitter<any> = new EventEmitter();
   @ViewChild(ConfirmacionAgregarCarritoComponent) confirmacionAgregar: ConfirmacionAgregarCarritoComponent;
   @Input() productoParent: string;
- /** Dto que contiene los datos de la autenticacion */
+
+  /** Dto que contiene los datos de la autenticacion */
   private auth: AutenticacionResponseDTO;
 
   public rolloColilla : RolloColillaDTO;
-
 
   clienteOperacion = {correoCustomer:null, idCustomer:null, nombreCliente:null, numeroDocumento:null, tipoDocumento:null}
   edit = false;
@@ -53,7 +52,6 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
   verConfirmacionPopap = false;
   hoy = new Date();
   fechaActual = this.hoy.getDate() + '/' + (this.hoy.getMonth() + 1) + '/' + this.hoy.getFullYear();
-
   
 
   constructor(
@@ -64,14 +62,44 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
     private shellState: ShellState,
     private commonService: CommonService
   ) {
+<<<<<<< HEAD:ventas-front/src/app/modules/productos/chance/summary-footer/summary-footer.component.ts
     super();
       // se obtiene los datos de la autenticacion
     this.auth = SessionStoreUtil.auth(TipoEventoConstant.GET);
     this.obtenerNumeroColilla();
    }
+=======
+    super();   
+  }
+>>>>>>> 14a99972eb08ec0e52dbc78dbb940b443968b45b:ventas-front/src/app/modules/productos/genericos/summary-footer/summary-footer.component.ts
 
   ngOnInit(): void {
+    this.obtenerColilla()
     this.obtenerIva();
+  
+  }
+
+
+ /**
+  * Método encargado de consulta la última colilla para venta
+  */
+  public obtenerNumeroColilla(): void {
+    const filtro = new FiltroOperacionDTO;
+    filtro.idRollo = this.auth.usuario.idRollo;
+    filtro.idVendedor = this.auth.usuario.idUsuario;
+    if (filtro.idRollo) {
+      this.productosService.consultarColilla(filtro).subscribe(
+        colilla => {
+          this.rolloColilla = new RolloColillaDTO;
+          this.rolloColilla = colilla;
+          this.colilla = colilla.serie + colilla.rangoColilla;
+        },
+        error => {
+          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+        }
+      );
+    }
+
   }
 
 
@@ -97,29 +125,6 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
         }
       );
     }
-
-  }
-
-/**
-  * Método encargado de consulta la última colilla para venta
-  */
-  public obtenerNumeroColilla(): void {
-    const filtro = new FiltroOperacionDTO;
-    filtro.idRollo = this.auth.usuario.idRollo;
-    filtro.idVendedor = this.auth.usuario.idUsuario;
-    if (filtro.idRollo) {
-      this.productosService.consultarColilla(filtro).subscribe(
-        colilla => {
-          this.rolloColilla = new RolloColillaDTO;
-          this.rolloColilla = colilla;
-          this.colilla = colilla.serie + colilla.rangoColilla;
-        },
-        error => {
-          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
-        }
-      );
-    }
-
   }
 
   /**
@@ -260,6 +265,11 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
   }
 
 
+<<<<<<< HEAD:ventas-front/src/app/modules/productos/chance/summary-footer/summary-footer.component.ts
+  agregarCarritoF(): void {
+    
+    
+=======
 
   obtenerValoresTotalesChanceMillonario(){
     if(this.loterias){
@@ -279,6 +289,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
 
 
   agregarCarritoF(): void { 
+>>>>>>> 14a99972eb08ec0e52dbc78dbb940b443968b45b:ventas-front/src/app/modules/productos/genericos/summary-footer/summary-footer.component.ts
 
     switch (this.productoParent) {
       case 'chance':
@@ -304,21 +315,38 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
         if(this.edit){
           this.confirmacionAgregar.isCreate = false;
           this.verConfirmacionPopap = true;
-          this.confirmacionAgregar.colilla = this.colilla
-          this.confirmacionAgregar.numeros = this.concatenarNumeros(listaNumeros)
+           this.confirmacionAgregar.colilla = this.colilla
+           this.confirmacionAgregar.numeros = this.concatenarNumeros(listaNumeros)
           this.confirmacionAgregar.loterias = this.concatenarLoterias(this.loterias)
           this.confirmacionAgregar.apostado = Math.round(this.valueBet)
           this.confirmacionAgregar.iva = Math.round(this.valueVat)
           this.confirmacionAgregar.total = Math.round(this.valueBetTotal)
+        
         } else {
+         
           this.confirmacionAgregar.isCreate = true;
           this.verConfirmacionPopap = true;
-          this.confirmacionAgregar.colilla = this.colilla
-          this.confirmacionAgregar.numeros = this.concatenarNumeros(listaNumeros)
-          this.confirmacionAgregar.loterias = this.concatenarLoterias(this.loterias)
-          this.confirmacionAgregar.apostado = Math.round(this.valueBet)
-          this.confirmacionAgregar.iva = Math.round(this.valueVat)
-          this.confirmacionAgregar.total = Math.round(this.valueBetTotal)
+          this.confirmacionAgregar.colilla = this.colilla;
+          this.confirmacionAgregar.numeros = this.concatenarNumeros(listaNumeros);
+          this.confirmacionAgregar.loterias = this.concatenarLoterias(this.loterias);
+          this.confirmacionAgregar.apostado = Math.round(this.valueBet);
+          this.confirmacionAgregar.iva = Math.round(this.valueVat);
+          this.confirmacionAgregar.total = Math.round(this.valueBetTotal);
+          this.confirmacionAgregar.idRollo = this.auth.usuario.idRollo;
+          this.confirmacionAgregar.rolloColilla =  this.rolloColilla;
+          this.confirmacionAgregar.idUsuario = this.auth.usuario.idUsuario;
+      
+          if (JSON.parse(localStorage.getItem('chanceApuesta')) && JSON.parse(localStorage.getItem('chanceApuesta')).length > 0) {
+            const iteracionLocalStorageProductos = JSON.parse(localStorage.getItem('chanceApuesta'));
+            let index = iteracionLocalStorageProductos.length - 1
+            let colillaActual = iteracionLocalStorageProductos[index].colillaActual;
+            colillaActual++;
+            this.confirmacionAgregar.rolloColilla.colillaActual = colillaActual;
+            const colilla = iteracionLocalStorageProductos[index].serie + String(colillaActual).padStart(7, '0');
+            this.confirmacionAgregar.colilla = colilla;
+            this.colilla = colilla;
+           }
+
         }
       } else {
         this.messageService.add(MsjUtil.getToastErrorMedium('Valide que esta gestionando los campos necesarios para realizar la apuesta'));

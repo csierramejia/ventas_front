@@ -11,11 +11,12 @@ import {CardModule} from 'primeng/card';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {DialogModule} from 'primeng/dialog';
 import {SidebarModule} from 'primeng/sidebar';
+import { SelectButtonModule } from 'primeng/selectbutton';
 import {OverlayPanelModule} from 'primeng/overlaypanel';
 
 // OJOS QUITAR ESTE COMPONENTE
 import { BolsaComponent } from './genericos/bolsa/bolsa.component';
-import { SummaryFooterComponent } from './chance/summary-footer/summary-footer.component';
+import { SummaryFooterComponent } from './genericos/summary-footer/summary-footer.component';
 import { ConfirmacionAgregarCarritoComponent } from './genericos/confirmacion-agregar-carrito/confirmacion-agregar-carrito.component';
 
 
@@ -94,6 +95,7 @@ import { MenuCarritoComponent } from './genericos/menu-carrito/menu-carrito.comp
     SharedModule,
     CardModule,
     DialogModule,
+    SelectButtonModule,
     SidebarModule,
     OverlayPanelModule,
     InputSwitchModule,

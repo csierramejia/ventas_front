@@ -1,5 +1,8 @@
 <div  >  
-    <app-menu-carrito (editarProducto)="editarProducto($event)"></app-menu-carrito>
+    <app-menu-carrito 
+        [productoParent]="productoChance" 
+        (editarProducto)="editarProducto($event)">
+    </app-menu-carrito>
     <section>
         <app-apuesta-chance
             (agregarLoterias)="agregarLoterias($event)"
@@ -8,7 +11,9 @@
             (agregarCliente)="agregarCliente($event)">
         </app-apuesta-chance>
         <app-summary-footer
-            (borrarTodoReset)="borrarTodoReset($event)" (agregarProductos)="agregarProductos($event)">
+            [productoParent]="productoChance" 
+            (borrarTodoReset)="borrarTodoReset($event)" 
+            (agregarProductos)="agregarProductos($event)">
         </app-summary-footer>
     </section>
     </div>
