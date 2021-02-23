@@ -1,36 +1,30 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { BolsaComponent } from '../genericos/bolsa/bolsa.component';
-import { ApuestaSuperComponent } from './apuesta-super/apuesta-super.component';
+import { SummaryFooterComponent } from '../genericos/summary-footer/summary-footer.component';
+import { ApuestaMillonariaComponent } from './apuesta-millonaria/apuesta-millonaria.component';
+import { MenuCarritoComponent } from '../genericos/menu-carrito/menu-carrito.component';
+import { ProductosService } from '../productos.service';
 
 @Component({
-  selector: 'app-super-chance',
-  templateUrl: './super-chance.component.html',
-  styleUrls: ['./super-chance.component.css']
+  selector: 'app-chance-millonario',
+  templateUrl: './chance-millonario.component.html',
+  styleUrls: ['./chance-millonario.component.css'],
+  providers: [ProductosService]
+
 })
 export class SuperChanceComponent implements OnInit {
 
-  @ViewChild(BolsaComponent) bolsaChild: BolsaComponent;
-  @ViewChild(ApuestaSuperComponent) apuestaMillonariaComponent: ApuestaSuperComponent;
+  // esto aplica para chance
+  @ViewChild(SummaryFooterComponent, {static: true}) summaryFooter: SummaryFooterComponent;
+  @ViewChild(ApuestaMillonariaComponent) apuestaChanceMillonario: ApuestaMillonariaComponent;
+  @ViewChild(MenuCarritoComponent, {static: true}) menuCarrito: MenuCarritoComponent;
 
-  esMillonaria:boolean;
-  constructor() {
+  productoChanceMillonario = 'chance-millonario'
 
-   }
-
-  ngOnInit(): void {
-    this.esMillonaria=true;
+  constructor(private productosService: ProductosService) {
   }
 
-  /**
-   * @author Luis Hernandez
-   * @param event
-   * @description Metodo que se engarda de recibir
-   * la informacion del chance que viene del
-   * componente apuesta y lo envia para el
-   * componente bolsa
-   */
-  addBet(event): void {
-    this.bolsaChild.validCreateAndEdit(event);
+  ngOnInit(): void {
+
   }
 
   /**
@@ -38,39 +32,51 @@ export class SuperChanceComponent implements OnInit {
    * @param event
    * @description funcion que se encarga de setear las loterias en la bolsa
    */
-  addLotteries(event): void {
-    this.bolsaChild.setLotteries(event);
-    this.bolsaChild.setProducto("SUPER_CHANCE")
+  agregarLoterias(event): void {
+    this.summaryFooter.setLoterias(event);
+    this.summaryFooter.setProducto('CHANCE');
   }
-
-
 
 
   /**
    * @author Luis Hernandez
    * @param event
-   * @description Metodo que se engarda de recibir
-   * la informacion del chance que viene del
-   * componente bolsa y lo envia para el
-   * componente chance
+   * @description funcion que se encarga de setear la variable 
    */
-  editBet(event): void {
-      this.apuestaMillonariaComponent.editBetSendEmit(event);
-    
+  reiniciarEdit(event){
+    this.summaryFooter.edit = event;
   }
 
 
-
-  /**
-   * @author Luis Hernandez
-   * @param event
-   * @description Metodo que se engarda de notificar
-   * que la transaccion esta ok
-   */
-  creatingBet(event): void {
-      this.apuestaMillonariaComponent.createBetSendEmit(event);
-    
+  agregarNumeros(event) {
+    this.summaryFooter.setNumeros(event);
   }
+
+  agregarCliente(event) {
+    this.summaryFooter.setCliente(event);
+  }
+
+
+  agregarModalidad(event) {
+    this.summaryFooter.setModalidad(event);
+  }
+
+  borrarTodoReset(event) {
+    this.apuestaChanceMillonario.borrarTodo(3);
+    this.summaryFooter.limpiar();
+
+  }
+
+
+  agregarProductos(event){
+    this.menuCarrito.refrescarCarrito()
+  }
+
+  editarProducto(event){
+    this.summaryFooter.editarProducto(event)
+    this.apuestaChanceMillonario.editarProducto(event)
+  }
+
 
 
 }
