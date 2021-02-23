@@ -91,8 +91,7 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
       // delete event.lotteries;
       this.cartItems.push(event);
       if(this.cartItems.length>1){
-     //   this.cartItems.sort((a, b) => a.colillaActual - b.colillaActual);
-        for (let index = this.cartItems.length - 1; index < this.cartItems.length; index++) {
+         for (let index = this.cartItems.length - 1; index < this.cartItems.length; index++) {
           const element = this.cartItems[index-1];
           let colillaActual = element.colillaActual;
           colillaActual ++ ;
@@ -101,10 +100,6 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
           this.cartItems[index].colillaActual=colillaActual;
           
         }
-
-        // descending
-   //  let newarr = this.cartItems.sort((a, b) => a.colillaActual - b.colillaActual);
-    // console.log(newarr);
 
       }
       this.get_values_totals();
