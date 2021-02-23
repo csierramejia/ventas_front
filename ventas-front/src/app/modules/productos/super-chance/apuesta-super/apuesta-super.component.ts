@@ -41,6 +41,7 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
   selectTodas:boolean;
   selectUnmarkAllBol = false;
   loterias = [];
+  seriesColillas = [];
   lotteriesSelected = [];
   esDuplicado:boolean;
   dayBet: Date;
@@ -565,6 +566,7 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
 
     if(this.btnAdd){
       this.addBetSend();
+      this.incrementarNumeroSerie();
     }
     else if(this.btnEdit){
       this.editBetSend();
@@ -1052,5 +1054,23 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
   }
 
 }
+
+
+ /**
+   * Método encargado de incrementar el número de serie
+   */
+  public incrementarNumeroSerie() {
+    this.seriesColillas.push(this.rolloColilla);
+    if (this.seriesColillas && this.seriesColillas.length > 1) {
+      let index = this.seriesColillas.length - 1
+      let colillaActual = this.seriesColillas[index].colillaActual;
+      colillaActual++;
+      const serie = this.seriesColillas[index].serie + String(colillaActual).padStart(7, '0');
+      this.numeroSerie = serie;
+      this.rolloColilla.colillaActual = colillaActual;
+
+    }
+  }
+
 
 }

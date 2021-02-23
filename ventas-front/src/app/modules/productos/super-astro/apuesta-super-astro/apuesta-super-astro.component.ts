@@ -43,6 +43,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
   selectTodas:boolean;
   selectUnmarkAllBol = false;
   loterias = [];
+  seriesColillas = [];
   lotteriesSelected = [];
   zignos=[];
   dayBet: Date;
@@ -619,6 +620,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
 
       if(this.btnAdd){
         this.addBetSend();
+        this.incrementarNumeroSerie();
       }
       else if(this.btnEdit){
         this.editBetSend();
@@ -1198,6 +1200,22 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
     );
     }
 
+  }
+
+  /**
+   * Método encargado de incrementar el número de serie
+   */
+  public incrementarNumeroSerie() {
+    this.seriesColillas.push(this.rolloColilla);
+    if (this.seriesColillas && this.seriesColillas.length > 1) {
+      let index = this.seriesColillas.length - 1
+      let colillaActual = this.seriesColillas[index].colillaActual;
+      colillaActual++;
+      const serie = this.seriesColillas[index].serie + String(colillaActual).padStart(7, '0');
+      this.numeroSerie = serie;
+      this.rolloColilla.colillaActual = colillaActual;
+
+    }
   }
 
 }
