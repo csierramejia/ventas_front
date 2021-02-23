@@ -310,6 +310,9 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
           this.confirmacionAgregar.apostado = Math.round(this.valueBet)
           this.confirmacionAgregar.iva = Math.round(this.valueVat)
           this.confirmacionAgregar.total = Math.round(this.valueBetTotal)
+          this.confirmacionAgregar.idRollo = this.auth.usuario.idRollo;
+          this.confirmacionAgregar.rolloColilla =  this.rolloColilla;
+          this.confirmacionAgregar.idUsuario = this.auth.usuario.idUsuario;
         } else {
           this.confirmacionAgregar.isCreate = true;
           this.verConfirmacionPopap = true;
@@ -319,6 +322,19 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
           this.confirmacionAgregar.apostado = Math.round(this.valueBet)
           this.confirmacionAgregar.iva = Math.round(this.valueVat)
           this.confirmacionAgregar.total = Math.round(this.valueBetTotal)
+          this.confirmacionAgregar.idRollo = this.auth.usuario.idRollo;
+          this.confirmacionAgregar.rolloColilla =  this.rolloColilla;
+          this.confirmacionAgregar.idUsuario = this.auth.usuario.idUsuario;
+          if (JSON.parse(localStorage.getItem('chanceApuesta')) && JSON.parse(localStorage.getItem('chanceApuesta')).length > 0) {
+            const iteracionLocalStorageProductos = JSON.parse(localStorage.getItem('chanceApuesta'));
+            let index = iteracionLocalStorageProductos.length - 1
+            let colillaActual = iteracionLocalStorageProductos[index].colillaActual;
+            colillaActual++;
+            this.confirmacionAgregar.rolloColilla.colillaActual = colillaActual;
+            const colilla = iteracionLocalStorageProductos[index].serie + String(colillaActual).padStart(7, '0');
+            this.confirmacionAgregar.colilla = colilla;
+            this.colilla = colilla;
+           }
         }
       } else {
         this.messageService.add(MsjUtil.getToastErrorMedium('Valide que esta gestionando los campos necesarios para realizar la apuesta'));
