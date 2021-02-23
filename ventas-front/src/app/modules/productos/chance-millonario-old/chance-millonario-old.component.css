@@ -1,0 +1,8 @@
+
+.container{
+    display: flex;
+}
+
+.container .main-body{
+    width: 100%;
+}

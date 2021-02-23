@@ -1,0 +1,81 @@
+    <div id="row-summary" class="row">
+        <div id="summary-footer" class="col-md-9">
+            <div class="row rowf">
+                <div id="colilla-div">
+                    <div class="div-sum-text">
+                        <span class="text-sum">COLILLA</span>
+                        <br/>
+                        <span class="text-sum">{{ colilla }}</span>
+                    </div>
+                </div>
+                <div class="col-md-2 div-s-t">
+                    <div class="div-sum-text">
+                        <span class="text-sum">DÍA DEL SORTEO</span>
+                        <br/>
+                        <span class="text-sum">{{ fechaSeleccionApuesta | date: 'yyyy-MM-dd' }}</span>
+                    </div>
+                </div>
+                <div class="col-md-2 div-s-t">
+                    <div class="div-sum-text">
+                        <span class="text-sum">LOTERIAS</span>
+                        <br/>
+                        <span *ngIf="loteriaSeleccionadas" class="text-sum">{{ loteriaSeleccionadas.length }}</span>
+                    </div>
+                </div>
+                <div class="col-md-2 div-s-t">
+                    <div class="div-sum-text">
+                        <span class="text-sum">APOSTADO</span>
+                        <br/>
+                        <span class="text-sum">{{ valueBet  | currency: "CAD":"symbol-narrow":".0-0"}}</span>
+                    </div>
+                </div>
+                <div class="col-md-2 div-s-t">
+                    <div class="div-sum-text">
+                        <span class="text-sum">IVA</span>
+                        <br/>
+                        <span class="text-sum">{{ valueVat  | currency: "CAD":"symbol-narrow":".0-0"}}</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="div-sum-text">
+                        <span class="text-sum">TOTAL</span>
+                        <br/>
+                        <span class="text-sum">{{ valueBetTotal  | currency: "CAD":"symbol-narrow":".0-0"}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="summary-cart" class="col-md-3">
+            <div class="row ">
+                <div class="col-md-6 flex-col">
+                    <div id="cicleOne">
+                        <div class="accciones-btn" *ngIf="!edit">
+                            <img title="Agregar Juego" (click)="agregarCarritoF()" class="img-circle" src="../../../../../assets/img/svg/add-to-cart-l.svg" />
+                            <span>Agregar</span>
+                        </div>
+                        <div class="accciones-btn" *ngIf="edit">
+                            <img title="Editar Juego" (click)="agregarCarritoF()" class="img-circle" src="../../../../../assets/img/svg/update.svg" />
+                            <span>Actualizar</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 flex-col">
+                    <div id="cicleTwo">
+                        <div class="accciones-btn">
+                            <img title="Continuar al pago" (click)="irResumen()" class="img-circle" src="../../../../../assets/img/svg/money-l.svg" />
+                            <span>Pagar</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <p-dialog header="CONFIRMACIÓN" [(visible)]="verConfirmacionPopap" [style]="{width: '664px'}">
+        <app-confirmacion-agregar-carrito  
+            (closePopup)="closeModal($event)" 
+            (eventoCrearEditar)="eventoCrearEditar($event)">
+        </app-confirmacion-agregar-carrito >
+    </p-dialog>
+    
