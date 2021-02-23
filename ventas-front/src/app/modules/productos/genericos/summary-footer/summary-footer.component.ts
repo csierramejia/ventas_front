@@ -372,6 +372,19 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
           this.confirmacionAgregar.apostado = Math.round(this.valueBet)
           this.confirmacionAgregar.iva = Math.round(this.valueVat)
           this.confirmacionAgregar.total = Math.round(this.valueBetTotal)
+          this.confirmacionAgregar.idRollo = this.auth.usuario.idRollo;
+          this.confirmacionAgregar.rolloColilla =  this.rolloColilla;
+          this.confirmacionAgregar.idUsuario = this.auth.usuario.idUsuario;
+          if (JSON.parse(localStorage.getItem('chanceApuestaMillonario')) && JSON.parse(localStorage.getItem('chanceApuestaMillonario')).length > 0) {
+            const iteracionLocalStorageProductos = JSON.parse(localStorage.getItem('chanceApuestaMillonario'));
+            let index = iteracionLocalStorageProductos.length - 1;
+            let colillaActual = iteracionLocalStorageProductos[index].colillaActual;
+            colillaActual++;
+            this.confirmacionAgregar.rolloColilla.colillaActual = colillaActual;
+            const colilla = iteracionLocalStorageProductos[index].serie + String(colillaActual).padStart(7, '0');
+            this.confirmacionAgregar.colilla = colilla;
+            this.colilla = colilla;
+           }
         }
       } else {
         this.messageService.add(MsjUtil.getToastErrorMedium('Valide que esta gestionando los campos necesarios para realizar la apuesta'));
@@ -669,7 +682,11 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
         listaNumeros:listaNumeros,
         clienteOperacion:this.clienteOperacion,
         selectedCifras: this.selectedCifras,
-        fechaSeleccionApuesta:this.fechaSeleccionApuesta
+        fechaSeleccionApuesta:this.fechaSeleccionApuesta,
+        serie:  this.rolloColilla.serie,
+        colillaActual: this.rolloColilla .colillaActual,
+        idRollo:  this.auth.usuario.idRollo,
+        idVendedor: this.auth.usuario.idUsuario,
       }
 
       let chanceApuesta:any = JSON.parse(localStorage.getItem('chanceApuestaMillonario'));
@@ -710,7 +727,12 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
         listaNumeros:listaNumeros,
         clienteOperacion:this.clienteOperacion,
         selectedCifras: this.selectedCifras,
-        fechaSeleccionApuesta:this.fechaSeleccionApuesta
+        fechaSeleccionApuesta:this.fechaSeleccionApuesta,
+        serie:  this.rolloColilla.serie,
+        colillaActual: this.rolloColilla .colillaActual,
+        idRollo:  this.auth.usuario.idRollo,
+        idVendedor: this.auth.usuario.idUsuario,
+        
       }
 
       let chanceApuestaMillonario = localStorage.getItem('chanceApuestaMillonario');
