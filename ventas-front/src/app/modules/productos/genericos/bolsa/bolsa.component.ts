@@ -319,11 +319,11 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
       const bet = [];
       const betDetail = {valueBet:null,valueVat:null,numberPlayed: null, apuestaA: null, apuestaB: null,
         apuestaC: null, apuestaD: null, apuestaE: null, numeroSuper: null, details: null, numeroAstro: null, zignos: null, lotteries:null,
-      //  colilla:  null,
-       // serie:  null,
-       // colillaActual: null,
-       // idRollo:  null,
-       // idVendedor: null,
+        colilla:  null,
+        serie:  null,
+        colillaActual: null,
+        idRollo:  null,
+        idVendedor: null,
         fechaSorteo:null};
       if (element.modalidad && element.numeroSuper == null) {
         betDetail.apuestaA = element.apuestaA;
@@ -378,11 +378,11 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
       }
       betDetail.details = bet;
      }
-     // betDetail.colilla = element.colilla;
-     // betDetail.serie = element.serie;
-     // betDetail.colillaActual = element.colillaActual;
-     // betDetail.idRollo = element.idRollo;
-     // betDetail.idVendedor = element.idVendedor;
+      betDetail.colilla = element.colilla;
+      betDetail.serie = element.serie;
+      betDetail.colillaActual = element.colillaActual;
+      betDetail.idRollo = element.idRollo;
+      betDetail.idVendedor = element.idVendedor;
       betDetail.fechaSorteo = element.dataPlayed;
       betDetail.lotteries = element.loterias;
       bets.push(betDetail);

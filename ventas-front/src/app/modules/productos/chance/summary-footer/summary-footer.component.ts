@@ -247,15 +247,14 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
       
           if (JSON.parse(localStorage.getItem('chanceApuesta')) && JSON.parse(localStorage.getItem('chanceApuesta')).length > 0) {
             const iteracionLocalStorageProductos = JSON.parse(localStorage.getItem('chanceApuesta'));
-            iteracionLocalStorageProductos.sort((a, b) => b.colillaActual - a.colillaActual);
-             let index = iteracionLocalStorageProductos.length - 1
+            let index = iteracionLocalStorageProductos.length - 1
             let colillaActual = iteracionLocalStorageProductos[index].colillaActual;
             colillaActual++;
+            this.confirmacionAgregar.rolloColilla.colillaActual = colillaActual;
             const colilla = iteracionLocalStorageProductos[index].serie + String(colillaActual).padStart(7, '0');
             this.confirmacionAgregar.colilla = colilla;
-            iteracionLocalStorageProductos[index].colilla = colilla;
-             localStorage.setItem('chanceApuesta', JSON.stringify(iteracionLocalStorageProductos));
-         }
+            this.colilla = colilla;
+           }
 
         }
       } else {
