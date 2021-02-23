@@ -115,7 +115,8 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
           listaNumeros:this.concatenarNumeros(element.listaNumeros),
           loterias:this.concatenarLoterias(element.loterias),
           total:Math.round(element.total),
-          _id:element._id
+          _id:element._id,
+          
         });
       });
     }
@@ -305,7 +306,7 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
     const productosDepurar = JSON.parse(localStorage.getItem('chanceApuestaMillonario'))
 
     for (let index = 0; index < productosDepurar.length; index++) {
-      const bet = { bets:null, canal: 'WEB', dataPlayed:null, idCustomer:null, idUser:this.shellState.userAccount.auth.usuario.idUsuario, lotteries:null, producto:this.producto, valueBet:null, valueBetTotal:null, valueVat:null,idOficina:this.shellState.userAccount.auth.usuario.idOficina,idPuntoVenta:this.shellState.userAccount.auth.usuario.idPuntoVenta};
+      const bet = { bets:null, canal: 'WEB', dataPlayed:null, idCustomer:null, idUser:this.shellState.userAccount.auth.usuario.idUsuario, lotteries:null, producto:this.producto, valueBet:null, valueBetTotal:null, valueVat:null,idOficina:this.shellState.userAccount.auth.usuario.idOficina,idPuntoVenta:this.shellState.userAccount.auth.usuario.idPuntoVenta,idRollo:null,colillaActual:null};
       bet.lotteries = this.obtenerLoteriasSeleccionadas(productosDepurar[index].loterias)
       bet.bets = this.obtenerEstructuraDatosNumeros(productosDepurar[index].listaNumeros, productosDepurar[0].fechaSeleccionApuesta, bet.lotteries)
       bet.dataPlayed = productosDepurar[index].fechaActual
@@ -319,6 +320,8 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
 
       bet.idOficina = this.shellState.userAccount.auth.usuario.idOficina;
       bet.idPuntoVenta = this.shellState.userAccount.auth.usuario.idPuntoVenta
+      bet.idRollo = productosDepurar[index].idRollo;
+      bet.colillaActual = productosDepurar[index].colillaActual;
 
 
       // guardamos el correo del usuario (para enviar desplendible de pago)

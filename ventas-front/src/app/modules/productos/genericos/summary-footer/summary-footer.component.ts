@@ -684,7 +684,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
         selectedCifras: this.selectedCifras,
         fechaSeleccionApuesta:this.fechaSeleccionApuesta,
         serie:  this.rolloColilla.serie,
-        colillaActual: this.rolloColilla .colillaActual,
+        colillaActual: this.rolloColilla.colillaActual,
         idRollo:  this.auth.usuario.idRollo,
         idVendedor: this.auth.usuario.idUsuario,
       }
@@ -729,7 +729,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
         selectedCifras: this.selectedCifras,
         fechaSeleccionApuesta:this.fechaSeleccionApuesta,
         serie:  this.rolloColilla.serie,
-        colillaActual: this.rolloColilla .colillaActual,
+        colillaActual: this.rolloColilla.colillaActual,
         idRollo:  this.auth.usuario.idRollo,
         idVendedor: this.auth.usuario.idUsuario,
         
@@ -794,7 +794,11 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
         total: this.valueBetTotal,
         listaNumeros:listaNumeros,
         clienteOperacion:this.clienteOperacion,
-        fechaSeleccionApuesta:this.fechaSeleccionApuesta
+        fechaSeleccionApuesta:this.fechaSeleccionApuesta,
+        serie:  this.rolloColilla.serie,
+        colillaActual: this.rolloColilla.colillaActual,
+        idRollo:  this.auth.usuario.idRollo,
+        idVendedor: this.auth.usuario.idUsuario,
       }
 
       let chanceApuesta:any = JSON.parse(localStorage.getItem('chanceApuesta'));
@@ -838,7 +842,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
         total: this.valueBetTotal,
         listaNumeros:listaNumeros,
         clienteOperacion:this.clienteOperacion,
-        fechaSeleccionApuesta:this.fechaSeleccionApuesta
+        fechaSeleccionApuesta:this.fechaSeleccionApuesta,
       }
 
       let chanceApuesta = localStorage.getItem('chanceApuesta');
