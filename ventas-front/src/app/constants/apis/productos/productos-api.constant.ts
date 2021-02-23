@@ -151,4 +151,10 @@ export class ProductosAPIConstant {
        ProductosAPIConstant.HORARIO +
        'obtenerProgramacion';
 
+       /** URL del recuso de colilla rollo */
+       static readonly URL_COLILLA_ROLLO: string =
+       AppDomainConstant.URI_GATEWAY +
+       ProductosAPIConstant.LOTERIAS_API +
+       'consultarColilla';
+
 }

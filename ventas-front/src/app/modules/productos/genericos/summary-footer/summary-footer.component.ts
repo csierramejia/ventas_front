@@ -8,6 +8,12 @@ import { CommonService } from 'src/app/utilities/common.service';
 import { Router } from '@angular/router';
 import { RouterConstant } from '../../../../constants/router.constant';
 import { ConfirmacionAgregarCarritoComponent } from '../../genericos/confirmacion-agregar-carrito/confirmacion-agregar-carrito.component';
+import { AutenticacionResponseDTO } from 'src/app/dtos/seguridad/autenticacion/autenticacion-response.dto';
+import { SessionStoreUtil } from 'src/app/utilities/session-store.util';
+import { TipoEventoConstant } from 'src/app/constants/tipo-evento.constant';
+import { FiltroOperacionDTO} from 'src/app/dtos/transversal/filtro-operacion.dto';
+import { RolloColillaDTO} from 'src/app/dtos/transversal/rollo-colilla.dto'
+
 
 
 
@@ -24,6 +30,11 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
   @Output() agregarProductos: EventEmitter<any> = new EventEmitter();
   @ViewChild(ConfirmacionAgregarCarritoComponent) confirmacionAgregar: ConfirmacionAgregarCarritoComponent;
   @Input() productoParent: string;
+ /** Dto que contiene los datos de la autenticacion */
+  private auth: AutenticacionResponseDTO;
+
+  public rolloColilla : RolloColillaDTO;
+
 
   clienteOperacion = {correoCustomer:null, idCustomer:null, nombreCliente:null, numeroDocumento:null, tipoDocumento:null}
   edit = false;
@@ -53,11 +64,13 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
     private shellState: ShellState,
     private commonService: CommonService
   ) {
-    super();   
-  }
+    super();
+      // se obtiene los datos de la autenticacion
+    this.auth = SessionStoreUtil.auth(TipoEventoConstant.GET);
+    this.obtenerNumeroColilla();
+   }
 
   ngOnInit(): void {
-    this.obtenerColilla()
     this.obtenerIva();
   }
 
@@ -84,6 +97,29 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
         }
       );
     }
+
+  }
+
+/**
+  * Método encargado de consulta la última colilla para venta
+  */
+  public obtenerNumeroColilla(): void {
+    const filtro = new FiltroOperacionDTO;
+    filtro.idRollo = this.auth.usuario.idRollo;
+    filtro.idVendedor = this.auth.usuario.idUsuario;
+    if (filtro.idRollo) {
+      this.productosService.consultarColilla(filtro).subscribe(
+        colilla => {
+          this.rolloColilla = new RolloColillaDTO;
+          this.rolloColilla = colilla;
+          this.colilla = colilla.serie + colilla.rangoColilla;
+        },
+        error => {
+          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+        }
+      );
+    }
+
   }
 
   /**
@@ -274,6 +310,9 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
           this.confirmacionAgregar.apostado = Math.round(this.valueBet)
           this.confirmacionAgregar.iva = Math.round(this.valueVat)
           this.confirmacionAgregar.total = Math.round(this.valueBetTotal)
+          this.confirmacionAgregar.idRollo = this.auth.usuario.idRollo;
+          this.confirmacionAgregar.rolloColilla =  this.rolloColilla;
+          this.confirmacionAgregar.idUsuario = this.auth.usuario.idUsuario;
         } else {
           this.confirmacionAgregar.isCreate = true;
           this.verConfirmacionPopap = true;
@@ -283,6 +322,19 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
           this.confirmacionAgregar.apostado = Math.round(this.valueBet)
           this.confirmacionAgregar.iva = Math.round(this.valueVat)
           this.confirmacionAgregar.total = Math.round(this.valueBetTotal)
+          this.confirmacionAgregar.idRollo = this.auth.usuario.idRollo;
+          this.confirmacionAgregar.rolloColilla =  this.rolloColilla;
+          this.confirmacionAgregar.idUsuario = this.auth.usuario.idUsuario;
+          if (JSON.parse(localStorage.getItem('chanceApuesta')) && JSON.parse(localStorage.getItem('chanceApuesta')).length > 0) {
+            const iteracionLocalStorageProductos = JSON.parse(localStorage.getItem('chanceApuesta'));
+            let index = iteracionLocalStorageProductos.length - 1
+            let colillaActual = iteracionLocalStorageProductos[index].colillaActual;
+            colillaActual++;
+            this.confirmacionAgregar.rolloColilla.colillaActual = colillaActual;
+            const colilla = iteracionLocalStorageProductos[index].serie + String(colillaActual).padStart(7, '0');
+            this.confirmacionAgregar.colilla = colilla;
+            this.colilla = colilla;
+           }
         }
       } else {
         this.messageService.add(MsjUtil.getToastErrorMedium('Valide que esta gestionando los campos necesarios para realizar la apuesta'));
@@ -753,6 +805,10 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
       const productosAgregar = {
         _id: 'bet_' + Math.floor(Math.random() * 999999),
         colilla: this.colilla,
+        serie:  this.rolloColilla.serie,
+        colillaActual: this.rolloColilla .colillaActual,
+        idRollo:  this.auth.usuario.idRollo,
+        idVendedor: this.auth.usuario.idUsuario,
         fechaActual: this.fechaActual,
         loterias: this.loterias,
         apostado: this.valueBet,

@@ -25,6 +25,12 @@ export class UsuarioDTO {
     public idPuntoVenta: number;
 
      /** Almacena la hora final de programación*/ 
-	public horaFinal: string;
+    public horaFinal: string;
+    
+    /** Indica si el usuario autenticado tiene rol de administrador */
+    public administrador: boolean;
+    
+    /** Almacena el id del rollo asignado */
+    public idRollo: number;
 
 }

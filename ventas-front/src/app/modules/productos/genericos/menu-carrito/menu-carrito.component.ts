@@ -143,7 +143,12 @@ export class MenuCarritoComponent implements OnInit {
             loterias:loteriasSeleccionadas,
             total:Math.round(element.total),
             _id:element._id,
-            viewRepetir: false
+            viewRepetir: false,
+            serie: element.serie,
+            colillaActual:element.colillaActual,
+            idRollo: element.idRollo,
+            idVendedor:element.idUsuario,
+        
           })
           this.subtotal = Math.round(this.subtotal + element.total)
         });
@@ -175,7 +180,11 @@ export class MenuCarritoComponent implements OnInit {
             loterias:loteriasSeleccionadas,
             total:Math.round(element.total),
             _id:element._id,
-            viewRepetir: false
+            viewRepetir: false,
+            serie: element.serie,
+            colillaActual:element.colillaActual,
+            idRollo: element.idRollo,
+            idVendedor:element.idUsuario,
           })
           this.subtotal = Math.round(this.subtotal + element.total)
         });

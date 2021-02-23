@@ -4,9 +4,11 @@
  */
 export class FiltroBusquedaDTO {
 
-  /** filtro por algun identificador */
-  public id: number;
+   /** filtro por algun identificador */
+   public id: number;
 
-  /** filtro por nombre */
-  public nombre: string;
+   /** filtro por nombre */
+   public nombre: string;
+
+ 
 }

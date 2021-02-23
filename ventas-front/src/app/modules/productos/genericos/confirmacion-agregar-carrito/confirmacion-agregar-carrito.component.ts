@@ -3,6 +3,8 @@ import { CommonComponent } from 'src/app/utilities/common.component';
 import { ProductosService } from '../../productos.service';
 import { MessageService } from 'primeng/api';
 import { ShellState } from 'src/app/states/shell/shell.state';
+import { RolloColillaDTO} from 'src/app/dtos/transversal/rollo-colilla.dto'
+
 
 @Component({
   selector: 'app-confirmacion-agregar-carrito',
@@ -25,6 +27,10 @@ export class ConfirmacionAgregarCarritoComponent extends CommonComponent impleme
   apostado = 0;
   iva = 0;
   total = 0;
+  public idRollo: number;
+  public rolloColilla : RolloColillaDTO;
+  public idUsuario: number;
+  
 
 
   constructor(

@@ -9,6 +9,12 @@ import { ShellState } from 'src/app/states/shell/shell.state';
 import { CrearClienteComponent } from '../../genericos/crear-cliente/crear-cliente.component';
 import { CurrencyPipe } from '@angular/common';
 import { FechaUtil } from 'src/app/utilities/fecha-util';
+import { AutenticacionResponseDTO } from 'src/app/dtos/seguridad/autenticacion/autenticacion-response.dto';
+import { SessionStoreUtil } from 'src/app/utilities/session-store.util';
+import { TipoEventoConstant } from 'src/app/constants/tipo-evento.constant';
+import { FiltroOperacionDTO} from 'src/app/dtos/transversal/filtro-operacion.dto';
+import { RolloColillaDTO} from 'src/app/dtos/transversal/rollo-colilla.dto'
+
 @Component({
   selector: 'app-apuesta-super-astro',
   templateUrl: './apuesta-super-astro.component.html',
@@ -21,6 +27,12 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
   @Output() addLotteries: EventEmitter<any> = new EventEmitter();
 
   @ViewChild(CrearClienteComponent) crearClienteChild: CrearClienteComponent;
+
+  /** Dto que contiene los datos de la autenticacion */
+  private auth: AutenticacionResponseDTO;
+
+  public rolloColilla : RolloColillaDTO;
+
 
   apuestaCurrency:string;
   idCustomer = '';
@@ -83,6 +95,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
     private currencyPipe : CurrencyPipe
   ) {
     super();
+    this.auth = SessionStoreUtil.auth(TipoEventoConstant.GET);
     // obtemos el esquema de fechas para que el usuario puede saleccionar el dia de la apuesta a realizar
     const dayWeek = this.getDayWeek();
    // this.setDays(dayWeek);
@@ -98,6 +111,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
       this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
     }
   );
+  this.obtenerNumeroColilla();
   }
 
   ngOnInit(): void {
@@ -106,14 +120,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
     this.selectTodas=false;
     this.mostrarSignos=false;
     this.fechaActual=new Date();
-    this.productosService.consultarNumeroSerieApuesta("SUPER ASTRO").subscribe(
-      numeroSerie => {
-        this.numeroSerie=numeroSerie.codigo;
-      },
-      error => {
-        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
-      }
-    );
+    
     this.todosSignos=false;
     this.zignos=[];
     this.productosService.consultarSignos().subscribe(
@@ -650,7 +657,13 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
         apuestaE:null,
         dataPlayed: this.dayBet,
         nombresLoteria:this.nombresLoterias(),
-        loterias:this.lotteriesSelected
+        loterias:this.lotteriesSelected,
+        colilla:  this.numeroSerie,
+        serie:  this.rolloColilla.serie,
+        colillaActual: this.rolloColilla.colillaActual,
+        idRollo:  this.auth.usuario.idRollo,
+        idVendedor: this.auth.usuario.idUsuario,
+
       });
       this.cleanInputs();
       if(this.idCustomer){
@@ -1162,6 +1175,29 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
    */
   ngOnDestroy(): void {
     this.messageService.clear();
+  }
+
+
+  /**
+  * Método encargado de consulta la última colilla para venta
+  */
+  public obtenerNumeroColilla(): void {
+    const filtro = new FiltroOperacionDTO;
+    filtro.idRollo = this.auth.usuario.idRollo;
+    filtro.idVendedor = this.auth.usuario.idUsuario;
+    if (filtro.idRollo) {
+    this.productosService.consultarColilla(filtro).subscribe(
+      colilla => {
+        this.rolloColilla = new RolloColillaDTO;
+        this.rolloColilla = colilla;
+        this.numeroSerie = colilla.serie + colilla.rangoColilla;
+      },
+      error => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
+    }
+
   }
 
 }
