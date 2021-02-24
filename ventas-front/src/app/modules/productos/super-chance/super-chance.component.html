@@ -1,18 +1,17 @@
 <div>  
     <app-menu-carrito 
-        [productoParent]="productoChanceMillonario"
+        [productoParent]="productoSuperChance"
         (editarProducto)="editarProducto($event)">
     </app-menu-carrito>
     <section>
-        <app-apuesta-millonaria
+        <app-apuesta-super
             (agregarLoterias)="agregarLoterias($event)"
             (reiniciarEdit)="reiniciarEdit($event)"
             (agregarNumeros)="agregarNumeros($event)"
-            (agregarCliente)="agregarCliente($event)"
-            (agregarModalidad)="agregarModalidad($event)">
-        </app-apuesta-millonaria>
+            (agregarCliente)="agregarCliente($event)">
+        </app-apuesta-super>
         <app-summary-footer
-            [productoParent]="productoChanceMillonario"
+            [productoParent]="productoSuperChance"
             (borrarTodoReset)="borrarTodoReset($event)"
             (agregarProductos)="agregarProductos($event)">
         </app-summary-footer>

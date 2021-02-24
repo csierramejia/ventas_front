@@ -1,13 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { SummaryFooterComponent } from '../genericos/summary-footer/summary-footer.component';
-import { ApuestaMillonariaComponent } from './apuesta-millonaria/apuesta-millonaria.component';
+import { ApuestaSuperComponent } from './apuesta-super/apuesta-super.component';
 import { MenuCarritoComponent } from '../genericos/menu-carrito/menu-carrito.component';
 import { ProductosService } from '../productos.service';
 
 @Component({
-  selector: 'app-chance-millonario',
-  templateUrl: './chance-millonario.component.html',
-  styleUrls: ['./chance-millonario.component.css'],
+  selector: 'app-super-chance',
+  templateUrl: './super-chance.component.html',
+  styleUrls: ['./super-chance.component.css'],
   providers: [ProductosService]
 
 })
@@ -15,10 +15,10 @@ export class SuperChanceComponent implements OnInit {
 
   // esto aplica para chance
   @ViewChild(SummaryFooterComponent, {static: true}) summaryFooter: SummaryFooterComponent;
-  @ViewChild(ApuestaMillonariaComponent) apuestaChanceMillonario: ApuestaMillonariaComponent;
+  @ViewChild(ApuestaSuperComponent) apuestaChanceMillonario: ApuestaSuperComponent;
   @ViewChild(MenuCarritoComponent, {static: true}) menuCarrito: MenuCarritoComponent;
 
-  productoChanceMillonario = 'chance-millonario'
+  productoSuperChance = 'super-chance'
 
   constructor(private productosService: ProductosService) {
   }
@@ -56,10 +56,6 @@ export class SuperChanceComponent implements OnInit {
     this.summaryFooter.setCliente(event);
   }
 
-
-  agregarModalidad(event) {
-    this.summaryFooter.setModalidad(event);
-  }
 
   borrarTodoReset(event) {
     this.apuestaChanceMillonario.borrarTodo(3);
