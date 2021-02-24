@@ -832,6 +832,8 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
       delete this.dayBet;
       // limpiamos los demas campos
       this.cleanInputs();
+      this.obtenerNumeroColilla();
+      this.seriesColillas=[];
     }
   }
 

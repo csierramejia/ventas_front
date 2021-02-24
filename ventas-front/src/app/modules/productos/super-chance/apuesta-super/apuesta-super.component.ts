@@ -736,6 +736,8 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
       delete this.dayBet;
       // limpiamos los demas campos
       this.cleanInputs();
+      this.obtenerNumeroColilla();
+      this.seriesColillas=[];
     }
   }
 
