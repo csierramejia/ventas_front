@@ -221,21 +221,25 @@ export class MenuCarritoComponent implements OnInit {
     const chanceArray = JSON.parse(localStorage.getItem('chanceApuesta'));
     let item = chanceArray[0];
     const productosBorrar = JSON.parse(localStorage.getItem('chanceApuesta'))
+   
     const keyResponse = this.getKeyObject(id, productosBorrar);
-    if ( keyResponse  !== -1 ) {
-      productosBorrar.splice( keyResponse , 1 );
+    if (keyResponse !== -1) {
+      productosBorrar.splice(keyResponse, 1);
     }
-    productosBorrar[0].colillaActual=item.colillaActual;
-    for (let i = 1; i < productosBorrar.length; i++) {
-      if(productosBorrar.length > 1){
-         let ind = i - 1;
-         let colillaActual = productosBorrar[ind].colillaActual;
-         colillaActual++;
-         productosBorrar[i].colillaActual = colillaActual;
-         const colilla = productosBorrar[i].serie + String(colillaActual).padStart(7, '0');
-         productosBorrar[i].colilla = colilla;
-             }
-      
+    if (productosBorrar.length > 0) {
+      productosBorrar[0].colillaActual = item.colillaActual;
+      productosBorrar[0].colilla = item.colilla;
+      for (let i = 1; i < productosBorrar.length; i++) {
+        if (productosBorrar.length > 1) {
+          let ind = i - 1;
+          let colillaActual = productosBorrar[ind].colillaActual;
+          colillaActual++;
+          productosBorrar[i].colillaActual = colillaActual;
+          const colilla = productosBorrar[i].serie + String(colillaActual).padStart(7, '0');
+          productosBorrar[i].colilla = colilla;
+        }
+
+      }
     }
     localStorage.setItem('chanceApuesta', JSON.stringify(productosBorrar));
     this.refrescarCarrito();
@@ -243,10 +247,27 @@ export class MenuCarritoComponent implements OnInit {
 
 
   borrarApuestaChanceMillonario(id) {
+    const chanceArray = JSON.parse(localStorage.getItem('chanceApuestaMillonario'));
+    let item = chanceArray[0];
     const productosBorrar = JSON.parse(localStorage.getItem('chanceApuestaMillonario'))
     const keyResponse = this.getKeyObject(id, productosBorrar);
-    if ( keyResponse  !== -1 ) {
-      productosBorrar.splice( keyResponse , 1 );
+    if (keyResponse !== -1) {
+      productosBorrar.splice(keyResponse, 1);
+    }
+    if (productosBorrar.length > 0) {
+      productosBorrar[0].colillaActual = item.colillaActual;
+      productosBorrar[0].colilla = item.colilla;
+      for (let i = 1; i < productosBorrar.length; i++) {
+        if (productosBorrar.length > 1) {
+          let ind = i - 1;
+          let colillaActual = productosBorrar[ind].colillaActual;
+          colillaActual++;
+          productosBorrar[i].colillaActual = colillaActual;
+          const colilla = productosBorrar[i].serie + String(colillaActual).padStart(7, '0');
+          productosBorrar[i].colilla = colilla;
+        }
+
+      }
     }
     localStorage.setItem('chanceApuestaMillonario', JSON.stringify(productosBorrar));
     this.refrescarCarrito();
