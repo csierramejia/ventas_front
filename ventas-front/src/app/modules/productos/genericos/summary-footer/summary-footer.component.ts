@@ -51,6 +51,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
   colilla = '';
   fechaSeleccionApuesta: Date;
   verConfirmacionPopap = false;
+  displayModalSerie = false;
   hoy = new Date();
   fechaActual = this.hoy.getDate() + '/' + (this.hoy.getMonth() + 1) + '/' + this.hoy.getFullYear();
 
@@ -113,6 +114,10 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
           this.rolloColilla = new RolloColillaDTO;
           this.rolloColilla = colilla;
           this.colilla = colilla.serie + colilla.rangoColilla;
+          if (this.rolloColilla.nroFinalSerie === this.rolloColilla.colillaActual) {
+            this.displayModalSerie = true;
+  
+          }
         },
         error => {
           this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
@@ -889,6 +894,28 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
    */
   ngOnDestroy(): void {
     this.messageService.clear();
+  }
+
+
+  /**
+   * Permite cerrar el modal de operaciones
+   * @param event 
+   */
+  public closeModalOperacion(event): void {
+    this.displayModalSerie = event;
+  }
+
+
+
+  /**
+   * Permite obtner la colilla actual 
+   * @param event 
+   */
+  public iniciaOperacion(event): void {
+    if(event){
+      this.colilla = event;
+    }
+
   }
 
 }

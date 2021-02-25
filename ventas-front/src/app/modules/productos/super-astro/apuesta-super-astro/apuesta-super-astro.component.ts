@@ -37,6 +37,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
   apuestaCurrency:string;
   idCustomer = '';
   displayModalCreate = false;
+  displayModalSerie = false;
   btnEdit = false;
   btnAdd  = true;
   idEdit: any;
@@ -1195,6 +1196,11 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
         this.rolloColilla = new RolloColillaDTO;
         this.rolloColilla = colilla;
         this.numeroSerie = colilla.serie + colilla.rangoColilla;
+
+        if (this.rolloColilla.nroFinalSerie === this.rolloColilla.colillaActual) {
+          this.displayModalSerie = true;
+
+        }
       },
       error => {
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
@@ -1218,6 +1224,27 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
       this.rolloColilla.colillaActual = colillaActual;
 
     }
+  }
+
+  /**
+   * Permite cerrar el modal de operaciones
+   * @param event 
+   */
+  public closeModalOperacion(event): void {
+    this.displayModalSerie = event;
+  }
+
+
+
+  /**
+   * Permite obtner la colilla actual 
+   * @param event 
+   */
+  public iniciaOperacion(event): void {
+    if(event){
+      this.numeroSerie = event;
+    }
+
   }
 
 }

@@ -35,6 +35,7 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
 
   idCustomer = '';
   displayModalCreate = false;
+  displayModalSerie = false;
   btnEdit = false;
   btnAdd  = true;
   idEdit: any;
@@ -1048,6 +1049,10 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
       this.rolloColilla = new RolloColillaDTO;
       this.rolloColilla = colilla;
       this.numeroSerie =colilla.serie + colilla.rangoColilla;
+      if (this.rolloColilla.nroFinalSerie === this.rolloColilla.colillaActual) {
+        this.displayModalSerie = true;
+
+      }
     },
     error => {
       this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
@@ -1074,5 +1079,27 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
     }
   }
 
+
+  /**
+   * Permite cerrar el modal de operaciones
+   * @param event 
+   */
+  public closeModalOperacion(event): void {
+    this.displayModalSerie = event;
+  }
+
+
+
+  /**
+   * Permite obtner la colilla actual 
+   * @param event 
+   */
+  public iniciaOperacion(event): void {
+    if(event){
+      this.numeroSerie = event;
+    }
+
+  }
+  
 
 }
