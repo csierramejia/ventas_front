@@ -218,10 +218,24 @@ export class MenuCarritoComponent implements OnInit {
 
 
   borrarApuestaChance(id) {
+    const chanceArray = JSON.parse(localStorage.getItem('chanceApuesta'));
+    let item = chanceArray[0];
     const productosBorrar = JSON.parse(localStorage.getItem('chanceApuesta'))
     const keyResponse = this.getKeyObject(id, productosBorrar);
     if ( keyResponse  !== -1 ) {
       productosBorrar.splice( keyResponse , 1 );
+    }
+    productosBorrar[0].colillaActual=item.colillaActual;
+    for (let i = 1; i < productosBorrar.length; i++) {
+      if(productosBorrar.length > 1){
+         let ind = i - 1;
+         let colillaActual = productosBorrar[ind].colillaActual;
+         colillaActual++;
+         productosBorrar[i].colillaActual = colillaActual;
+         const colilla = productosBorrar[i].serie + String(colillaActual).padStart(7, '0');
+         productosBorrar[i].colilla = colilla;
+             }
+      
     }
     localStorage.setItem('chanceApuesta', JSON.stringify(productosBorrar));
     this.refrescarCarrito();
