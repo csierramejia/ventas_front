@@ -77,6 +77,17 @@ export class MenuCarritoComponent implements OnInit {
       result[0]._id = 'bet_' + Math.floor(Math.random() * 999999)
       const newLocalstorage = JSON.parse(localStorage.getItem('chanceApuesta'));
       newLocalstorage.push(result[0]);
+      for (let i = 1; i < newLocalstorage.length; i++) {
+        if(newLocalstorage.length > 0){
+           let ind = i - 1;
+           let colillaActual = newLocalstorage[ind].colillaActual;
+           colillaActual++;
+           newLocalstorage[i].colillaActual = colillaActual;
+           const colilla = newLocalstorage[i].serie + String(colillaActual).padStart(7, '0');
+           newLocalstorage[i].colilla = colilla;
+               }
+        
+      }
       localStorage.setItem('chanceApuesta', JSON.stringify(newLocalstorage));
     }
     this.refrescarCarrito();
@@ -90,6 +101,16 @@ export class MenuCarritoComponent implements OnInit {
       result[0]._id = 'bet_' + Math.floor(Math.random() * 999999)
       const newLocalstorage = JSON.parse(localStorage.getItem('chanceApuestaMillonario'));
       newLocalstorage.push(result[0]);
+      for (let i = 1; i < newLocalstorage.length; i++) {
+        if (newLocalstorage.length > 0) {
+          let ind = i - 1;
+          let colillaActual = newLocalstorage[ind].colillaActual;
+          colillaActual++;
+          newLocalstorage[i].colillaActual = colillaActual;
+          const colilla = newLocalstorage[i].serie + String(colillaActual).padStart(7, '0');
+          newLocalstorage[i].colilla = colilla;
+        }
+      }
       localStorage.setItem('chanceApuestaMillonario', JSON.stringify(newLocalstorage));
     }
     this.refrescarCarrito();
