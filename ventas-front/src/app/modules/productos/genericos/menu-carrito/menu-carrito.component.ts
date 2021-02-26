@@ -18,6 +18,7 @@ import { ProductosService } from '../../productos.service';
 export class MenuCarritoComponent implements OnInit {
 
   @Output() editarProducto: EventEmitter<any> = new EventEmitter();
+  @Output() updateSerieChance = new EventEmitter<string>();
   // variable que nos sirve para identificar sobre que producto debe trabajar el componente si chance, chance millonario, etc
   @Input() productoParent: string;
   cantidadRepetir = 1;
@@ -88,6 +89,8 @@ export class MenuCarritoComponent implements OnInit {
                }
         
       }
+   //   this.updateSerieChance.emit(newLocalstorage[newLocalstorage.length-1].colilla);
+ 
       localStorage.setItem('chanceApuesta', JSON.stringify(newLocalstorage));
     }
     this.refrescarCarrito();
@@ -111,7 +114,8 @@ export class MenuCarritoComponent implements OnInit {
           newLocalstorage[i].colilla = colilla;
         }
       }
-      localStorage.setItem('chanceApuestaMillonario', JSON.stringify(newLocalstorage));
+  //    this.updateSerieChance.emit(newLocalstorage[newLocalstorage.length-1].colilla);
+       localStorage.setItem('chanceApuestaMillonario', JSON.stringify(newLocalstorage));
     }
     this.refrescarCarrito();
   }
@@ -240,8 +244,12 @@ export class MenuCarritoComponent implements OnInit {
         }
 
       }
+     
     }
+    this.updateSerieChance.emit(productosBorrar.length > 0 ? productosBorrar[productosBorrar.length - 1].colilla : item.colilla);
     localStorage.setItem('chanceApuesta', JSON.stringify(productosBorrar));
+
+
     this.refrescarCarrito();
   }
 
@@ -266,10 +274,11 @@ export class MenuCarritoComponent implements OnInit {
           const colilla = productosBorrar[i].serie + String(colillaActual).padStart(7, '0');
           productosBorrar[i].colilla = colilla;
         }
-
       }
     }
+    this.updateSerieChance.emit(productosBorrar.length > 0 ? productosBorrar[productosBorrar.length - 1].colilla : item.colilla);
     localStorage.setItem('chanceApuestaMillonario', JSON.stringify(productosBorrar));
+
     this.refrescarCarrito();
   }
 

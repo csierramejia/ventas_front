@@ -918,4 +918,15 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
 
   }
 
+    /**
+   * Permite cambiar la serie 
+   * @param event 
+   */
+  public updateSerie(event): void {
+    if(event){
+      this.colilla = event;
+    }
+
+  }
+
 }
