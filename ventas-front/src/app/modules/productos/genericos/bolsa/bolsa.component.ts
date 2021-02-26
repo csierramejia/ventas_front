@@ -193,10 +193,27 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
    * por el usuario
    */
   deleteBet(element): void {
+    const chanceArray = this.cartItems;
+    let item = chanceArray[0];
     const keyResponse = this.getKeyObject(element._id);
     if ( keyResponse  !== -1 ) {
       this.cartItems.splice( keyResponse , 1 );
       this.get_values_totals();
+    }
+    if (this.cartItems.length > 0) {
+      this.cartItems[0].colillaActual = item.colillaActual;
+      this.cartItems[0].colilla = item.colilla;
+      for (let i = 1; i < this.cartItems.length; i++) {
+        if (this.cartItems.length > 1) {
+          let ind = i - 1;
+          let colillaActual = this.cartItems[ind].colillaActual;
+          colillaActual++;
+          this.cartItems[i].colillaActual = colillaActual;
+          const colilla = this.cartItems[i].serie + String(colillaActual).padStart(7, '0');
+          this.cartItems[i].colilla = colilla;
+        }
+
+      }
     }
   }
 
