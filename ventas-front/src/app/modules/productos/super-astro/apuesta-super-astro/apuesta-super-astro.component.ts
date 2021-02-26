@@ -1247,4 +1247,15 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
 
   }
 
+  /**
+   * Permite cambiar la serie 
+   * @param event 
+   */
+  public updateSerie(event): void {
+    if(event){
+      this.numeroSerie = event;
+    }
+
+  }
+
 }

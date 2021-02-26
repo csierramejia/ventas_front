@@ -16,7 +16,7 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
 
   @Output() editBet: EventEmitter<any> = new EventEmitter();
   @Output() creatingBet: EventEmitter<any> = new EventEmitter();
-  @Output() serie = new EventEmitter<string>();
+  @Output() updateSerie = new EventEmitter<string>();
   
   
   inputVat = 0;
@@ -215,6 +215,7 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
 
       }
     }
+    this.updateSerie.emit(this.cartItems[this.cartItems.length-1].colilla);
   }
 
 

@@ -1100,6 +1100,18 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
     }
 
   }
+
+
+   /**
+   * Permite cambiar la serie 
+   * @param event 
+   */
+  public updateSerie(event): void {
+    if(event){
+      this.numeroSerie = event;
+    }
+
+  }
   
 
 }
