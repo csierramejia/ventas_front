@@ -114,7 +114,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
           this.rolloColilla = new RolloColillaDTO;
           this.rolloColilla = colilla;
           this.colilla = colilla.serie + colilla.rangoColilla;
-          if (this.rolloColilla.nroFinalSerie === this.rolloColilla.colillaActual) {
+          if ( this.rolloColilla.colillaActual > this.rolloColilla.nroFinalSerie ) {
             this.displayModalSerie = true;
   
           }

@@ -1197,7 +1197,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
         this.rolloColilla = colilla;
         this.numeroSerie = colilla.serie + colilla.rangoColilla;
 
-        if (this.rolloColilla.nroFinalSerie === this.rolloColilla.colillaActual) {
+        if (this.rolloColilla.colillaActual > this.rolloColilla.nroFinalSerie ) {
           this.displayModalSerie = true;
 
         }
