@@ -89,8 +89,7 @@ export class MenuCarritoComponent implements OnInit {
                }
         
       }
-   //   this.updateSerieChance.emit(newLocalstorage[newLocalstorage.length-1].colilla);
- 
+      this.updateSerieChance.emit(newLocalstorage.length > 0 ? newLocalstorage[newLocalstorage.length - 1].colilla : productosDuplicar[0].colilla);
       localStorage.setItem('chanceApuesta', JSON.stringify(newLocalstorage));
     }
     this.refrescarCarrito();
@@ -114,7 +113,7 @@ export class MenuCarritoComponent implements OnInit {
           newLocalstorage[i].colilla = colilla;
         }
       }
-  //    this.updateSerieChance.emit(newLocalstorage[newLocalstorage.length-1].colilla);
+      this.updateSerieChance.emit(newLocalstorage.length > 0 ? newLocalstorage[newLocalstorage.length - 1].colilla : productosDuplicar[0].colilla);
        localStorage.setItem('chanceApuestaMillonario', JSON.stringify(newLocalstorage));
     }
     this.refrescarCarrito();
