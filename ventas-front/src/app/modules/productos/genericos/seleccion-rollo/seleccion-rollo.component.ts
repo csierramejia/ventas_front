@@ -51,6 +51,7 @@ export class SeleccionRolloComponent extends CommonComponent implements OnInit {
     this.auth = SessionStoreUtil.auth(TipoEventoConstant.GET);
      // Estado para administrar la cuenta del usuario
    this.userAccount = new UserAccountST();
+   this.serieOperacion = new PapeleriaRolloDTO();
   }
 
   /**
@@ -65,11 +66,9 @@ export class SeleccionRolloComponent extends CommonComponent implements OnInit {
    * Metodo que permite inicializar las variables globales
    */
   private init(): void {
-    this.obtnerSeriesVendedor(this.auth.usuario.idUsuario);
+       this.obtnerSeriesVendedor(this.auth.usuario.idUsuario);
        
    }
-
- 
 
 
   
@@ -85,7 +84,6 @@ export class SeleccionRolloComponent extends CommonComponent implements OnInit {
       data => {
         if (data.length > 0) {
           this.listaSeries = data;
-          this.serieOperacion = new PapeleriaRolloDTO();
           this.modalOperatividad = new VentanaModalModel();
          }
         else { return; }
