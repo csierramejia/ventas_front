@@ -22,7 +22,7 @@ import { UserAccountST } from '../../../../states/shell/shell-states/user-accoun
 export class SeleccionRolloComponent extends CommonComponent implements OnInit {
 
   @Output() closePopup: EventEmitter<any> = new EventEmitter();
-  @Output() enviaRollo: EventEmitter<any> = new EventEmitter();
+  @Output() enviaRollo: EventEmitter<PapeleriaRolloDTO> = new EventEmitter();
 
   /** Indica si ya se dio submit para la creacion o edicion de roles */
   public isSubmit: boolean;
@@ -103,6 +103,8 @@ export class SeleccionRolloComponent extends CommonComponent implements OnInit {
   public seleccionarSerie(serie: PapeleriaRolloDTO) {
     this.serieOperacion.serie = serie.serie;
     this.serieOperacion.rangoInicial = serie.rangoInicial;
+    this.serieOperacion.nroInicialSerie = serie.nroInicialSerie;
+    this.serieOperacion.idRollo = serie.idRollo;
     this.dataAutenticacion = this.auth;
     this.dataAutenticacion.usuario.idRollo = serie.idRollo;
    
@@ -133,7 +135,12 @@ export class SeleccionRolloComponent extends CommonComponent implements OnInit {
   }
 
   iniciaOperacion():void {
-    this.enviaRollo.emit(this.serieOperacion.serie+this.serieOperacion.rangoInicial);
+    let papeleriaRolloDTO = new PapeleriaRolloDTO;
+    papeleriaRolloDTO.serie = this.serieOperacion.serie;
+    papeleriaRolloDTO.rangoInicial = this.serieOperacion.rangoInicial;
+    papeleriaRolloDTO.nroInicialSerie = this.serieOperacion.nroInicialSerie;
+    papeleriaRolloDTO.idRollo = this.serieOperacion.idRollo;
+    this.enviaRollo.emit(papeleriaRolloDTO);
 
   }
 

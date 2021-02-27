@@ -13,6 +13,8 @@ import { RolloColillaDTO} from 'src/app/dtos/transversal/rollo-colilla.dto'
 import { AutenticacionResponseDTO } from 'src/app/dtos/seguridad/autenticacion/autenticacion-response.dto';
 import { SessionStoreUtil } from 'src/app/utilities/session-store.util';
 import { TipoEventoConstant } from 'src/app/constants/tipo-evento.constant';
+import { PapeleriaRolloDTO } from 'src/app/dtos/transversal/papeleria-rollo.dto';
+import { SeleccionRolloComponent } from '../../genericos/seleccion-rollo/seleccion-rollo.component';
 
 @Component({
   selector: 'app-apuesta-super',
@@ -26,6 +28,8 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
   @Output() addLotteries: EventEmitter<any> = new EventEmitter();
 
   @ViewChild(CrearClienteComponent) crearClienteChild: CrearClienteComponent;
+  @ViewChild(SeleccionRolloComponent) rolloOperacion: SeleccionRolloComponent;
+
 
   /** Dto que contiene los datos de la autenticacion */
   private auth: AutenticacionResponseDTO;
@@ -737,6 +741,7 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
       delete this.dayBet;
       // limpiamos los demas campos
       this.cleanInputs();
+     
       this.obtenerNumeroColilla();
       this.seriesColillas=[];
     }
@@ -1051,6 +1056,8 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
       this.numeroSerie =colilla.serie + colilla.rangoColilla;
       if (this.rolloColilla.colillaActual > this.rolloColilla.nroFinalSerie ) {
         this.displayModalSerie = true;
+        this.rolloOperacion.ngOnInit();
+
 
       }
     },
@@ -1090,13 +1097,17 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
 
 
 
-  /**
+   /**
    * Permite obtner la colilla actual 
    * @param event 
    */
   public iniciaOperacion(event): void {
     if(event){
-      this.numeroSerie = event;
+      let papeleriaRolloDTO = new PapeleriaRolloDTO;
+      papeleriaRolloDTO = event;
+      this.numeroSerie = papeleriaRolloDTO.serie + papeleriaRolloDTO.rangoInicial;
+      this.rolloColilla.colillaActual  = papeleriaRolloDTO.nroInicialSerie;
+      this.auth.usuario.idRollo = papeleriaRolloDTO.idRollo;
     }
 
   }

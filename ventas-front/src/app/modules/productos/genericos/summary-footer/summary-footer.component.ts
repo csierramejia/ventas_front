@@ -13,6 +13,7 @@ import { SessionStoreUtil } from 'src/app/utilities/session-store.util';
 import { TipoEventoConstant } from 'src/app/constants/tipo-evento.constant';
 import { FiltroOperacionDTO} from 'src/app/dtos/transversal/filtro-operacion.dto';
 import { RolloColillaDTO} from 'src/app/dtos/transversal/rollo-colilla.dto'
+import { PapeleriaRolloDTO } from 'src/app/dtos/transversal/papeleria-rollo.dto';
 
 
 
@@ -913,7 +914,13 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
    */
   public iniciaOperacion(event): void {
     if(event){
-      this.colilla = event;
+      let papeleriaRolloDTO = new PapeleriaRolloDTO;
+      papeleriaRolloDTO = event;
+      this.colilla = papeleriaRolloDTO.serie + papeleriaRolloDTO.rangoInicial;
+      this.rolloColilla.colillaActual  = papeleriaRolloDTO.nroInicialSerie;
+      this.auth.usuario.idRollo = papeleriaRolloDTO.idRollo;
+     
+ 
     }
 
   }

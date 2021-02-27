@@ -193,6 +193,6 @@
 </p-dialog>
 
 
-<p-dialog modal="true" [(visible)]="displayModalSerie" [style]="{width: '45vw'}">
+<p-dialog header="PUNTO DE VENTA"  [closable]="false" modal="true" [(visible)]="displayModalSerie" [style]="{width: '45vw'}">
     <app-seleccion-rollo (closePopup)="closeModalOperacion($event)" (enviaRollo)="iniciaOperacion($event)"> </app-seleccion-rollo>
     </p-dialog>
