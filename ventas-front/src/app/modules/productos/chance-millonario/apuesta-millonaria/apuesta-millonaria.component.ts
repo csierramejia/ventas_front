@@ -135,7 +135,7 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
 
 
   obtenerNumeroModalidad(){
-    this.borrarTodo(2);
+    this.borrarTodo(4);
     if(this.selectedCifras.code === '4C'){
       this.maxlengthV = 4;
       this.consultarValoresModalidad(1);
@@ -594,10 +594,6 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
     this.chanceForm.controls.numeroFilaCuatro.setValue('');
     this.chanceForm.controls.numeroFilaCinco.setValue('');
     
-
-
-    this.loterias = [];
-    this.agregarLoterias.emit(this.loterias);
     if(event === 1){
       this.reiniciarEdit.emit(false);
     }
@@ -607,34 +603,32 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
 
     document.getElementById('numeroFilaUno').focus();
     
-
-    const chipL = document.getElementById('lun');
-    chipL.style.backgroundColor = '#FFFFFF';
-    chipL.style.color = '#BE1E42';
-
-    const chipM = document.getElementById('mar');
-    chipM.style.backgroundColor = '#FFFFFF';
-    chipM.style.color = '#BE1E42';
-
-    const chipMi = document.getElementById('mie');
-    chipMi.style.backgroundColor = '#FFFFFF';
-    chipMi.style.color = '#BE1E42';
-
-    const chipJ = document.getElementById('jue');
-    chipJ.style.backgroundColor = '#FFFFFF';
-    chipJ.style.color = '#BE1E42';
-
-    const chipV = document.getElementById('vie');
-    chipV.style.backgroundColor = '#FFFFFF';
-    chipV.style.color = '#BE1E42';
-
-    const chipS = document.getElementById('sab');
-    chipS.style.backgroundColor = '#FFFFFF';
-    chipS.style.color = '#BE1E42';
-
-    const chipD = document.getElementById('dom');
-    chipD.style.backgroundColor = '#FFFFFF';
-    chipD.style.color = '#BE1E42';
+    if(event != 4){
+      this.loterias = [];
+      const chipL = document.getElementById('lun');
+      chipL.style.backgroundColor = '#FFFFFF';
+      chipL.style.color = '#BE1E42';
+      const chipM = document.getElementById('mar');
+      chipM.style.backgroundColor = '#FFFFFF';
+      chipM.style.color = '#BE1E42';
+      const chipMi = document.getElementById('mie');
+      chipMi.style.backgroundColor = '#FFFFFF';
+      chipMi.style.color = '#BE1E42';
+      const chipJ = document.getElementById('jue');
+      chipJ.style.backgroundColor = '#FFFFFF';
+      chipJ.style.color = '#BE1E42';
+      const chipV = document.getElementById('vie');
+      chipV.style.backgroundColor = '#FFFFFF';
+      chipV.style.color = '#BE1E42';
+      const chipS = document.getElementById('sab');
+      chipS.style.backgroundColor = '#FFFFFF';
+      chipS.style.color = '#BE1E42';
+      const chipD = document.getElementById('dom');
+      chipD.style.backgroundColor = '#FFFFFF';
+      chipD.style.color = '#BE1E42';
+      this.agregarLoterias.emit(this.loterias);
+    }
+    
   }
 
 
