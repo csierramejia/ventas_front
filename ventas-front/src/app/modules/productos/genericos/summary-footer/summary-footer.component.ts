@@ -13,6 +13,7 @@ import { SessionStoreUtil } from 'src/app/utilities/session-store.util';
 import { TipoEventoConstant } from 'src/app/constants/tipo-evento.constant';
 import { FiltroOperacionDTO} from 'src/app/dtos/transversal/filtro-operacion.dto';
 import { RolloColillaDTO} from 'src/app/dtos/transversal/rollo-colilla.dto'
+import { PapeleriaRolloDTO } from 'src/app/dtos/transversal/papeleria-rollo.dto';
 
 
 
@@ -51,6 +52,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
   colilla = '';
   fechaSeleccionApuesta: Date;
   verConfirmacionPopap = false;
+  displayModalSerie = false;
   hoy = new Date();
   fechaActual = this.hoy.getDate() + '/' + (this.hoy.getMonth() + 1) + '/' + this.hoy.getFullYear();
 
@@ -113,6 +115,10 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
           this.rolloColilla = new RolloColillaDTO;
           this.rolloColilla = colilla;
           this.colilla = colilla.serie + colilla.rangoColilla;
+          if ( this.rolloColilla.colillaActual > this.rolloColilla.nroFinalSerie ) {
+            this.displayModalSerie = true;
+  
+          }
         },
         error => {
           this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
@@ -684,7 +690,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
         selectedCifras: this.selectedCifras,
         fechaSeleccionApuesta:this.fechaSeleccionApuesta,
         serie:  this.rolloColilla.serie,
-        colillaActual: this.rolloColilla .colillaActual,
+        colillaActual: this.rolloColilla.colillaActual,
         idRollo:  this.auth.usuario.idRollo,
         idVendedor: this.auth.usuario.idUsuario,
       }
@@ -729,7 +735,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
         selectedCifras: this.selectedCifras,
         fechaSeleccionApuesta:this.fechaSeleccionApuesta,
         serie:  this.rolloColilla.serie,
-        colillaActual: this.rolloColilla .colillaActual,
+        colillaActual: this.rolloColilla.colillaActual,
         idRollo:  this.auth.usuario.idRollo,
         idVendedor: this.auth.usuario.idUsuario,
         
@@ -794,7 +800,11 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
         total: this.valueBetTotal,
         listaNumeros:listaNumeros,
         clienteOperacion:this.clienteOperacion,
-        fechaSeleccionApuesta:this.fechaSeleccionApuesta
+        fechaSeleccionApuesta:this.fechaSeleccionApuesta,
+        serie:  this.rolloColilla.serie,
+        colillaActual: this.rolloColilla.colillaActual,
+        idRollo:  this.auth.usuario.idRollo,
+        idVendedor: this.auth.usuario.idUsuario,
       }
 
       let chanceApuesta:any = JSON.parse(localStorage.getItem('chanceApuesta'));
@@ -838,7 +848,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
         total: this.valueBetTotal,
         listaNumeros:listaNumeros,
         clienteOperacion:this.clienteOperacion,
-        fechaSeleccionApuesta:this.fechaSeleccionApuesta
+        fechaSeleccionApuesta:this.fechaSeleccionApuesta,
       }
 
       let chanceApuesta = localStorage.getItem('chanceApuesta');
@@ -885,6 +895,45 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
    */
   ngOnDestroy(): void {
     this.messageService.clear();
+  }
+
+
+  /**
+   * Permite cerrar el modal de operaciones
+   * @param event 
+   */
+  public closeModalOperacion(event): void {
+    this.displayModalSerie = event;
+  }
+
+
+
+  /**
+   * Permite obtner la colilla actual 
+   * @param event 
+   */
+  public iniciaOperacion(event): void {
+    if(event){
+      let papeleriaRolloDTO = new PapeleriaRolloDTO;
+      papeleriaRolloDTO = event;
+      this.colilla = papeleriaRolloDTO.serie + papeleriaRolloDTO.rangoInicial;
+      this.rolloColilla.colillaActual  = papeleriaRolloDTO.nroInicialSerie;
+      this.auth.usuario.idRollo = papeleriaRolloDTO.idRollo;
+     
+ 
+    }
+
+  }
+
+    /**
+   * Permite cambiar la serie 
+   * @param event 
+   */
+  public updateSerie(event): void {
+    if(event){
+      this.colilla = event;
+    }
+
   }
 
 }

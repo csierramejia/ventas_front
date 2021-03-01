@@ -77,6 +77,14 @@ export class ChanceMillonarioComponent implements OnInit {
     this.apuestaChanceMillonario.editarProducto(event)
   }
 
+   /**
+   * @author Jhon Rivera
+   * @param event
+   * @description Metodo que se engarda de cambiar la serie seleccionada
+   */
+  updateSerie(event): void {
+    this.summaryFooter.updateSerie(event);
+  }
 
 
 }

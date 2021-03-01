@@ -18,6 +18,7 @@ import { ProductosService } from '../../productos.service';
 export class MenuCarritoComponent implements OnInit {
 
   @Output() editarProducto: EventEmitter<any> = new EventEmitter();
+  @Output() updateSerieChance = new EventEmitter<string>();
   // variable que nos sirve para identificar sobre que producto debe trabajar el componente si chance, chance millonario, etc
   @Input() productoParent: string;
   cantidadRepetir = 1;
@@ -77,6 +78,7 @@ export class MenuCarritoComponent implements OnInit {
       result[0]._id = 'bet_' + Math.floor(Math.random() * 999999)
       const newLocalstorage = JSON.parse(localStorage.getItem('chanceApuesta'));
       newLocalstorage.push(result[0]);
+      this.asignarSerieDuplicarApuesta(newLocalstorage,productosDuplicar);
       localStorage.setItem('chanceApuesta', JSON.stringify(newLocalstorage));
     }
     this.refrescarCarrito();
@@ -90,7 +92,8 @@ export class MenuCarritoComponent implements OnInit {
       result[0]._id = 'bet_' + Math.floor(Math.random() * 999999)
       const newLocalstorage = JSON.parse(localStorage.getItem('chanceApuestaMillonario'));
       newLocalstorage.push(result[0]);
-      localStorage.setItem('chanceApuestaMillonario', JSON.stringify(newLocalstorage));
+      this.asignarSerieDuplicarApuesta(newLocalstorage,productosDuplicar);
+       localStorage.setItem('chanceApuestaMillonario', JSON.stringify(newLocalstorage));
     }
     this.refrescarCarrito();
   }
@@ -197,23 +200,33 @@ export class MenuCarritoComponent implements OnInit {
 
 
   borrarApuestaChance(id) {
+    const chanceArray = JSON.parse(localStorage.getItem('chanceApuesta'));
+    let item = chanceArray[0];
     const productosBorrar = JSON.parse(localStorage.getItem('chanceApuesta'))
+   
     const keyResponse = this.getKeyObject(id, productosBorrar);
-    if ( keyResponse  !== -1 ) {
-      productosBorrar.splice( keyResponse , 1 );
+    if (keyResponse !== -1) {
+      productosBorrar.splice(keyResponse, 1);
     }
+    this.asignarSerieCarrito(productosBorrar, item);
     localStorage.setItem('chanceApuesta', JSON.stringify(productosBorrar));
+
+
     this.refrescarCarrito();
   }
 
 
   borrarApuestaChanceMillonario(id) {
+    const chanceArray = JSON.parse(localStorage.getItem('chanceApuestaMillonario'));
+    let item = chanceArray[0];
     const productosBorrar = JSON.parse(localStorage.getItem('chanceApuestaMillonario'))
     const keyResponse = this.getKeyObject(id, productosBorrar);
-    if ( keyResponse  !== -1 ) {
-      productosBorrar.splice( keyResponse , 1 );
+    if (keyResponse !== -1) {
+      productosBorrar.splice(keyResponse, 1);
     }
+    this.asignarSerieCarrito(productosBorrar, item);
     localStorage.setItem('chanceApuestaMillonario', JSON.stringify(productosBorrar));
+
     this.refrescarCarrito();
   }
 
@@ -281,6 +294,56 @@ export class MenuCarritoComponent implements OnInit {
     }
 
     
+  }
+
+  /**
+   * Método que permite asignar la serie en el carrito en orden seuencia
+   * @param productosBorrar 
+   * @param item 
+   */
+  private asignarSerieCarrito(productosBorrar, item): void {
+
+    if (productosBorrar.length > 0) {
+      productosBorrar[0].colillaActual = item.colillaActual;
+      productosBorrar[0].colilla = item.colilla;
+      for (let i = 1; i < productosBorrar.length; i++) {
+        if (productosBorrar.length > 1) {
+          let ind = i - 1;
+          let colillaActual = productosBorrar[ind].colillaActual;
+          colillaActual++;
+          productosBorrar[i].colillaActual = colillaActual;
+          const colilla = productosBorrar[i].serie + String(colillaActual).padStart(7, '0');
+          productosBorrar[i].colilla = colilla;
+        }
+      }
+    }
+   this.updateSerieChance.emit(productosBorrar.length > 0 ? productosBorrar[productosBorrar.length - 1].colilla : item.colilla);
+
+  }
+
+  /**
+   * Método encargado de asignar la serie en orden consecutiva al asignar
+   * nuevas apuestas
+   * @param newLocalstorage 
+   * @param productosDuplicar 
+   */
+  private asignarSerieDuplicarApuesta(newLocalstorage,productosDuplicar):void{
+
+    for (let i = 1; i < newLocalstorage.length; i++) {
+      if (newLocalstorage.length > 0) {
+        let ind = i - 1;
+        let colillaActual = newLocalstorage[ind].colillaActual;
+        colillaActual++;
+        newLocalstorage[i].colillaActual = colillaActual;
+        const colilla = newLocalstorage[i].serie + String(colillaActual).padStart(7, '0');
+        newLocalstorage[i].colilla = colilla;
+      }
+    }
+    this.updateSerieChance.emit(newLocalstorage.length > 0 ? newLocalstorage[newLocalstorage.length - 1].colilla : productosDuplicar[0].colilla);
+   
+
+
+
   }
   ////////// ----------------- FALTA REVISAR PARA IDENTIFICAR TIPO GENERICO ------------------- ////////////
 

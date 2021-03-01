@@ -17,8 +17,8 @@ import { CorreosAPIConstant } from 'src/app/constants/apis/correos/correos-api-c
 import { LoteriaVirtualVentaResponseDTO } from 'src/app/dtos/productos/loteria-virtual/loteria-virtual-venta-response.dto';
 import { FiltroOperacionDTO } from 'src/app/dtos/transversal/filtro-operacion.dto';
 import { RolloColillaDTO} from 'src/app/dtos/transversal/rollo-colilla.dto'
+import { PapeleriaRolloDTO } from 'src/app/dtos/transversal/papeleria-rollo.dto';
 
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 /**
  * Service que contiene los procesos de negocio para la Loterias en el sistema
@@ -192,6 +192,21 @@ export class ProductosService {
       filtro
     );
   }
+
+
+   /**
+   * Método encargado de obtner la lista de rollos asociados a un vendedor
+   * @param idVendedor 
+   * @return DTO con los datos de los rollos
+   */
+  public obtenerSeriesVendedor(idVendedor: number): Observable<PapeleriaRolloDTO[]> {
+    return this.http.post<PapeleriaRolloDTO[]>(
+      ProductosAPIConstant.URL_SERIES_VENDEDOR,
+      idVendedor
+    );
+  }
+
+  
 
 
 }

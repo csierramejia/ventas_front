@@ -1,0 +1,34 @@
+.requerido {
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(169, 68, 66, .6);
+  }
+
+  .btn-less {
+    box-shadow: 0 3.5px 4px 0 rgba(167, 187, 190, 0.45);
+    border-radius: 15px;
+    background-color: #6c757d;
+    color: #f1f1f1;
+    padding: .30rem .8rem;
+    border: 0px;
+    outline: 0px !important;
+  }
+  
+  .btn-less:hover {
+    background-color: #50585f;
+  }
+  
+  .btn-light {
+    box-shadow: 0 1.5px 4px 0 rgba(20, 157, 183, 0.45) !important;
+    border-radius: 15px;
+    background-color: #2076BD !important;
+    color: #f1f1f1;
+    padding: .30rem .8rem;
+    border: 0px;
+    outline: 0px !important;
+  }
+  
+  .btn-light:hover {
+    background-color: rgb(38, 132, 209) !important;
+  }
+  .puntero {
+      cursor: pointer;
+  }
