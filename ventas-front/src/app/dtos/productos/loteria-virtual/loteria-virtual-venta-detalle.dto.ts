@@ -41,4 +41,19 @@ export class LoteriaVirtualVentaDetalleDTO {
 
   /** Indica cuando se juega el sorteo */
   public fechaSorteo: Date;
+
+  /** Idica en que número va la colilla */
+  public colilla: string;
+
+  /** Indica el valor de la colilla actual */
+  public serieDos: number;
+
+  /** Indica el rollo seleccionado */
+  public idRollo: number;
+
+  /** Indica la serie de la colilla */
+  public serieUno: string;
+
+ 
 }
+
