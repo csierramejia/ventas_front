@@ -4,7 +4,7 @@ import { RouterConstant } from '../../../../constants/router.constant';
 import { MessageService } from 'primeng/api';
 import { CommonService } from 'src/app/utilities/common.service';
 import { ProductosService } from '../../productos.service';
-
+import { ShellState } from 'src/app/states/shell/shell.state';
 
 /**
  * Es el Menu del shell a visualizar en la aplicacion
@@ -28,6 +28,7 @@ export class MenuCarritoComponent implements OnInit {
   constructor(
     protected messageService: MessageService,
     private router: Router,
+    private shellState: ShellState,
     private productosService:ProductosService,
     private commonService: CommonService) {}
 
@@ -160,6 +161,9 @@ export class MenuCarritoComponent implements OnInit {
         this.productos = []
       }
     }
+
+    // emitimos el evento para el observable
+    this.shellState.enviarEventoCarritoELiminar(true);
   }
 
 
@@ -196,6 +200,7 @@ export class MenuCarritoComponent implements OnInit {
         this.productos = []
       }
     }
+    this.shellState.enviarEventoCarritoELiminar(true);
   }
 
 

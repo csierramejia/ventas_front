@@ -358,7 +358,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
     if(this.validarCeros(listaNumeros)){
       this.messageService.add(MsjUtil.getToastErrorMedium('Usted no puede colocar valores en 0'));
     } else {
-      if(this.colilla && this.fechaActual && this.loteriaSeleccionadas.length > 0 && listaNumeros.length > 0) {
+      if(this.colilla && this.fechaActual && this.loteriaSeleccionadas.length === 2 && listaNumeros.length > 0) {
 
         if(this.edit){
           this.confirmacionAgregar.isCreate = false;
@@ -879,8 +879,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
     }
 
 
-    //////////////////////////////////////
-    ///////////// ACA SUBCR /////////////
+    // emitimos el evento para el observable
     this.shellState.enviarEventoCarrito(true);
 
     this.valueVat = 0;
