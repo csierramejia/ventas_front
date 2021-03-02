@@ -386,20 +386,14 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
         this.checked = false;
       }
     }
-
     if (this.checked) {
+      // Limpiamos las loterias seleccionadas
       this.limpiaLoterias();
-      let aleatorio = this.generarAletorio()
-      this.loterias[aleatorio].checked=true;
-      let aleatorio2 = aleatorio = this.generarAletorio()
-      if(aleatorio == aleatorio2){
-        aleatorio2 = aleatorio = this.generarAletorio()
-        this.loterias[aleatorio2].checked=true;
-      } else {
-        this.loterias[aleatorio2].checked=true;
+      const ls = this.getRandomValues();
+      // tslint:disable-next-line: prefer-for-of
+      for (let index = 0; index < ls.length; index++) {
+        this.randomSelected(ls[index]);
       }
-
-      
       this.checked = true;
     } else {
       for (let index = 0; index < this.loterias.length; index++) {
@@ -407,19 +401,85 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
       }
       this.checked = false;
     }
-
     const emitLoterias = {
       loterias: this.loterias,
       fechaSeleccionApuesta: this.dayBet
     }
-
     this.agregarLoterias.emit(emitLoterias);
   }
 
 
-  generarAletorio(){
-    return Math.round(Math.random() * (this.loterias.length-1 - 0) + 0);
+  /**
+   * @author Luis Hernandez
+   * @description Metodo que se encarga
+   * de devolver los values aletorios
+   * que se van a usar para marcar las
+   * dos loterias
+   */
+  getRandomValues() {
+    const array = [];
+    const max = this.loterias.length - 1;
+    array.push(this.getAletorio(max));
+    return this.validExistRandom(array, max, max);
   }
+
+  getAletorio(max) {
+    return Math.round(Math.random() * (max - 0) + 0);
+  }
+
+  /**
+   * @author Luis Hernandez
+   * @description Metodo que
+   * se encarga de validar
+   * que no se repita un
+   * value para garantizar
+   * que se marcar dos loterias
+   * diferentes
+   * @param array
+   * @param max
+   * @param loteriasLen
+   */
+  validExistRandom(array, max, loteriasLen) {
+    const newl = this.getAletorio(max);
+    const found = array.find(element => element === newl);
+    if (found === undefined) {
+      array.push(newl);
+    } else {
+      const newMore = newl + 1;
+      if (newMore <= loteriasLen) {
+        array.push(newMore);
+      } else {
+        const newMin = newl - 1;
+        array.push(newMin);
+      }
+    }
+    return array;
+  }
+
+
+
+  /**
+   * @author Luis Hernandez
+   * @description Metodo que
+   * se encarga de ir pintando
+   * las dos loterias aletorias
+   * @param index
+   */
+  randomSelected(index): void {
+    if (this.loterias[index].checked) {
+      this.loterias[index].checked = false;
+    } else {
+      this.loterias[index].checked = true;
+    }
+    let valid = true;
+    this.loterias.forEach(element => { if (!element.checked) { valid = false; } });
+  }
+
+
+
+  // generarAletorio(){
+  //   return Math.round(Math.random() * (this.loterias.length-1 - 0) + 0);
+  // }
 
 
   /**

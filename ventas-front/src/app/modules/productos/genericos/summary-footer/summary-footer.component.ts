@@ -879,8 +879,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
     }
 
 
-    //////////////////////////////////////
-    ///////////// ACA SUBCR /////////////
+    // emitimos el evento para el observable
     this.shellState.enviarEventoCarrito(true);
 
     this.valueVat = 0;
