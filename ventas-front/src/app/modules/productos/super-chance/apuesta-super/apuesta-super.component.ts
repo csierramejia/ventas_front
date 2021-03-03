@@ -27,6 +27,10 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit  {
   @Output() agregarCliente: EventEmitter<any> = new EventEmitter();
   @ViewChild(CrearClienteComponent) crearClienteChild: CrearClienteComponent;
 
+  // test
+  public itemsTiposReporte: any;
+  public filtro = ''
+
   stateDisabeld = false;
   subscription: any;
   lengEspanol = {}

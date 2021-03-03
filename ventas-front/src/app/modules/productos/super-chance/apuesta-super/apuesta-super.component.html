@@ -108,11 +108,17 @@
                 </div>
                 <div class="col-md-7">
                     <b>Modalidad</b><br/>
-                    <i (click)="borrarFilaUno()" class="fa fa-trash tras-del" aria-hidden="true"></i><br/>
+
+                    <p-dropdown
+                        [options]="itemsTiposReporte"
+                        styleClass="customClass">
+                    </p-dropdown>
+
+                    <!-- <i (click)="borrarFilaUno()" class="fa fa-trash tras-del" aria-hidden="true"></i><br/>
                     <i (click)="borrarFilaDos()" class="fa fa-trash tras-del" aria-hidden="true"></i><br/>
                     <i (click)="borrarFilaTres()" class="fa fa-trash tras-del" aria-hidden="true"></i><br/>
                     <i (click)="borrarFilaCuatro()" class="fa fa-trash tras-del" aria-hidden="true"></i><br/>
-                    <i (click)="borrarFilaCinco()" class="fa fa-trash tras-del" aria-hidden="true"></i>
+                    <i (click)="borrarFilaCinco()" class="fa fa-trash tras-del" aria-hidden="true"></i> -->
                     <!-- <div *ngFor="let enum of valoresModalidades">
                         <label (click)="emitirModalidad(enum)" for="valorApostado">
                             <input [value]='enum' class="radioAzul" type="radio" name="valoresModalidades" formControlName="valoresModalidades">
