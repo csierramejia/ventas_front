@@ -27,9 +27,20 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit  {
   @Output() agregarCliente: EventEmitter<any> = new EventEmitter();
   @ViewChild(CrearClienteComponent) crearClienteChild: CrearClienteComponent;
 
-  // test
-  public itemsTiposReporte: any;
-  public filtro = ''
+
+  valoresModalidadesUno = []
+  valoresModalidadesDos = []
+  valoresModalidadesTres = []
+  valoresModalidadesCuatro = []
+  valoresModalidadesCinco = []
+
+
+
+  numeroUno = false;
+  numeroDos = false;
+  numeroTres = false;
+  numeroCuatro = false;
+  numeroCinco = false;
 
   stateDisabeld = false;
   subscription: any;
@@ -64,11 +75,11 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit  {
   ];
 
   chanceForm = new FormGroup({
-    numeroFilaUno: new FormControl({ value: '', disabled: true }),
-    numeroFilaDos: new FormControl({ value: '', disabled: true }),
-    numeroFilaTres: new FormControl({ value: '', disabled: true }),
-    numeroFilaCuatro: new FormControl({ value: '', disabled: true }),
-    numeroFilaCinco: new FormControl({ value: '', disabled: true }),
+    numeroFilaUno: new FormControl('', [Validators.required, Validators.maxLength(4)]),
+    numeroFilaDos: new FormControl('', [Validators.required, Validators.maxLength(4)]),
+    numeroFilaTres: new FormControl('', [Validators.required, Validators.maxLength(4)]),
+    numeroFilaCuatro: new FormControl('', [Validators.required, Validators.maxLength(4)]),
+    numeroFilaCinco: new FormControl('', [Validators.required, Validators.maxLength(4)]),
     tipoDocumento: new FormControl(''),
     numeroDocumento: new FormControl(''),
     nombreCliente: new FormControl(''),
@@ -158,6 +169,48 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit  {
     } else {
       this.displayModalBuscarCliente = true;
       this.emitirCliente(2)
+    }
+  }
+
+  onFocus(event){
+    switch (event) {
+      case 1:
+        this.numeroUno = true;
+        this.numeroDos = false;
+        this.numeroTres = false;
+        this.numeroCuatro = false;
+        this.numeroCinco = false;
+        break;
+      case 2:
+        this.numeroUno = false;
+        this.numeroDos = true;
+        this.numeroTres = false;
+        this.numeroCuatro = false;
+        this.numeroCinco = false;
+        break;
+      case 3:
+        this.numeroUno = false;
+        this.numeroDos = false;
+        this.numeroTres = true;
+        this.numeroCuatro = false;
+        this.numeroCinco = false;
+        break;
+      case 4:
+        this.numeroUno = false;
+        this.numeroDos = false;
+        this.numeroTres = false;
+        this.numeroCuatro = true;
+        this.numeroCinco = false;
+        break;
+      case 5:
+        this.numeroUno = false;
+        this.numeroDos = false;
+        this.numeroTres = false;
+        this.numeroCuatro = false;
+        this.numeroCinco = true;
+        break;
+      default:
+        break;
     }
   }
   
@@ -384,6 +437,108 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit  {
 
   generarAletorio(){
     return Math.round(Math.random() * (this.loterias.length-1 - 0) + 0);
+  }
+
+
+  consultarValoresModalidad(numero, fila){
+    //SUPER CHANCE
+      this.productosService.consultarValoresModalidad("SUPER CHANCE",numero).subscribe(
+        valoresData => {
+          console.log(valoresData)
+          if (fila === 1) {
+            this.valoresModalidadesUno = [];
+            valoresData.forEach(element => {this.valoresModalidadesUno.push({label: element, value: element})});
+          } else if(fila === 2){
+            this.valoresModalidadesDos = [];
+            valoresData.forEach(element => {this.valoresModalidadesDos.push({label: element, value: element})});
+          } else if(fila === 3){
+            this.valoresModalidadesTres = [];
+            valoresData.forEach(element => {this.valoresModalidadesTres.push({label: element, value: element})});
+          } else if(fila === 4){
+            this.valoresModalidadesCuatro = [];
+            valoresData.forEach(element => {this.valoresModalidadesCuatro.push({label: element, value: element})});
+          } else if(fila === 5){
+            this.valoresModalidadesCinco = [];
+            valoresData.forEach(element => {this.valoresModalidadesCinco.push({label: element, value: element})});
+          }
+        },
+        error => {
+          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+        }
+      );
+  }
+
+
+  generarAletorios(){
+    let arrayAletorios = []
+    for (let index = 0; index < 5; index++) {
+      arrayAletorios.push(Math.round(Math.random() * (1000 - 9999) + 9999))
+    }
+    this.chanceForm.controls.numeroFilaUno.setValue(arrayAletorios[0]);
+    this.chanceForm.controls.numeroFilaDos.setValue(arrayAletorios[1]);
+    this.chanceForm.controls.numeroFilaTres.setValue(arrayAletorios[2]);
+    this.chanceForm.controls.numeroFilaCuatro.setValue(arrayAletorios[3]);
+    this.chanceForm.controls.numeroFilaCinco.setValue(arrayAletorios[4]);
+    this.emitirNumeros();
+  }
+
+
+  aleatorioTresCifras() {
+    if(this.numeroUno){
+      this.chanceForm.controls.numeroFilaUno.setValue(Math.round(Math.random() * (100 - 999) + 999));
+      this.consultarValoresModalidad(3,1)
+      // this.habilitarDeshabilitarSegunCifras(this.chanceForm.get('numeroFilaUno').value, 1);
+    }
+    if(this.numeroDos){
+      this.chanceForm.controls.numeroFilaDos.setValue(Math.round(Math.random() * (100 - 999) + 999));
+      this.consultarValoresModalidad(3,2)
+      // this.habilitarDeshabilitarSegunCifras(this.chanceForm.get('numeroFilaDos').value, 2);
+    }
+    if(this.numeroTres){
+      this.chanceForm.controls.numeroFilaTres.setValue(Math.round(Math.random() * (100 - 999) + 999));
+      this.consultarValoresModalidad(3,3)
+      // this.habilitarDeshabilitarSegunCifras(this.chanceForm.get('numeroFilaTres').value, 3);
+    }
+    if(this.numeroCuatro){
+      this.chanceForm.controls.numeroFilaCuatro.setValue(Math.round(Math.random() * (100 - 999) + 999));
+      this.consultarValoresModalidad(3,4)
+      // this.habilitarDeshabilitarSegunCifras(this.chanceForm.get('numeroFilaCuatro').value, 4);
+    }
+    if(this.numeroCinco){
+      this.chanceForm.controls.numeroFilaCinco.setValue(Math.round(Math.random() * (100 - 999) + 999));
+      this.consultarValoresModalidad(3,5)
+      // this.habilitarDeshabilitarSegunCifras(this.chanceForm.get('numeroFilaCinco').value, 5);
+    }
+    this.emitirNumeros();
+  }
+
+  aleatorioCuatroCifras() {
+    if(this.numeroUno){
+      this.chanceForm.controls.numeroFilaUno.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
+      this.consultarValoresModalidad(4,1)
+      // this.habilitarDeshabilitarSegunCifras(this.chanceForm.get('numeroFilaUno').value, 1);
+    }
+    if(this.numeroDos){
+      this.chanceForm.controls.numeroFilaDos.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
+      this.consultarValoresModalidad(4,2)
+      // this.habilitarDeshabilitarSegunCifras(this.chanceForm.get('numeroFilaDos').value, 2);
+    }
+    if(this.numeroTres){
+      this.chanceForm.controls.numeroFilaTres.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
+      this.consultarValoresModalidad(4,3)
+      // this.habilitarDeshabilitarSegunCifras(this.chanceForm.get('numeroFilaTres').value, 3);
+    }
+    if(this.numeroCuatro){
+      this.chanceForm.controls.numeroFilaCuatro.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
+      this.consultarValoresModalidad(4,4)
+      // this.habilitarDeshabilitarSegunCifras(this.chanceForm.get('numeroFilaCuatro').value, 4);
+    }
+    if(this.numeroCinco){
+      this.chanceForm.controls.numeroFilaCinco.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
+      this.consultarValoresModalidad(4,5)
+      // this.habilitarDeshabilitarSegunCifras(this.chanceForm.get('numeroFilaCinco').value, 5);
+    }
+    this.emitirNumeros();
   }
 
 

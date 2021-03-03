@@ -31,9 +31,9 @@
             <span class="hea-titles">Juego Automático</span>
             <hr/>
             <div class="row">
-                <img class="img-aletorio" src="../../../../../assets/img/svg/Grupo_299.svg" />
-                <img class="img-aletorio" src="../../../../../assets/img/svg/Grupo_300.svg" />
-                <img class="img-aletorio" src="../../../../../assets/img/svg/Grupo_301.svg" />
+                <img class="img-aletorio" (click)="aleatorioTresCifras()" src="../../../../../assets/img/svg/Grupo_299.svg" />
+                <img class="img-aletorio" (click)="aleatorioCuatroCifras()" src="../../../../../assets/img/svg/Grupo_300.svg" />
+                <img class="img-aletorio" (click)="generarAletorios()" src="../../../../../assets/img/svg/Grupo_301.svg" />
             </div>
         </div>
         <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
@@ -80,51 +80,58 @@
         
         <div [formGroup]="chanceForm" class="col-md-7">
             <div class="row">
-                <div class="col-md-5">
+                <div class="col-md-4">
                     <b>Número</b><br/>
-
-                    <input id="numeroFilaUno" (change)="emitirNumeros()" formControlName="numeroFilaUno" autocomplete="off" type="text" [maxlength]="maxlengthV" (keypress)="permitirSoloNumeros($event)" class="input-bet">
-                    <!-- <img class="img-aletorio" (click)="generarAletorios('one', '3C', 1)" *ngIf="selectedCifras && selectedCifras.code == '3C'" src="../../../../../assets/img/svg/Grupo_306.svg" />
-                    <img class="img-aletorio" (click)="generarAletorios('one', '4C', 1)" *ngIf="selectedCifras && selectedCifras.code == '4C'" src="../../../../../assets/img/svg/Grupo_303.svg" />
-                     -->
-                    <br/>
-                    <input id="numeroFilaDos" (change)="emitirNumeros()" formControlName="numeroFilaDos" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
-                    <!-- <img class="img-aletorio" (click)="generarAletorios('one', '3C', 2)" *ngIf="selectedCifras && selectedCifras.code == '3C'" src="../../../../../assets/img/svg/Grupo_306.svg" />
-                    <img class="img-aletorio" (click)="generarAletorios('one', '4C', 2)" *ngIf="selectedCifras && selectedCifras.code == '4C'" src="../../../../../assets/img/svg/Grupo_303.svg" /> -->
-                    <br/>
-                    <input id="numeroFilaTres" (change)="emitirNumeros()" formControlName="numeroFilaTres" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
-                    <!-- <img class="img-aletorio" (click)="generarAletorios('one', '3C', 3)" *ngIf="selectedCifras && selectedCifras.code == '3C'" src="../../../../../assets/img/svg/Grupo_306.svg" />
-                    <img class="img-aletorio" (click)="generarAletorios('one', '4C', 3)" *ngIf="selectedCifras && selectedCifras.code == '4C'" src="../../../../../assets/img/svg/Grupo_303.svg" /> -->
-                    <br/>
-                    <input id="numeroFilaCuatro" (change)="emitirNumeros()" formControlName="numeroFilaCuatro" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
-                    <!-- <img class="img-aletorio" (click)="generarAletorios('one', '3C', 4)" *ngIf="selectedCifras && selectedCifras.code == '3C'" src="../../../../../assets/img/svg/Grupo_306.svg" />
-                    <img class="img-aletorio" (click)="generarAletorios('one', '4C', 4)" *ngIf="selectedCifras && selectedCifras.code == '4C'" src="../../../../../assets/img/svg/Grupo_303.svg" /> -->
-                    <br/>
-                    <input id="numeroFilaCinco" (change)="emitirNumeros()" formControlName="numeroFilaCinco" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
-                    <!-- <img class="img-aletorio" (click)="generarAletorios('one', '3C', 5)" *ngIf="selectedCifras && selectedCifras.code == '3C'" src="../../../../../assets/img/svg/Grupo_306.svg" />
-                    <img class="img-aletorio" (click)="generarAletorios('one', '4C', 5)" *ngIf="selectedCifras && selectedCifras.code == '4C'" src="../../../../../assets/img/svg/Grupo_303.svg" /> -->
-
-                    
+                    <div class="row">
+                        <input id="numeroFilaUno" (focus)="onFocus(1)" (change)="emitirNumeros()" formControlName="numeroFilaUno" autocomplete="off" type="text" [maxlength]="maxlengthV" (keypress)="permitirSoloNumeros($event)" class="input-bet">
+                    </div>
+                    <div class="row">
+                        <input id="numeroFilaDos" (focus)="onFocus(2)" (change)="emitirNumeros()" formControlName="numeroFilaDos" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
+                    </div>
+                    <div class="row">
+                        <input id="numeroFilaTres" (focus)="onFocus(3)" (change)="emitirNumeros()" formControlName="numeroFilaTres" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
+                    </div>
+                    <div class="row">
+                        <input id="numeroFilaCuatro" (focus)="onFocus(4)" (change)="emitirNumeros()" formControlName="numeroFilaCuatro" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
+                    </div>
+                    <div class="row">
+                        <input id="numeroFilaCinco" (focus)="onFocus(5)" (change)="emitirNumeros()" formControlName="numeroFilaCinco" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
+                    </div>
                 </div>
-                <div class="col-md-7">
+                <div class="col-md-6">
                     <b>Modalidad</b><br/>
-
-                    <p-dropdown
-                        [options]="itemsTiposReporte"
-                        styleClass="customClass">
-                    </p-dropdown>
-
-                    <!-- <i (click)="borrarFilaUno()" class="fa fa-trash tras-del" aria-hidden="true"></i><br/>
-                    <i (click)="borrarFilaDos()" class="fa fa-trash tras-del" aria-hidden="true"></i><br/>
-                    <i (click)="borrarFilaTres()" class="fa fa-trash tras-del" aria-hidden="true"></i><br/>
-                    <i (click)="borrarFilaCuatro()" class="fa fa-trash tras-del" aria-hidden="true"></i><br/>
-                    <i (click)="borrarFilaCinco()" class="fa fa-trash tras-del" aria-hidden="true"></i> -->
-                    <!-- <div *ngFor="let enum of valoresModalidades">
-                        <label (click)="emitirModalidad(enum)" for="valorApostado">
-                            <input [value]='enum' class="radioAzul" type="radio" name="valoresModalidades" formControlName="valoresModalidades">
-                            {{enum  | currency}}
-                        </label>
-                    </div> -->
+                    <div class="row dropModalidades">
+                        <p-dropdown [options]="valoresModalidadesUno" [style]="{'height':'39px','width':'275px', 'border':'1px solid #707070', 'border-radius':'5px'}"></p-dropdown>
+                    </div>
+                    <div class="row dropModalidades">
+                        <p-dropdown [options]="valoresModalidadesDos" [style]="{'height':'39px','width':'275px', 'border':'1px solid #707070', 'border-radius':'5px'}"></p-dropdown>
+                    </div>
+                    <div class="row dropModalidades">
+                        <p-dropdown [options]="valoresModalidadesTres" [style]="{'height':'39px','width':'275px', 'border':'1px solid #707070', 'border-radius':'5px'}"></p-dropdown>
+                    </div>
+                    <div class="row dropModalidades">
+                        <p-dropdown [options]="valoresModalidadesCuatro" [style]="{'height':'39px','width':'275px', 'border':'1px solid #707070', 'border-radius':'5px'}"></p-dropdown>
+                    </div>
+                    <div class="row dropModalidades">
+                        <p-dropdown [options]="valoresModalidadesCinco" [style]="{'height':'39px','width':'275px', 'border':'1px solid #707070', 'border-radius':'5px'}"></p-dropdown>
+                    </div>
+                </div>
+                <div class="col-md-2 div_borrar">
+                    <div class="row">
+                        <i (click)="borrarFilaUno()" class="fa fa-trash tras-del" aria-hidden="true"></i>
+                    </div>
+                    <div class="row">
+                        <i (click)="borrarFilaDos()" class="fa fa-trash tras-del" aria-hidden="true"></i>
+                    </div>
+                    <div class="row">
+                        <i (click)="borrarFilaTres()" class="fa fa-trash tras-del" aria-hidden="true"></i>
+                    </div>
+                    <div class="row">
+                        <i (click)="borrarFilaCuatro()" class="fa fa-trash tras-del" aria-hidden="true"></i>
+                    </div>
+                    <div class="row">
+                        <i (click)="borrarFilaCinco()" class="fa fa-trash tras-del" aria-hidden="true"></i>
+                    </div>
                 </div>
                 <!-- <div class="col-md-3">
                     acciones
