@@ -584,7 +584,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
 
 
 
-  irResumen() {
+   irResumen() {
     switch (this.productoParent) {
       case 'chance':
         this.irResumenChance();

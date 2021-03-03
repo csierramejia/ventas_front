@@ -669,6 +669,8 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
         colillaActual: this.rolloColilla.colillaActual,
         idRollo:  this.auth.usuario.idRollo,
         idVendedor: this.auth.usuario.idUsuario,
+        serieUno: this.rolloColilla.serie,
+        serieDos: this.rolloColilla.colillaActual
 
       });
       this.cleanInputs();
