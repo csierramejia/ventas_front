@@ -5,6 +5,7 @@ import { MessageService, ConfirmationService } from 'primeng/api';
 import { ProductosService } from '../../productos.service';
 import { MsjUtil } from 'src/app/utilities/messages.util';
 import { NotificacionSoportePagoDTO } from 'src/app/dtos/correos/notificacion-soporte-pago.dto';
+
 @Component({
   selector: 'app-bolsa',
   templateUrl: './bolsa.component.html',
@@ -15,8 +16,9 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
 
   @Output() editBet: EventEmitter<any> = new EventEmitter();
   @Output() creatingBet: EventEmitter<any> = new EventEmitter();
-
-
+  @Output() updateSerie = new EventEmitter<string>();
+  
+  
   inputVat = 0;
   valueBet = 0;
   valueVat = 0;
@@ -191,11 +193,29 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
    * por el usuario
    */
   deleteBet(element): void {
+    const chanceArray = this.cartItems;
+    let item = chanceArray[0];
     const keyResponse = this.getKeyObject(element._id);
     if ( keyResponse  !== -1 ) {
       this.cartItems.splice( keyResponse , 1 );
       this.get_values_totals();
     }
+    if (this.cartItems.length > 0) {
+      this.cartItems[0].colillaActual = item.colillaActual;
+      this.cartItems[0].colilla = item.colilla;
+      for (let i = 1; i < this.cartItems.length; i++) {
+        if (this.cartItems.length > 1) {
+          let ind = i - 1;
+          let colillaActual = this.cartItems[ind].colillaActual;
+          colillaActual++;
+          this.cartItems[i].colillaActual = colillaActual;
+          const colilla = this.cartItems[i].serie + String(colillaActual).padStart(7, '0');
+          this.cartItems[i].colilla = colilla;
+        }
+
+      }
+    }
+    this.updateSerie.emit(this.cartItems[this.cartItems.length-1].colilla);
   }
 
 
@@ -408,6 +428,8 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
           // se limpia la data ingresada
           this.cleanCartValues();
           this.creatingBet.emit(true);
+     
+        
         } 
         else if(responseApuesta.mensaje){
           this.messageService.add(MsjUtil.getToastErrorLng(responseApuesta.mensaje));
@@ -505,4 +527,5 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
       (error) => { this.messageService.add(MsjUtil.getToastErrorMedium(this.showMensajeError(error))); }
     );
   }
+ 
 }

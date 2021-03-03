@@ -47,36 +47,10 @@ export class BreadcrumbComponent implements OnInit {
         this.verCarrito = true;
         this.itemsCarrito = 0;
         if(event.url == this.urlChance) {
-          this.obtenerInfoCarrito('chanceApuesta');
-          this.shellState.getEventoCarrito().subscribe(evento => { 
-            if(evento){
-              this.obtenerInfoCarrito('chanceApuesta')
-            }
-          });
-
+          this.eventosChance();
         } else if(event.url == this.urlMillonario){
-          this.obtenerInfoCarrito('chanceApuestaMillonario');
-          this.shellState.getEventoCarrito().subscribe(evento => { 
-            if(evento){
-              this.obtenerInfoCarrito('chanceApuestaMillonario')
-            }
-          });
+          this.eventosChanceMillonario();
         }
-
-        // this.commonService.obtenerHora().subscribe(data => this.horaActual = data);
-        // if(event.url === '/autenticado/productos/chance'){
-        //   this.itemsCarrito = 0;
-        //     this.verCarrito = true;
-        //     this.commonService.obtenerItemsCarritoChance()
-        //     .subscribe( data => {
-        //       const res:any = data;
-        //       if(res){
-        //         this.itemsCarrito = res.length;
-        //       } else {
-        //         this.itemsCarrito = 0;
-        //       }
-        //     });
-        // }
       });
 
 
@@ -87,9 +61,6 @@ export class BreadcrumbComponent implements OnInit {
         }
       });
 
-
-      
-
   }
 
 
@@ -97,6 +68,38 @@ export class BreadcrumbComponent implements OnInit {
   ngOnInit(): void {
     setInterval(this.obtenerFechaHora, 1000);
     this.obtenerInfoCliente();
+  }
+
+
+  eventosChance(){
+    this.obtenerInfoCarrito('chanceApuesta');
+    this.shellState.getEventoCarrito().subscribe(evento => { 
+      if(evento){
+        this.obtenerInfoCarrito('chanceApuesta')
+      }
+    });
+
+    this.shellState.getEventoCarritoEliminar().subscribe(evento => { 
+      if(evento){
+        this.obtenerInfoCarrito('chanceApuesta')
+      }
+    });
+  }
+
+
+  eventosChanceMillonario(){
+    this.obtenerInfoCarrito('chanceApuestaMillonario');
+    this.shellState.getEventoCarrito().subscribe(evento => { 
+      if(evento){
+        this.obtenerInfoCarrito('chanceApuestaMillonario')
+      }
+    });
+
+    this.shellState.getEventoCarritoEliminar().subscribe(evento => { 
+      if(evento){
+        this.obtenerInfoCarrito('chanceApuestaMillonario')
+      }
+    });
   }
 
 

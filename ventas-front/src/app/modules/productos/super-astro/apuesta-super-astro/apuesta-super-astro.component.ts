@@ -14,6 +14,8 @@ import { SessionStoreUtil } from 'src/app/utilities/session-store.util';
 import { TipoEventoConstant } from 'src/app/constants/tipo-evento.constant';
 import { FiltroOperacionDTO} from 'src/app/dtos/transversal/filtro-operacion.dto';
 import { RolloColillaDTO} from 'src/app/dtos/transversal/rollo-colilla.dto'
+import { PapeleriaRolloDTO } from 'src/app/dtos/transversal/papeleria-rollo.dto';
+import { SeleccionRolloComponent } from '../../genericos/seleccion-rollo/seleccion-rollo.component';
 
 @Component({
   selector: 'app-apuesta-super-astro',
@@ -27,6 +29,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
   @Output() addLotteries: EventEmitter<any> = new EventEmitter();
 
   @ViewChild(CrearClienteComponent) crearClienteChild: CrearClienteComponent;
+  @ViewChild(SeleccionRolloComponent) rolloOperacion: SeleccionRolloComponent;
 
   /** Dto que contiene los datos de la autenticacion */
   private auth: AutenticacionResponseDTO;
@@ -37,12 +40,14 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
   apuestaCurrency:string;
   idCustomer = '';
   displayModalCreate = false;
+  displayModalSerie = false;
   btnEdit = false;
   btnAdd  = true;
   idEdit: any;
   selectTodas:boolean;
   selectUnmarkAllBol = false;
   loterias = [];
+  seriesColillas = [];
   lotteriesSelected = [];
   zignos=[];
   dayBet: Date;
@@ -619,6 +624,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
 
       if(this.btnAdd){
         this.addBetSend();
+        this.incrementarNumeroSerie();
       }
       else if(this.btnEdit){
         this.editBetSend();
@@ -830,6 +836,10 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
       delete this.dayBet;
       // limpiamos los demas campos
       this.cleanInputs();
+    
+      this.obtenerNumeroColilla()
+      ;
+      this.seriesColillas=[];
     }
   }
 
@@ -1191,11 +1201,70 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
         this.rolloColilla = new RolloColillaDTO;
         this.rolloColilla = colilla;
         this.numeroSerie = colilla.serie + colilla.rangoColilla;
+
+        if (this.rolloColilla.colillaActual > this.rolloColilla.nroFinalSerie ) {
+          this.displayModalSerie = true;
+          this.rolloOperacion.ngOnInit();
+
+        }
       },
       error => {
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
       }
     );
+    }
+
+  }
+
+  /**
+   * Método encargado de incrementar el número de serie
+   */
+  public incrementarNumeroSerie() {
+    this.seriesColillas.push(this.rolloColilla);
+    if (this.seriesColillas && this.seriesColillas.length > 1) {
+      let index = this.seriesColillas.length - 1
+      let colillaActual = this.seriesColillas[index].colillaActual;
+      colillaActual++;
+      const serie = this.seriesColillas[index].serie + String(colillaActual).padStart(7, '0');
+      this.numeroSerie = serie;
+      this.rolloColilla.colillaActual = colillaActual;
+
+    }
+  }
+
+  /**
+   * Permite cerrar el modal de operaciones
+   * @param event 
+   */
+  public closeModalOperacion(event): void {
+    this.displayModalSerie = event;
+  }
+
+
+
+  /**
+   * Permite obtner la colilla actual 
+   * @param event 
+   */
+  public iniciaOperacion(event): void {
+    if(event){
+      let papeleriaRolloDTO = new PapeleriaRolloDTO;
+      papeleriaRolloDTO = event;
+      this.numeroSerie = papeleriaRolloDTO.serie + papeleriaRolloDTO.rangoInicial;
+      this.rolloColilla.colillaActual  = papeleriaRolloDTO.nroInicialSerie;
+      this.auth.usuario.idRollo = papeleriaRolloDTO.idRollo;
+    }
+
+  }
+
+  
+  /**
+   * Permite cambiar la serie 
+   * @param event 
+   */
+  public updateSerie(event): void {
+    if(event){
+      this.numeroSerie = event;
     }
 
   }

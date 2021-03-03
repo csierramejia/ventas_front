@@ -13,6 +13,7 @@ import { SessionStoreUtil } from 'src/app/utilities/session-store.util';
 import { TipoEventoConstant } from 'src/app/constants/tipo-evento.constant';
 import { FiltroOperacionDTO} from 'src/app/dtos/transversal/filtro-operacion.dto';
 import { RolloColillaDTO} from 'src/app/dtos/transversal/rollo-colilla.dto'
+import { PapeleriaRolloDTO } from 'src/app/dtos/transversal/papeleria-rollo.dto';
 
 
 
@@ -51,6 +52,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
   colilla = '';
   fechaSeleccionApuesta: Date;
   verConfirmacionPopap = false;
+  displayModalSerie = false;
   hoy = new Date();
   fechaActual = this.hoy.getDate() + '/' + (this.hoy.getMonth() + 1) + '/' + this.hoy.getFullYear();
 
@@ -113,6 +115,10 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
           this.rolloColilla = new RolloColillaDTO;
           this.rolloColilla = colilla;
           this.colilla = colilla.serie + colilla.rangoColilla;
+          if ( this.rolloColilla.colillaActual > this.rolloColilla.nroFinalSerie ) {
+            this.displayModalSerie = true;
+  
+          }
         },
         error => {
           this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
@@ -352,7 +358,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
     if(this.validarCeros(listaNumeros)){
       this.messageService.add(MsjUtil.getToastErrorMedium('Usted no puede colocar valores en 0'));
     } else {
-      if(this.colilla && this.fechaActual && this.loteriaSeleccionadas.length > 0 && listaNumeros.length > 0) {
+      if(this.colilla && this.fechaActual && this.loteriaSeleccionadas.length === 2 && listaNumeros.length > 0) {
 
         if(this.edit){
           this.confirmacionAgregar.isCreate = false;
@@ -372,6 +378,19 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
           this.confirmacionAgregar.apostado = Math.round(this.valueBet)
           this.confirmacionAgregar.iva = Math.round(this.valueVat)
           this.confirmacionAgregar.total = Math.round(this.valueBetTotal)
+          this.confirmacionAgregar.idRollo = this.auth.usuario.idRollo;
+          this.confirmacionAgregar.rolloColilla =  this.rolloColilla;
+          this.confirmacionAgregar.idUsuario = this.auth.usuario.idUsuario;
+          if (JSON.parse(localStorage.getItem('chanceApuestaMillonario')) && JSON.parse(localStorage.getItem('chanceApuestaMillonario')).length > 0) {
+            const iteracionLocalStorageProductos = JSON.parse(localStorage.getItem('chanceApuestaMillonario'));
+            let index = iteracionLocalStorageProductos.length - 1;
+            let colillaActual = iteracionLocalStorageProductos[index].colillaActual;
+            colillaActual++;
+            this.confirmacionAgregar.rolloColilla.colillaActual = colillaActual;
+            const colilla = iteracionLocalStorageProductos[index].serie + String(colillaActual).padStart(7, '0');
+            this.confirmacionAgregar.colilla = colilla;
+            this.colilla = colilla;
+           }
         }
       } else {
         this.messageService.add(MsjUtil.getToastErrorMedium('Valide que esta gestionando los campos necesarios para realizar la apuesta'));
@@ -669,7 +688,11 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
         listaNumeros:listaNumeros,
         clienteOperacion:this.clienteOperacion,
         selectedCifras: this.selectedCifras,
-        fechaSeleccionApuesta:this.fechaSeleccionApuesta
+        fechaSeleccionApuesta:this.fechaSeleccionApuesta,
+        serie:  this.rolloColilla.serie,
+        colillaActual: this.rolloColilla.colillaActual,
+        idRollo:  this.auth.usuario.idRollo,
+        idVendedor: this.auth.usuario.idUsuario,
       }
 
       let chanceApuesta:any = JSON.parse(localStorage.getItem('chanceApuestaMillonario'));
@@ -710,7 +733,12 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
         listaNumeros:listaNumeros,
         clienteOperacion:this.clienteOperacion,
         selectedCifras: this.selectedCifras,
-        fechaSeleccionApuesta:this.fechaSeleccionApuesta
+        fechaSeleccionApuesta:this.fechaSeleccionApuesta,
+        serie:  this.rolloColilla.serie,
+        colillaActual: this.rolloColilla.colillaActual,
+        idRollo:  this.auth.usuario.idRollo,
+        idVendedor: this.auth.usuario.idUsuario,
+        
       }
 
       let chanceApuestaMillonario = localStorage.getItem('chanceApuestaMillonario');
@@ -772,7 +800,11 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
         total: this.valueBetTotal,
         listaNumeros:listaNumeros,
         clienteOperacion:this.clienteOperacion,
-        fechaSeleccionApuesta:this.fechaSeleccionApuesta
+        fechaSeleccionApuesta:this.fechaSeleccionApuesta,
+        serie:  this.rolloColilla.serie,
+        colillaActual: this.rolloColilla.colillaActual,
+        idRollo:  this.auth.usuario.idRollo,
+        idVendedor: this.auth.usuario.idUsuario,
       }
 
       let chanceApuesta:any = JSON.parse(localStorage.getItem('chanceApuesta'));
@@ -816,7 +848,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
         total: this.valueBetTotal,
         listaNumeros:listaNumeros,
         clienteOperacion:this.clienteOperacion,
-        fechaSeleccionApuesta:this.fechaSeleccionApuesta
+        fechaSeleccionApuesta:this.fechaSeleccionApuesta,
       }
 
       let chanceApuesta = localStorage.getItem('chanceApuesta');
@@ -847,8 +879,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
     }
 
 
-    //////////////////////////////////////
-    ///////////// ACA SUBCR /////////////
+    // emitimos el evento para el observable
     this.shellState.enviarEventoCarrito(true);
 
     this.valueVat = 0;
@@ -863,6 +894,45 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
    */
   ngOnDestroy(): void {
     this.messageService.clear();
+  }
+
+
+  /**
+   * Permite cerrar el modal de operaciones
+   * @param event 
+   */
+  public closeModalOperacion(event): void {
+    this.displayModalSerie = event;
+  }
+
+
+
+  /**
+   * Permite obtner la colilla actual 
+   * @param event 
+   */
+  public iniciaOperacion(event): void {
+    if(event){
+      let papeleriaRolloDTO = new PapeleriaRolloDTO;
+      papeleriaRolloDTO = event;
+      this.colilla = papeleriaRolloDTO.serie + papeleriaRolloDTO.rangoInicial;
+      this.rolloColilla.colillaActual  = papeleriaRolloDTO.nroInicialSerie;
+      this.auth.usuario.idRollo = papeleriaRolloDTO.idRollo;
+     
+ 
+    }
+
+  }
+
+    /**
+   * Permite cambiar la serie 
+   * @param event 
+   */
+  public updateSerie(event): void {
+    if(event){
+      this.colilla = event;
+    }
+
   }
 
 }

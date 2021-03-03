@@ -1,156 +1,149 @@
-      
-            <div class="container-fluid">
-                <!-- ABRE SEMANARIO Y BOTONES HEADER -->
-                <div class="row">
-                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                        <span class="hea-titles">Seleccione el día del sorteo</span>
-                        <hr/>
-                        <span 
-                            class="badge badge-secondary chipOptionDay" 
-                            *ngFor="let day of days"
-                            [id]="day.name"
-                            (click)="get_date_bet(day)">
-                            {{day.text}}
-                        </span>
-                        <p-calendar
-                            [locale]="lengEspanol"
-                            [(ngModel)]="pCalendarioValor"
-                            [inputStyle]="{'width':'142px', 'height':'40px', 'padding-left':'20px','background':'url(../../../../../assets/img/svg/calendar-blue.svg) 100px 3px no-repeat #ffff', 'box-shadow':'0px 3px 6px #149DB77A', 'border-radius':'25px'}"
-                            (onSelect)="obtenerFechaCalendario(pCalendarioValor)"
-                            class="calendar-control"
-                            placeholder="Otro día"
-                            showOn="button"
-                            [readonlyInput]="true"
-                            yearRange="2020:2021"
-                            [monthNavigator]="true"
-                            [yearNavigator]="true"
-                            dateFormat="yy-mm-dd"
-                            [showIcon]="false">
-                        </p-calendar>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                        <span class="hea-titles">Juego Automático</span>
-                        <hr/>
-                        <div class="row">
-                            <img class="img-aletorio" src="../../../../../assets/img/svg/Grupo_299.svg" />
-                            <img class="img-aletorio" src="../../../../../assets/img/svg/Grupo_300.svg" />
-                            <img class="img-aletorio" src="../../../../../assets/img/svg/Grupo_301.svg" />
-                        </div>
-                    </div>
-                    <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
-                        
-                    </div>
-                    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                        <button (click)="borrarTodo(3)" type="button" class="btn btn-random-red">
-                            BORRAR TODO
-                        </button>
-                    </div>
-                </div>
-                <!-- / CIERRA SEMANARIO Y BOTONES HEADER -->
-    
-                <!-- ABRE SELECCION DE LOTERIAS Y NUMEROS QUE APUESTAN -->
-                <div id="content-bet" class="row">
-                    <div class="col-md-5" style="position: static;">
-                        <span class="title-lot-bet">Loterias del día</span>
-                        <div id="content-lot">
-                            <div class="row select-all-a">
-                                <div class="col-md-6"></div>
-                                <div class="col-md-6" *ngIf="loterias.length > 0">
-                                    <span (click)="cambioSeleccion(1)" class="title-lot-bet">Seleccionar aletorias</span>
-                                    <p-inputSwitch (click)="cambioSeleccion(2)" [(ngModel)]="checked"></p-inputSwitch>
-                                </div>
-    
-    
-                                <div class="container-fluid">
-                                    <div id="fila-loteiras" class="row">
-                                        <div class="col-md-4" style="position: static;" *ngFor="let loteria of loterias">
-                                            <!-- <p-checkbox (onChange)="toggleVisibility(loteria)" [formControl]="loteria.checked"></p-checkbox>
-                                            <label class="labelloteria">{{loteria.nombreCorto}}</label> -->
-                                            <input [id]="'loteriaid'+loteria.idLoteria" (mouseenter)="op1.toggle($event)" (mouseleave)="op1.toggle($event)" type="checkbox" (click)="toggleVisibility(loteria)" [(ngModel)]="loteria.checked"/>
-                                            <label (mouseenter)="op1.toggle($event)" (mouseleave)="op1.toggle($event)" class="labelloteria" (click)="toggleVisibility(loteria)">{{loteria.nombreCorto}}</label>
-                                            <p-overlayPanel #op1>
-                                                <img [src]="loteria.url" style="width: 60px;" alt="Galleria 1" />
-                                            </p-overlayPanel>
-                                        </div>
-                                    </div>
-                                </div>
-    
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div [formGroup]="chanceForm" class="col-md-7">
-                        <div class="row">
-                            <div class="col-md-5">
-                                <b>Número</b><br/>
-
-                                <input id="numeroFilaUno" (change)="emitirNumeros()" formControlName="numeroFilaUno" autocomplete="off" type="text" [maxlength]="maxlengthV" (keypress)="permitirSoloNumeros($event)" class="input-bet">
-                                <!-- <img class="img-aletorio" (click)="generarAletorios('one', '3C', 1)" *ngIf="selectedCifras && selectedCifras.code == '3C'" src="../../../../../assets/img/svg/Grupo_306.svg" />
-                                <img class="img-aletorio" (click)="generarAletorios('one', '4C', 1)" *ngIf="selectedCifras && selectedCifras.code == '4C'" src="../../../../../assets/img/svg/Grupo_303.svg" />
-                                 -->
-                                <br/>
-                                <input id="numeroFilaDos" (change)="emitirNumeros()" formControlName="numeroFilaDos" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
-                                <!-- <img class="img-aletorio" (click)="generarAletorios('one', '3C', 2)" *ngIf="selectedCifras && selectedCifras.code == '3C'" src="../../../../../assets/img/svg/Grupo_306.svg" />
-                                <img class="img-aletorio" (click)="generarAletorios('one', '4C', 2)" *ngIf="selectedCifras && selectedCifras.code == '4C'" src="../../../../../assets/img/svg/Grupo_303.svg" /> -->
-                                <br/>
-                                <input id="numeroFilaTres" (change)="emitirNumeros()" formControlName="numeroFilaTres" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
-                                <!-- <img class="img-aletorio" (click)="generarAletorios('one', '3C', 3)" *ngIf="selectedCifras && selectedCifras.code == '3C'" src="../../../../../assets/img/svg/Grupo_306.svg" />
-                                <img class="img-aletorio" (click)="generarAletorios('one', '4C', 3)" *ngIf="selectedCifras && selectedCifras.code == '4C'" src="../../../../../assets/img/svg/Grupo_303.svg" /> -->
-                                <br/>
-                                <input id="numeroFilaCuatro" (change)="emitirNumeros()" formControlName="numeroFilaCuatro" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
-                                <!-- <img class="img-aletorio" (click)="generarAletorios('one', '3C', 4)" *ngIf="selectedCifras && selectedCifras.code == '3C'" src="../../../../../assets/img/svg/Grupo_306.svg" />
-                                <img class="img-aletorio" (click)="generarAletorios('one', '4C', 4)" *ngIf="selectedCifras && selectedCifras.code == '4C'" src="../../../../../assets/img/svg/Grupo_303.svg" /> -->
-                                <br/>
-                                <input id="numeroFilaCinco" (change)="emitirNumeros()" formControlName="numeroFilaCinco" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
-                                <!-- <img class="img-aletorio" (click)="generarAletorios('one', '3C', 5)" *ngIf="selectedCifras && selectedCifras.code == '3C'" src="../../../../../assets/img/svg/Grupo_306.svg" />
-                                <img class="img-aletorio" (click)="generarAletorios('one', '4C', 5)" *ngIf="selectedCifras && selectedCifras.code == '4C'" src="../../../../../assets/img/svg/Grupo_303.svg" /> -->
-
-                                
-                            </div>
-                            <div class="col-md-7">
-                                <b>Modalidad</b><br/>
-                                <i (click)="borrarFilaUno()" class="fa fa-trash tras-del" aria-hidden="true"></i><br/>
-                                <i (click)="borrarFilaDos()" class="fa fa-trash tras-del" aria-hidden="true"></i><br/>
-                                <i (click)="borrarFilaTres()" class="fa fa-trash tras-del" aria-hidden="true"></i><br/>
-                                <i (click)="borrarFilaCuatro()" class="fa fa-trash tras-del" aria-hidden="true"></i><br/>
-                                <i (click)="borrarFilaCinco()" class="fa fa-trash tras-del" aria-hidden="true"></i>
-                                <!-- <div *ngFor="let enum of valoresModalidades">
-                                    <label (click)="emitirModalidad(enum)" for="valorApostado">
-                                        <input [value]='enum' class="radioAzul" type="radio" name="valoresModalidades" formControlName="valoresModalidades">
-                                        {{enum  | currency}}
-                                    </label>
-                                </div> -->
-                            </div>
-                            <!-- <div class="col-md-3">
-                                acciones
-                            </div> -->
-                        </div>
-                    </div>
-                </div>
-                <!-- / CIERRA SELECCION DE LOTERIAS Y NUMEROS QUE APUESTAN -->
+<div class="container-fluid">
+    <!-- ABRE SEMANARIO Y BOTONES HEADER -->
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <span class="hea-titles">Seleccione el día del sorteo</span>
+            <hr/>
+            <span 
+                class="badge badge-secondary chipOptionDay" 
+                *ngFor="let day of days"
+                [id]="day.name"
+                (click)="get_date_bet(day)">
+                {{day.text}}
+            </span>
+            <p-calendar
+                [locale]="lengEspanol"
+                [(ngModel)]="pCalendarioValor"
+                [inputStyle]="{'width':'142px', 'height':'40px', 'padding-left':'20px','background':'url(../../../../../assets/img/svg/calendar-blue.svg) 100px 3px no-repeat #ffff', 'box-shadow':'0px 3px 6px #149DB77A', 'border-radius':'25px'}"
+                (onSelect)="obtenerFechaCalendario(pCalendarioValor)"
+                class="calendar-control"
+                placeholder="Otro día"
+                showOn="button"
+                [readonlyInput]="true"
+                yearRange="2020:2021"
+                [monthNavigator]="true"
+                [yearNavigator]="true"
+                dateFormat="yy-mm-dd"
+                [showIcon]="false">
+            </p-calendar>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <span class="hea-titles">Juego Automático</span>
+            <hr/>
+            <div class="row">
+                <img class="img-aletorio" src="../../../../../assets/img/svg/Grupo_299.svg" />
+                <img class="img-aletorio" src="../../../../../assets/img/svg/Grupo_300.svg" />
+                <img class="img-aletorio" src="../../../../../assets/img/svg/Grupo_301.svg" />
             </div>
+        </div>
+        <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
+            
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+            <button (click)="borrarTodo(3)" type="button" class="btn btn-random-red">
+                BORRAR TODO
+            </button>
+        </div>
+    </div>
+    <!-- / CIERRA SEMANARIO Y BOTONES HEADER -->
+
+    <!-- ABRE SELECCION DE LOTERIAS Y NUMEROS QUE APUESTAN -->
+    <div id="content-bet" class="row">
+        <div class="col-md-5" style="position: static;">
+            <span class="title-lot-bet">Loterias del día</span>
+            <div id="content-lot">
+                <div class="row select-all-a">
+                    <div class="col-md-6"></div>
+                    <div class="col-md-6" *ngIf="loterias.length > 0">
+                        <span (click)="cambioSeleccion(1)" class="title-lot-bet">Seleccionar aletorias</span>
+                        <p-inputSwitch (click)="cambioSeleccion(2)" [(ngModel)]="checked"></p-inputSwitch>
+                    </div>
 
 
+                    <div class="container-fluid">
+                        <div id="fila-loteiras" class="row">
+                            <div class="col-md-4" style="position: static;" *ngFor="let loteria of loterias">
+                                <!-- <p-checkbox (onChange)="toggleVisibility(loteria)" [formControl]="loteria.checked"></p-checkbox>
+                                <label class="labelloteria">{{loteria.nombreCorto}}</label> -->
+                                <input [id]="'loteriaid'+loteria.idLoteria" (mouseenter)="op1.toggle($event)" (mouseleave)="op1.toggle($event)" type="checkbox" (click)="toggleVisibility(loteria)" [(ngModel)]="loteria.checked"/>
+                                <label (mouseenter)="op1.toggle($event)" (mouseleave)="op1.toggle($event)" class="labelloteria" (click)="toggleVisibility(loteria)">{{loteria.nombreCorto}}</label>
+                                <p-overlayPanel #op1>
+                                    <img [src]="loteria.url" style="width: 60px;" alt="Galleria 1" />
+                                </p-overlayPanel>
+                            </div>
+                        </div>
+                    </div>
 
-        <p-dialog [(visible)]="displayModalCreate" [style]="{width: '464px'}">
-            <app-crear-cliente 
-                (closePopup)="closeModal($event)" 
-                (createCustomer)="createCustomer($event)">
-            </app-crear-cliente>
-        </p-dialog>
-
-
-
-        <p-dialog [(visible)]="displayModalBuscarCliente" header="CONSULTA DE CLIENTE" [style]="{width: '664px'}">
-            <app-buscar-cliente
-                (closeModalCliente)="closeModalCliente($event)"
-                (closeModalClienteVerCreacion)="closeModalClienteVerCreacion($event)"
-                (searchCustomer)="searchCustomer($event)">
-            </app-buscar-cliente>
-        </p-dialog>
+                </div>
+            </div>
+        </div>
         
+        <div [formGroup]="chanceForm" class="col-md-7">
+            <div class="row">
+                <div class="col-md-5">
+                    <b>Número</b><br/>
 
-    
+                    <input id="numeroFilaUno" (change)="emitirNumeros()" formControlName="numeroFilaUno" autocomplete="off" type="text" [maxlength]="maxlengthV" (keypress)="permitirSoloNumeros($event)" class="input-bet">
+                    <!-- <img class="img-aletorio" (click)="generarAletorios('one', '3C', 1)" *ngIf="selectedCifras && selectedCifras.code == '3C'" src="../../../../../assets/img/svg/Grupo_306.svg" />
+                    <img class="img-aletorio" (click)="generarAletorios('one', '4C', 1)" *ngIf="selectedCifras && selectedCifras.code == '4C'" src="../../../../../assets/img/svg/Grupo_303.svg" />
+                     -->
+                    <br/>
+                    <input id="numeroFilaDos" (change)="emitirNumeros()" formControlName="numeroFilaDos" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
+                    <!-- <img class="img-aletorio" (click)="generarAletorios('one', '3C', 2)" *ngIf="selectedCifras && selectedCifras.code == '3C'" src="../../../../../assets/img/svg/Grupo_306.svg" />
+                    <img class="img-aletorio" (click)="generarAletorios('one', '4C', 2)" *ngIf="selectedCifras && selectedCifras.code == '4C'" src="../../../../../assets/img/svg/Grupo_303.svg" /> -->
+                    <br/>
+                    <input id="numeroFilaTres" (change)="emitirNumeros()" formControlName="numeroFilaTres" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
+                    <!-- <img class="img-aletorio" (click)="generarAletorios('one', '3C', 3)" *ngIf="selectedCifras && selectedCifras.code == '3C'" src="../../../../../assets/img/svg/Grupo_306.svg" />
+                    <img class="img-aletorio" (click)="generarAletorios('one', '4C', 3)" *ngIf="selectedCifras && selectedCifras.code == '4C'" src="../../../../../assets/img/svg/Grupo_303.svg" /> -->
+                    <br/>
+                    <input id="numeroFilaCuatro" (change)="emitirNumeros()" formControlName="numeroFilaCuatro" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
+                    <!-- <img class="img-aletorio" (click)="generarAletorios('one', '3C', 4)" *ngIf="selectedCifras && selectedCifras.code == '3C'" src="../../../../../assets/img/svg/Grupo_306.svg" />
+                    <img class="img-aletorio" (click)="generarAletorios('one', '4C', 4)" *ngIf="selectedCifras && selectedCifras.code == '4C'" src="../../../../../assets/img/svg/Grupo_303.svg" /> -->
+                    <br/>
+                    <input id="numeroFilaCinco" (change)="emitirNumeros()" formControlName="numeroFilaCinco" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
+                    <!-- <img class="img-aletorio" (click)="generarAletorios('one', '3C', 5)" *ngIf="selectedCifras && selectedCifras.code == '3C'" src="../../../../../assets/img/svg/Grupo_306.svg" />
+                    <img class="img-aletorio" (click)="generarAletorios('one', '4C', 5)" *ngIf="selectedCifras && selectedCifras.code == '4C'" src="../../../../../assets/img/svg/Grupo_303.svg" /> -->
 
-    
+                    
+                </div>
+                <div class="col-md-7">
+                    <b>Modalidad</b><br/>
+                    <i (click)="borrarFilaUno()" class="fa fa-trash tras-del" aria-hidden="true"></i><br/>
+                    <i (click)="borrarFilaDos()" class="fa fa-trash tras-del" aria-hidden="true"></i><br/>
+                    <i (click)="borrarFilaTres()" class="fa fa-trash tras-del" aria-hidden="true"></i><br/>
+                    <i (click)="borrarFilaCuatro()" class="fa fa-trash tras-del" aria-hidden="true"></i><br/>
+                    <i (click)="borrarFilaCinco()" class="fa fa-trash tras-del" aria-hidden="true"></i>
+                    <!-- <div *ngFor="let enum of valoresModalidades">
+                        <label (click)="emitirModalidad(enum)" for="valorApostado">
+                            <input [value]='enum' class="radioAzul" type="radio" name="valoresModalidades" formControlName="valoresModalidades">
+                            {{enum  | currency}}
+                        </label>
+                    </div> -->
+                </div>
+                <!-- <div class="col-md-3">
+                    acciones
+                </div> -->
+            </div>
+        </div>
+    </div>
+    <!-- / CIERRA SELECCION DE LOTERIAS Y NUMEROS QUE APUESTAN -->
+</div>
 
+
+
+<p-dialog [(visible)]="displayModalCreate" [style]="{width: '464px'}">
+<app-crear-cliente 
+    (closePopup)="closeModal($event)" 
+    (createCustomer)="createCustomer($event)">
+</app-crear-cliente>
+</p-dialog>
+
+
+
+<p-dialog [(visible)]="displayModalBuscarCliente" header="CONSULTA DE CLIENTE" [style]="{width: '664px'}">
+<app-buscar-cliente
+    (closeModalCliente)="closeModalCliente($event)"
+    (closeModalClienteVerCreacion)="closeModalClienteVerCreacion($event)"
+    (searchCustomer)="searchCustomer($event)">
+</app-buscar-cliente>
+</p-dialog>

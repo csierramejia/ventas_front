@@ -68,7 +68,7 @@
     top: 258px;
     left: 253px;
     width: 410px;
-    height: 244px;
+    height: 300px;
     background: #FFFFFF 0% 0% no-repeat padding-box;
     border-radius: 5px;
     background-image: url("../../../../../assets/img/svg/lottery_4.svg");
@@ -150,7 +150,6 @@
 }
 
 .labelloteria{
-    width: 60px;
     font-size: 11px !important;
     text-transform: uppercase;
     height: 16px;

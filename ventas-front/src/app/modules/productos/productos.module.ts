@@ -33,7 +33,7 @@ import { RecargasOperadorComponent } from './recargas/regargas-operador/recargas
 import { BolsaRecargasComponent } from './recargas/bolsa-recargas/bolsa-recargas.component';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { MenuCarritoComponent } from './genericos/menu-carrito/menu-carrito.component';
-
+import {SeleccionRolloComponent} from './genericos/seleccion-rollo/seleccion-rollo.component'
 
 
 
@@ -58,7 +58,8 @@ import { MenuCarritoComponent } from './genericos/menu-carrito/menu-carrito.comp
     RecargasComponent,
     RecargasOperadorComponent,
     BolsaRecargasComponent,
-    MenuCarritoComponent
+    MenuCarritoComponent,
+    SeleccionRolloComponent
   ],
   
   imports: [

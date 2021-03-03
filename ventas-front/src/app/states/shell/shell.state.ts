@@ -25,14 +25,17 @@ export class ShellState {
   /**----------- LUIS FERNANDO HERNANDEZ CALDERON---------- */
   private subject = new Subject<any>();
 
-  /**----------- LUIS FERNANDO HERNANDEZ CALDERON---------- */
+  /**
+   * @author Luis Fernando Hernandez
+   * @description variable observable para obtener el evente cuando borran un cliente
+   */
   private subjectDelete = new Subject<any>();
 
-
-  /**----------- LUIS FERNANDO HERNANDEZ CALDERON---------- */
+  /**
+   * @author Luis Fernando Hernandez
+   * @description variable observable para obtener el evente cuando crean un cliente
+   */
   private subjectAgregar = new Subject<any>();
-
-
 
 
   /**
@@ -40,6 +43,13 @@ export class ShellState {
    * @description variable que nos va permitir capturar evento del carrito
    */
   private subjectCarrito = new Subject<any>();
+
+
+  /**
+   * @author Luis Fernando Hernandez
+   * @description variable que nos va permitir capturar evento cuando eliminan un item del carrito
+   */
+  private subjectCarritoELiminar = new Subject<any>();
 
 
   /** Administra el estado de la pantalla del dispositivo */
@@ -119,6 +129,14 @@ export class ShellState {
   }
 
 
+  /* evento que se encarga de notificar al
+   * observable de que han eliminado un 
+   * nuevo cliente*/
+  enviarEventoCarritoELiminar(event) {
+    this.subjectCarritoELiminar.next(event);
+  }
+
+
 
   /* evento que se encarga de notificar al
    * observable de que ha eliminado un 
@@ -153,6 +171,10 @@ export class ShellState {
 
   getEventoCarrito(): Observable<any> {
     return this.subjectCarrito.asObservable();
+  }
+
+  getEventoCarritoEliminar(): Observable<any> {
+    return this.subjectCarritoELiminar.asObservable();
   }
 
   /**--------------LUIS FERNANDO HERNANDEZ------------- */

@@ -51,8 +51,7 @@ export class LoginComponent extends CommonComponent implements OnInit {
    */
   constructor(
     private shellState: ShellState,
-    private seguridadService: SeguridadService,
-    private router: Router) {
+    private seguridadService: SeguridadService) {
     super();
   }
 

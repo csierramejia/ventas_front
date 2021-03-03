@@ -134,6 +134,7 @@ export class BuscarClienteComponent extends CommonComponent implements OnInit, O
               numeroDocumento: this.clienteForm.get('numeroDocumento').value,
               emitirCliente: 2
             }
+            this.clienteForm.reset();
             this.closeModalClienteVerCreacion.emit(infoCliente)
           }
         },

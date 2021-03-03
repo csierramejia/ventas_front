@@ -71,5 +71,14 @@ export class SuperAstroComponent implements OnInit {
     
   }
 
+  /**
+   * @author Jhon Rivera
+   * @param event
+   * @description Metodo que se engarda de cambiar la serie seleccionada
+   */
+  updateSerie(event): void {
+    this.apuestaMillonariaComponent.updateSerie(event);
+  }
+
 
 }

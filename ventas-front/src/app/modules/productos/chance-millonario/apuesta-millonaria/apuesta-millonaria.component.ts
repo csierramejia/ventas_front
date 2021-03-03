@@ -135,10 +135,10 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
 
 
   obtenerNumeroModalidad(){
-    this.borrarTodo(2);
+    this.borrarTodo(4);
     if(this.selectedCifras.code === '4C'){
       this.maxlengthV = 4;
-      this.consultarValoresModalidad(4);
+      this.consultarValoresModalidad(1);
     } else if(this.selectedCifras.code === '3C'){
       this.maxlengthV = 3;
       this.consultarValoresModalidad(3);
@@ -386,20 +386,14 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
         this.checked = false;
       }
     }
-
     if (this.checked) {
+      // Limpiamos las loterias seleccionadas
       this.limpiaLoterias();
-      let aleatorio = this.generarAletorio()
-      this.loterias[aleatorio].checked=true;
-      let aleatorio2 = aleatorio = this.generarAletorio()
-      if(aleatorio == aleatorio2){
-        aleatorio2 = aleatorio = this.generarAletorio()
-        this.loterias[aleatorio2].checked=true;
-      } else {
-        this.loterias[aleatorio2].checked=true;
+      const ls = this.getRandomValues();
+      // tslint:disable-next-line: prefer-for-of
+      for (let index = 0; index < ls.length; index++) {
+        this.randomSelected(ls[index]);
       }
-
-      
       this.checked = true;
     } else {
       for (let index = 0; index < this.loterias.length; index++) {
@@ -407,19 +401,85 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
       }
       this.checked = false;
     }
-
     const emitLoterias = {
       loterias: this.loterias,
       fechaSeleccionApuesta: this.dayBet
     }
-
     this.agregarLoterias.emit(emitLoterias);
   }
 
 
-  generarAletorio(){
-    return Math.round(Math.random() * (this.loterias.length-1 - 0) + 0);
+  /**
+   * @author Luis Hernandez
+   * @description Metodo que se encarga
+   * de devolver los values aletorios
+   * que se van a usar para marcar las
+   * dos loterias
+   */
+  getRandomValues() {
+    const array = [];
+    const max = this.loterias.length - 1;
+    array.push(this.getAletorio(max));
+    return this.validExistRandom(array, max, max);
   }
+
+  getAletorio(max) {
+    return Math.round(Math.random() * (max - 0) + 0);
+  }
+
+  /**
+   * @author Luis Hernandez
+   * @description Metodo que
+   * se encarga de validar
+   * que no se repita un
+   * value para garantizar
+   * que se marcar dos loterias
+   * diferentes
+   * @param array
+   * @param max
+   * @param loteriasLen
+   */
+  validExistRandom(array, max, loteriasLen) {
+    const newl = this.getAletorio(max);
+    const found = array.find(element => element === newl);
+    if (found === undefined) {
+      array.push(newl);
+    } else {
+      const newMore = newl + 1;
+      if (newMore <= loteriasLen) {
+        array.push(newMore);
+      } else {
+        const newMin = newl - 1;
+        array.push(newMin);
+      }
+    }
+    return array;
+  }
+
+
+
+  /**
+   * @author Luis Hernandez
+   * @description Metodo que
+   * se encarga de ir pintando
+   * las dos loterias aletorias
+   * @param index
+   */
+  randomSelected(index): void {
+    if (this.loterias[index].checked) {
+      this.loterias[index].checked = false;
+    } else {
+      this.loterias[index].checked = true;
+    }
+    let valid = true;
+    this.loterias.forEach(element => { if (!element.checked) { valid = false; } });
+  }
+
+
+
+  // generarAletorio(){
+  //   return Math.round(Math.random() * (this.loterias.length-1 - 0) + 0);
+  // }
 
 
   /**
@@ -594,10 +654,6 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
     this.chanceForm.controls.numeroFilaCuatro.setValue('');
     this.chanceForm.controls.numeroFilaCinco.setValue('');
     
-
-
-    this.loterias = [];
-    this.agregarLoterias.emit(this.loterias);
     if(event === 1){
       this.reiniciarEdit.emit(false);
     }
@@ -607,34 +663,32 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
 
     document.getElementById('numeroFilaUno').focus();
     
-
-    const chipL = document.getElementById('lun');
-    chipL.style.backgroundColor = '#FFFFFF';
-    chipL.style.color = '#BE1E42';
-
-    const chipM = document.getElementById('mar');
-    chipM.style.backgroundColor = '#FFFFFF';
-    chipM.style.color = '#BE1E42';
-
-    const chipMi = document.getElementById('mie');
-    chipMi.style.backgroundColor = '#FFFFFF';
-    chipMi.style.color = '#BE1E42';
-
-    const chipJ = document.getElementById('jue');
-    chipJ.style.backgroundColor = '#FFFFFF';
-    chipJ.style.color = '#BE1E42';
-
-    const chipV = document.getElementById('vie');
-    chipV.style.backgroundColor = '#FFFFFF';
-    chipV.style.color = '#BE1E42';
-
-    const chipS = document.getElementById('sab');
-    chipS.style.backgroundColor = '#FFFFFF';
-    chipS.style.color = '#BE1E42';
-
-    const chipD = document.getElementById('dom');
-    chipD.style.backgroundColor = '#FFFFFF';
-    chipD.style.color = '#BE1E42';
+    if(event != 4){
+      this.loterias = [];
+      const chipL = document.getElementById('lun');
+      chipL.style.backgroundColor = '#FFFFFF';
+      chipL.style.color = '#BE1E42';
+      const chipM = document.getElementById('mar');
+      chipM.style.backgroundColor = '#FFFFFF';
+      chipM.style.color = '#BE1E42';
+      const chipMi = document.getElementById('mie');
+      chipMi.style.backgroundColor = '#FFFFFF';
+      chipMi.style.color = '#BE1E42';
+      const chipJ = document.getElementById('jue');
+      chipJ.style.backgroundColor = '#FFFFFF';
+      chipJ.style.color = '#BE1E42';
+      const chipV = document.getElementById('vie');
+      chipV.style.backgroundColor = '#FFFFFF';
+      chipV.style.color = '#BE1E42';
+      const chipS = document.getElementById('sab');
+      chipS.style.backgroundColor = '#FFFFFF';
+      chipS.style.color = '#BE1E42';
+      const chipD = document.getElementById('dom');
+      chipD.style.backgroundColor = '#FFFFFF';
+      chipD.style.color = '#BE1E42';
+      this.agregarLoterias.emit(this.loterias);
+    }
+    
   }
 
 

@@ -22,6 +22,10 @@ export class ProductosAPIConstant {
   /** PATH que contiene los procesos de negocio para los horarios */
   static readonly HORARIO: string = 'admin/horario/';  
 
+  /** PATH que contiene los procesos de negocio para el inventario de papeleria */
+  static readonly PAPELERIA: string = 'admin/papeleria/';
+
+
 
   /** URL del recurso para para obtener las loterias virtual */
   static readonly URL_GET_LOTERIAS_VIRTUAL: string =
@@ -156,5 +160,12 @@ export class ProductosAPIConstant {
        AppDomainConstant.URI_GATEWAY +
        ProductosAPIConstant.LOTERIAS_API +
        'consultarColilla';
+
+
+       /** URL del recurso para  obtener los datos de bienvenida */
+       static readonly URL_SERIES_VENDEDOR: string =
+       AppDomainConstant.URI_GATEWAY +
+        ProductosAPIConstant.PAPELERIA +
+        'obtenerSeriesVendedor';
 
 }
