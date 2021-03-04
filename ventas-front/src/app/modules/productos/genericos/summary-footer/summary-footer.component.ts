@@ -352,9 +352,6 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
 
   agregarCarritoFChanceMillonario(): void {
     const listaNumeros = this.obtenerFilasConApuesta(this.listaNumeros)
-
-    
-
     if(this.validarCeros(listaNumeros)){
       this.messageService.add(MsjUtil.getToastErrorMedium('Usted no puede colocar valores en 0'));
     } else {

@@ -307,23 +307,24 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
     const productosDepurar = JSON.parse(localStorage.getItem('chanceApuestaMillonario'))
 
     for (let index = 0; index < productosDepurar.length; index++) {
-      const bet = { bets:null, canal: 'WEB', dataPlayed:null, idCustomer:null, idUser:this.shellState.userAccount.auth.usuario.idUsuario, lotteries:null, producto:this.producto, valueBet:null, valueBetTotal:null, valueVat:null,idOficina:this.shellState.userAccount.auth.usuario.idOficina,idPuntoVenta:this.shellState.userAccount.auth.usuario.idPuntoVenta,idRollo:null,colillaActual:null, colilla:null};
+      const bet = { bets:null, canal: 'WEB', dataPlayed:null, idCustomer:null, idUser:this.shellState.userAccount.auth.usuario.idUsuario, lotteries:null, producto:this.producto, valueBet:null, valueBetTotal:null, valueVat:null};
       bet.lotteries = this.obtenerLoteriasSeleccionadas(productosDepurar[index].loterias)
-      bet.bets = this.obtenerEstructuraDatosNumeros(productosDepurar[index].listaNumeros, productosDepurar[0].fechaSeleccionApuesta, bet.lotteries)
-      bet.dataPlayed = productosDepurar[index].fechaActual
-      bet.idCustomer = productosDepurar[index].clienteOperacion.idCustomer
-
       //////////// -----------------------!!!!!!!!-------------------- /////////////////////////////////
       bet.valueBet = Math.round(productosDepurar[index].apostado);
       bet.valueBetTotal = Math.round(productosDepurar[index].total);
       bet.valueVat = Math.round(productosDepurar[index].iva);
       //////////// ----------------------!!!!!!!--------------------- /////////////////////////////////
+      bet.bets = this.obtenerEstructuraDatosNumerosChanceMillonario(productosDepurar[index].listaNumeros, productosDepurar[0].fechaSeleccionApuesta, bet.lotteries, bet.valueVat, bet.valueBetTotal)
+      bet.dataPlayed = new Date(productosDepurar[index].fechaActual)
+      bet.idCustomer = productosDepurar[index].clienteOperacion.idCustomer
 
-      bet.idOficina = this.shellState.userAccount.auth.usuario.idOficina;
-      bet.idPuntoVenta = this.shellState.userAccount.auth.usuario.idPuntoVenta
-      bet.idRollo = productosDepurar[index].idRollo;
-      bet.colillaActual = productosDepurar[index].colillaActual;
-      bet.colilla = productosDepurar[index].colilla;
+      
+
+      // bet.idOficina = this.shellState.userAccount.auth.usuario.idOficina;
+      // bet.idPuntoVenta = this.shellState.userAccount.auth.usuario.idPuntoVenta
+      // bet.idRollo = productosDepurar[index].idRollo;
+      // bet.colillaActual = productosDepurar[index].colillaActual;
+      // bet.colilla = productosDepurar[index].colilla;
 
 
 
@@ -355,7 +356,6 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
     //   default:
     //     break;
     // }
-
     this.productosService.registrarApuestas(paySend).subscribe(
       apuestaData => {
         const responseApuesta: any = apuestaData;
@@ -402,6 +402,25 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
       }
     }
     return cantidadLoterias * sumaTotal;
+  }
+
+
+  obtenerEstructuraDatosNumerosChanceMillonario(numerosIteras, fechaSorteo, loterias, valueVat, valueBetTotal){
+    const numeros = [
+      {
+        apuestaA: null,apuestaB: null,apuestaC: null,apuestaD: null,apuestaE: null,details: null,fechaSorteo: new Date(fechaSorteo),
+        lotteries: loterias,numberPlayed: null,numeroAstro: null,numeroSuper: null,valueBet: valueBetTotal,valueVat: valueVat,
+        zignos: null
+      }
+    ];
+    numerosIteras.forEach(element => {
+      if (element.numeroFilaUno) {numeros[0].apuestaA = element.numeroFilaUno}
+      if (element.numeroFilaDos) {numeros[0].apuestaB = element.numeroFilaDos}
+      if (element.numeroFilaTres) {numeros[0].apuestaC = element.numeroFilaTres}
+      if (element.numeroFilaCuatro) {numeros[0].apuestaD = element.numeroFilaCuatro}
+      if (element.numeroFilaCinco) {numeros[0].apuestaE = element.numeroFilaCinco}
+    })
+    return numeros;
   }
 
 
