@@ -4,9 +4,15 @@
 
 export const environment = {
   production: false,
+<<<<<<< HEAD
    serverApiUrl: 'http://localhost:8181/'
   
   //serverApiUrl: 'https://gateway2.logiiblue.com/'
+=======
+  // serverApiUrl: 'http://localhost:8181/'
+  
+  serverApiUrl: 'https://gateway2.logiiblue.com/'
+>>>>>>> 350d7468178e8e600811df87fa10f1814603a992
 };
 
 /*
