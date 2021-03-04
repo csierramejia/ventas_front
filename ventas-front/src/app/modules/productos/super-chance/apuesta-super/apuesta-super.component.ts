@@ -469,18 +469,21 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit  {
   }
 
 
-  generarAletorios(){
-    let arrayAletorios = []
-    for (let index = 0; index < 5; index++) {
-      arrayAletorios.push(Math.round(Math.random() * (1000 - 9999) + 9999))
-    }
-    this.chanceForm.controls.numeroFilaUno.setValue(arrayAletorios[0]);
-    this.chanceForm.controls.numeroFilaDos.setValue(arrayAletorios[1]);
-    this.chanceForm.controls.numeroFilaTres.setValue(arrayAletorios[2]);
-    this.chanceForm.controls.numeroFilaCuatro.setValue(arrayAletorios[3]);
-    this.chanceForm.controls.numeroFilaCinco.setValue(arrayAletorios[4]);
-    this.emitirNumeros();
-  }
+  // generarAletorios(type){
+   
+  //   let arrayAletorios = []
+  //   for (let index = 0; index < 5; index++) {
+  //     arrayAletorios.push(Math.round(Math.random() * (1000 - 9999) + 9999))
+  //   }
+  //   this.chanceForm.controls.numeroFilaUno.setValue(arrayAletorios[0]);
+  //   this.chanceForm.controls.numeroFilaDos.setValue(arrayAletorios[1]);
+  //   this.chanceForm.controls.numeroFilaTres.setValue(arrayAletorios[2]);
+  //   this.chanceForm.controls.numeroFilaCuatro.setValue(arrayAletorios[3]);
+  //   this.chanceForm.controls.numeroFilaCinco.setValue(arrayAletorios[4]);
+
+  //   this.emitirNumeros();
+    
+  // }
 
 
   aleatorioTresCifras() {
@@ -538,6 +541,22 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit  {
       this.consultarValoresModalidad(4,5)
       // this.habilitarDeshabilitarSegunCifras(this.chanceForm.get('numeroFilaCinco').value, 5);
     }
+    this.emitirNumeros();
+  }
+
+
+
+  aleatorioCuatroCifrasAll() {
+    this.chanceForm.controls.numeroFilaUno.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
+    this.consultarValoresModalidad(4,1)
+    this.chanceForm.controls.numeroFilaDos.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
+    this.consultarValoresModalidad(4,2)
+    this.chanceForm.controls.numeroFilaTres.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
+    this.consultarValoresModalidad(4,3)
+    this.chanceForm.controls.numeroFilaCuatro.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
+    this.consultarValoresModalidad(4,4)
+    this.chanceForm.controls.numeroFilaCinco.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
+    this.consultarValoresModalidad(4,5)
     this.emitirNumeros();
   }
 
