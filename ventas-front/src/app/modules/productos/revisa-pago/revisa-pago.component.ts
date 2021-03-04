@@ -319,15 +319,11 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
       bet.dataPlayed = new Date(productosDepurar[index].fechaActual)
       bet.idCustomer = productosDepurar[index].clienteOperacion.idCustomer
 
-      
-
       // bet.idOficina = this.shellState.userAccount.auth.usuario.idOficina;
       // bet.idPuntoVenta = this.shellState.userAccount.auth.usuario.idPuntoVenta
       // bet.idRollo = productosDepurar[index].idRollo;
       // bet.colillaActual = productosDepurar[index].colillaActual;
       // bet.colilla = productosDepurar[index].colilla;
-
-
 
       // guardamos el correo del usuario (para enviar desplendible de pago)
       this.correoCliente = productosDepurar[index].clienteOperacion.correoCustomer
@@ -346,21 +342,6 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
 
 
   hacerCompraServicio(paySend){
-
-    // switch (this.productoParent) {
-    //   case 'chance':
-    //     this.hacerCompraServicioChance(paySend)
-    //     break;
-    //   case 'chance-millonario':
-    //     this.hacerCompraServicioChanceMillonario(paySend)
-    //     break;
-    //   default:
-    //     break;
-    // }
-    console.log('paySend');
-    console.log(paySend);
-    console.log('paySend');
-
     this.productosService.registrarApuestas(paySend).subscribe(
       apuestaData => {
         const responseApuesta: any = apuestaData;
