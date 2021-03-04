@@ -279,7 +279,7 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
     const productosDepurar = JSON.parse(localStorage.getItem('chanceApuesta'))
 
     for (let index = 0; index < productosDepurar.length; index++) {
-      const bet = { bets:null, canal: 'WEB', dataPlayed:null, idCustomer:null, idUser:this.shellState.userAccount.auth.usuario.idUsuario, lotteries:null, producto:this.producto, valueBet:null, valueBetTotal:null, valueVat:null,idOficina:this.shellState.userAccount.auth.usuario.idOficina,idPuntoVenta:this.shellState.userAccount.auth.usuario.idPuntoVenta,idRollo:null,colillaActual:null, colilla:null};
+      const bet = { bets:null, canal: 'WEB', dataPlayed:null, idCustomer:null, idUser:this.shellState.userAccount.auth.usuario.idUsuario, lotteries:null, producto:this.producto, valueBet:null, valueBetTotal:null, valueVat:null,idOficina:this.shellState.userAccount.auth.usuario.idOficina,idPuntoVenta:this.shellState.userAccount.auth.usuario.idPuntoVenta,idRollo:null,colillaActual:null, colilla:null, serieUno:null, serieDos:null};
       bet.lotteries = this.obtenerLoteriasSeleccionadas(productosDepurar[index].loterias)
       bet.bets = this.obtenerEstructuraDatosNumeros(productosDepurar[index].listaNumeros, productosDepurar[0].fechaSeleccionApuesta, bet.lotteries)
       bet.dataPlayed = productosDepurar[index].fechaActual
@@ -292,8 +292,9 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
       bet.idRollo = productosDepurar[index].idRollo;
       bet.colillaActual = productosDepurar[index].colillaActual;
       bet.colilla = productosDepurar[index].colilla;
-
-      // guardamos el correo del usuario (para enviar desplendible de pago)
+      bet.serieUno = productosDepurar[index].serie;
+      bet.serieDos = productosDepurar[index].colillaActual;
+     // guardamos el correo del usuario (para enviar desplendible de pago)
       this.correoCliente = productosDepurar[index].clienteOperacion.correoCustomer
       this.paySend.push(bet);
     }
@@ -356,6 +357,10 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
     //   default:
     //     break;
     // }
+    console.log('paySend');
+    console.log(paySend);
+    console.log('paySend');
+
     this.productosService.registrarApuestas(paySend).subscribe(
       apuestaData => {
         const responseApuesta: any = apuestaData;

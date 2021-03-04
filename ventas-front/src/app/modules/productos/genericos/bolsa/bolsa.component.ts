@@ -339,6 +339,8 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
         colillaActual: null,
         idRollo:  null,
         idVendedor: null,
+        serieUno: null,
+        serieDos: null,
         fechaSorteo:null};
       if (element.modalidad && element.numeroSuper == null) {
         betDetail.apuestaA = element.apuestaA;
@@ -400,6 +402,9 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
       betDetail.idVendedor = element.idVendedor;
       betDetail.fechaSorteo = element.dataPlayed;
       betDetail.lotteries = element.loterias;
+      betDetail.serieUno = element.serie;
+      betDetail.serieDos = element.colillaActual;
+
       bets.push(betDetail);
     });
 

@@ -69,7 +69,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
     super();
       // se obtiene los datos de la autenticacion
     this.auth = SessionStoreUtil.auth(TipoEventoConstant.GET);
-    this.obtenerNumeroColilla();
+    this.obtenerColillaActual();
    }
 
   ngOnInit(): void {
@@ -105,7 +105,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
 /**
   * Método encargado de consulta la última colilla para venta
   */
-  public obtenerNumeroColilla(): void {
+  public obtenerColillaActual(): void {
     const filtro = new FiltroOperacionDTO;
     filtro.idRollo = this.auth.usuario.idRollo;
     filtro.idVendedor = this.auth.usuario.idUsuario;
@@ -581,7 +581,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
 
 
 
-  irResumen() {
+   irResumen() {
     switch (this.productoParent) {
       case 'chance':
         this.irResumenChance();

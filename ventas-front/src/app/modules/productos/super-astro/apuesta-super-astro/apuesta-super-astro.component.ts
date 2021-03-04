@@ -116,7 +116,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
       this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
     }
   );
-  this.obtenerNumeroColilla();
+  this.obtenerColillaActual();
   }
 
   ngOnInit(): void {
@@ -669,6 +669,8 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
         colillaActual: this.rolloColilla.colillaActual,
         idRollo:  this.auth.usuario.idRollo,
         idVendedor: this.auth.usuario.idUsuario,
+        serieUno: this.rolloColilla.serie,
+        serieDos: this.rolloColilla.colillaActual
 
       });
       this.cleanInputs();
@@ -837,7 +839,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
       // limpiamos los demas campos
       this.cleanInputs();
     
-      this.obtenerNumeroColilla()
+      this.obtenerColillaActual()
       ;
       this.seriesColillas=[];
     }
@@ -1191,7 +1193,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
   /**
   * Método encargado de consulta la última colilla para venta
   */
-  public obtenerNumeroColilla(): void {
+  public obtenerColillaActual(): void {
     const filtro = new FiltroOperacionDTO;
     filtro.idRollo = this.auth.usuario.idRollo;
     filtro.idVendedor = this.auth.usuario.idUsuario;
