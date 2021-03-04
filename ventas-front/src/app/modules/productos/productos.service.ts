@@ -107,6 +107,9 @@ export class ProductosService {
 
 
   public registrarApuestas(bet): Observable<ResponseDTO> {
+    console.log('----------');
+    console.log(ProductosAPIConstant.URL_REGISTRAR_APUESTAS)
+    console.log('----------');
     return this.http.post<ResponseDTO>(
       ProductosAPIConstant.URL_REGISTRAR_APUESTAS,
       bet
