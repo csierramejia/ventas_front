@@ -5,6 +5,7 @@ import { MessageService, ConfirmationService } from 'primeng/api';
 import { ProductosService } from '../../productos.service';
 import { MsjUtil } from 'src/app/utilities/messages.util';
 import { NotificacionSoportePagoDTO } from 'src/app/dtos/correos/notificacion-soporte-pago.dto';
+import { RolloColillaDTO } from 'src/app/dtos/transversal/rollo-colilla.dto';
 
 @Component({
   selector: 'app-bolsa',
@@ -12,13 +13,13 @@ import { NotificacionSoportePagoDTO } from 'src/app/dtos/correos/notificacion-so
   styleUrls: ['./bolsa.component.css'],
   providers: [ProductosService]
 })
-export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy  {
+export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy {
 
   @Output() editBet: EventEmitter<any> = new EventEmitter();
   @Output() creatingBet: EventEmitter<any> = new EventEmitter();
-  @Output() updateSerie = new EventEmitter<string>();
-  
-  
+  @Output() updateSerie = new EventEmitter<RolloColillaDTO>();
+
+
   inputVat = 0;
   valueBet = 0;
   valueVat = 0;
@@ -38,7 +39,7 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
 
   ngOnInit(): void {
     this.cartItems.forEach(element => {
-       
+
     });
     this.get_taxes_vat();
     this.getSignos();
@@ -52,7 +53,7 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
         const rs: any = signosData;
         rs.forEach(element => {
           if (element.nombre != 'Todos') {
-          this.zignos.push(element);
+            this.zignos.push(element);
           }
         });
       },
@@ -89,18 +90,18 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
   validCreateAndEdit(event): void {
     if (event.action === 1) {
       delete event.action;
-       // this.lotteries = event.lotteries;
+      // this.lotteries = event.lotteries;
       // delete event.lotteries;
       this.cartItems.push(event);
-      if(this.cartItems.length>1){
-         for (let index = this.cartItems.length - 1; index < this.cartItems.length; index++) {
-          const element = this.cartItems[index-1];
+      if (this.cartItems.length > 1) {
+        for (let index = this.cartItems.length - 1; index < this.cartItems.length; index++) {
+          const element = this.cartItems[index - 1];
           let colillaActual = element.colillaActual;
-          colillaActual ++ ;
-          const colilla =this.cartItems[index].serie + String(colillaActual).padStart(7, '0');
+          colillaActual++;
+          const colilla = this.cartItems[index].serie + String(colillaActual).padStart(7, '0');
           this.cartItems[index].colilla = colilla;
-          this.cartItems[index].colillaActual=colillaActual;
-          
+          this.cartItems[index].colillaActual = colillaActual;
+
         }
 
       }
@@ -178,7 +179,7 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
    * se desea modificar
    */
   editBetSend(element, repetirApuesta): void {
-    element.repetirApuesta=repetirApuesta;
+    element.repetirApuesta = repetirApuesta;
     this.editBet.emit(element);
   }
 
@@ -196,8 +197,8 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
     const chanceArray = this.cartItems;
     let item = chanceArray[0];
     const keyResponse = this.getKeyObject(element._id);
-    if ( keyResponse  !== -1 ) {
-      this.cartItems.splice( keyResponse , 1 );
+    if (keyResponse !== -1) {
+      this.cartItems.splice(keyResponse, 1);
       this.get_values_totals();
     }
     if (this.cartItems.length > 0) {
@@ -214,8 +215,16 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
         }
 
       }
+     
     }
-    this.updateSerie.emit(this.cartItems[this.cartItems.length-1].colilla);
+    let rolloDTO = new RolloColillaDTO;
+    rolloDTO.rangoColilla = this.cartItems.length > 0 ? this.cartItems[this.cartItems.length - 1].colilla : item.colilla;
+    rolloDTO.colillaActual = this.cartItems.length > 0 ? this.cartItems[this.cartItems.length - 1].colilla.colillaActual : item.colillaActual;
+    this.updateSerie.emit(rolloDTO);
+
+    
+
+
   }
 
 
@@ -240,56 +249,56 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
   get_values_totals(): void {
     this.valueBet = 0;
     this.valueVat = 0;
-    let loterias=[];
-    let valorSumado=0;
+    let loterias = [];
+    let valorSumado = 0;
     this.cartItems.forEach(element => {
-         loterias=[];
-         valorSumado=0;
-   //   this.valueBet=0;
+      loterias = [];
+      valorSumado = 0;
+      //   this.valueBet=0;
       if (element.modalidad && element.numeroSuper == null) {
         if (element.modalidad == '4 Cifras') {
-          this.valueBet = this.valueBet +parseInt(element.valorApostado);
+          this.valueBet = this.valueBet + parseInt(element.valorApostado);
         } else {
-          this.valueBet =this.valueBet + parseInt(element.valorApostado);
+          this.valueBet = this.valueBet + parseInt(element.valorApostado);
         }
       } else if (element.modalidad == null && (element.numeroSuper || element.numeroAstro)) {
-          this.valueBet = this.valueBet + parseInt(element.valorApostado);
-          this.valueBet = element.loterias.length * this.valueBet;
+        this.valueBet = this.valueBet + parseInt(element.valorApostado);
+        this.valueBet = element.loterias.length * this.valueBet;
       } else {
-      // tslint:disable-next-line: radix
-      if (element.direct) { valorSumado = (valorSumado + parseInt(element.direct)); }
-      // tslint:disable-next-line: radix
-      if (element.combined) { valorSumado= (valorSumado + parseInt(element.combined)); }
-      // tslint:disable-next-line: radix
-      if (element.threeC) { valorSumado= (valorSumado + parseInt(element.threeC)); }
-      // tslint:disable-next-line: radix
-      if (element.twoC) { valorSumado = (valorSumado+ parseInt(element.twoC)); }
-      // tslint:disable-next-line: radix
-      if (element.oneC) { valorSumado = valorSumado+ parseInt(element.oneC); }
-      this.valueBet =this.valueBet+ (element.loterias.length * valorSumado);
+        // tslint:disable-next-line: radix
+        if (element.direct) { valorSumado = (valorSumado + parseInt(element.direct)); }
+        // tslint:disable-next-line: radix
+        if (element.combined) { valorSumado = (valorSumado + parseInt(element.combined)); }
+        // tslint:disable-next-line: radix
+        if (element.threeC) { valorSumado = (valorSumado + parseInt(element.threeC)); }
+        // tslint:disable-next-line: radix
+        if (element.twoC) { valorSumado = (valorSumado + parseInt(element.twoC)); }
+        // tslint:disable-next-line: radix
+        if (element.oneC) { valorSumado = valorSumado + parseInt(element.oneC); }
+        this.valueBet = this.valueBet + (element.loterias.length * valorSumado);
       }
     });
-   
-    const calculoImpuesto=(this.inputVat/100) + 1
-    this.valueVat = this.valueBet-(this.valueBet / calculoImpuesto);
+
+    const calculoImpuesto = (this.inputVat / 100) + 1
+    this.valueVat = this.valueBet - (this.valueBet / calculoImpuesto);
     this.valueBet = this.valueBet - this.valueVat;
 
     this.valueBetTotal = Math.floor(this.valueBet + this.valueVat);
   }
 
-  consultarTipoAPuesta(cartItem){
-    let tipoApuesta="";
-    if(cartItem.numeroAstro){
-      tipoApuesta="Super astro";
+  consultarTipoAPuesta(cartItem) {
+    let tipoApuesta = "";
+    if (cartItem.numeroAstro) {
+      tipoApuesta = "Super astro";
     }
-    else   if(cartItem.numberPlayed){
-      tipoApuesta="Chance";
+    else if (cartItem.numberPlayed) {
+      tipoApuesta = "Chance";
     }
-    else   if(cartItem.apuestaA){
-      tipoApuesta="Chance millonario";
+    else if (cartItem.apuestaA) {
+      tipoApuesta = "Chance millonario";
     }
-    else   if(cartItem.numeroSuper){
-      tipoApuesta="Super chance";
+    else if (cartItem.numeroSuper) {
+      tipoApuesta = "Super chance";
     }
 
 
@@ -309,21 +318,21 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
         this.hacerCompra();
       },
     });
-   
+
   }
 
-  hacerCompra(){
+  hacerCompra() {
     const bets = [];
 
     const paySend = {
       idUser: this.shellState.userAccount.auth.usuario.idUsuario,
       datePlayed: this.cartItems[0].dataPlayed,
       idCustomer: this.cartItems[0].idCustomer,
-      valueBet : Math.round(this.valueBet),
-      valueVat : Math.round(this.valueVat),
-      valueBetTotal : this.valueBetTotal,
+      valueBet: Math.round(this.valueBet),
+      valueVat: Math.round(this.valueVat),
+      valueBetTotal: this.valueBetTotal,
       bets: null,
-      lotteries : this.lotteries,
+      lotteries: this.lotteries,
       canal: null,
       producto: this.producto,
       idOficina: this.shellState.userAccount.auth.usuario.idOficina,
@@ -332,69 +341,71 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
 
     this.cartItems.forEach(element => {
       const bet = [];
-      const betDetail = {valueBet:null,valueVat:null,numberPlayed: null, apuestaA: null, apuestaB: null,
-        apuestaC: null, apuestaD: null, apuestaE: null, numeroSuper: null, details: null, numeroAstro: null, zignos: null, lotteries:null,
-        colilla:  null,
-        serie:  null,
+      const betDetail = {
+        valueBet: null, valueVat: null, numberPlayed: null, apuestaA: null, apuestaB: null,
+        apuestaC: null, apuestaD: null, apuestaE: null, numeroSuper: null, details: null, numeroAstro: null, zignos: null, lotteries: null,
+        colilla: null,
+        serie: null,
         colillaActual: null,
-        idRollo:  null,
+        idRollo: null,
         idVendedor: null,
         serieUno: null,
         serieDos: null,
-        fechaSorteo:null};
+        fechaSorteo: null
+      };
       if (element.modalidad && element.numeroSuper == null) {
         betDetail.apuestaA = element.apuestaA;
         betDetail.apuestaB = element.apuestaB;
         betDetail.apuestaC = element.apuestaC;
         betDetail.apuestaD = element.apuestaD;
         betDetail.apuestaE = element.apuestaE;
-        betDetail.valueBet= element.valorApostado;
-        const calculoImpuesto=(this.inputVat/100) + 1
-        betDetail.valueVat =  betDetail.valueBet-( betDetail.valueBet/ calculoImpuesto);
-        betDetail.valueVat=Math.round(betDetail.valueVat);
-        betDetail.valueBet=Math.round(betDetail.valueBet);
+        betDetail.valueBet = element.valorApostado;
+        const calculoImpuesto = (this.inputVat / 100) + 1
+        betDetail.valueVat = betDetail.valueBet - (betDetail.valueBet / calculoImpuesto);
+        betDetail.valueVat = Math.round(betDetail.valueVat);
+        betDetail.valueBet = Math.round(betDetail.valueBet);
       } else if (element.modalidad == null && element.numeroSuper) {
         betDetail.numeroSuper = element.numeroSuper;
-        betDetail.valueBet= element.valorApostado;
-        const calculoImpuesto=(this.inputVat/100) + 1
-        betDetail.valueVat =  betDetail.valueBet-( betDetail.valueBet / calculoImpuesto);
-        betDetail.valueVat=Math.round(betDetail.valueVat);
-        betDetail.valueBet=Math.round(betDetail.valueBet);
+        betDetail.valueBet = element.valorApostado;
+        const calculoImpuesto = (this.inputVat / 100) + 1
+        betDetail.valueVat = betDetail.valueBet - (betDetail.valueBet / calculoImpuesto);
+        betDetail.valueVat = Math.round(betDetail.valueVat);
+        betDetail.valueBet = Math.round(betDetail.valueBet);
       } else if (element.modalidad == null && element.numeroAstro) {
         betDetail.numeroAstro = element.numeroAstro;
-        betDetail.valueBet= element.valorApostado;
-        const calculoImpuesto=(this.inputVat/100) + 1
-        betDetail.valueVat =  betDetail.valueBet-( betDetail.valueBet / calculoImpuesto);
+        betDetail.valueBet = element.valorApostado;
+        const calculoImpuesto = (this.inputVat / 100) + 1
+        betDetail.valueVat = betDetail.valueBet - (betDetail.valueBet / calculoImpuesto);
         betDetail.zignos = element.zignos;
-        betDetail.valueVat=Math.round(betDetail.valueVat);
-        betDetail.valueBet=Math.round(betDetail.valueBet);
+        betDetail.valueVat = Math.round(betDetail.valueVat);
+        betDetail.valueBet = Math.round(betDetail.valueBet);
       } else {
-      betDetail.numberPlayed = element.numberPlayed;
-      if (String(element.numberPlayed).length === 4) {
+        betDetail.numberPlayed = element.numberPlayed;
+        if (String(element.numberPlayed).length === 4) {
 
-        if (element.direct) {bet.push({code: 1, valor: element.direct}); }
-        if (element.combined) {bet.push({code: 2, valor: element.combined}); }
-        if (element.threeC) { bet.push({code: 3, valor: element.threeC}); }
-        if (element.twoC) { bet.push({code: 5, valor: element.twoC}); }
-        if (element.oneC) { bet.push({code: 6, valor: element.oneC}); }
+          if (element.direct) { bet.push({ code: 1, valor: element.direct }); }
+          if (element.combined) { bet.push({ code: 2, valor: element.combined }); }
+          if (element.threeC) { bet.push({ code: 3, valor: element.threeC }); }
+          if (element.twoC) { bet.push({ code: 5, valor: element.twoC }); }
+          if (element.oneC) { bet.push({ code: 6, valor: element.oneC }); }
 
-      } else if (String(element.numberPlayed).length === 3) {
+        } else if (String(element.numberPlayed).length === 3) {
 
-        if (element.direct) { bet.push({code: 3, valor: element.direct}); }
-        if (element.combined) { bet.push({code: 4, valor: element.combined}); }
-        if (element.twoC) { bet.push({code: 5, valor: element.twoC}); }
-        if (element.oneC) { bet.push({code: 6, valor: element.oneC}); }
+          if (element.direct) { bet.push({ code: 3, valor: element.direct }); }
+          if (element.combined) { bet.push({ code: 4, valor: element.combined }); }
+          if (element.twoC) { bet.push({ code: 5, valor: element.twoC }); }
+          if (element.oneC) { bet.push({ code: 6, valor: element.oneC }); }
 
-      } else if (String(element.numberPlayed).length === 2) {
+        } else if (String(element.numberPlayed).length === 2) {
 
-        if (element.direct) { bet.push({code: 5, valor: element.direct}); }
-        if (element.oneC) { bet.push({code: 6, valor: element.oneC}); }
+          if (element.direct) { bet.push({ code: 5, valor: element.direct }); }
+          if (element.oneC) { bet.push({ code: 6, valor: element.oneC }); }
 
-      } else if (String(element.numberPlayed).length === 1) {
-        if (element.direct) { bet.push({code: 6, valor: element.direct}); }
+        } else if (String(element.numberPlayed).length === 1) {
+          if (element.direct) { bet.push({ code: 6, valor: element.direct }); }
+        }
+        betDetail.details = bet;
       }
-      betDetail.details = bet;
-     }
       betDetail.colilla = element.colilla;
       betDetail.serie = element.serie;
       betDetail.colillaActual = element.colillaActual;
@@ -433,10 +444,10 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
           // se limpia la data ingresada
           this.cleanCartValues();
           this.creatingBet.emit(true);
-     
-        
-        } 
-        else if(responseApuesta.mensaje){
+
+
+        }
+        else if (responseApuesta.mensaje) {
           this.messageService.add(MsjUtil.getToastErrorLng(responseApuesta.mensaje));
         }
         else {
@@ -451,49 +462,49 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
   }
 
 
-  validarSignoNombre(signos){
+  validarSignoNombre(signos) {
     let sig = '';
     if (signos.length >= 12) {
       sig = ",Todos";
-  } else {
-    signos.forEach(s => {
-      this.zignos.forEach(element => {
-        if (s == element.idSigno) {
-         sig = sig + ", " + element.nombre;
-        }
+    } else {
+      signos.forEach(s => {
+        this.zignos.forEach(element => {
+          if (s == element.idSigno) {
+            sig = sig + ", " + element.nombre;
+          }
+        });
       });
-    });
-  }
-    return sig.substr(1,sig.length);
+    }
+    return sig.substr(1, sig.length);
   }
 
 
   nombreSigno(signo) {
     if (signo == 1) {
       return 'Acuario';
-    } else if(signo == 2) {
+    } else if (signo == 2) {
       return 'Piscis';
     } else if (signo == 3) {
       return 'Aries';
-    } else if(signo == 4) {
+    } else if (signo == 4) {
       return 'Tauro';
-    } else if(signo == 5) {
+    } else if (signo == 5) {
       return 'Géminis';
-    } else if(signo == 6) {
+    } else if (signo == 6) {
       return 'Cáncer';
-    } else if(signo == 7) {
+    } else if (signo == 7) {
       return 'Leo';
-    } else if(signo == 8) {
+    } else if (signo == 8) {
       return 'Virgo';
-    } else if(signo == 9) {
+    } else if (signo == 9) {
       return 'Libra';
-    } else if(signo == 10) {
+    } else if (signo == 10) {
       return 'Escorpio';
-    } else if(signo == 11) {
+    } else if (signo == 11) {
       return 'Sagitario';
-    } else if(signo == 12) {
+    } else if (signo == 12) {
       return 'Capricornio';
-    } else if(signo == 13) {
+    } else if (signo == 13) {
       return 'Todos';
     }
   }
@@ -528,9 +539,9 @@ export class BolsaComponent extends CommonComponent implements OnInit, OnDestroy
    */
   private enviarNotificacionSoportePago(data: NotificacionSoportePagoDTO): void {
     this.productosService.enviarNotificacionSoportePagoChance(data).subscribe(
-      (response) => {},
+      (response) => { },
       (error) => { this.messageService.add(MsjUtil.getToastErrorMedium(this.showMensajeError(error))); }
     );
   }
- 
+
 }

@@ -1119,10 +1119,12 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
    */
   public updateSerie(event): void {
     if(event){
-      this.numeroSerie = event;
+        this.numeroSerie = event.rangoColilla;
+        this.rolloColilla.colillaActual = event.colillaActual;
+      }
     }
 
-  }
+  
   
 
 }

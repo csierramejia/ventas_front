@@ -1265,8 +1265,10 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
    * @param event 
    */
   public updateSerie(event): void {
-    if(event){
-      this.numeroSerie = event;
+    if (event) {
+        
+      this.numeroSerie = event.rangoColilla;
+      this.rolloColilla.colillaActual = event.colillaActual;
     }
 
   }

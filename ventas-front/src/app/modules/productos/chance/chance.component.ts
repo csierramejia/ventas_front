@@ -24,7 +24,7 @@ export class ChanceComponent implements OnInit {
    }
 
   ngOnInit(): void {
-
+  
   }
 
   /**
