@@ -653,6 +653,8 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
     this.chanceForm.controls.numeroFilaTres.setValue('');
     this.chanceForm.controls.numeroFilaCuatro.setValue('');
     this.chanceForm.controls.numeroFilaCinco.setValue('');
+    this.chanceForm.controls.valoresModalidades.setValue([]);
+
     
     if(event === 1){
       this.reiniciarEdit.emit(false);

@@ -623,6 +623,19 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
 
 
   limpiarCarrito(){
+    switch (this.productoParent) {
+      case 'chance':
+        this.limpiarCarritoChance()
+        break;
+      case 'chance-millonario':
+        this.limpiarCarritoChanceMillonario()
+        break;
+      default:
+        break;
+    }
+  }
+
+  limpiarCarritoChance(){
     this.paySend = []
     this.productosChance = []
     this.subtotalGeneral = 0
@@ -631,6 +644,17 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
     this.efectivo = ''
     this.devuelta = 0
     localStorage.removeItem('chanceApuesta');
+  }
+
+  limpiarCarritoChanceMillonario(){
+    this.paySend = []
+    this.productosChance = []
+    this.subtotalGeneral = 0
+    this.ivaGeneral = 0
+    this.totalGeneral = 0
+    this.efectivo = ''
+    this.devuelta = 0
+    localStorage.removeItem('chanceApuestaMillonario');
   }
 
   /**
