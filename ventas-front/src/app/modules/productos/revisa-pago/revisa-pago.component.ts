@@ -308,22 +308,26 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
     const productosDepurar = JSON.parse(localStorage.getItem('chanceApuestaMillonario'))
 
     for (let index = 0; index < productosDepurar.length; index++) {
-      const bet = { bets:null, canal: 'WEB', dataPlayed:null, idCustomer:null, idUser:this.shellState.userAccount.auth.usuario.idUsuario, lotteries:null, producto:this.producto, valueBet:null, valueBetTotal:null, valueVat:null};
+      const bet = { bets:null, canal: 'WEB', dataPlayed:null, idCustomer:null, idUser:this.shellState.userAccount.auth.usuario.idUsuario, lotteries:null, producto:this.producto, valueBet:null, valueBetTotal:null, valueVat:null,idOficina:this.shellState.userAccount.auth.usuario.idOficina,idPuntoVenta:this.shellState.userAccount.auth.usuario.idPuntoVenta,idRollo:null,colillaActual:null, colilla:null,serieUno:null, serieDos:null};
       bet.lotteries = this.obtenerLoteriasSeleccionadas(productosDepurar[index].loterias)
       //////////// -----------------------!!!!!!!!-------------------- /////////////////////////////////
       bet.valueBet = Math.round(productosDepurar[index].apostado);
       bet.valueBetTotal = Math.round(productosDepurar[index].total);
       bet.valueVat = Math.round(productosDepurar[index].iva);
+      bet.idOficina = this.shellState.userAccount.auth.usuario.idOficina;
+      bet.idPuntoVenta = this.shellState.userAccount.auth.usuario.idPuntoVenta
+      bet.idRollo = productosDepurar[index].idRollo;
+      bet.colillaActual = productosDepurar[index].colillaActual;
+      bet.colilla = productosDepurar[index].colilla;
+      bet.serieUno = productosDepurar[index].serie;
+      bet.serieDos = productosDepurar[index].colillaActual;
+     
       //////////// ----------------------!!!!!!!--------------------- /////////////////////////////////
       bet.bets = this.obtenerEstructuraDatosNumerosChanceMillonario(productosDepurar[index].listaNumeros, productosDepurar[0].fechaSeleccionApuesta, bet.lotteries, bet.valueVat, bet.valueBetTotal)
       bet.dataPlayed = new Date(productosDepurar[index].fechaActual)
       bet.idCustomer = productosDepurar[index].clienteOperacion.idCustomer
 
-      // bet.idOficina = this.shellState.userAccount.auth.usuario.idOficina;
-      // bet.idPuntoVenta = this.shellState.userAccount.auth.usuario.idPuntoVenta
-      // bet.idRollo = productosDepurar[index].idRollo;
-      // bet.colillaActual = productosDepurar[index].colillaActual;
-      // bet.colilla = productosDepurar[index].colilla;
+    
 
       // guardamos el correo del usuario (para enviar desplendible de pago)
       this.correoCliente = productosDepurar[index].clienteOperacion.correoCustomer
