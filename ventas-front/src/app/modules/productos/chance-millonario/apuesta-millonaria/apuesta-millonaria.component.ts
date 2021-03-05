@@ -636,10 +636,6 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
 
 
   
-
-
-
-
   borrarTodo(event) {
 
     if(event === 3){
