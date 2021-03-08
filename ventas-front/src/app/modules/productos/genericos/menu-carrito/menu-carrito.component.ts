@@ -122,6 +122,9 @@ export class MenuCarritoComponent implements OnInit {
       case 'chance-millonario':
         this.refrescarCarritoChanceMillonario();
         break;
+      case 'super-chance':
+        this.refrescarCarritoSuperChance();
+        break;
       default:
         break;
     }
@@ -200,6 +203,45 @@ export class MenuCarritoComponent implements OnInit {
         this.productos = []
       }
     }
+    this.shellState.enviarEventoCarritoELiminar(true);
+  }
+
+
+  refrescarCarritoSuperChance() {
+    this.subtotal = 0;
+    this.productos = [];
+    if( JSON.parse(localStorage.getItem('superChanceApuesta')) ){
+      if(JSON.parse(localStorage.getItem('superChanceApuesta')).length > 0) {
+        const iteracionLocalStorageProductos = JSON.parse(localStorage.getItem('superChanceApuesta'));
+        const newProductos = []
+        iteracionLocalStorageProductos.forEach(element => {
+          const loteriasSeleccionadas = this.get_lotteriesSelected(element.loterias)
+          newProductos.push({
+            apostado:element.apostado,
+            colilla:element.colilla,
+            fechaActual:element.fechaActual,
+            fechaSeleccionApuesta:element.fechaSeleccionApuesta,
+            iva:element.iva,
+            listaNumeros:element.listaNumeros,
+            loterias:loteriasSeleccionadas,
+            total:Math.round(element.total),
+            _id:element._id,
+            viewRepetir: false,
+            serie: element.serie,
+            colillaActual:element.colillaActual,
+            idRollo: element.idRollo,
+            idVendedor:element.idUsuario,
+        
+          })
+          this.subtotal = Math.round(this.subtotal + element.total)
+        });
+        this.productos = newProductos;
+      } else {
+        this.productos = []
+      }
+    }
+
+    // emitimos el evento para el observable
     this.shellState.enviarEventoCarritoELiminar(true);
   }
 

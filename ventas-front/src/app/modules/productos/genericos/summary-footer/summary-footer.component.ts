@@ -45,6 +45,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
   valueVat = 0;
   valueBetTotal = 0;
   listaNumeros = [];
+  listaModalidades = [];
   producto = null;
   selectedCifras: any;
   loterias = [];
@@ -78,8 +79,6 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
 
 
   obtenerColilla(){
-    
-
     if(this.productoParent === 'chance') {
       this.productosService.consultarNumeroSerieApuesta("CHANCE").subscribe(
         numeroSerie => {
@@ -91,6 +90,15 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
       );
     } else if(this.productoParent === 'chance-millonario'){
       this.productosService.consultarNumeroSerieApuesta("CHANCE MILLONARIO").subscribe(
+        numeroSerie => {
+          this.colilla=numeroSerie.codigo;
+        },
+        error => {
+          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+        }
+      );
+    } else if(this.productoParent === 'super-chance'){
+      this.productosService.consultarNumeroSerieApuesta("SUPER CHANCE").subscribe(
         numeroSerie => {
           this.colilla=numeroSerie.codigo;
         },
@@ -177,6 +185,15 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
     this.obtenerValoresTotales();
   }
 
+  setModalidades(event){
+    // console.log('event')
+    // console.log(event)
+    // console.log('event')
+
+    this.listaModalidades = event
+    this.obtenerValoresTotales();
+  }
+
 
   setCliente(event) {
     this.clienteOperacion = event;
@@ -214,6 +231,9 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
         break;
       case 'chance-millonario':
         this.obtenerValoresTotalesChanceMillonario();
+        break;
+      case 'super-chance':
+        this.obtenerValoresTotalesSuperChance();
         break;
       default:
         break;
@@ -276,11 +296,44 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
   }
 
 
+  obtenerValoresTotalesSuperChance(){
+    
+    this.valueVat = 0;
+    this.valueBetTotal = 0;
+    this.valueBet = 0;
+    let valorSumado = 0;
+
+    this.listaModalidades.forEach(element => {
+      if(element.valoresModalidadesUno){
+        valorSumado = valorSumado + parseInt(element.valoresModalidadesUno)
+      }
+      if(element.valoresModalidadesDos){
+        valorSumado = valorSumado + parseInt(element.valoresModalidadesDos)
+      }
+      if(element.valoresModalidadesTres){
+        valorSumado = valorSumado + parseInt(element.valoresModalidadesTres)
+      }
+      if(element.valoresModalidadesCuatro){
+        valorSumado = valorSumado + parseInt(element.valoresModalidadesCuatro)
+      }
+      if(element.valoresModalidadesCinco){
+        valorSumado = valorSumado + parseInt(element.valoresModalidadesCinco)
+      }
+    });
+
+    if(this.loterias){
+      const ivaNv = this.inputVat / 100 + 1
+      this.valueBetTotal = (this.loteriaSeleccionadas.length * valorSumado);
+      this.valueBet = this.valueBetTotal / ivaNv;
+      this.valueVat = this.valueBetTotal - this.valueBet;
+    }
+  }
+
+
   limpiar(){
     this.valueVat = 0;
     this.valueBetTotal = 0;
     this.valueBet = 0;
-    // let valorSumado = 0;
   }
 
 
@@ -292,6 +345,9 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
         break;
       case 'chance-millonario':
         this.agregarCarritoFChanceMillonario();
+        break;
+      case 'super-chance':
+        this.agregarCarritoFSuperChance();
         break;
       default:
         break;
@@ -384,6 +440,56 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
           if (JSON.parse(localStorage.getItem('chanceApuestaMillonario')) && JSON.parse(localStorage.getItem('chanceApuestaMillonario')).length > 0) {
             const iteracionLocalStorageProductos = JSON.parse(localStorage.getItem('chanceApuestaMillonario'));
             let index = iteracionLocalStorageProductos.length - 1;
+            let colillaActual = iteracionLocalStorageProductos[index].colillaActual;
+            colillaActual++;
+            this.confirmacionAgregar.rolloColilla.colillaActual = colillaActual;
+            const colilla = iteracionLocalStorageProductos[index].serie + String(colillaActual).padStart(7, '0');
+            this.confirmacionAgregar.colilla = colilla;
+            this.colilla = colilla;
+           }
+        }
+      } else {
+        this.messageService.add(MsjUtil.getToastErrorMedium('Valide que esta gestionando los campos necesarios para realizar la apuesta'));
+      }
+    }
+  }
+
+
+
+  agregarCarritoFSuperChance(): void {
+    const listaNumeros = this.obtenerFilasConApuesta(this.listaNumeros)
+
+    if(this.validarCeros(listaNumeros)){
+      this.messageService.add(MsjUtil.getToastErrorMedium('Usted no puede colocar valores en 0'));
+    } else {
+      if(this.colilla && this.fechaActual && this.loteriaSeleccionadas.length > 0 && listaNumeros.length > 0) {
+        if(this.edit){
+          this.confirmacionAgregar.isCreate = false;
+          this.verConfirmacionPopap = true;
+          this.confirmacionAgregar.colilla = this.colilla
+          this.confirmacionAgregar.numeros = this.concatenarNumeros(listaNumeros)
+          this.confirmacionAgregar.loterias = this.concatenarLoterias(this.loterias)
+          this.confirmacionAgregar.apostado = Math.round(this.valueBet)
+          this.confirmacionAgregar.iva = Math.round(this.valueVat)
+          this.confirmacionAgregar.total = Math.round(this.valueBetTotal)
+          this.confirmacionAgregar.idRollo = this.auth.usuario.idRollo;
+          this.confirmacionAgregar.rolloColilla =  this.rolloColilla;
+          this.confirmacionAgregar.idUsuario = this.auth.usuario.idUsuario;
+        } else {
+          this.confirmacionAgregar.isCreate = true;
+          this.verConfirmacionPopap = true;
+          this.confirmacionAgregar.colilla = this.colilla
+          this.confirmacionAgregar.numeros = this.concatenarNumeros(listaNumeros)
+          this.confirmacionAgregar.loterias = this.concatenarLoterias(this.loterias)
+          this.confirmacionAgregar.apostado = Math.round(this.valueBet)
+          this.confirmacionAgregar.iva = Math.round(this.valueVat)
+          this.confirmacionAgregar.total = Math.round(this.valueBetTotal)
+          this.confirmacionAgregar.idRollo = this.auth.usuario.idRollo;
+          this.confirmacionAgregar.rolloColilla =  this.rolloColilla;
+          this.confirmacionAgregar.idUsuario = this.auth.usuario.idUsuario;
+          if (JSON.parse(localStorage.getItem('superChanceApuesta')) && JSON.parse(localStorage.getItem('superChanceApuesta')).length > 0) {
+            const iteracionLocalStorageProductos = JSON.parse(localStorage.getItem('superChanceApuesta'));
+            let index = iteracionLocalStorageProductos.length - 1
             let colillaActual = iteracionLocalStorageProductos[index].colillaActual;
             colillaActual++;
             this.confirmacionAgregar.rolloColilla.colillaActual = colillaActual;
@@ -517,6 +623,9 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
       case 'chance-millonario':
         this.editarProductoChanceMillonario(event);
         break;
+      case 'super-chance':
+        this.editarProductoSuperChance(event);
+        break;
       default:
         break;
     }
@@ -544,11 +653,23 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
     this.colilla = apuestaEditar[0].colilla
     this.fechaActual = apuestaEditar[0].fechaActual
 
-    // estar pendiente de estas asignaciones de variables !!
     this.valueBet = apuestaEditar[0].apostado
     this.valueVat = apuestaEditar[0].iva
     this.valueBetTotal = apuestaEditar[0].total
-    // estar pendiente de estas asignaciones de variables !!
+  }
+
+
+  editarProductoSuperChance(event){
+    this.edit = true;
+    const buscarApuestasEditar = JSON.parse(localStorage.getItem('superChanceApuesta'))
+    const apuestaEditar = buscarApuestasEditar.filter(buscarApuestaEditar => buscarApuestaEditar._id == event._id);
+    this.infoEdit = apuestaEditar;
+    this.colilla = apuestaEditar[0].colilla
+    this.fechaActual = apuestaEditar[0].fechaActual
+
+    this.valueBet = apuestaEditar[0].apostado
+    this.valueVat = apuestaEditar[0].iva
+    this.valueBetTotal = apuestaEditar[0].total
   }
 
 
@@ -663,6 +784,9 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
         break;
       case 'chance-millonario':
         this.eventoCrearEditarChanceMillonario();
+        break;
+      case 'super-chance':
+        this.eventoCrearEditarSuperChance();
         break;
       default:
         break;
@@ -872,6 +996,117 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
         const chanceAp = JSON.parse(localStorage.getItem('chanceApuesta'));
         chanceAp.push(productosAgregar);
         localStorage.setItem('chanceApuesta', JSON.stringify(chanceAp));
+      }
+      this.agregarProductos.emit(true);
+      this.borrarTodoReset.emit(true);
+      
+    }
+
+
+    // emitimos el evento para el observable
+    this.shellState.enviarEventoCarrito(true);
+
+    this.valueVat = 0;
+    this.valueBetTotal = 0;
+  }
+
+
+
+
+  /**
+   * @author Luis Hernandez
+   * @description Metodo que se encarga de 
+   */
+   eventoCrearEditarSuperChance(): void {
+
+    this.confirmacionAgregar.isCreate = false;
+    this.verConfirmacionPopap = false;
+
+    const listaNumeros = this.obtenerFilasConApuesta(this.listaNumeros)
+
+    if(this.edit){
+      const productosEditar = {
+        _id: this.infoEdit[0]._id,
+        colilla: this.colilla,
+        fechaActual: this.fechaActual,
+        loterias: this.loterias,
+        apostado: this.valueBet,
+        iva: this.valueVat,
+        total: this.valueBetTotal,
+        listaNumeros:listaNumeros,
+        clienteOperacion:this.clienteOperacion,
+        fechaSeleccionApuesta:this.fechaSeleccionApuesta,
+        serie:  this.rolloColilla.serie,
+        colillaActual: this.rolloColilla.colillaActual,
+        idRollo:  this.auth.usuario.idRollo,
+        idVendedor: this.auth.usuario.idUsuario,
+      }
+
+      let chanceApuesta:any = JSON.parse(localStorage.getItem('superChanceApuesta'));
+
+      if (chanceApuesta[0]) {
+        let actualizarCliente = chanceApuesta      
+        for (let index = 0; index < actualizarCliente.length; index++) {
+          actualizarCliente[index].clienteOperacion = this.clienteOperacion;
+        }
+        localStorage.setItem('superChanceApuesta', JSON.stringify(actualizarCliente));
+        chanceApuesta = JSON.parse(localStorage.getItem('superChanceApuesta'));
+      }
+
+      const keyResponse = this.getKeyObject(this.infoEdit[0]._id, chanceApuesta);
+      chanceApuesta[keyResponse]._id = productosEditar._id
+      chanceApuesta[keyResponse].colilla = productosEditar.colilla
+      chanceApuesta[keyResponse].fechaActual = productosEditar.fechaActual
+      chanceApuesta[keyResponse].loterias = productosEditar.loterias
+      chanceApuesta[keyResponse].apostado = productosEditar.apostado
+      chanceApuesta[keyResponse].iva = productosEditar.iva
+      chanceApuesta[keyResponse].total = productosEditar.total
+      chanceApuesta[keyResponse].listaNumeros = productosEditar.listaNumeros
+      chanceApuesta[keyResponse].fechaSeleccionApuesta = productosEditar.fechaSeleccionApuesta
+      localStorage.setItem('superChanceApuesta', JSON.stringify(chanceApuesta));
+      this.cleanFooter()
+      this.agregarProductos.emit(true);
+      this.borrarTodoReset.emit(true);
+    } else {
+
+      const productosAgregar = {
+        _id: 'bet_' + Math.floor(Math.random() * 999999),
+        colilla: this.colilla,
+        serie:  this.rolloColilla.serie,
+        colillaActual: this.rolloColilla .colillaActual,
+        idRollo:  this.auth.usuario.idRollo,
+        idVendedor: this.auth.usuario.idUsuario,
+        fechaActual: this.fechaActual,
+        loterias: this.loterias,
+        apostado: this.valueBet,
+        iva: this.valueVat,
+        total: this.valueBetTotal,
+        listaNumeros:listaNumeros,
+        clienteOperacion:this.clienteOperacion,
+        fechaSeleccionApuesta:this.fechaSeleccionApuesta,
+      }
+
+      let chanceApuesta = localStorage.getItem('superChanceApuesta');
+
+      if(JSON.parse(chanceApuesta) != null){
+        if (JSON.parse(chanceApuesta)[0]) {
+          let actualizarCliente = JSON.parse(chanceApuesta)          
+          for (let index = 0; index < actualizarCliente.length; index++) {
+            actualizarCliente[index].clienteOperacion = this.clienteOperacion;
+          }
+          localStorage.setItem('superChanceApuesta', JSON.stringify(actualizarCliente));
+          chanceApuesta = localStorage.getItem('superChanceApuesta');
+        }
+      }
+
+      if(chanceApuesta === null) {
+        const arrayproductosAgregar = []
+        arrayproductosAgregar.push(productosAgregar)
+        localStorage.setItem('superChanceApuesta', JSON.stringify(arrayproductosAgregar));
+      } else {
+        const chanceAp = JSON.parse(localStorage.getItem('superChanceApuesta'));
+        chanceAp.push(productosAgregar);
+        localStorage.setItem('superChanceApuesta', JSON.stringify(chanceAp));
       }
       this.agregarProductos.emit(true);
       this.borrarTodoReset.emit(true);

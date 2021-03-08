@@ -71,7 +71,6 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit  {
   group: FormGroup;
 
   
-
   chanceForm = new FormGroup({
     numeroFilaUno: new FormControl('', [Validators.required, Validators.maxLength(4)]),
     valorDirectoFilaUno: new FormControl({ value: '', disabled: true }),

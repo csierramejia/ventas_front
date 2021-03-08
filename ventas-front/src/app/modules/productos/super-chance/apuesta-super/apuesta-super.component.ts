@@ -24,6 +24,7 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit  {
   @Output() agregarLoterias: EventEmitter<any> = new EventEmitter();
   @Output() reiniciarEdit: EventEmitter<any> = new EventEmitter();
   @Output() agregarNumeros: EventEmitter<any> = new EventEmitter();
+  @Output() agregarModalidades: EventEmitter<any> = new EventEmitter();
   @Output() agregarCliente: EventEmitter<any> = new EventEmitter();
   @ViewChild(CrearClienteComponent) crearClienteChild: CrearClienteComponent;
 
@@ -63,7 +64,7 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit  {
   rutaServidor: string;
   loteriasSeleccionadas = [];
   checked = false;
-  maxlengthV = 0
+  maxlengthV = 4
   days = [
     { text: 'L', name: 'lun', date: null },
     { text: 'M', name: 'mar', date: null },
@@ -80,6 +81,14 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit  {
     numeroFilaTres: new FormControl('', [Validators.required, Validators.maxLength(4)]),
     numeroFilaCuatro: new FormControl('', [Validators.required, Validators.maxLength(4)]),
     numeroFilaCinco: new FormControl('', [Validators.required, Validators.maxLength(4)]),
+
+
+    valoresModalidadesUno: new FormControl(''),
+    valoresModalidadesDos: new FormControl(''),
+    valoresModalidadesTres: new FormControl(''),
+    valoresModalidadesCuatro: new FormControl(''),
+    valoresModalidadesCinco: new FormControl(''),
+
     tipoDocumento: new FormControl(''),
     numeroDocumento: new FormControl(''),
     nombreCliente: new FormControl(''),
@@ -338,7 +347,7 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit  {
   toggleVisibility(loteria): void {
     const keyResponse = this.getKeyObject(loteria.idLoteria);
     let lotSelec = this.obtenerLoteriasSeleccionadas()
-    if(lotSelec < 2){
+    // if(lotSelec < 2){
       
       if (this.loterias[keyResponse].checked === true) {
         this.loterias[keyResponse].checked = false;
@@ -356,11 +365,11 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit  {
       }
       
       
-    } else {
-      this.loterias[keyResponse].checked = false
-      let ele = document.getElementById("loteriaid"+loteria.idLoteria) as HTMLInputElement;
-      ele.checked = false;
-    }
+    // } else {
+    //   this.loterias[keyResponse].checked = false
+    //   let ele = document.getElementById("loteriaid"+loteria.idLoteria) as HTMLInputElement;
+    //   ele.checked = false;
+    // }
 
     const emitLoterias = {
       loterias: this.loterias,
@@ -406,18 +415,9 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit  {
     }
 
     if (this.checked) {
-      this.limpiaLoterias();
-      let aleatorio = this.generarAletorio()
-      this.loterias[aleatorio].checked=true;
-      let aleatorio2 = aleatorio = this.generarAletorio()
-      if(aleatorio == aleatorio2){
-        aleatorio2 = aleatorio = this.generarAletorio()
-        this.loterias[aleatorio2].checked=true;
-      } else {
-        this.loterias[aleatorio2].checked=true;
+      for (let index = 0; index < this.loterias.length; index++) {
+        this.loterias[index].checked = true;
       }
-
-      
       this.checked = true;
     } else {
       for (let index = 0; index < this.loterias.length; index++) {
@@ -444,23 +444,28 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit  {
     //SUPER CHANCE
       this.productosService.consultarValoresModalidad("SUPER CHANCE",numero).subscribe(
         valoresData => {
-          console.log(valoresData)
           if (fila === 1) {
             this.valoresModalidadesUno = [];
             valoresData.forEach(element => {this.valoresModalidadesUno.push({label: element, value: element})});
+            this.chanceForm.controls.valoresModalidadesUno.setValue(this.valoresModalidadesUno[0].value);
           } else if(fila === 2){
             this.valoresModalidadesDos = [];
             valoresData.forEach(element => {this.valoresModalidadesDos.push({label: element, value: element})});
+            this.chanceForm.controls.valoresModalidadesDos.setValue(this.valoresModalidadesDos[0].value);
           } else if(fila === 3){
             this.valoresModalidadesTres = [];
             valoresData.forEach(element => {this.valoresModalidadesTres.push({label: element, value: element})});
+            this.chanceForm.controls.valoresModalidadesTres.setValue(this.valoresModalidadesTres[0].value);
           } else if(fila === 4){
             this.valoresModalidadesCuatro = [];
             valoresData.forEach(element => {this.valoresModalidadesCuatro.push({label: element, value: element})});
+            this.chanceForm.controls.valoresModalidadesCuatro.setValue(this.valoresModalidadesCuatro[0].value);
           } else if(fila === 5){
             this.valoresModalidadesCinco = [];
             valoresData.forEach(element => {this.valoresModalidadesCinco.push({label: element, value: element})});
+            this.chanceForm.controls.valoresModalidadesCinco.setValue(this.valoresModalidadesCinco[0].value);
           }
+          this.emitirModalidades();
         },
         error => {
           this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
@@ -469,79 +474,87 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit  {
   }
 
 
-  // generarAletorios(type){
-   
-  //   let arrayAletorios = []
-  //   for (let index = 0; index < 5; index++) {
-  //     arrayAletorios.push(Math.round(Math.random() * (1000 - 9999) + 9999))
-  //   }
-  //   this.chanceForm.controls.numeroFilaUno.setValue(arrayAletorios[0]);
-  //   this.chanceForm.controls.numeroFilaDos.setValue(arrayAletorios[1]);
-  //   this.chanceForm.controls.numeroFilaTres.setValue(arrayAletorios[2]);
-  //   this.chanceForm.controls.numeroFilaCuatro.setValue(arrayAletorios[3]);
-  //   this.chanceForm.controls.numeroFilaCinco.setValue(arrayAletorios[4]);
+  chance_validar_fila_modalidad(fila, numero){
+    if(String(numero).length === 3){
+      if(fila === 1){
+        this.consultarValoresModalidad(3,1)
+      } else if(fila === 2){
+        this.consultarValoresModalidad(3,2)
+      } else if(fila === 3){
+        this.consultarValoresModalidad(3,3)
+      } else if(fila === 4){
+        this.consultarValoresModalidad(3,4)
+      } else if(fila === 5){
+        this.consultarValoresModalidad(3,5)
+      }
+    } else if(String(numero).length === 4){
+      if(fila === 1){
+        this.consultarValoresModalidad(4,1)
+      } else if(fila === 2){
+        this.consultarValoresModalidad(4,2)
+      } else if(fila === 3){
+        this.consultarValoresModalidad(4,3)
+      } else if(fila === 4){
+        this.consultarValoresModalidad(4,4)
+      } else if(fila === 5){
+        this.consultarValoresModalidad(4,5)
+      }
+    }
 
-  //   this.emitirNumeros();
-    
-  // }
+    this.emitirNumeros();
+    this.emitirModalidades();
+  }
 
 
   aleatorioTresCifras() {
     if(this.numeroUno){
       this.chanceForm.controls.numeroFilaUno.setValue(Math.round(Math.random() * (100 - 999) + 999));
       this.consultarValoresModalidad(3,1)
-      // this.habilitarDeshabilitarSegunCifras(this.chanceForm.get('numeroFilaUno').value, 1);
     }
     if(this.numeroDos){
       this.chanceForm.controls.numeroFilaDos.setValue(Math.round(Math.random() * (100 - 999) + 999));
       this.consultarValoresModalidad(3,2)
-      // this.habilitarDeshabilitarSegunCifras(this.chanceForm.get('numeroFilaDos').value, 2);
     }
     if(this.numeroTres){
       this.chanceForm.controls.numeroFilaTres.setValue(Math.round(Math.random() * (100 - 999) + 999));
       this.consultarValoresModalidad(3,3)
-      // this.habilitarDeshabilitarSegunCifras(this.chanceForm.get('numeroFilaTres').value, 3);
     }
     if(this.numeroCuatro){
       this.chanceForm.controls.numeroFilaCuatro.setValue(Math.round(Math.random() * (100 - 999) + 999));
       this.consultarValoresModalidad(3,4)
-      // this.habilitarDeshabilitarSegunCifras(this.chanceForm.get('numeroFilaCuatro').value, 4);
     }
     if(this.numeroCinco){
       this.chanceForm.controls.numeroFilaCinco.setValue(Math.round(Math.random() * (100 - 999) + 999));
       this.consultarValoresModalidad(3,5)
-      // this.habilitarDeshabilitarSegunCifras(this.chanceForm.get('numeroFilaCinco').value, 5);
     }
     this.emitirNumeros();
+    this.emitirModalidades();
   }
+
 
   aleatorioCuatroCifras() {
     if(this.numeroUno){
       this.chanceForm.controls.numeroFilaUno.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
       this.consultarValoresModalidad(4,1)
-      // this.habilitarDeshabilitarSegunCifras(this.chanceForm.get('numeroFilaUno').value, 1);
     }
     if(this.numeroDos){
       this.chanceForm.controls.numeroFilaDos.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
       this.consultarValoresModalidad(4,2)
-      // this.habilitarDeshabilitarSegunCifras(this.chanceForm.get('numeroFilaDos').value, 2);
     }
     if(this.numeroTres){
       this.chanceForm.controls.numeroFilaTres.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
       this.consultarValoresModalidad(4,3)
-      // this.habilitarDeshabilitarSegunCifras(this.chanceForm.get('numeroFilaTres').value, 3);
     }
     if(this.numeroCuatro){
       this.chanceForm.controls.numeroFilaCuatro.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
       this.consultarValoresModalidad(4,4)
-      // this.habilitarDeshabilitarSegunCifras(this.chanceForm.get('numeroFilaCuatro').value, 4);
     }
     if(this.numeroCinco){
       this.chanceForm.controls.numeroFilaCinco.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
       this.consultarValoresModalidad(4,5)
-      // this.habilitarDeshabilitarSegunCifras(this.chanceForm.get('numeroFilaCinco').value, 5);
     }
     this.emitirNumeros();
+    this.emitirModalidades();
   }
 
 
@@ -558,6 +571,7 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit  {
     this.chanceForm.controls.numeroFilaCinco.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
     this.consultarValoresModalidad(4,5)
     this.emitirNumeros();
+    this.emitirModalidades();
   }
 
 
@@ -705,6 +719,19 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit  {
 
 
 
+  emitirModalidades() {
+    let modalidadesValores:any = [
+      {valoresModalidadesUno: this.chanceForm.get('valoresModalidadesUno').value},
+      {valoresModalidadesDos: this.chanceForm.get('valoresModalidadesDos').value},
+      {valoresModalidadesTres: this.chanceForm.get('valoresModalidadesTres').value},
+      {valoresModalidadesCuatro: this.chanceForm.get('valoresModalidadesCuatro').value},
+      {valoresModalidadesCinco: this.chanceForm.get('valoresModalidadesCinco').value}
+    ]
+    this.agregarModalidades.emit(modalidadesValores);
+  }
+
+
+
   
 
 
@@ -712,19 +739,23 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit  {
 
   borrarTodo(event) {
 
-    // if(event === 3){
-    //   delete this.selectedCifras;
-    // }
-    
-    // delete this.valoresModalidades;
-
     this.chanceForm.controls.numeroFilaUno.setValue('');
     this.chanceForm.controls.numeroFilaDos.setValue('');
     this.chanceForm.controls.numeroFilaTres.setValue('');
     this.chanceForm.controls.numeroFilaCuatro.setValue('');
     this.chanceForm.controls.numeroFilaCinco.setValue('');
-    
 
+    this.chanceForm.controls.valoresModalidadesUno.setValue('');
+    this.chanceForm.controls.valoresModalidadesDos.setValue('');
+    this.chanceForm.controls.valoresModalidadesTres.setValue('');
+    this.chanceForm.controls.valoresModalidadesCuatro.setValue('');
+    this.chanceForm.controls.valoresModalidadesCinco.setValue('');
+
+    this.valoresModalidadesUno = [];
+    this.valoresModalidadesDos = [];
+    this.valoresModalidadesTres = [];
+    this.valoresModalidadesCuatro = [];
+    this.valoresModalidadesCinco = [];
 
     this.loterias = [];
     this.agregarLoterias.emit(this.loterias);
@@ -733,7 +764,7 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit  {
     }
     
     this.emitirNumeros();
-
+    this.emitirModalidades();
 
     document.getElementById('numeroFilaUno').focus();
     
@@ -768,129 +799,82 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit  {
   }
 
 
-
-  
-
-
-  // generarAletorios(event, numeroCifras, fila){
-
-  //   if(numeroCifras){
-  //     if(event == 'all'){
-  //       let arrayAletorios = []
-  //       if(numeroCifras == '3C'){
-  //         for (let index = 0; index < 5; index++) {
-  //           arrayAletorios.push(Math.round(Math.random() * (100 - 999) + 999))
-  //         }
-  //       } else if(numeroCifras == '4C'){
-  //         for (let index = 0; index < 5; index++) {
-  //           arrayAletorios.push(Math.round(Math.random() * (1000 - 9999) + 9999))
-  //         }
-  //       }
-  //       this.chanceForm.controls.numeroFilaUno.setValue(arrayAletorios[0]);
-  //       this.chanceForm.controls.numeroFilaDos.setValue(arrayAletorios[1]);
-  //       this.chanceForm.controls.numeroFilaTres.setValue(arrayAletorios[2]);
-  //       this.chanceForm.controls.numeroFilaCuatro.setValue(arrayAletorios[3]);
-  //       this.chanceForm.controls.numeroFilaCinco.setValue(arrayAletorios[4]);
-  //     } else if(event == 'one'){
-  //       let aletorio = 0;
-  //       if(numeroCifras == '3C'){
-  //         aletorio = Math.round(Math.random() * (100 - 999) + 999);
-  //         this.printFilaAletorio(aletorio, fila);
-  //       } else if(numeroCifras == '4C'){
-  //         aletorio = Math.round(Math.random() * (1000 - 9999) + 9999);
-  //         this.printFilaAletorio(aletorio, fila);
-  //       }
-  //     }
-  //   }
-  //   this.emitirNumeros();
-  // }
-
-
-  // printFilaAletorio(numero, fila){
-  //   switch (fila) {
-  //     case 1:
-  //       this.chanceForm.controls.numeroFilaUno.setValue(numero);
-  //       break;
-  //     case 2:
-  //       this.chanceForm.controls.numeroFilaDos.setValue(numero);
-  //       break;
-  //     case 3:
-  //       this.chanceForm.controls.numeroFilaTres.setValue(numero);
-  //       break;
-  //     case 4:
-  //       this.chanceForm.controls.numeroFilaCuatro.setValue(numero);
-  //       break;
-  //     case 5:
-  //       this.chanceForm.controls.numeroFilaCinco.setValue(numero);
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  // }
-
-
   editarProducto(event) {
     this.borrarTodo(2)
 
-    this.edit = true;
-    const buscarApuestasEditar = JSON.parse(localStorage.getItem('chanceApuestaMillonario'))
-    const apuestaEditar = buscarApuestasEditar.filter(buscarApuestaEditar => buscarApuestaEditar._id == event._id);
+    // this.edit = true;
+    // const buscarApuestasEditar = JSON.parse(localStorage.getItem('chanceApuestaMillonario'))
+    // const apuestaEditar = buscarApuestasEditar.filter(buscarApuestaEditar => buscarApuestaEditar._id == event._id);
 
-    if (apuestaEditar[0].clienteOperacion.nombreCliente) {
-      this.enabledCustomer = true;
-      this.chanceForm.controls.nombreCliente.setValue(apuestaEditar[0].clienteOperacion.nombreCliente);
-      this.chanceForm.controls.tipoDocumento.setValue(apuestaEditar[0].clienteOperacion.tipoDocumento);
-      this.chanceForm.controls.numeroDocumento.setValue(apuestaEditar[0].clienteOperacion.numeroDocumento);
-    }
+    // if (apuestaEditar[0].clienteOperacion.nombreCliente) {
+    //   this.enabledCustomer = true;
+    //   this.chanceForm.controls.nombreCliente.setValue(apuestaEditar[0].clienteOperacion.nombreCliente);
+    //   this.chanceForm.controls.tipoDocumento.setValue(apuestaEditar[0].clienteOperacion.tipoDocumento);
+    //   this.chanceForm.controls.numeroDocumento.setValue(apuestaEditar[0].clienteOperacion.numeroDocumento);
+    // }
 
 
-    this.loterias = apuestaEditar[0].loterias;
-    const emitLoterias = {
-      loterias: this.loterias,
-      fechaSeleccionApuesta: apuestaEditar[0].fechaSeleccionApuesta
-    }
+    // this.loterias = apuestaEditar[0].loterias;
+    // const emitLoterias = {
+    //   loterias: this.loterias,
+    //   fechaSeleccionApuesta: apuestaEditar[0].fechaSeleccionApuesta
+    // }
 
-    this.agregarLoterias.emit(emitLoterias);
-    this.infoEdit = apuestaEditar;
+    // this.agregarLoterias.emit(emitLoterias);
+    // this.infoEdit = apuestaEditar;
 
-    this.setNumerosEvento(apuestaEditar[0].listaNumeros);
+    // this.setNumerosEvento(apuestaEditar[0].listaNumeros);
   }
+
 
   borrarFilaUno() {
     this.chanceForm.get('numeroFilaUno').setValue('');
-    this.emitirNumeros()
+    this.chanceForm.get('valoresModalidadesUno').setValue('');
+    this.valoresModalidadesUno = [];
+    this.emitirNumeros();
+    this.emitirModalidades();
     document.getElementById('numeroFilaUno').focus();
   }
 
 
   borrarFilaDos() {
     this.chanceForm.get('numeroFilaDos').setValue('');
-    this.emitirNumeros()
+    this.chanceForm.get('valoresModalidadesDos').setValue('');
+    this.valoresModalidadesDos = [];
+    this.emitirNumeros();
+    this.emitirModalidades();
     document.getElementById('numeroFilaDos').focus();
   }
 
 
   borrarFilaTres() {
     this.chanceForm.get('numeroFilaTres').setValue('');
+    this.chanceForm.get('valoresModalidadesTres').setValue('');
+    this.valoresModalidadesTres = [];
     this.emitirNumeros();
+    this.emitirModalidades();
     document.getElementById('numeroFilaTres').focus();
   }
 
 
   borrarFilaCuatro() {
     this.chanceForm.get('numeroFilaCuatro').setValue('');
-    this.emitirNumeros()
+    this.chanceForm.get('valoresModalidadesCuatro').setValue('');
+    this.valoresModalidadesCuatro = [];
+    this.emitirNumeros();
+    this.emitirModalidades();
     document.getElementById('numeroFilaCuatro').focus();
   }
 
 
   borrarFilaCinco() {
     this.chanceForm.get('numeroFilaCinco').setValue('');
+    this.chanceForm.get('valoresModalidadesCinco').setValue('');
+    this.valoresModalidadesCinco = [];
     this.emitirNumeros();
+    this.emitirModalidades();
     document.getElementById('numeroFilaCinco').focus();
   }
-
-
 
 
   setNumerosEvento(numeros){
@@ -912,6 +896,7 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit  {
       }
     });
     this.emitirNumeros();
+    this.emitirModalidades();
   }
 
 

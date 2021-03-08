@@ -15,7 +15,7 @@ export class SuperChanceComponent implements OnInit {
 
   // esto aplica para chance
   @ViewChild(SummaryFooterComponent, {static: true}) summaryFooter: SummaryFooterComponent;
-  @ViewChild(ApuestaSuperComponent) apuestaChanceMillonario: ApuestaSuperComponent;
+  @ViewChild(ApuestaSuperComponent) apuestaSuperChance: ApuestaSuperComponent;
   @ViewChild(MenuCarritoComponent, {static: true}) menuCarrito: MenuCarritoComponent;
 
   productoSuperChance = 'super-chance'
@@ -52,13 +52,19 @@ export class SuperChanceComponent implements OnInit {
     this.summaryFooter.setNumeros(event);
   }
 
+
+  agregarModalidades(event) {
+    this.summaryFooter.setModalidades(event);
+  }
+
+
   agregarCliente(event) {
     this.summaryFooter.setCliente(event);
   }
 
 
   borrarTodoReset(event) {
-    this.apuestaChanceMillonario.borrarTodo(3);
+    this.apuestaSuperChance.borrarTodo(3);
     this.summaryFooter.limpiar();
 
   }
@@ -70,7 +76,7 @@ export class SuperChanceComponent implements OnInit {
 
   editarProducto(event){
     this.summaryFooter.editarProducto(event)
-    this.apuestaChanceMillonario.editarProducto(event)
+    this.apuestaSuperChance.editarProducto(event)
   }
 
 

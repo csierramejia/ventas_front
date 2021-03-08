@@ -55,7 +55,7 @@
                 <div class="row select-all-a">
                     <div class="col-md-6"></div>
                     <div class="col-md-6" *ngIf="loterias.length > 0">
-                        <span (click)="cambioSeleccion(1)" class="title-lot-bet">Seleccionar aletorias</span>
+                        <span (click)="cambioSeleccion(1)" class="title-lot-bet">Seleccionar todas</span>
                         <p-inputSwitch (click)="cambioSeleccion(2)" [(ngModel)]="checked"></p-inputSwitch>
                     </div>
 
@@ -83,37 +83,37 @@
                 <div class="col-md-4">
                     <b>Número</b><br/>
                     <div class="row">
-                        <input id="numeroFilaUno" (focus)="onFocus(1)" (change)="emitirNumeros()" formControlName="numeroFilaUno" autocomplete="off" type="text" [maxlength]="maxlengthV" (keypress)="permitirSoloNumeros($event)" class="input-bet">
+                        <input id="numeroFilaUno" (focus)="onFocus(1)" (change)="chance_validar_fila_modalidad(1, $event.target.value)" formControlName="numeroFilaUno" autocomplete="off" type="text" [maxlength]="maxlengthV" (keypress)="permitirSoloNumeros($event)" class="input-bet">
                     </div>
                     <div class="row">
-                        <input id="numeroFilaDos" (focus)="onFocus(2)" (change)="emitirNumeros()" formControlName="numeroFilaDos" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
+                        <input id="numeroFilaDos" (focus)="onFocus(2)" (change)="chance_validar_fila_modalidad(2, $event.target.value)" formControlName="numeroFilaDos" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
                     </div>
                     <div class="row">
-                        <input id="numeroFilaTres" (focus)="onFocus(3)" (change)="emitirNumeros()" formControlName="numeroFilaTres" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
+                        <input id="numeroFilaTres" (focus)="onFocus(3)" (change)="chance_validar_fila_modalidad(3, $event.target.value)" formControlName="numeroFilaTres" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
                     </div>
                     <div class="row">
-                        <input id="numeroFilaCuatro" (focus)="onFocus(4)" (change)="emitirNumeros()" formControlName="numeroFilaCuatro" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
+                        <input id="numeroFilaCuatro" (focus)="onFocus(4)" (change)="chance_validar_fila_modalidad(4, $event.target.value)" formControlName="numeroFilaCuatro" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
                     </div>
                     <div class="row">
-                        <input id="numeroFilaCinco" (focus)="onFocus(5)" (change)="emitirNumeros()" formControlName="numeroFilaCinco" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
+                        <input id="numeroFilaCinco" (focus)="onFocus(5)" (change)="chance_validar_fila_modalidad(5, $event.target.value)" formControlName="numeroFilaCinco" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <b>Modalidad</b><br/>
                     <div class="row dropModalidades">
-                        <p-dropdown [options]="valoresModalidadesUno" [style]="{'height':'39px','width':'275px', 'border':'1px solid #707070', 'border-radius':'5px'}"></p-dropdown>
+                        <p-dropdown [options]="valoresModalidadesUno" (onChange)="emitirModalidades()" formControlName="valoresModalidadesUno" [style]="{'height':'39px','width':'275px', 'border':'1px solid #707070', 'border-radius':'5px'}"></p-dropdown>
                     </div>
                     <div class="row dropModalidades">
-                        <p-dropdown [options]="valoresModalidadesDos" [style]="{'height':'39px','width':'275px', 'border':'1px solid #707070', 'border-radius':'5px'}"></p-dropdown>
+                        <p-dropdown [options]="valoresModalidadesDos" (onChange)="emitirModalidades()" formControlName="valoresModalidadesDos" [style]="{'height':'39px','width':'275px', 'border':'1px solid #707070', 'border-radius':'5px'}"></p-dropdown>
                     </div>
                     <div class="row dropModalidades">
-                        <p-dropdown [options]="valoresModalidadesTres" [style]="{'height':'39px','width':'275px', 'border':'1px solid #707070', 'border-radius':'5px'}"></p-dropdown>
+                        <p-dropdown [options]="valoresModalidadesTres" (onChange)="emitirModalidades()" formControlName="valoresModalidadesTres" [style]="{'height':'39px','width':'275px', 'border':'1px solid #707070', 'border-radius':'5px'}"></p-dropdown>
                     </div>
                     <div class="row dropModalidades">
-                        <p-dropdown [options]="valoresModalidadesCuatro" [style]="{'height':'39px','width':'275px', 'border':'1px solid #707070', 'border-radius':'5px'}"></p-dropdown>
+                        <p-dropdown [options]="valoresModalidadesCuatro" (onChange)="emitirModalidades()" formControlName="valoresModalidadesCuatro" [style]="{'height':'39px','width':'275px', 'border':'1px solid #707070', 'border-radius':'5px'}"></p-dropdown>
                     </div>
                     <div class="row dropModalidades">
-                        <p-dropdown [options]="valoresModalidadesCinco" [style]="{'height':'39px','width':'275px', 'border':'1px solid #707070', 'border-radius':'5px'}"></p-dropdown>
+                        <p-dropdown [options]="valoresModalidadesCinco" (onChange)="emitirModalidades()" formControlName="valoresModalidadesCinco" [style]="{'height':'39px','width':'275px', 'border':'1px solid #707070', 'border-radius':'5px'}"></p-dropdown>
                     </div>
                 </div>
                 <div class="col-md-2 div_borrar">

@@ -28,6 +28,8 @@ export class BreadcrumbComponent implements OnInit {
 
   urlChance = '/autenticado/productos/chance';
   urlMillonario = '/autenticado/productos/chance-millonario';
+  urlSuperChance = '/autenticado/productos/super-chance';
+
 
   /**
    * @param shellState , se utiliza para obtener
@@ -50,6 +52,8 @@ export class BreadcrumbComponent implements OnInit {
           this.eventosChance();
         } else if(event.url == this.urlMillonario){
           this.eventosChanceMillonario();
+        } else if(event.url == this.urlSuperChance){
+          this.eventosSuperChance();
         }
       });
 
@@ -98,6 +102,22 @@ export class BreadcrumbComponent implements OnInit {
     this.shellState.getEventoCarritoEliminar().subscribe(evento => { 
       if(evento){
         this.obtenerInfoCarrito('chanceApuestaMillonario')
+      }
+    });
+  }
+
+
+  eventosSuperChance() {
+    this.obtenerInfoCarrito('superChanceApuesta');
+    this.shellState.getEventoCarrito().subscribe(evento => { 
+      if(evento){
+        this.obtenerInfoCarrito('superChanceApuesta');
+      }
+    });
+
+    this.shellState.getEventoCarritoEliminar().subscribe(evento => { 
+      if(evento){
+        this.obtenerInfoCarrito('superChanceApuesta')
       }
     });
   }
