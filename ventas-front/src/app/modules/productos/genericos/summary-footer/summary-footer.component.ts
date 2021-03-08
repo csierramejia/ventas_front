@@ -70,7 +70,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
     super();
       // se obtiene los datos de la autenticacion
     this.auth = SessionStoreUtil.auth(TipoEventoConstant.GET);
-    this.obtenerNumeroColilla();
+    this.obtenerColillaActual();
    }
 
   ngOnInit(): void {
@@ -113,7 +113,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
 /**
   * Método encargado de consulta la última colilla para venta
   */
-  public obtenerNumeroColilla(): void {
+  public obtenerColillaActual(): void {
     const filtro = new FiltroOperacionDTO;
     filtro.idRollo = this.auth.usuario.idRollo;
     filtro.idVendedor = this.auth.usuario.idUsuario;
@@ -123,10 +123,15 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
           this.rolloColilla = new RolloColillaDTO;
           this.rolloColilla = colilla;
           this.colilla = colilla.serie + colilla.rangoColilla;
-          if ( this.rolloColilla.colillaActual > this.rolloColilla.nroFinalSerie ) {
+          if (this.rolloColilla.colillaActual > this.rolloColilla.nroFinalSerie) {
             this.displayModalSerie = true;
-  
+
           }
+          if (this.productoParent === 'chance') {
+            this.obtenerArrayCarro('chanceApuesta');
+          }
+          else if (this.productoParent === 'chance-millonario') { }
+          this.obtenerArrayCarro('chanceApuestaMillonario');
         },
         error => {
           this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
@@ -408,9 +413,6 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
 
   agregarCarritoFChanceMillonario(): void {
     const listaNumeros = this.obtenerFilasConApuesta(this.listaNumeros)
-
-    
-
     if(this.validarCeros(listaNumeros)){
       this.messageService.add(MsjUtil.getToastErrorMedium('Usted no puede colocar valores en 0'));
     } else {
@@ -705,7 +707,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
 
 
 
-  irResumen() {
+   irResumen() {
     switch (this.productoParent) {
       case 'chance':
         this.irResumenChance();
@@ -1147,27 +1149,65 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
    * @param event 
    */
   public iniciaOperacion(event): void {
-    if(event){
+    if (event) {
       let papeleriaRolloDTO = new PapeleriaRolloDTO;
       papeleriaRolloDTO = event;
       this.colilla = papeleriaRolloDTO.serie + papeleriaRolloDTO.rangoInicial;
-      this.rolloColilla.colillaActual  = papeleriaRolloDTO.nroInicialSerie;
+      this.rolloColilla.colillaActual = papeleriaRolloDTO.nroInicialSerie;
       this.auth.usuario.idRollo = papeleriaRolloDTO.idRollo;
-     
- 
+
+
     }
 
   }
 
-    /**
-   * Permite cambiar la serie 
-   * @param event 
-   */
+  /**
+ * Permite cambiar la serie 
+ * @param event 
+ */
   public updateSerie(event): void {
-    if(event){
-      this.colilla = event;
+    if (event) {
+        
+      this.colilla = event.rangoColilla;
+      this.rolloColilla.colillaActual = event.colillaActual;
     }
 
   }
+
+
+  /**
+   * Método encargado de ordenar el carrito con base en la serie actual
+   * 
+   */
+  private obtenerArrayCarro(nombreArreglo): void {
+    if (JSON.parse(localStorage.getItem(nombreArreglo)) && JSON.parse(localStorage.getItem(nombreArreglo)).length > 0) {
+      const iteracionLocalStorageProductos = JSON.parse(localStorage.getItem(nombreArreglo));
+      iteracionLocalStorageProductos[0].colillaActual = this.rolloColilla.colillaActual;
+      iteracionLocalStorageProductos[0].colilla = this.colilla;
+      for (let index = 1; index < iteracionLocalStorageProductos.length; index++) {
+        let colillaActual = iteracionLocalStorageProductos[index - 1].colillaActual;
+        colillaActual++;
+        const colilla = iteracionLocalStorageProductos[index].serie + String(colillaActual).padStart(7, '0');
+        this.colilla = colilla;
+        iteracionLocalStorageProductos[index].colillaActual = colillaActual;
+        iteracionLocalStorageProductos[index].colilla = colilla;
+
+      }
+      let colillaFin = iteracionLocalStorageProductos[iteracionLocalStorageProductos.length - 1].colillaActual;
+      const serieFin = iteracionLocalStorageProductos[iteracionLocalStorageProductos.length - 1].serie + String(colillaFin).padStart(7, '0');
+      this.colilla = serieFin;
+      this.rolloColilla.colillaActual = colillaFin;
+
+      localStorage.setItem(nombreArreglo, JSON.stringify(iteracionLocalStorageProductos));
+      this.agregarProductos.emit(true);
+      this.borrarTodoReset.emit(true);
+
+
+
+
+      
+    }
+  }
+
 
 }

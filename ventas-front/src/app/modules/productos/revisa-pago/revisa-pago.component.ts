@@ -279,7 +279,7 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
     const productosDepurar = JSON.parse(localStorage.getItem('chanceApuesta'))
 
     for (let index = 0; index < productosDepurar.length; index++) {
-      const bet = { bets:null, canal: 'WEB', dataPlayed:null, idCustomer:null, idUser:this.shellState.userAccount.auth.usuario.idUsuario, lotteries:null, producto:this.producto, valueBet:null, valueBetTotal:null, valueVat:null,idOficina:this.shellState.userAccount.auth.usuario.idOficina,idPuntoVenta:this.shellState.userAccount.auth.usuario.idPuntoVenta,idRollo:null,colillaActual:null, colilla:null};
+      const bet = { bets:null, canal: 'WEB', dataPlayed:null, idCustomer:null, idUser:this.shellState.userAccount.auth.usuario.idUsuario, lotteries:null, producto:this.producto, valueBet:null, valueBetTotal:null, valueVat:null,idOficina:this.shellState.userAccount.auth.usuario.idOficina,idPuntoVenta:this.shellState.userAccount.auth.usuario.idPuntoVenta,idRollo:null,colillaActual:null, colilla:null, serieUno:null, serieDos:null};
       bet.lotteries = this.obtenerLoteriasSeleccionadas(productosDepurar[index].loterias)
       bet.bets = this.obtenerEstructuraDatosNumeros(productosDepurar[index].listaNumeros, productosDepurar[0].fechaSeleccionApuesta, bet.lotteries)
       bet.dataPlayed = productosDepurar[index].fechaActual
@@ -292,8 +292,9 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
       bet.idRollo = productosDepurar[index].idRollo;
       bet.colillaActual = productosDepurar[index].colillaActual;
       bet.colilla = productosDepurar[index].colilla;
-
-      // guardamos el correo del usuario (para enviar desplendible de pago)
+      bet.serieUno = productosDepurar[index].serie;
+      bet.serieDos = productosDepurar[index].colillaActual;
+     // guardamos el correo del usuario (para enviar desplendible de pago)
       this.correoCliente = productosDepurar[index].clienteOperacion.correoCustomer
       this.paySend.push(bet);
     }
@@ -307,25 +308,26 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
     const productosDepurar = JSON.parse(localStorage.getItem('chanceApuestaMillonario'))
 
     for (let index = 0; index < productosDepurar.length; index++) {
-      const bet = { bets:null, canal: 'WEB', dataPlayed:null, idCustomer:null, idUser:this.shellState.userAccount.auth.usuario.idUsuario, lotteries:null, producto:this.producto, valueBet:null, valueBetTotal:null, valueVat:null,idOficina:this.shellState.userAccount.auth.usuario.idOficina,idPuntoVenta:this.shellState.userAccount.auth.usuario.idPuntoVenta,idRollo:null,colillaActual:null, colilla:null};
+      const bet = { bets:null, canal: 'WEB', dataPlayed:null, idCustomer:null, idUser:this.shellState.userAccount.auth.usuario.idUsuario, lotteries:null, producto:this.producto, valueBet:null, valueBetTotal:null, valueVat:null,idOficina:this.shellState.userAccount.auth.usuario.idOficina,idPuntoVenta:this.shellState.userAccount.auth.usuario.idPuntoVenta,idRollo:null,colillaActual:null, colilla:null,serieUno:null, serieDos:null};
       bet.lotteries = this.obtenerLoteriasSeleccionadas(productosDepurar[index].loterias)
-      bet.bets = this.obtenerEstructuraDatosNumeros(productosDepurar[index].listaNumeros, productosDepurar[0].fechaSeleccionApuesta, bet.lotteries)
-      bet.dataPlayed = productosDepurar[index].fechaActual
-      bet.idCustomer = productosDepurar[index].clienteOperacion.idCustomer
-
       //////////// -----------------------!!!!!!!!-------------------- /////////////////////////////////
       bet.valueBet = Math.round(productosDepurar[index].apostado);
       bet.valueBetTotal = Math.round(productosDepurar[index].total);
       bet.valueVat = Math.round(productosDepurar[index].iva);
-      //////////// ----------------------!!!!!!!--------------------- /////////////////////////////////
-
       bet.idOficina = this.shellState.userAccount.auth.usuario.idOficina;
       bet.idPuntoVenta = this.shellState.userAccount.auth.usuario.idPuntoVenta
       bet.idRollo = productosDepurar[index].idRollo;
       bet.colillaActual = productosDepurar[index].colillaActual;
       bet.colilla = productosDepurar[index].colilla;
+      bet.serieUno = productosDepurar[index].serie;
+      bet.serieDos = productosDepurar[index].colillaActual;
+     
+      //////////// ----------------------!!!!!!!--------------------- /////////////////////////////////
+      bet.bets = this.obtenerEstructuraDatosNumerosChanceMillonario(productosDepurar[index].listaNumeros, productosDepurar[0].fechaSeleccionApuesta, bet.lotteries, bet.valueVat, bet.valueBetTotal)
+      bet.dataPlayed = new Date(productosDepurar[index].fechaActual)
+      bet.idCustomer = productosDepurar[index].clienteOperacion.idCustomer
 
-
+    
 
       // guardamos el correo del usuario (para enviar desplendible de pago)
       this.correoCliente = productosDepurar[index].clienteOperacion.correoCustomer
@@ -344,18 +346,6 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
 
 
   hacerCompraServicio(paySend){
-
-    // switch (this.productoParent) {
-    //   case 'chance':
-    //     this.hacerCompraServicioChance(paySend)
-    //     break;
-    //   case 'chance-millonario':
-    //     this.hacerCompraServicioChanceMillonario(paySend)
-    //     break;
-    //   default:
-    //     break;
-    // }
-
     this.productosService.registrarApuestas(paySend).subscribe(
       apuestaData => {
         const responseApuesta: any = apuestaData;
@@ -402,6 +392,25 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
       }
     }
     return cantidadLoterias * sumaTotal;
+  }
+
+
+  obtenerEstructuraDatosNumerosChanceMillonario(numerosIteras, fechaSorteo, loterias, valueVat, valueBetTotal){
+    const numeros = [
+      {
+        apuestaA: null,apuestaB: null,apuestaC: null,apuestaD: null,apuestaE: null,details: null,fechaSorteo: new Date(fechaSorteo),
+        lotteries: loterias,numberPlayed: null,numeroAstro: null,numeroSuper: null,valueBet: valueBetTotal,valueVat: valueVat,
+        zignos: null
+      }
+    ];
+    numerosIteras.forEach(element => {
+      if (element.numeroFilaUno) {numeros[0].apuestaA = element.numeroFilaUno}
+      if (element.numeroFilaDos) {numeros[0].apuestaB = element.numeroFilaDos}
+      if (element.numeroFilaTres) {numeros[0].apuestaC = element.numeroFilaTres}
+      if (element.numeroFilaCuatro) {numeros[0].apuestaD = element.numeroFilaCuatro}
+      if (element.numeroFilaCinco) {numeros[0].apuestaE = element.numeroFilaCinco}
+    })
+    return numeros;
   }
 
 
@@ -614,6 +623,19 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
 
 
   limpiarCarrito(){
+    switch (this.productoParent) {
+      case 'chance':
+        this.limpiarCarritoChance()
+        break;
+      case 'chance-millonario':
+        this.limpiarCarritoChanceMillonario()
+        break;
+      default:
+        break;
+    }
+  }
+
+  limpiarCarritoChance(){
     this.paySend = []
     this.productosChance = []
     this.subtotalGeneral = 0
@@ -622,6 +644,17 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
     this.efectivo = ''
     this.devuelta = 0
     localStorage.removeItem('chanceApuesta');
+  }
+
+  limpiarCarritoChanceMillonario(){
+    this.paySend = []
+    this.productosChance = []
+    this.subtotalGeneral = 0
+    this.ivaGeneral = 0
+    this.totalGeneral = 0
+    this.efectivo = ''
+    this.devuelta = 0
+    localStorage.removeItem('chanceApuestaMillonario');
   }
 
   /**

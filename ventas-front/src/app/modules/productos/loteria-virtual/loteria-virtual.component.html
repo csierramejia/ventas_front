@@ -6,10 +6,11 @@
 
     <!-- fecha actual -->
     <div class="ui-g-12 text-left pb-0 pt-0 pr-0 pl-0">
-      <p class="clock-icon mb-0">
-        <label class="hora">{{ fechaActual | date: "dd/MM/yyyy HH:mm:ss" }}</label>        
-      </p>
+      <div class="col-md-6">
+        <label class="numeroserie">Número de serie {{colilla}}</label><br>
     </div>
+    </div>
+   
       
     <!-- pnl filtro -->
     <div class="ui-g-12 p-0 pb-1 pt-1">
@@ -332,6 +333,9 @@
           <div class="ui-g-12 p-0 pnl-loterias mb-2">
             <div class="ui-g-10 p-0 pnl-separator height-100">
               <div class="ui-g-12 p-0">
+                <div class="ui-g-12 p-0 p-left text-left">
+                  <span class="nro-sorteo pr-2">Colilla: {{sorteo.colilla}}</span>
+                </div>
                 <div class="ui-g-6 p-0 p-left">
                   <span class="nro-sorteo pr-2">Número: {{sorteo.numero}}</span>
                 </div>
@@ -513,3 +517,8 @@
     </div>
   </p-dialog>
 </ng-container>
+
+<p-dialog header="PUNTO DE VENTA" [closable]="false"  modal="true" [(visible)]="displayModalSerie" [style]="{width: '45vw'}">
+  <app-seleccion-rollo (closePopup)="closeModalOperacion($event)" (enviaRollo)="iniciaOperacion($event)"> </app-seleccion-rollo>
+</p-dialog>
+

@@ -459,3 +459,14 @@
   margin-right: 15px;
   cursor: pointer;
 }
+
+.numeroserie{
+  text-align: left;
+  font: Regular 13px/16px Montserrat;
+  letter-spacing: 0px;
+  color: #FF6969;
+  opacity: 1;
+  background-color: #fff;
+  padding: 3px 10px;
+  border-radius: 15px;
+}

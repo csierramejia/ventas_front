@@ -1,3 +1,4 @@
+import { RolloColillaDTO } from 'src/app/dtos/transversal/rollo-colilla.dto';
 import { Component, OnInit, Output, EventEmitter, ViewChild, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { RouterConstant } from '../../../../constants/router.constant';
@@ -18,7 +19,7 @@ import { ShellState } from 'src/app/states/shell/shell.state';
 export class MenuCarritoComponent implements OnInit {
 
   @Output() editarProducto: EventEmitter<any> = new EventEmitter();
-  @Output() updateSerieChance = new EventEmitter<string>();
+  @Output() updateSerieChance = new EventEmitter<RolloColillaDTO>();
   // variable que nos sirve para identificar sobre que producto debe trabajar el componente si chance, chance millonario, etc
   @Input() productoParent: string;
   cantidadRepetir = 1;
@@ -34,8 +35,7 @@ export class MenuCarritoComponent implements OnInit {
 
   
   ngOnInit(): void {
-    this.refrescarCarrito()
-  }
+   }
 
 
   borrarApuesta(id) {
@@ -364,8 +364,11 @@ export class MenuCarritoComponent implements OnInit {
         }
       }
     }
-   this.updateSerieChance.emit(productosBorrar.length > 0 ? productosBorrar[productosBorrar.length - 1].colilla : item.colilla);
-
+    let rolloDTO = new RolloColillaDTO;
+    rolloDTO.rangoColilla = productosBorrar.length > 0 ? productosBorrar[productosBorrar.length - 1].colilla : item.colilla;
+    rolloDTO.colillaActual =productosBorrar.length > 0 ? productosBorrar[productosBorrar.length - 1].colillaActual : item.colillaActual;
+    this.updateSerieChance.emit(rolloDTO);
+  
   }
 
   /**
@@ -386,7 +389,10 @@ export class MenuCarritoComponent implements OnInit {
         newLocalstorage[i].colilla = colilla;
       }
     }
-    this.updateSerieChance.emit(newLocalstorage.length > 0 ? newLocalstorage[newLocalstorage.length - 1].colilla : productosDuplicar[0].colilla);
+    let rolloDTO = new RolloColillaDTO;
+    rolloDTO.rangoColilla = newLocalstorage.length > 0 ? newLocalstorage[newLocalstorage.length - 1].colilla : productosDuplicar[0].colilla;
+    rolloDTO.colillaActual =newLocalstorage.length > 0 ? newLocalstorage[newLocalstorage.length - 1].colillaActual : productosDuplicar[0].colillaActual;
+    this.updateSerieChance.emit(rolloDTO);
    
 
 

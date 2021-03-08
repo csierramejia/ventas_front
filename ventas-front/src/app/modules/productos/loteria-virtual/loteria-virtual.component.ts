@@ -24,6 +24,11 @@ import { AutenticacionResponseDTO } from 'src/app/dtos/seguridad/autenticacion/a
 import { SessionStoreUtil } from 'src/app/utilities/session-store.util';
 import { TipoEventoConstant } from 'src/app/constants/tipo-evento.constant';
 import { TipoTransaccionConstants } from 'src/app/constants/tipo-transaccion-constants';
+import { FiltroOperacionDTO} from 'src/app/dtos/transversal/filtro-operacion.dto';
+import { RolloColillaDTO} from 'src/app/dtos/transversal/rollo-colilla.dto'
+import { PapeleriaRolloDTO } from 'src/app/dtos/transversal/papeleria-rollo.dto';
+
+
 
 /**
  * Componente para las ventas de las loterias virtual
@@ -92,6 +97,16 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
   /** Es el componente modal para la creacion del cliente */
   @ViewChild(CrearClienteComponent) modalCrearCliente: CrearClienteComponent;
 
+  /** Almacena la información de la serie */
+  public colilla = '';
+
+  /** Permite abrir el modal de operaciones */
+  public displayModalSerie = false;
+ 
+
+  public rolloColilla : RolloColillaDTO;
+
+
   /**
    * @param messageService, Se utiliza para la visualizacion
    * de los mensajes en la pantalla
@@ -111,6 +126,7 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
     private confirmationService: ConfirmationService,
     private spinnerState: SpinnerState) {
     super();
+
   }
 
   /**
@@ -471,12 +487,28 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
           this.venta.valorTotal = this.venta.valorTotal + this.detalleVenta.valor;
           this.venta.valorTotalIVA = Math.round(this.venta.valorTotal  / calculoImpuesto);
           this.detalleVenta.todoBillete = false;
+          this.detalleVenta.colilla = this.colilla;
+          this.detalleVenta.idRollo= this.auth.usuario.idRollo;
+          this.detalleVenta.serieDos = this.rolloColilla.colillaActual;
+          this.detalleVenta.serieUno = this.rolloColilla.serie;
+        
           if (this.sorteoSeleccionado.cantidadFraccion === this.detalleVenta.fracciones) {
             this.detalleVenta.todoBillete = true;
           }
 
           // se agrega el detalle a la venta
           this.venta.detalles.push(this.detalleVenta);
+
+          if (this.venta.detalles.length > 0) {
+            let index = this.venta.detalles.length - 1;
+            let colillaActual = this.venta.detalles[index].serieDos;
+            colillaActual++;
+            this.rolloColilla.colillaActual = colillaActual;
+            const colilla = this.venta.detalles[index].serieUno + String(colillaActual).padStart(7, '0');
+            this.colilla  = colilla;
+           // this.venta.detalles[index].colilla= colilla;
+          }
+        
 
           // se limpia las variable del detalle
           this.detalleVenta = new LoteriaVirtualVentaDetalleDTO();
@@ -536,12 +568,14 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
       message: '¿Está seguro de eliminar el número:' + detalle.numero + '?',
       header: MsjFrontConstant.CONFIRMACION,
       accept: () => {
-
+        const chanceArray = this.venta.detalles;
+        let item = chanceArray[0];
         // se elimina el detalle de la venta
         const i = this.venta.detalles.indexOf(detalle, 0);
         if (i > -1) {
           this.venta.detalles.splice(i, 1);
         }
+        this.asignarSerieCarrito(this.venta.detalles, item);
 
         // se calculan los valores de la venta
         const  calculoImpuesto= (this.PORCENTAJE_IVA/100)+1;
@@ -663,6 +697,8 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
 
     // Se consulta las constantes parametrizado en el sistema
     this.getParametros();
+    //Permite obtner la colilla actual
+    this.obtenercolillaActual();
   }
 
   /**
@@ -715,5 +751,105 @@ export class LoteriaVirtualComponent extends CommonComponent implements OnInit, 
       (response) => {},
       (error) => { this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error))); }
     );
+  }
+
+
+  /**
+  * Método encargado de consulta la última colilla para venta
+  */
+ public obtenercolillaActual(): void {
+  const filtro = new FiltroOperacionDTO;
+  filtro.idRollo = this.auth.usuario.idRollo;
+  filtro.idVendedor = this.auth.usuario.idUsuario;
+  if (filtro.idRollo) {
+    this.productosService.consultarColilla(filtro).subscribe(
+      colilla => {
+        this.rolloColilla = new RolloColillaDTO;
+        this.rolloColilla = colilla;
+        this.colilla = colilla.serie + colilla.rangoColilla;
+        if ( this.rolloColilla.colillaActual > this.rolloColilla.nroFinalSerie ) {
+          this.displayModalSerie = true;
+
+        }
+      },
+      error => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
+  }
+
+}
+
+
+ /**
+   * Permite obtner la colilla actual 
+   * @param event 
+   */
+  public iniciaOperacion(event): void {
+    if(event){
+      let papeleriaRolloDTO = new PapeleriaRolloDTO;
+      papeleriaRolloDTO = event;
+      this.colilla = papeleriaRolloDTO.serie + papeleriaRolloDTO.rangoInicial;
+      this.rolloColilla.colillaActual  = papeleriaRolloDTO.nroInicialSerie;
+      this.auth.usuario.idRollo = papeleriaRolloDTO.idRollo;
+     
+ 
+    }
+
+  }
+
+    /**
+   * Permite cambiar la serie 
+   * @param event 
+   */
+  public updateSerie(event): void {
+    if(event){
+      this.colilla = event;
+    }
+
+  }
+
+  /**
+   * Permite cerrar el modal de operaciones
+   * @param event 
+   */
+  public closeModalOperacion(event): void {
+    this.displayModalSerie = event;
+  }
+
+
+
+  /**
+   * Método que permite asignar la serie en el carrito en orden seuencia
+   * @param productosBorrar 
+   * @param item 
+   */
+  private asignarSerieCarrito(productosBorrar, item): void {
+
+    if (productosBorrar.length > 0) {
+      productosBorrar[0].serieDos = item.serieDos;
+      productosBorrar[0].colilla = item.colilla;
+      for (let i = 1; i < productosBorrar.length; i++) {
+        if (productosBorrar.length > 1) {
+          let ind = i - 1;
+          let colillaActual = productosBorrar[ind].serieDos;
+          colillaActual++;
+          productosBorrar[i].serieDos = colillaActual;
+          const colilla = productosBorrar[i].serieUno + String(colillaActual).padStart(7, '0');
+          productosBorrar[i].colilla = colilla;
+        }
+      }
+      let colillaFin = productosBorrar[productosBorrar.length - 1].serieDos;
+      colillaFin++;
+      const serieFin = productosBorrar[productosBorrar.length - 1].serieUno + String(colillaFin).padStart(7, '0');
+
+      this.colilla = productosBorrar.length > 0 ? serieFin : item.colilla;
+      this.rolloColilla.colillaActual = productosBorrar.length > 0 ? colillaFin : item.serieDos;
+    }
+    else{
+      this.colilla =  item.colilla;
+      this.rolloColilla.colillaActual =  item.serieDos;
+ 
+    }
   }
 }
