@@ -191,10 +191,6 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
   }
 
   setModalidades(event){
-    // console.log('event')
-    // console.log(event)
-    // console.log('event')
-
     this.listaModalidades = event
     this.obtenerValoresTotales();
   }
@@ -1036,6 +1032,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
         iva: this.valueVat,
         total: this.valueBetTotal,
         listaNumeros:listaNumeros,
+        listaModalidades:this.listaModalidades,
         clienteOperacion:this.clienteOperacion,
         fechaSeleccionApuesta:this.fechaSeleccionApuesta,
         serie:  this.rolloColilla.serie,
@@ -1045,7 +1042,6 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
       }
 
       let chanceApuesta:any = JSON.parse(localStorage.getItem('superChanceApuesta'));
-
       if (chanceApuesta[0]) {
         let actualizarCliente = chanceApuesta      
         for (let index = 0; index < actualizarCliente.length; index++) {
@@ -1064,6 +1060,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
       chanceApuesta[keyResponse].iva = productosEditar.iva
       chanceApuesta[keyResponse].total = productosEditar.total
       chanceApuesta[keyResponse].listaNumeros = productosEditar.listaNumeros
+      chanceApuesta[keyResponse].listaModalidades = productosEditar.listaModalidades
       chanceApuesta[keyResponse].fechaSeleccionApuesta = productosEditar.fechaSeleccionApuesta
       localStorage.setItem('superChanceApuesta', JSON.stringify(chanceApuesta));
       this.cleanFooter()
@@ -1084,6 +1081,7 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
         iva: this.valueVat,
         total: this.valueBetTotal,
         listaNumeros:listaNumeros,
+        listaModalidades:this.listaModalidades,
         clienteOperacion:this.clienteOperacion,
         fechaSeleccionApuesta:this.fechaSeleccionApuesta,
       }

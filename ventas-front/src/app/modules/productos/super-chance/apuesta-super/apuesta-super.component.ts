@@ -802,28 +802,27 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit  {
   editarProducto(event) {
     this.borrarTodo(2)
 
-    // this.edit = true;
-    // const buscarApuestasEditar = JSON.parse(localStorage.getItem('chanceApuestaMillonario'))
-    // const apuestaEditar = buscarApuestasEditar.filter(buscarApuestaEditar => buscarApuestaEditar._id == event._id);
+    this.edit = true;
+    const buscarApuestasEditar = JSON.parse(localStorage.getItem('superChanceApuesta'))
+    const apuestaEditar = buscarApuestasEditar.filter(buscarApuestaEditar => buscarApuestaEditar._id == event._id);
 
-    // if (apuestaEditar[0].clienteOperacion.nombreCliente) {
-    //   this.enabledCustomer = true;
-    //   this.chanceForm.controls.nombreCliente.setValue(apuestaEditar[0].clienteOperacion.nombreCliente);
-    //   this.chanceForm.controls.tipoDocumento.setValue(apuestaEditar[0].clienteOperacion.tipoDocumento);
-    //   this.chanceForm.controls.numeroDocumento.setValue(apuestaEditar[0].clienteOperacion.numeroDocumento);
-    // }
+    if (apuestaEditar[0].clienteOperacion.nombreCliente) {
+      this.enabledCustomer = true;
+      this.chanceForm.controls.nombreCliente.setValue(apuestaEditar[0].clienteOperacion.nombreCliente);
+      this.chanceForm.controls.tipoDocumento.setValue(apuestaEditar[0].clienteOperacion.tipoDocumento);
+      this.chanceForm.controls.numeroDocumento.setValue(apuestaEditar[0].clienteOperacion.numeroDocumento);
+    }
 
+    this.loterias = apuestaEditar[0].loterias;
+    const emitLoterias = {
+      loterias: this.loterias,
+      fechaSeleccionApuesta: apuestaEditar[0].fechaSeleccionApuesta
+    }
 
-    // this.loterias = apuestaEditar[0].loterias;
-    // const emitLoterias = {
-    //   loterias: this.loterias,
-    //   fechaSeleccionApuesta: apuestaEditar[0].fechaSeleccionApuesta
-    // }
+    this.agregarLoterias.emit(emitLoterias);
+    this.infoEdit = apuestaEditar;
+    this.setNumerosEvento(apuestaEditar[0].listaNumeros, apuestaEditar[0].listaModalidades);
 
-    // this.agregarLoterias.emit(emitLoterias);
-    // this.infoEdit = apuestaEditar;
-
-    // this.setNumerosEvento(apuestaEditar[0].listaNumeros);
   }
 
 
@@ -877,27 +876,106 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit  {
   }
 
 
-  setNumerosEvento(numeros){
-    numeros.forEach(element => {
-      if (element.numeroFilaUno) {
-        this.chanceForm.get('numeroFilaUno').setValue(element.numeroFilaUno);
-      }
-      if (element.numeroFilaDos) {
-        this.chanceForm.get('numeroFilaDos').setValue(element.numeroFilaDos);
-      }
-      if (element.numeroFilaTres) {
-        this.chanceForm.get('numeroFilaTres').setValue(element.numeroFilaTres);
-      }
-      if (element.numeroFilaCuatro) {
-        this.chanceForm.get('numeroFilaCuatro').setValue(element.numeroFilaCuatro);
-      }
-      if (element.numeroFilaCinco) {
-        this.chanceForm.get('numeroFilaCinco').setValue(element.numeroFilaCinco);
-      }
-    });
-    this.emitirNumeros();
-    this.emitirModalidades();
+  setNumerosEvento(numeros, modalidades){
+    let nuevo_array_numeros_modalidades = []
+    for (let index = 0; index < numeros.length; index++) {
+      if(numeros[index].numeroFilaUno){nuevo_array_numeros_modalidades.push({numero:numeros[index].numeroFilaUno, modalidad:modalidades[0].valoresModalidadesUno})}
+      if(numeros[index].numeroFilaDos){nuevo_array_numeros_modalidades.push({numero:numeros[index].numeroFilaDos, modalidad:modalidades[1].valoresModalidadesDos})}
+      if(numeros[index].numeroFilaTres){nuevo_array_numeros_modalidades.push({numero:numeros[index].numeroFilaTres, modalidad:modalidades[2].valoresModalidadesTres})}
+      if(numeros[index].numeroFilaCuatro){nuevo_array_numeros_modalidades.push({numero:numeros[index].numeroFilaCuatro, modalidad:modalidades[3].valoresModalidadesCuatro})}
+      if(numeros[index].numeroFilaCinco){nuevo_array_numeros_modalidades.push({numero:numeros[index].numeroFilaCinco, modalidad:modalidades[4].valoresModalidadesCinco})}
+    }
+    this.operacion_por_fila(nuevo_array_numeros_modalidades)
   }
+
+  operacion_por_fila(nuevo_array_numeros_modalidades) {
+
+    if(nuevo_array_numeros_modalidades[0]){
+      this.chanceForm.get('numeroFilaUno').setValue(nuevo_array_numeros_modalidades[0].numero);
+      this.productosService.consultarValoresModalidad("SUPER CHANCE",String(nuevo_array_numeros_modalidades[0].numero).length).subscribe(
+        valoresData => {
+          valoresData.forEach(element => {this.valoresModalidadesUno.push({label: element, value: element})});
+          this.chanceForm.controls.valoresModalidadesUno.setValue(nuevo_array_numeros_modalidades[0].modalidad);
+          this.emitirNumeros();
+          this.emitirModalidades();
+        },
+        error => {
+          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+        }
+      );
+
+    }
+
+    if(nuevo_array_numeros_modalidades[1]){
+      this.chanceForm.get('numeroFilaDos').setValue(nuevo_array_numeros_modalidades[1].numero);
+      this.productosService.consultarValoresModalidad("SUPER CHANCE",String(nuevo_array_numeros_modalidades[1].numero).length).subscribe(
+        valoresData => {
+          valoresData.forEach(element => {this.valoresModalidadesDos.push({label: element, value: element})});
+          this.chanceForm.controls.valoresModalidadesDos.setValue(nuevo_array_numeros_modalidades[1].modalidad);
+          this.emitirNumeros();
+          this.emitirModalidades();
+        },
+        error => {
+          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+        }
+      );
+    }
+
+    if(nuevo_array_numeros_modalidades[2]){
+      this.chanceForm.get('numeroFilaTres').setValue(nuevo_array_numeros_modalidades[2].numero);
+      this.productosService.consultarValoresModalidad("SUPER CHANCE",String(nuevo_array_numeros_modalidades[2].numero).length).subscribe(
+        valoresData => {
+          valoresData.forEach(element => {this.valoresModalidadesTres.push({label: element, value: element})});
+          this.chanceForm.controls.valoresModalidadesTres.setValue(nuevo_array_numeros_modalidades[2].modalidad);
+          this.emitirNumeros();
+          this.emitirModalidades();
+        },
+        error => {
+          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+        }
+      );
+    }
+
+    if(nuevo_array_numeros_modalidades[3]){
+      this.chanceForm.get('numeroFilaCuatro').setValue(nuevo_array_numeros_modalidades[3].numero);
+      this.productosService.consultarValoresModalidad("SUPER CHANCE",String(nuevo_array_numeros_modalidades[3].numero).length).subscribe(
+        valoresData => {
+          valoresData.forEach(element => {this.valoresModalidadesCuatro.push({label: element, value: element})});
+          this.chanceForm.controls.valoresModalidadesCuatro.setValue(nuevo_array_numeros_modalidades[3].modalidad);
+          this.emitirNumeros();
+          this.emitirModalidades();
+        },
+        error => {
+          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+        }
+      );
+    }
+
+    if(nuevo_array_numeros_modalidades[4]){
+      this.chanceForm.get('numeroFilaCinco').setValue(nuevo_array_numeros_modalidades[4].numero);
+      this.productosService.consultarValoresModalidad("SUPER CHANCE",String(nuevo_array_numeros_modalidades[4].numero).length).subscribe(
+        valoresData => {
+          valoresData.forEach(element => {this.valoresModalidadesCinco.push({label: element, value: element})});
+          this.chanceForm.controls.valoresModalidadesCinco.setValue(nuevo_array_numeros_modalidades[4].modalidad);
+          this.emitirNumeros();
+          this.emitirModalidades();
+        },
+        error => {
+          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+        }
+      );
+    }
+
+    
+    
+
+
+  }
+
+
+
+
+  
 
 
 
