@@ -60,6 +60,9 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
           case 'chance-millonario':
             this.producto = "CHANCE_MILLONARIO";
             break;
+          case 'super-chance':
+            // this.producto = "CHANCE_MILLONARIO";
+            break;
           default:
             break;
         }
@@ -81,10 +84,13 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
         this.ivaServicio = parseInt(impuestoData.descripcion);
         switch (this.productoParent) {
           case 'chance':
-            this.obtenerProductosChance()
+            this.obtener_productos_operacion('chanceApuesta')
             break;
           case 'chance-millonario':
-            this.obtenerProductosChanceMillonario()
+            this.obtener_productos_operacion('chanceApuestaMillonario')
+            break;
+          case 'super-chance':
+            this.obtener_productos_operacion('superChanceApuesta')
             break;
           default:
             break;
@@ -98,12 +104,12 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
   }
 
 
-  obtenerProductosChance() {
+  obtener_productos_operacion(productoEvento) {
 
     this.productosChance = []
     this.efectivo = ''
     this.devuelta = 0
-    const productosChanceConst = JSON.parse(localStorage.getItem('chanceApuesta'))
+    const productosChanceConst = JSON.parse(localStorage.getItem(productoEvento))
 
     if(productosChanceConst){
       productosChanceConst.forEach(element => {
@@ -125,27 +131,7 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
   }
 
 
-  obtenerProductosChanceMillonario() {
-    this.productosChance = []
-    this.efectivo = ''
-    this.devuelta = 0
-    const productosChanceConst = JSON.parse(localStorage.getItem('chanceApuestaMillonario'))
-    if(productosChanceConst){
-      productosChanceConst.forEach(element => {
-        this.productosChance.push({
-          apostado:Math.round(element.apostado),
-          colilla:element.colilla,
-          fechaActual:element.fechaActual,
-          iva:Math.round(element.iva),
-          listaNumeros:this.concatenarNumeros(element.listaNumeros),
-          loterias:this.concatenarLoterias(element.loterias),
-          total:Math.round(element.total),
-          _id:element._id
-        });
-      });
-    }
-    this.calcularValores();
-  }
+
 
 
   concatenarLoterias(loterias){
@@ -227,10 +213,13 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
   borrarApuesta(id) {
     switch (this.productoParent) {
       case 'chance':
-        this.borrarApuestaChance(id)
+        this.borrarApuestaOperacion(id, 'chanceApuesta', 'chance')
         break;
       case 'chance-millonario':
-        this.borrarApuestaChanceMillonario(id)
+        this.borrarApuestaOperacion(id, 'chanceApuestaMillonario', 'chance-millonario')
+        break;
+      case 'super-chance':
+        this.borrarApuestaOperacion(id, 'superChanceApuesta', 'super-chance')
         break;
       default:
         break;
@@ -238,25 +227,17 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
   }
 
 
-  borrarApuestaChance(id){
-    const productosBorrar = JSON.parse(localStorage.getItem('chanceApuesta'))
+  borrarApuestaOperacion(id, productoEvento, productoValidacion){
+    const productosBorrar = JSON.parse(localStorage.getItem(productoEvento))
     const keyResponse = this.getKeyObject(id, productosBorrar);
     if ( keyResponse  !== -1 ) {
       productosBorrar.splice( keyResponse , 1 );
     }
-    localStorage.setItem('chanceApuesta', JSON.stringify(productosBorrar));
-    this.obtenerProductosChance();
+    localStorage.setItem(productoEvento, JSON.stringify(productosBorrar));
+    this.obtener_productos_operacion(productoValidacion);
   }
 
-  borrarApuestaChanceMillonario(id){
-    const productosBorrar = JSON.parse(localStorage.getItem('chanceApuestaMillonario'))
-    const keyResponse = this.getKeyObject(id, productosBorrar);
-    if ( keyResponse  !== -1 ) {
-      productosBorrar.splice( keyResponse , 1 );
-    }
-    localStorage.setItem('chanceApuestaMillonario', JSON.stringify(productosBorrar));
-    this.obtenerProductosChanceMillonario();
-  }
+ 
 
 
 
@@ -267,6 +248,9 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
         break;
       case 'chance-millonario':
         this.depurarInfoChanceMillonario()
+        break;
+      case 'super-chance':
+        console.log('pendiente por hacer una depuración');
         break;
       default:
         break;
@@ -326,8 +310,6 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
       bet.bets = this.obtenerEstructuraDatosNumerosChanceMillonario(productosDepurar[index].listaNumeros, productosDepurar[0].fechaSeleccionApuesta, bet.lotteries, bet.valueVat, bet.valueBetTotal)
       bet.dataPlayed = new Date(productosDepurar[index].fechaActual)
       bet.idCustomer = productosDepurar[index].clienteOperacion.idCustomer
-
-    
 
       // guardamos el correo del usuario (para enviar desplendible de pago)
       this.correoCliente = productosDepurar[index].clienteOperacion.correoCustomer
@@ -616,6 +598,9 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
       case 'chance-millonario':
         this.router.navigate([RouterConstant.NAVIGATE_CHANCE_MILLONARIO]);
         break;
+      case 'super-chance':
+        this.router.navigate([RouterConstant.NAVIGATE_SUPER_CHANCE]);
+        break;
       default:
         break;
     }
@@ -625,17 +610,21 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
   limpiarCarrito(){
     switch (this.productoParent) {
       case 'chance':
-        this.limpiarCarritoChance()
+        this.limpiarCarritoOperacion('chanceApuesta')
         break;
       case 'chance-millonario':
-        this.limpiarCarritoChanceMillonario()
+        this.limpiarCarritoOperacion('chanceApuestaMillonario')
+        break;
+      case 'chance-millonario':
+        this.limpiarCarritoOperacion('superChanceApuesta')
         break;
       default:
         break;
     }
   }
 
-  limpiarCarritoChance(){
+
+  limpiarCarritoOperacion(productoEvento){
     this.paySend = []
     this.productosChance = []
     this.subtotalGeneral = 0
@@ -643,19 +632,9 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
     this.totalGeneral = 0
     this.efectivo = ''
     this.devuelta = 0
-    localStorage.removeItem('chanceApuesta');
+    localStorage.removeItem(productoEvento);
   }
 
-  limpiarCarritoChanceMillonario(){
-    this.paySend = []
-    this.productosChance = []
-    this.subtotalGeneral = 0
-    this.ivaGeneral = 0
-    this.totalGeneral = 0
-    this.efectivo = ''
-    this.devuelta = 0
-    localStorage.removeItem('chanceApuestaMillonario');
-  }
 
   /**
    * @author Luis Hernandez

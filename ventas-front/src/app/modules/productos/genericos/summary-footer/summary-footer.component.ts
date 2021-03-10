@@ -706,10 +706,13 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
    irResumen() {
     switch (this.productoParent) {
       case 'chance':
-        this.irResumenChance();
+        this.irResumenOperacion('chanceApuesta','chance');
         break;
       case 'chance-millonario':
-        this.irResumenChanceMillonario();
+        this.irResumenOperacion('chanceApuestaMillonario','chance-millonario');
+        break;
+      case 'super-chance':
+        this.irResumenOperacion('superChanceApuesta','super-chance');
         break;
       default:
         break;
@@ -717,15 +720,15 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
   }
 
 
-  irResumenChance() {
+  irResumenOperacion(productoEvento, productoParams) {
     let numeros = this.obtenerFilasConApuesta(this.listaNumeros);
     let loterias = this.get_lotteriesSelected();
     if(numeros.length > 0 || loterias.length > 0) {
       this.messageService.add(MsjUtil.getMsjError('Por favor termine de diligenciar los campos o limpie el formulario para avanzar'));
     } else {
-      if(JSON.parse(localStorage.getItem('chanceApuesta')) != null) {
-        if( JSON.parse(localStorage.getItem('chanceApuesta')).length > 0 ) {
-          this.router.navigate([RouterConstant.NAVIGATE_REVISA_PAGO], { queryParams: { producto: 'chance' } });
+      if(JSON.parse(localStorage.getItem(productoEvento)) != null) {
+        if( JSON.parse(localStorage.getItem(productoEvento)).length > 0 ) {
+          this.router.navigate([RouterConstant.NAVIGATE_REVISA_PAGO], { queryParams: { producto: productoParams } });
         } else {
           this.messageService.add(MsjUtil.getMsjError('no hay apuestas agregadas'));
         }
@@ -734,26 +737,6 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
       }
     }
   }
-
-
-  irResumenChanceMillonario() {
-    let numeros = this.obtenerFilasConApuesta(this.listaNumeros);
-    let loterias = this.get_lotteriesSelected();
-    if(numeros.length > 0 || loterias.length > 0) {
-      this.messageService.add(MsjUtil.getMsjError('Por favor termine de diligenciar los campos o limpie el formulario para avanzar'));
-    } else {
-      if(JSON.parse(localStorage.getItem('chanceApuestaMillonario')) != null){
-        if( JSON.parse(localStorage.getItem('chanceApuestaMillonario')).length > 0 ) {
-          this.router.navigate([RouterConstant.NAVIGATE_REVISA_PAGO], { queryParams: { producto: 'chance-millonario' } });
-        } else {
-          this.messageService.add(MsjUtil.getMsjError('no hay apuestas agregadas'));
-        }
-      } else {
-          this.messageService.add(MsjUtil.getMsjError('no hay apuestas agregadas'));
-      }
-    }
-  }
-
 
 
   /**

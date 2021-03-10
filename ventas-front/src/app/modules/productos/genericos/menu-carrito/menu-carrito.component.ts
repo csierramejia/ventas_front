@@ -35,16 +35,20 @@ export class MenuCarritoComponent implements OnInit {
 
   
   ngOnInit(): void {
-   }
+    this.refrescarCarrito();
+  }
 
 
   borrarApuesta(id) {
     switch (this.productoParent) {
       case 'chance':
-        this.borrarApuestaChance(id);
+        this.borrarApuestaOperacion(id,'chanceApuesta');
         break;
       case 'chance-millonario':
-        this.borrarApuestaChanceMillonario(id);
+        this.borrarApuestaOperacion(id,'chanceApuestaMillonario');
+        break;
+      case 'super-chance':
+        this.borrarApuestaOperacion(id,'superChanceApuesta');
         break;
       default:
         break;
@@ -60,10 +64,13 @@ export class MenuCarritoComponent implements OnInit {
   duplicarApuesta(id) {
     switch (this.productoParent) {
       case 'chance':
-        this.duplicarApuestaChance(id);
+        this.duplicarApuestaOperacion(id, 'chanceApuesta');
         break;
       case 'chance-millonario':
-        this.duplicarApuestaChanceMillonario(id);
+        this.duplicarApuestaOperacion(id, 'chanceApuestaMillonario');
+        break;
+      case 'super-chance':
+        this.duplicarApuestaOperacion(id, 'superChanceApuesta');
         break;
       default:
         break;
@@ -72,29 +79,15 @@ export class MenuCarritoComponent implements OnInit {
 
 
 
-  duplicarApuestaChance(id){
-    const productosDuplicar = JSON.parse(localStorage.getItem('chanceApuesta'))
+  duplicarApuestaOperacion(id, eventoProducto){
+    const productosDuplicar = JSON.parse(localStorage.getItem(eventoProducto))
     const result = productosDuplicar.filter(productoDuplicar => productoDuplicar._id == id);
     for (let index = 0; index < this.cantidadRepetir; index++) {
       result[0]._id = 'bet_' + Math.floor(Math.random() * 999999)
-      const newLocalstorage = JSON.parse(localStorage.getItem('chanceApuesta'));
+      const newLocalstorage = JSON.parse(localStorage.getItem(eventoProducto));
       newLocalstorage.push(result[0]);
       this.asignarSerieDuplicarApuesta(newLocalstorage,productosDuplicar);
-      localStorage.setItem('chanceApuesta', JSON.stringify(newLocalstorage));
-    }
-    this.refrescarCarrito();
-  }
-
-
-  duplicarApuestaChanceMillonario(id){
-    const productosDuplicar = JSON.parse(localStorage.getItem('chanceApuestaMillonario'))
-    const result = productosDuplicar.filter(productoDuplicar => productoDuplicar._id == id);
-    for (let index = 0; index < this.cantidadRepetir; index++) {
-      result[0]._id = 'bet_' + Math.floor(Math.random() * 999999)
-      const newLocalstorage = JSON.parse(localStorage.getItem('chanceApuestaMillonario'));
-      newLocalstorage.push(result[0]);
-      this.asignarSerieDuplicarApuesta(newLocalstorage,productosDuplicar);
-       localStorage.setItem('chanceApuestaMillonario', JSON.stringify(newLocalstorage));
+      localStorage.setItem(eventoProducto, JSON.stringify(newLocalstorage));
     }
     this.refrescarCarrito();
   }
@@ -115,6 +108,7 @@ export class MenuCarritoComponent implements OnInit {
 
 
   refrescarCarrito(){
+    console.log('-------');
     switch (this.productoParent) {
       case 'chance':
         this.refrescarCarritoChance();
@@ -246,34 +240,16 @@ export class MenuCarritoComponent implements OnInit {
   }
 
 
-  borrarApuestaChance(id) {
-    const chanceArray = JSON.parse(localStorage.getItem('chanceApuesta'));
+  borrarApuestaOperacion(id, eventProducto) {
+    const chanceArray = JSON.parse(localStorage.getItem(eventProducto));
     let item = chanceArray[0];
-    const productosBorrar = JSON.parse(localStorage.getItem('chanceApuesta'))
-   
+    const productosBorrar = JSON.parse(localStorage.getItem(eventProducto))
     const keyResponse = this.getKeyObject(id, productosBorrar);
     if (keyResponse !== -1) {
       productosBorrar.splice(keyResponse, 1);
     }
     this.asignarSerieCarrito(productosBorrar, item);
-    localStorage.setItem('chanceApuesta', JSON.stringify(productosBorrar));
-
-
-    this.refrescarCarrito();
-  }
-
-
-  borrarApuestaChanceMillonario(id) {
-    const chanceArray = JSON.parse(localStorage.getItem('chanceApuestaMillonario'));
-    let item = chanceArray[0];
-    const productosBorrar = JSON.parse(localStorage.getItem('chanceApuestaMillonario'))
-    const keyResponse = this.getKeyObject(id, productosBorrar);
-    if (keyResponse !== -1) {
-      productosBorrar.splice(keyResponse, 1);
-    }
-    this.asignarSerieCarrito(productosBorrar, item);
-    localStorage.setItem('chanceApuestaMillonario', JSON.stringify(productosBorrar));
-
+    localStorage.setItem(eventProducto, JSON.stringify(productosBorrar));
     this.refrescarCarrito();
   }
 
@@ -335,6 +311,9 @@ export class MenuCarritoComponent implements OnInit {
         break;
       case 'chance-millonario':
         this.router.navigate([RouterConstant.NAVIGATE_REVISA_PAGO], { queryParams: { producto: 'chance-millonario' } });
+        break;
+      case 'super-chance':
+        this.router.navigate([RouterConstant.NAVIGATE_REVISA_PAGO], { queryParams: { producto: 'super-chance' } });
         break;
       default:
         break;
