@@ -61,7 +61,7 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
             this.producto = "CHANCE_MILLONARIO";
             break;
           case 'super-chance':
-            // this.producto = "CHANCE_MILLONARIO";
+            this.producto = "SUPER_CHANCE";
             break;
           default:
             break;
@@ -250,7 +250,7 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
         this.depurarInfoChanceMillonario()
         break;
       case 'super-chance':
-        console.log('pendiente por hacer una depuración');
+        this.depurarInfoSuperChance();
         break;
       default:
         break;
@@ -294,7 +294,7 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
     for (let index = 0; index < productosDepurar.length; index++) {
       const bet = { bets:null, canal: 'WEB', dataPlayed:null, idCustomer:null, idUser:this.shellState.userAccount.auth.usuario.idUsuario, lotteries:null, producto:this.producto, valueBet:null, valueBetTotal:null, valueVat:null,idOficina:this.shellState.userAccount.auth.usuario.idOficina,idPuntoVenta:this.shellState.userAccount.auth.usuario.idPuntoVenta,idRollo:null,colillaActual:null, colilla:null,serieUno:null, serieDos:null};
       bet.lotteries = this.obtenerLoteriasSeleccionadas(productosDepurar[index].loterias)
-      //////////// -----------------------!!!!!!!!-------------------- /////////////////////////////////
+
       bet.valueBet = Math.round(productosDepurar[index].apostado);
       bet.valueBetTotal = Math.round(productosDepurar[index].total);
       bet.valueVat = Math.round(productosDepurar[index].iva);
@@ -305,8 +305,7 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
       bet.colilla = productosDepurar[index].colilla;
       bet.serieUno = productosDepurar[index].serie;
       bet.serieDos = productosDepurar[index].colillaActual;
-     
-      //////////// ----------------------!!!!!!!--------------------- /////////////////////////////////
+
       bet.bets = this.obtenerEstructuraDatosNumerosChanceMillonario(productosDepurar[index].listaNumeros, productosDepurar[0].fechaSeleccionApuesta, bet.lotteries, bet.valueVat, bet.valueBetTotal)
       bet.dataPlayed = new Date(productosDepurar[index].fechaActual)
       bet.idCustomer = productosDepurar[index].clienteOperacion.idCustomer
@@ -315,6 +314,31 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
       this.correoCliente = productosDepurar[index].clienteOperacion.correoCustomer
       this.paySend.push(bet);
     }
+    this.hacerCompraServicio(this.paySend);
+
+  }
+
+
+
+  depurarInfoSuperChance() {
+    this.paySend = [];
+    const productosDepurar = JSON.parse(localStorage.getItem('superChanceApuesta'))
+    for (let index = 0; index < productosDepurar.length; index++) {
+      const bet = { bets:null, canal: 'WEB', dataPlayed:null, idCustomer:null, idUser:this.shellState.userAccount.auth.usuario.idUsuario, lotteries:null, producto:this.producto, valueBet:null, valueBetTotal:null, valueVat:null,idOficina:this.shellState.userAccount.auth.usuario.idOficina,idPuntoVenta:this.shellState.userAccount.auth.usuario.idPuntoVenta};
+      bet.lotteries = this.obtenerLoteriasSeleccionadas(productosDepurar[index].loterias)
+      bet.valueBet = Math.round(productosDepurar[index].apostado);
+      bet.valueBetTotal = Math.round(productosDepurar[index].total);
+      bet.valueVat = Math.round(productosDepurar[index].iva);
+      bet.idOficina = this.shellState.userAccount.auth.usuario.idOficina;
+      bet.idPuntoVenta = this.shellState.userAccount.auth.usuario.idPuntoVenta
+      bet.bets = this.obtener_estructura_datos_numeros_superchance(productosDepurar[index].listaNumeros, productosDepurar[0].fechaSeleccionApuesta, bet.lotteries, productosDepurar[index].listaModalidades, productosDepurar[index].colilla, productosDepurar[index].colillaActual, productosDepurar[index].idRollo, productosDepurar[index].serie)
+      bet.dataPlayed = new Date(productosDepurar[index].fechaActual)
+      bet.idCustomer = productosDepurar[index].clienteOperacion.idCustomer
+      // guardamos el correo del usuario (para enviar desplendible de pago)
+      this.correoCliente = productosDepurar[index].clienteOperacion.correoCustomer
+      this.paySend.push(bet);
+    }
+
     this.hacerCompraServicio(this.paySend);
 
   }
@@ -392,6 +416,145 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
       if (element.numeroFilaCuatro) {numeros[0].apuestaD = element.numeroFilaCuatro}
       if (element.numeroFilaCinco) {numeros[0].apuestaE = element.numeroFilaCinco}
     })
+    return numeros;
+  }
+
+
+
+  obtener_estructura_datos_numeros_superchance(numerosIteras, fechaSorteo, loterias, listaModalidades, colilla, colillaActual, idRollo, serie){
+
+
+    const numeros = [];
+    numerosIteras.forEach(element => {
+      if (element.numeroFilaUno) { 
+        numeros.push({
+          apuestaA: null,
+          apuestaB: null,
+          puestaC: null,
+          apuestaD: null,
+          apuestaE: null, 
+          colilla: colilla, 
+          colillaActual: colillaActual, 
+          details: null,
+          fechaSorteo: new Date(fechaSorteo),
+          idRollo: idRollo, 
+          idVendedor: this.shellState.userAccount.auth.usuario.idUsuario, 
+          lotteries: loterias,
+          numberPlayed: null,
+          numeroAstro: null,
+          numeroSuper: element.numeroFilaUno, 
+          serie: serie, 
+          serieDos: colillaActual, 
+          serieUno: serie, 
+          valueBet: listaModalidades[0].valoresModalidadesUno * loterias.length,
+          valueVat: listaModalidades[0].valoresModalidadesUno * loterias.length - Math.round(this.obtenerIvaIteracion(listaModalidades[0].valoresModalidadesUno * loterias.length)),
+          zignos: null
+        })
+      }
+      if (element.numeroFilaDos) { 
+        numeros.push({
+          apuestaA: null,
+          apuestaB: null,
+          puestaC: null,
+          apuestaD: null,
+          apuestaE: null, 
+          colilla: colilla, 
+          colillaActual: colillaActual, 
+          details: null,
+          fechaSorteo: new Date(fechaSorteo),
+          idRollo: idRollo, 
+          idVendedor: this.shellState.userAccount.auth.usuario.idUsuario, 
+          lotteries: loterias,
+          numberPlayed: null,
+          numeroAstro: null,
+          numeroSuper: element.numeroFilaDos, 
+          serie: serie, 
+          serieDos: colillaActual, 
+          serieUno: serie, 
+          valueBet: listaModalidades[1].valoresModalidadesDos * loterias.length,
+          valueVat: listaModalidades[1].valoresModalidadesDos * loterias.length - Math.round(this.obtenerIvaIteracion(listaModalidades[1].valoresModalidadesDos * loterias.length)),
+          zignos: null
+        })
+      }
+      if (element.numeroFilaTres) { 
+          numeros.push({
+            apuestaA: null,
+            apuestaB: null,
+            puestaC: null,
+            apuestaD: null,
+            apuestaE: null, 
+            colilla: colilla, 
+            colillaActual: colillaActual,  
+            details: null,
+            fechaSorteo: new Date(fechaSorteo),
+            idRollo: idRollo, 
+            idVendedor: this.shellState.userAccount.auth.usuario.idUsuario, 
+            lotteries: loterias,
+            numberPlayed: null,
+            numeroAstro: null,
+            numeroSuper: element.numeroFilaTres, 
+            serie: serie, 
+            serieDos: colillaActual, 
+            serieUno: serie, 
+            valueBet: listaModalidades[2].valoresModalidadesTres * loterias.length,
+            valueVat: listaModalidades[2].valoresModalidadesTres * loterias.length - Math.round(this.obtenerIvaIteracion(listaModalidades[2].valoresModalidadesTres * loterias.length)),
+            zignos: null
+        })
+      }
+      if (element.numeroFilaCuatro) { 
+        numeros.push({
+          apuestaA: null,
+          apuestaB: null,
+          puestaC: null,
+          apuestaD: null,
+          apuestaE: null, 
+          colilla: colilla, 
+          colillaActual: colillaActual, 
+          details: null,
+          fechaSorteo: new Date(fechaSorteo),
+          idRollo: idRollo,
+          idVendedor: this.shellState.userAccount.auth.usuario.idUsuario, 
+          lotteries: loterias,
+          numberPlayed: null,
+          numeroAstro: null,
+          numeroSuper: element.numeroFilaCuatro, 
+          serie: serie, 
+          serieDos: colillaActual, 
+          serieUno: serie, 
+          valueBet: listaModalidades[3].valoresModalidadesCuatro * loterias.length,
+          valueVat: listaModalidades[3].valoresModalidadesCuatro * loterias.length - Math.round(this.obtenerIvaIteracion(listaModalidades[3].valoresModalidadesCuatro * loterias.length)),
+          zignos: null
+        })
+      }
+      if (element.numeroFilaCinco) { 
+        numeros.push({
+          apuestaA: null,
+          apuestaB: null,
+          puestaC: null,
+          apuestaD: null,
+          apuestaE: null, 
+          colilla: colilla, 
+          colillaActual: colillaActual,  
+          details: null,
+          fechaSorteo: new Date(fechaSorteo),
+          idRollo: idRollo, 
+          idVendedor: this.shellState.userAccount.auth.usuario.idUsuario,
+          lotteries: loterias,
+          numberPlayed: null,
+          numeroAstro: null,
+          numeroSuper: element.numeroFilaCinco, 
+          serie: serie, 
+          serieDos: colillaActual, 
+          serieUno: serie, 
+          valueBet: listaModalidades[4].valoresModalidadesCinco * loterias.length,
+          valueVat: listaModalidades[4].valoresModalidadesCinco * loterias.length - Math.round(this.obtenerIvaIteracion(listaModalidades[4].valoresModalidadesCinco * loterias.length)),
+          zignos: null
+        })
+      }
+    });
+
+
+
     return numeros;
   }
 
