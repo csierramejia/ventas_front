@@ -356,100 +356,116 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
 
   }
 
+  
+
 
   agregarCarritoFChance(): void {
+    
     const listaNumeros = this.obtenerFilasConApuesta(this.listaNumeros)
+    let l2 = this.organizar_numeros(this.listaNumeros);
 
-    if(this.validarCeros(listaNumeros)){
-      this.messageService.add(MsjUtil.getToastErrorMedium('Usted no puede colocar valores en 0'));
-    } else {
-      if(this.colilla && this.fechaActual && this.loteriaSeleccionadas.length > 0 && listaNumeros.length > 0) {
-        if(this.edit){
-          this.confirmacionAgregar.isCreate = false;
-          this.verConfirmacionPopap = true;
-          this.confirmacionAgregar.colilla = this.colilla
-          this.confirmacionAgregar.numeros = this.concatenarNumeros(listaNumeros)
-          this.confirmacionAgregar.loterias = this.concatenarLoterias(this.loterias)
-          this.confirmacionAgregar.apostado = Math.round(this.valueBet)
-          this.confirmacionAgregar.iva = Math.round(this.valueVat)
-          this.confirmacionAgregar.total = Math.round(this.valueBetTotal)
-          this.confirmacionAgregar.idRollo = this.auth.usuario.idRollo;
-          this.confirmacionAgregar.rolloColilla =  this.rolloColilla;
-          this.confirmacionAgregar.idUsuario = this.auth.usuario.idUsuario;
-        } else {
-          this.confirmacionAgregar.isCreate = true;
-          this.verConfirmacionPopap = true;
-          this.confirmacionAgregar.colilla = this.colilla
-          this.confirmacionAgregar.numeros = this.concatenarNumeros(listaNumeros)
-          this.confirmacionAgregar.loterias = this.concatenarLoterias(this.loterias)
-          this.confirmacionAgregar.apostado = Math.round(this.valueBet)
-          this.confirmacionAgregar.iva = Math.round(this.valueVat)
-          this.confirmacionAgregar.total = Math.round(this.valueBetTotal)
-          this.confirmacionAgregar.idRollo = this.auth.usuario.idRollo;
-          this.confirmacionAgregar.rolloColilla =  this.rolloColilla;
-          this.confirmacionAgregar.idUsuario = this.auth.usuario.idUsuario;
-          if (JSON.parse(localStorage.getItem('chanceApuesta')) && JSON.parse(localStorage.getItem('chanceApuesta')).length > 0) {
-            const iteracionLocalStorageProductos = JSON.parse(localStorage.getItem('chanceApuesta'));
-            let index = iteracionLocalStorageProductos.length - 1
-            let colillaActual = iteracionLocalStorageProductos[index].colillaActual;
-            colillaActual++;
-            this.confirmacionAgregar.rolloColilla.colillaActual = colillaActual;
-            const colilla = iteracionLocalStorageProductos[index].serie + String(colillaActual).padStart(7, '0');
-            this.confirmacionAgregar.colilla = colilla;
-            this.colilla = colilla;
-           }
-        }
+    if(l2.every(this.esPrimero)){
+      if(this.validarCeros(listaNumeros)){
+        this.messageService.add(MsjUtil.getToastErrorMedium('Usted no puede colocar valores en 0'));
       } else {
-        this.messageService.add(MsjUtil.getToastErrorMedium('Valide que esta gestionando los campos necesarios para realizar la apuesta'));
+        if(this.colilla && this.fechaActual && this.loteriaSeleccionadas.length > 0 && listaNumeros.length > 0) {
+          if(this.edit){
+            this.confirmacionAgregar.isCreate = false;
+            this.verConfirmacionPopap = true;
+            this.confirmacionAgregar.colilla = this.colilla
+            this.confirmacionAgregar.numeros = this.concatenarNumeros(listaNumeros)
+            this.confirmacionAgregar.loterias = this.concatenarLoterias(this.loterias)
+            this.confirmacionAgregar.apostado = Math.round(this.valueBet)
+            this.confirmacionAgregar.iva = Math.round(this.valueVat)
+            this.confirmacionAgregar.total = Math.round(this.valueBetTotal)
+            this.confirmacionAgregar.idRollo = this.auth.usuario.idRollo;
+            this.confirmacionAgregar.rolloColilla =  this.rolloColilla;
+            this.confirmacionAgregar.idUsuario = this.auth.usuario.idUsuario;
+          } else {
+            this.confirmacionAgregar.isCreate = true;
+            this.verConfirmacionPopap = true;
+            this.confirmacionAgregar.colilla = this.colilla
+            this.confirmacionAgregar.numeros = this.concatenarNumeros(listaNumeros)
+            this.confirmacionAgregar.loterias = this.concatenarLoterias(this.loterias)
+            this.confirmacionAgregar.apostado = Math.round(this.valueBet)
+            this.confirmacionAgregar.iva = Math.round(this.valueVat)
+            this.confirmacionAgregar.total = Math.round(this.valueBetTotal)
+            this.confirmacionAgregar.idRollo = this.auth.usuario.idRollo;
+            this.confirmacionAgregar.rolloColilla =  this.rolloColilla;
+            this.confirmacionAgregar.idUsuario = this.auth.usuario.idUsuario;
+            if (JSON.parse(localStorage.getItem('chanceApuesta')) && JSON.parse(localStorage.getItem('chanceApuesta')).length > 0) {
+              const iteracionLocalStorageProductos = JSON.parse(localStorage.getItem('chanceApuesta'));
+              let index = iteracionLocalStorageProductos.length - 1
+              let colillaActual = iteracionLocalStorageProductos[index].colillaActual;
+              colillaActual++;
+              this.confirmacionAgregar.rolloColilla.colillaActual = colillaActual;
+              const colilla = iteracionLocalStorageProductos[index].serie + String(colillaActual).padStart(7, '0');
+              this.confirmacionAgregar.colilla = colilla;
+              this.colilla = colilla;
+             }
+          }
+        } else {
+          this.messageService.add(MsjUtil.getToastErrorMedium('Valide que esta gestionando los campos necesarios para realizar la apuesta'));
+        }
       }
+    } else {
+      this.messageService.add(MsjUtil.getToastErrorMedium('Usted no deberia colocar numeros repetidos.'));
     }
+
+    
   }
 
 
 
   agregarCarritoFChanceMillonario(): void {
     const listaNumeros = this.obtenerFilasConApuesta(this.listaNumeros)
-    if(this.validarCeros(listaNumeros)){
-      this.messageService.add(MsjUtil.getToastErrorMedium('Usted no puede colocar valores en 0'));
-    } else {
-      if(this.colilla && this.fechaActual && this.loteriaSeleccionadas.length === 2 && listaNumeros.length > 0) {
-
-        if(this.edit){
-          this.confirmacionAgregar.isCreate = false;
-          this.verConfirmacionPopap = true;
-          this.confirmacionAgregar.colilla = this.colilla
-          this.confirmacionAgregar.numeros = this.concatenarNumeros(listaNumeros)
-          this.confirmacionAgregar.loterias = this.concatenarLoterias(this.loterias)
-          this.confirmacionAgregar.apostado = Math.round(this.valueBet)
-          this.confirmacionAgregar.iva = Math.round(this.valueVat)
-          this.confirmacionAgregar.total = Math.round(this.valueBetTotal)
-        } else {
-          this.confirmacionAgregar.isCreate = true;
-          this.verConfirmacionPopap = true;
-          this.confirmacionAgregar.colilla = this.colilla
-          this.confirmacionAgregar.numeros = this.concatenarNumeros(listaNumeros)
-          this.confirmacionAgregar.loterias = this.concatenarLoterias(this.loterias)
-          this.confirmacionAgregar.apostado = Math.round(this.valueBet)
-          this.confirmacionAgregar.iva = Math.round(this.valueVat)
-          this.confirmacionAgregar.total = Math.round(this.valueBetTotal)
-          this.confirmacionAgregar.idRollo = this.auth.usuario.idRollo;
-          this.confirmacionAgregar.rolloColilla =  this.rolloColilla;
-          this.confirmacionAgregar.idUsuario = this.auth.usuario.idUsuario;
-          if (JSON.parse(localStorage.getItem('chanceApuestaMillonario')) && JSON.parse(localStorage.getItem('chanceApuestaMillonario')).length > 0) {
-            const iteracionLocalStorageProductos = JSON.parse(localStorage.getItem('chanceApuestaMillonario'));
-            let index = iteracionLocalStorageProductos.length - 1;
-            let colillaActual = iteracionLocalStorageProductos[index].colillaActual;
-            colillaActual++;
-            this.confirmacionAgregar.rolloColilla.colillaActual = colillaActual;
-            const colilla = iteracionLocalStorageProductos[index].serie + String(colillaActual).padStart(7, '0');
-            this.confirmacionAgregar.colilla = colilla;
-            this.colilla = colilla;
-           }
-        }
+    let l2 = this.organizar_numeros(this.listaNumeros);
+    if(l2.every(this.esPrimero)){
+      if(this.validarCeros(listaNumeros)){
+        this.messageService.add(MsjUtil.getToastErrorMedium('Usted no puede colocar valores en 0'));
       } else {
-        this.messageService.add(MsjUtil.getToastErrorMedium('Valide que esta gestionando los campos necesarios para realizar la apuesta'));
+        if(this.colilla && this.fechaActual && this.loteriaSeleccionadas.length === 2 && listaNumeros.length > 0) {
+  
+          if(this.edit){
+            this.confirmacionAgregar.isCreate = false;
+            this.verConfirmacionPopap = true;
+            this.confirmacionAgregar.colilla = this.colilla
+            this.confirmacionAgregar.numeros = this.concatenarNumeros(listaNumeros)
+            this.confirmacionAgregar.loterias = this.concatenarLoterias(this.loterias)
+            this.confirmacionAgregar.apostado = Math.round(this.valueBet)
+            this.confirmacionAgregar.iva = Math.round(this.valueVat)
+            this.confirmacionAgregar.total = Math.round(this.valueBetTotal)
+          } else {
+            this.confirmacionAgregar.isCreate = true;
+            this.verConfirmacionPopap = true;
+            this.confirmacionAgregar.colilla = this.colilla
+            this.confirmacionAgregar.numeros = this.concatenarNumeros(listaNumeros)
+            this.confirmacionAgregar.loterias = this.concatenarLoterias(this.loterias)
+            this.confirmacionAgregar.apostado = Math.round(this.valueBet)
+            this.confirmacionAgregar.iva = Math.round(this.valueVat)
+            this.confirmacionAgregar.total = Math.round(this.valueBetTotal)
+            this.confirmacionAgregar.idRollo = this.auth.usuario.idRollo;
+            this.confirmacionAgregar.rolloColilla =  this.rolloColilla;
+            this.confirmacionAgregar.idUsuario = this.auth.usuario.idUsuario;
+            if (JSON.parse(localStorage.getItem('chanceApuestaMillonario')) && JSON.parse(localStorage.getItem('chanceApuestaMillonario')).length > 0) {
+              const iteracionLocalStorageProductos = JSON.parse(localStorage.getItem('chanceApuestaMillonario'));
+              let index = iteracionLocalStorageProductos.length - 1;
+              let colillaActual = iteracionLocalStorageProductos[index].colillaActual;
+              colillaActual++;
+              this.confirmacionAgregar.rolloColilla.colillaActual = colillaActual;
+              const colilla = iteracionLocalStorageProductos[index].serie + String(colillaActual).padStart(7, '0');
+              this.confirmacionAgregar.colilla = colilla;
+              this.colilla = colilla;
+             }
+          }
+        } else {
+          this.messageService.add(MsjUtil.getToastErrorMedium('Valide que esta gestionando los campos necesarios para realizar la apuesta'));
+        }
       }
+    } else {
+      this.messageService.add(MsjUtil.getToastErrorMedium('Usted no deberia colocar numeros repetidos.'));
     }
+    
   }
 
 
@@ -500,6 +516,23 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
         this.messageService.add(MsjUtil.getToastErrorMedium('Valide que esta gestionando los campos necesarios para realizar la apuesta'));
       }
     }
+  }
+
+
+  esPrimero(valor, indice, lista) {
+    return (lista.indexOf(valor) === indice);
+  }
+
+  organizar_numeros(numeros){
+    let numerosReturn = []
+    numeros.forEach(element => {
+      if(element.numeroFilaUno){numerosReturn.push(String(element.numeroFilaUno))}
+      if(element.numeroFilaDos){numerosReturn.push(String(element.numeroFilaDos))}
+      if(element.numeroFilaTres){numerosReturn.push(String(element.numeroFilaTres))}
+      if(element.numeroFilaCuatro){numerosReturn.push(String(element.numeroFilaCuatro))}
+      if(element.numeroFilaCinco){numerosReturn.push(String(element.numeroFilaCinco))}
+    });
+    return numerosReturn
   }
 
 

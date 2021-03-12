@@ -619,7 +619,7 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit  {
       this.chanceForm.get('combinadoFilaCinco').enable();
       this.chanceForm.get('dosCifrasFilaCinco').enable();
       this.chanceForm.get('unaCifraFilaCinco').enable();
-
+      console.log('0000000000');
       document.getElementById('valorDirectoFilaCinco').focus();
       document.getElementById('valorDirectoFilaCinco').style.backgroundColor = '#FFFFFF';
       document.getElementById('combinadoFilaCinco').style.backgroundColor = '#FFFFFF';
@@ -632,7 +632,7 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit  {
       this.chanceForm.get('unaCifraFilaCinco').enable();
       this.chanceForm.get('valorDirectoFilaCinco').setValue('');
       this.chanceForm.get('combinadoFilaCinco').setValue('');
-
+      console.log('11111111111');
       document.getElementById('dosCifrasFilaCinco').focus();
       document.getElementById('valorDirectoFilaCinco').style.backgroundColor = '#EFEFEF';
       document.getElementById('combinadoFilaCinco').style.backgroundColor = '#EFEFEF';
@@ -646,7 +646,7 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit  {
       this.chanceForm.get('valorDirectoFilaCinco').setValue('');
       this.chanceForm.get('combinadoFilaCinco').setValue('');
       this.chanceForm.get('dosCifrasFilaCinco').setValue('');
-
+      console.log('22222222222');
       document.getElementById('unaCifraFilaCinco').focus();
       document.getElementById('valorDirectoFilaCinco').style.backgroundColor = '#EFEFEF';
       document.getElementById('combinadoFilaCinco').style.backgroundColor = '#EFEFEF';
