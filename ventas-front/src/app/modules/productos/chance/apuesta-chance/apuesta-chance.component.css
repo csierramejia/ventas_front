@@ -173,17 +173,11 @@
     cursor: pointer;
 }
 
+.input-bet-e{
+    display: none;
+}
 
 
-/* @media screen and (max-width: 1421px) {
-    .chipOptionDay{
-        font-size: 15px;
-        width: 30px;
-        height: 30px;
-        
-        
-    }
-} */
 
 
 

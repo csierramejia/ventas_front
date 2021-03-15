@@ -410,11 +410,11 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
       }
     ];
     numerosIteras.forEach(element => {
-      if (element.numeroFilaUno) {numeros[0].apuestaA = element.numeroFilaUno}
-      if (element.numeroFilaDos) {numeros[0].apuestaB = element.numeroFilaDos}
-      if (element.numeroFilaTres) {numeros[0].apuestaC = element.numeroFilaTres}
-      if (element.numeroFilaCuatro) {numeros[0].apuestaD = element.numeroFilaCuatro}
-      if (element.numeroFilaCinco) {numeros[0].apuestaE = element.numeroFilaCinco}
+      if (element.numeroFilaUno) {numeros[0].apuestaA = parseInt(element.numeroFilaUno)}
+      if (element.numeroFilaDos) {numeros[0].apuestaB = parseInt(element.numeroFilaDos)}
+      if (element.numeroFilaTres) {numeros[0].apuestaC = parseInt(element.numeroFilaTres)}
+      if (element.numeroFilaCuatro) {numeros[0].apuestaD = parseInt(element.numeroFilaCuatro)}
+      if (element.numeroFilaCinco) {numeros[0].apuestaE = parseInt(element.numeroFilaCinco)}
     })
     return numeros;
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, OnDestroy, ViewChild, AfterContentChecked } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy, ViewChild, ElementRef, AfterContentChecked } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { ProductosService } from '../../productos.service';
 import { MessageService } from 'primeng/api';
@@ -109,6 +109,7 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit  {
 
   });
 
+  // @ViewChild('valorDirectoFilaCinco') valorDirectoFilaCincoElement: ElementRef;
 
   constructor(
     private productosService: ProductosService,
@@ -615,11 +616,11 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit  {
 
   revisarFilaCinco(value): void {
     if (String(value).length === 4 || String(value).length === 3) {
+      // this.valorDirectoFilaCincoElement.nativeElement.focus();
       this.chanceForm.get('valorDirectoFilaCinco').enable();
       this.chanceForm.get('combinadoFilaCinco').enable();
       this.chanceForm.get('dosCifrasFilaCinco').enable();
       this.chanceForm.get('unaCifraFilaCinco').enable();
-      console.log('0000000000');
       document.getElementById('valorDirectoFilaCinco').focus();
       document.getElementById('valorDirectoFilaCinco').style.backgroundColor = '#FFFFFF';
       document.getElementById('combinadoFilaCinco').style.backgroundColor = '#FFFFFF';
