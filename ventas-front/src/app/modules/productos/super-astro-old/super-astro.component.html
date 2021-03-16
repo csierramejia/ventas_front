@@ -1,0 +1,18 @@
+    <section class="container-fluid">
+        <div class="row">
+            <div class="col-9">
+                <app-apuesta-super-astro
+                    (addBet)="addBet($event)"
+                    (addLotteries)="addLotteries($event)">
+                </app-apuesta-super-astro>
+            </div>
+            <div class="col-3">
+                <app-bolsa 
+                    (editBet)="editBet($event)"
+                    (creatingBet)="creatingBet($event)"
+                    (updateSerie)="updateSerie($event)"
+                    >
+                </app-bolsa>
+            </div>
+        </div>
+    </section>

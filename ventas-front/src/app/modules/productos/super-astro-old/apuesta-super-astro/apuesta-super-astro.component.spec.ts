@@ -1,19 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { SuperAstroComponent } from './super-astro.component';
 
-describe('SuperAstroComponent', () => {
-  let component: SuperAstroComponent;
-  let fixture: ComponentFixture<SuperAstroComponent>;
+import { DirectoComponent } from './directo.component';
+
+describe('DirectoComponent', () => {
+  let component: DirectoComponent;
+  let fixture: ComponentFixture<DirectoComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SuperAstroComponent ]
+      declarations: [ DirectoComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SuperAstroComponent);
+    fixture = TestBed.createComponent(DirectoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

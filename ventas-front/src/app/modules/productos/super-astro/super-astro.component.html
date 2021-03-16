@@ -1,18 +1,20 @@
-    <section class="container-fluid">
-        <div class="row">
-            <div class="col-9">
-                <app-apuesta-super-astro
-                    (addBet)="addBet($event)"
-                    (addLotteries)="addLotteries($event)">
-                </app-apuesta-super-astro>
-            </div>
-            <div class="col-3">
-                <app-bolsa 
-                    (editBet)="editBet($event)"
-                    (creatingBet)="creatingBet($event)"
-                    (updateSerie)="updateSerie($event)"
-                    >
-                </app-bolsa>
-            </div>
-        </div>
+<div>  
+    <app-menu-carrito 
+        [productoParent]="productoSuperChance"
+        (editarProducto)="editarProducto($event)">
+    </app-menu-carrito>
+    <section>
+        <app-apuesta-super-astro
+            (agregarLoterias)="agregarLoterias($event)"
+            (reiniciarEdit)="reiniciarEdit($event)"
+            (agregarNumeros)="agregarNumeros($event)"
+            (agregarModalidades)="agregarModalidades($event)"
+            (agregarCliente)="agregarCliente($event)">
+        </app-apuesta-super-astro>
+        <app-summary-footer
+            [productoParent]="productoSuperChance"
+            (borrarTodoReset)="borrarTodoReset($event)"
+            (agregarProductos)="agregarProductos($event)">
+        </app-summary-footer>
     </section>
+</div>

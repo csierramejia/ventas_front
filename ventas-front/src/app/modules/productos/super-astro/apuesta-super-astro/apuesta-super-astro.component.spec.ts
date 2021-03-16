@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DirectoComponent } from './directo.component';
+import { ApuestaSuperAstroComponent } from './apuesta-super-astro.component';
 
-describe('DirectoComponent', () => {
-  let component: DirectoComponent;
-  let fixture: ComponentFixture<DirectoComponent>;
+describe('ApuestaSuperAstroComponent', () => {
+  let component: ApuestaSuperAstroComponent;
+  let fixture: ComponentFixture<ApuestaSuperAstroComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DirectoComponent ]
+      declarations: [ ApuestaSuperAstroComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DirectoComponent);
+    fixture = TestBed.createComponent(ApuestaSuperAstroComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
