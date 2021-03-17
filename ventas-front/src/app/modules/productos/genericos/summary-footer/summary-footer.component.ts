@@ -45,6 +45,8 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
   valueVat = 0;
   valueBetTotal = 0;
   listaNumeros = [];
+  listaValores = [];
+
   listaModalidades = [];
   producto = null;
   selectedCifras: any;
@@ -190,6 +192,11 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
     this.obtenerValoresTotales();
   }
 
+  setValores(event){
+    this.listaValores = event
+    this.obtenerValoresTotales();
+  }
+
   setModalidades(event){
     this.listaModalidades = event
     this.obtenerValoresTotales();
@@ -235,6 +242,9 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
         break;
       case 'super-chance':
         this.obtenerValoresTotalesSuperChance();
+        break;
+      case 'super-astro':
+        this.obtenerValoresTotalesSuperAstro();
         break;
       default:
         break;
@@ -328,6 +338,13 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
       this.valueBet = this.valueBetTotal / ivaNv;
       this.valueVat = this.valueBetTotal - this.valueBet;
     }
+  }
+
+
+
+  obtenerValoresTotalesSuperAstro(){
+    
+    console.log('LISTO PARA HACER CALCULOS DE VALORES PARA SUPER ASTRO !!!');
   }
 
 

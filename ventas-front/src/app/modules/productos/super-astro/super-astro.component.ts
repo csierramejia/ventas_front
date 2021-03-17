@@ -52,6 +52,10 @@ export class SuperAstroComponent implements OnInit {
     this.summaryFooter.setNumeros(event);
   }
 
+  agregarValores(event) {
+    this.summaryFooter.setValores(event);
+  }
+
 
   agregarModalidades(event) {
     this.summaryFooter.setModalidades(event);

@@ -28,13 +28,11 @@
             </p-calendar>
         </div>
         <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-            <span class="hea-titles">Juego Automático</span>
+            <span class="hea-titles">Última Apuesta</span>
             <hr/>
-            <div class="row">
-                <img class="img-aletorio" (click)="aleatorioTresCifras()" src="../../../../../assets/img/svg/Grupo_299.svg" />
-                <img class="img-aletorio" (click)="aleatorioCuatroCifras()" src="../../../../../assets/img/svg/Grupo_300.svg" />
-                <img class="img-aletorio" (click)="aleatorioCuatroCifrasAll()" src="../../../../../assets/img/svg/Grupo_301.svg" />
-            </div>
+            <button type="button" class="btn btn-random">
+                REPETIR <i class="fa fa-repeat" aria-hidden="true"></i>
+            </button>
         </div>
         <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
             
@@ -80,50 +78,60 @@
         
         <div [formGroup]="chanceForm" class="col-md-7">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <b>Número</b><br/>
                     <div class="row">
-                        <input id="numeroFilaUno" (focus)="onFocus(1)" (change)="chance_validar_fila_modalidad(1, $event.target.value)" formControlName="numeroFilaUno" autocomplete="off" type="text" [maxlength]="maxlengthV" (keypress)="permitirSoloNumeros($event)" class="input-bet">
-                        <img class="img-aletorio" src="../../../../../assets/img/svg/Grupo_118.svg" />
+                        <input id="numeroFilaUno" (change)="emitirNumeros()" formControlName="numeroFilaUno" autocomplete="off" type="text" [maxlength]="maxlengthV" (keypress)="permitirSoloNumeros($event)" class="input-bet">
+                        <img class="img-aletorio" (click)="generarAletorios(1)" src="../../../../../assets/img/svg/Grupo_118.svg" />
                     </div>
                     <div class="row">
-                        <input id="numeroFilaDos" (focus)="onFocus(2)" (change)="chance_validar_fila_modalidad(2, $event.target.value)" formControlName="numeroFilaDos" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
-                        <img class="img-aletorio" src="../../../../../assets/img/svg/Grupo_118.svg" />
+                        <input id="numeroFilaDos" (change)="emitirNumeros()" formControlName="numeroFilaDos" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
+                        <img class="img-aletorio" (click)="generarAletorios(2)"  src="../../../../../assets/img/svg/Grupo_118.svg" />
                     </div>
                     <div class="row">
-                        <input id="numeroFilaTres" (focus)="onFocus(3)" (change)="chance_validar_fila_modalidad(3, $event.target.value)" formControlName="numeroFilaTres" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
-                        <img class="img-aletorio" src="../../../../../assets/img/svg/Grupo_118.svg" />
+                        <input id="numeroFilaTres" (change)="emitirNumeros()" formControlName="numeroFilaTres" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
+                        <img class="img-aletorio" (click)="generarAletorios(3)"  src="../../../../../assets/img/svg/Grupo_118.svg" />
                     </div>
                     <div class="row">
-                        <input id="numeroFilaCuatro" (focus)="onFocus(4)" (change)="chance_validar_fila_modalidad(4, $event.target.value)" formControlName="numeroFilaCuatro" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
-                        <img class="img-aletorio" src="../../../../../assets/img/svg/Grupo_118.svg" />
+                        <input id="numeroFilaCuatro" (change)="emitirNumeros()" formControlName="numeroFilaCuatro" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
+                        <img class="img-aletorio" (click)="generarAletorios(4)"  src="../../../../../assets/img/svg/Grupo_118.svg" />
                     </div>
                     <div class="row">
-                        <input id="numeroFilaCinco" (focus)="onFocus(5)" (change)="chance_validar_fila_modalidad(5, $event.target.value)" formControlName="numeroFilaCinco" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
-                        <img class="img-aletorio" src="../../../../../assets/img/svg/Grupo_118.svg" />
+                        <input id="numeroFilaCinco" (change)="emitirNumeros()" formControlName="numeroFilaCinco" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
+                        <img class="img-aletorio" (click)="generarAletorios(5)"  src="../../../../../assets/img/svg/Grupo_118.svg" />
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <b>Modalidad</b><b>Modalidad</b><br/>
-                    <div class="row dropModalidades">
-                        <input id="numeroFilaCinco" (focus)="onFocus(5)" (change)="chance_validar_fila_modalidad(5, $event.target.value)" formControlName="numeroFilaCinco" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
-                        <p-dropdown [options]="valoresModalidadesUno" (onChange)="emitirModalidades()" formControlName="valoresModalidadesUno" [style]="{'height':'39px','width':'150px', 'border':'1px solid #707070', 'border-radius':'5px'}"></p-dropdown>
-
-                    </div>
-                    <div class="row dropModalidades">
-                        <p-dropdown [options]="valoresModalidadesDos" (onChange)="emitirModalidades()" formControlName="valoresModalidadesDos" [style]="{'height':'39px','width':'275px', 'border':'1px solid #707070', 'border-radius':'5px'}"></p-dropdown>
-                    </div>
-                    <div class="row dropModalidades">
-                        <p-dropdown [options]="valoresModalidadesTres" (onChange)="emitirModalidades()" formControlName="valoresModalidadesTres" [style]="{'height':'39px','width':'275px', 'border':'1px solid #707070', 'border-radius':'5px'}"></p-dropdown>
-                    </div>
-                    <div class="row dropModalidades">
-                        <p-dropdown [options]="valoresModalidadesCuatro" (onChange)="emitirModalidades()" formControlName="valoresModalidadesCuatro" [style]="{'height':'39px','width':'275px', 'border':'1px solid #707070', 'border-radius':'5px'}"></p-dropdown>
-                    </div>
-                    <div class="row dropModalidades">
-                        <p-dropdown [options]="valoresModalidadesCinco" (onChange)="emitirModalidades()" formControlName="valoresModalidadesCinco" [style]="{'height':'39px','width':'275px', 'border':'1px solid #707070', 'border-radius':'5px'}"></p-dropdown>
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <b>Valor</b><br/>
+                            <input id="valorUno" maxlength="6" (change)="emitirNumeros()" (blur)="transformAmount(1)" (change)="emitirNumeros()" formControlName="valorUno" autocomplete="off" type="text" (keypress)="permitirSoloNumeros($event)" class="input-bet">
+                            <input id="valorDos" maxlength="6" (blur)="transformAmount(2)" (change)="emitirNumeros()" formControlName="valorDos" autocomplete="off" type="text" (keypress)="permitirSoloNumeros($event)" class="input-bet">
+                            <input id="valorTres" maxlength="6" (blur)="transformAmount(3)" (change)="emitirNumeros()" formControlName="valorTres" autocomplete="off" type="text" (keypress)="permitirSoloNumeros($event)" class="input-bet">
+                            <input id="valorCuatro" maxlength="6" (blur)="transformAmount(4)" (change)="emitirNumeros()" formControlName="valorCuatro" autocomplete="off" type="text" (keypress)="permitirSoloNumeros($event)" class="input-bet">
+                            <input id="valorCinco" maxlength="6" (blur)="transformAmount(5)" (change)="emitirNumeros()" formControlName="valorCinco" autocomplete="off" type="text" (keypress)="permitirSoloNumeros($event)" class="input-bet">
+                        </div>
+                        <div class="col-md-7">
+                            <b>Astro</b><br/>
+                            <div class="row">
+                                <p-dropdown [options]="valoresModalidadesUno" (onChange)="emitirModalidades()" formControlName="valoresModalidadesUno" [style]="{'height':'39px','width':'250px', 'border':'1px solid #707070', 'margin-top':'9px', 'border-radius':'5px'}"></p-dropdown>
+                            </div>
+                            <div class="row dropModalidades">
+                                <p-dropdown [options]="valoresModalidadesDos" (onChange)="emitirModalidades()" formControlName="valoresModalidadesDos" [style]="{'height':'39px','width':'250px', 'border':'1px solid #707070', 'border-radius':'5px'}"></p-dropdown>
+                            </div>
+                            <div class="row dropModalidades">
+                                <p-dropdown [options]="valoresModalidadesTres" (onChange)="emitirModalidades()" formControlName="valoresModalidadesTres" [style]="{'height':'39px','width':'250px', 'border':'1px solid #707070', 'border-radius':'5px'}"></p-dropdown>
+                            </div>
+                            <div class="row dropModalidades">
+                                <p-dropdown [options]="valoresModalidadesCuatro" (onChange)="emitirModalidades()" formControlName="valoresModalidadesCuatro" [style]="{'height':'39px','width':'250px', 'border':'1px solid #707070', 'border-radius':'5px'}"></p-dropdown>
+                            </div>
+                            <div class="row dropModalidades">
+                                <p-dropdown [options]="valoresModalidadesCinco" (onChange)="emitirModalidades()" formControlName="valoresModalidadesCinco" [style]="{'height':'39px','width':'250px', 'border':'1px solid #707070', 'border-radius':'5px'}"></p-dropdown>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-2 div_borrar">
+                <div class="col-md-1 div_borrar">
                     <div class="row">
                         <i (click)="borrarFilaUno()" class="fa fa-trash tras-del" aria-hidden="true"></i>
                     </div>

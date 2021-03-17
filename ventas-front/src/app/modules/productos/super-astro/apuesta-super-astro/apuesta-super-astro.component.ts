@@ -24,6 +24,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
   @Output() agregarLoterias: EventEmitter<any> = new EventEmitter();
   @Output() reiniciarEdit: EventEmitter<any> = new EventEmitter();
   @Output() agregarNumeros: EventEmitter<any> = new EventEmitter();
+  @Output() agregarValores: EventEmitter<any> = new EventEmitter();
   @Output() agregarModalidades: EventEmitter<any> = new EventEmitter();
   @Output() agregarCliente: EventEmitter<any> = new EventEmitter();
   @ViewChild(CrearClienteComponent) crearClienteChild: CrearClienteComponent;
@@ -35,12 +36,6 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
   valoresModalidadesCuatro = []
   valoresModalidadesCinco = []
 
-
-  numeroUno = false;
-  numeroDos = false;
-  numeroTres = false;
-  numeroCuatro = false;
-  numeroCinco = false;
 
   stateDisabeld = false;
   subscription: any;
@@ -81,6 +76,11 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
     numeroFilaCuatro: new FormControl('', [Validators.required, Validators.maxLength(4)]),
     numeroFilaCinco: new FormControl('', [Validators.required, Validators.maxLength(4)]),
 
+    valorUno: new FormControl(''),
+    valorDos: new FormControl(''),
+    valorTres: new FormControl(''),
+    valorCuatro: new FormControl(''),
+    valorCinco: new FormControl(''),
 
     valoresModalidadesUno: new FormControl(''),
     valoresModalidadesDos: new FormControl(''),
@@ -96,7 +96,8 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
   constructor(
     private productosService: ProductosService,
     protected messageService: MessageService,
-    public shellState: ShellState
+    public shellState: ShellState,
+    private currencyPipe: CurrencyPipe
   ) {
     super();
     // obtenemos el semanario
@@ -145,6 +146,28 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
     };
 
     this.validExistenciaClienteLocalStorage();
+    this.obtener_signos();
+  }
+
+
+  obtener_signos(){
+    this.productosService.consultarSignos().subscribe(
+      signosData => {
+        const rs: any = signosData;
+        rs.forEach(element => {
+          if(element.nombre != 'Todos') {
+            this.valoresModalidadesUno.push({label: element.nombre, value:element.idSigno});
+            this.valoresModalidadesDos.push({label: element.nombre, value:element.idSigno});
+            this.valoresModalidadesTres.push({label: element.nombre, value:element.idSigno});
+            this.valoresModalidadesCuatro.push({label: element.nombre, value:element.idSigno});
+            this.valoresModalidadesCinco.push({label: element.nombre, value:element.idSigno});
+          }
+        });
+      },
+      error => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
   }
 
 
@@ -180,48 +203,6 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
     }
   }
 
-  onFocus(event){
-    switch (event) {
-      case 1:
-        this.numeroUno = true;
-        this.numeroDos = false;
-        this.numeroTres = false;
-        this.numeroCuatro = false;
-        this.numeroCinco = false;
-        break;
-      case 2:
-        this.numeroUno = false;
-        this.numeroDos = true;
-        this.numeroTres = false;
-        this.numeroCuatro = false;
-        this.numeroCinco = false;
-        break;
-      case 3:
-        this.numeroUno = false;
-        this.numeroDos = false;
-        this.numeroTres = true;
-        this.numeroCuatro = false;
-        this.numeroCinco = false;
-        break;
-      case 4:
-        this.numeroUno = false;
-        this.numeroDos = false;
-        this.numeroTres = false;
-        this.numeroCuatro = true;
-        this.numeroCinco = false;
-        break;
-      case 5:
-        this.numeroUno = false;
-        this.numeroDos = false;
-        this.numeroTres = false;
-        this.numeroCuatro = false;
-        this.numeroCinco = true;
-        break;
-      default:
-        break;
-    }
-  }
-  
 
   /**
    * @author Luis Hernandez
@@ -303,7 +284,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
    */
   getLotteries(): void {
     this.loterias = [];
-    this.productosService.consultarLoterias(this.dayBet, 2).subscribe(
+    this.productosService.consultarLoterias(this.dayBet, 7).subscribe(
       loteriasData => {
         const rs: any = loteriasData;
         rs.forEach(element => {
@@ -473,104 +454,78 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
   }
 
 
-  chance_validar_fila_modalidad(fila, numero){
-    if(String(numero).length === 3){
-      if(fila === 1){
-        this.consultarValoresModalidad(3,1)
-      } else if(fila === 2){
-        this.consultarValoresModalidad(3,2)
-      } else if(fila === 3){
-        this.consultarValoresModalidad(3,3)
-      } else if(fila === 4){
-        this.consultarValoresModalidad(3,4)
-      } else if(fila === 5){
-        this.consultarValoresModalidad(3,5)
+  generarAletorios(fila){
+    let aletorio = 0;
+    aletorio = Math.round(Math.random() * (1000 - 9999) + 9999);
+    this.printFilaAletorio(aletorio, fila);
+  }
+
+  printFilaAletorio(numero, fila){
+    switch (fila) {
+      case 1:
+        this.chanceForm.controls.numeroFilaUno.setValue(numero);
+        break;
+      case 2:
+        this.chanceForm.controls.numeroFilaDos.setValue(numero);
+        break;
+      case 3:
+        this.chanceForm.controls.numeroFilaTres.setValue(numero);
+        break;
+      case 4:
+        this.chanceForm.controls.numeroFilaCuatro.setValue(numero);
+        break;
+      case 5:
+        this.chanceForm.controls.numeroFilaCinco.setValue(numero);
+        break;
+      default:
+        break;
+    }
+    this.emitirNumeros();
+  }
+
+
+  transformAmount(event) {
+    switch (event) {
+      case 1:
+        this.transformAmountLo('valorUno');
+        break;
+      case 2:
+        this.transformAmountLo('valorDos');
+        break;
+      case 3:
+        this.transformAmountLo('valorTres');
+        break;
+      case 4:
+        this.transformAmountLo('valorCuatro');
+        break;
+      case 5:
+        this.transformAmountLo('valorCinco');
+        break;
+      default:
+        break;
+    }
+    
+  }
+
+
+
+  transformAmountLo(event){
+    let limpiarCadena = this.chanceForm.get(event).value.replace(/[^a-zA-Z 0-9.]+/g,'')
+    let cadena = limpiarCadena;
+    if (cadena && cadena.includes("$")) {
+      cadena = cadena.substr(1, cadena.length);
+      cadena = cadena.substr(0, cadena.indexOf(',')) + cadena.slice(cadena.indexOf(',') + 1);
+      let pipe =  this.currencyPipe.transform(limpiarCadena, '$', 'symbol', '.0-0')
+      if(pipe){
+        this.chanceForm.get(event).setValue(pipe);
       }
-    } else if(String(numero).length === 4){
-      if(fila === 1){
-        this.consultarValoresModalidad(4,1)
-      } else if(fila === 2){
-        this.consultarValoresModalidad(4,2)
-      } else if(fila === 3){
-        this.consultarValoresModalidad(4,3)
-      } else if(fila === 4){
-        this.consultarValoresModalidad(4,4)
-      } else if(fila === 5){
-        this.consultarValoresModalidad(4,5)
+    }
+    else {
+      let pipe = this.currencyPipe.transform(limpiarCadena, '$', 'symbol', '.0-0')
+      if(pipe){
+        this.chanceForm.get(event).setValue(pipe);
       }
     }
-
-    this.emitirNumeros();
-    this.emitirModalidades();
-  }
-
-
-  aleatorioTresCifras() {
-    if(this.numeroUno){
-      this.chanceForm.controls.numeroFilaUno.setValue(Math.round(Math.random() * (100 - 999) + 999));
-      this.consultarValoresModalidad(3,1)
-    }
-    if(this.numeroDos){
-      this.chanceForm.controls.numeroFilaDos.setValue(Math.round(Math.random() * (100 - 999) + 999));
-      this.consultarValoresModalidad(3,2)
-    }
-    if(this.numeroTres){
-      this.chanceForm.controls.numeroFilaTres.setValue(Math.round(Math.random() * (100 - 999) + 999));
-      this.consultarValoresModalidad(3,3)
-    }
-    if(this.numeroCuatro){
-      this.chanceForm.controls.numeroFilaCuatro.setValue(Math.round(Math.random() * (100 - 999) + 999));
-      this.consultarValoresModalidad(3,4)
-    }
-    if(this.numeroCinco){
-      this.chanceForm.controls.numeroFilaCinco.setValue(Math.round(Math.random() * (100 - 999) + 999));
-      this.consultarValoresModalidad(3,5)
-    }
-    this.emitirNumeros();
-    this.emitirModalidades();
-  }
-
-
-  aleatorioCuatroCifras() {
-    if(this.numeroUno){
-      this.chanceForm.controls.numeroFilaUno.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
-      this.consultarValoresModalidad(4,1)
-    }
-    if(this.numeroDos){
-      this.chanceForm.controls.numeroFilaDos.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
-      this.consultarValoresModalidad(4,2)
-    }
-    if(this.numeroTres){
-      this.chanceForm.controls.numeroFilaTres.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
-      this.consultarValoresModalidad(4,3)
-    }
-    if(this.numeroCuatro){
-      this.chanceForm.controls.numeroFilaCuatro.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
-      this.consultarValoresModalidad(4,4)
-    }
-    if(this.numeroCinco){
-      this.chanceForm.controls.numeroFilaCinco.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
-      this.consultarValoresModalidad(4,5)
-    }
-    this.emitirNumeros();
-    this.emitirModalidades();
-  }
-
-
-
-  aleatorioCuatroCifrasAll() {
-    this.chanceForm.controls.numeroFilaUno.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
-    this.consultarValoresModalidad(4,1)
-    this.chanceForm.controls.numeroFilaDos.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
-    this.consultarValoresModalidad(4,2)
-    this.chanceForm.controls.numeroFilaTres.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
-    this.consultarValoresModalidad(4,3)
-    this.chanceForm.controls.numeroFilaCuatro.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
-    this.consultarValoresModalidad(4,4)
-    this.chanceForm.controls.numeroFilaCinco.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
-    this.consultarValoresModalidad(4,5)
-    this.emitirNumeros();
-    this.emitirModalidades();
   }
 
 
@@ -714,6 +669,18 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
       {numeroFilaCinco: this.chanceForm.get('numeroFilaCinco').value}
     ]
     this.agregarNumeros.emit(numerosValores);
+  }
+
+
+  emitirValores() {
+    let valores:any = [
+      {numeroFilaUno: this.chanceForm.get('valorUno').value},
+      {numeroFilaDos: this.chanceForm.get('valorDos').value},
+      {numeroFilaTres: this.chanceForm.get('valorTres').value},
+      {numeroFilaCuatro: this.chanceForm.get('valorCuatro').value},
+      {numeroFilaCinco: this.chanceForm.get('valorCinco').value}
+    ]
+    this.agregarValores.emit(valores);
   }
 
 
