@@ -79,11 +79,8 @@ export class LoginComponent extends CommonComponent implements OnInit {
           this.request.idUsuario = dataAutenticacion.usuario.idUsuario;
           this.request.idAplicacion = TransversalConstant.ID_APLICACION_VENTAS;
           this.dataAutenticacion = dataAutenticacion;
-            if(!dataAutenticacion.usuario.administrador){
-        //  if (dataAutenticacion.usuario.administrador) {
-
+          if (dataAutenticacion.usuario.administrador) {
             this.iniciarSesionUsuario(formLogin,);
-
           }
           else {
             this.obtnerSeriesVendedor(this.request.idUsuario);
