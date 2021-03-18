@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, OnDestroy, ViewChild, AfterContentChecked } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy, ViewChild, ElementRef, AfterContentChecked } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { ProductosService } from '../../productos.service';
 import { MessageService } from 'primeng/api';
@@ -71,7 +71,6 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit  {
   group: FormGroup;
 
   
-
   chanceForm = new FormGroup({
     numeroFilaUno: new FormControl('', [Validators.required, Validators.maxLength(4)]),
     valorDirectoFilaUno: new FormControl({ value: '', disabled: true }),
@@ -110,6 +109,7 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit  {
 
   });
 
+  // @ViewChild('valorDirectoFilaCinco') valorDirectoFilaCincoElement: ElementRef;
 
   constructor(
     private productosService: ProductosService,
@@ -616,11 +616,11 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit  {
 
   revisarFilaCinco(value): void {
     if (String(value).length === 4 || String(value).length === 3) {
+      // this.valorDirectoFilaCincoElement.nativeElement.focus();
       this.chanceForm.get('valorDirectoFilaCinco').enable();
       this.chanceForm.get('combinadoFilaCinco').enable();
       this.chanceForm.get('dosCifrasFilaCinco').enable();
       this.chanceForm.get('unaCifraFilaCinco').enable();
-
       document.getElementById('valorDirectoFilaCinco').focus();
       document.getElementById('valorDirectoFilaCinco').style.backgroundColor = '#FFFFFF';
       document.getElementById('combinadoFilaCinco').style.backgroundColor = '#FFFFFF';
@@ -633,7 +633,7 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit  {
       this.chanceForm.get('unaCifraFilaCinco').enable();
       this.chanceForm.get('valorDirectoFilaCinco').setValue('');
       this.chanceForm.get('combinadoFilaCinco').setValue('');
-
+      console.log('11111111111');
       document.getElementById('dosCifrasFilaCinco').focus();
       document.getElementById('valorDirectoFilaCinco').style.backgroundColor = '#EFEFEF';
       document.getElementById('combinadoFilaCinco').style.backgroundColor = '#EFEFEF';
@@ -647,7 +647,7 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit  {
       this.chanceForm.get('valorDirectoFilaCinco').setValue('');
       this.chanceForm.get('combinadoFilaCinco').setValue('');
       this.chanceForm.get('dosCifrasFilaCinco').setValue('');
-
+      console.log('22222222222');
       document.getElementById('unaCifraFilaCinco').focus();
       document.getElementById('valorDirectoFilaCinco').style.backgroundColor = '#EFEFEF';
       document.getElementById('combinadoFilaCinco').style.backgroundColor = '#EFEFEF';

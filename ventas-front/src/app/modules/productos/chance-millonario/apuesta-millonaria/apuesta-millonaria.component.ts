@@ -636,10 +636,6 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
 
 
   
-
-
-
-
   borrarTodo(event) {
 
     if(event === 3){
@@ -653,6 +649,8 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
     this.chanceForm.controls.numeroFilaTres.setValue('');
     this.chanceForm.controls.numeroFilaCuatro.setValue('');
     this.chanceForm.controls.numeroFilaCinco.setValue('');
+    this.chanceForm.controls.valoresModalidades.setValue([]);
+
     
     if(event === 1){
       this.reiniciarEdit.emit(false);
@@ -759,11 +757,7 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
     this.edit = true;
     const buscarApuestasEditar = JSON.parse(localStorage.getItem('chanceApuestaMillonario'))
     const apuestaEditar = buscarApuestasEditar.filter(buscarApuestaEditar => buscarApuestaEditar._id == event._id);
-
-    console.log('apuestaEditar!!!!!!!!!!!!');
-    console.log(apuestaEditar);
-    console.log('apuestaEditar!!!!!!!!!!!!');
-
+    this.dayBet = FechaUtil.stringToDate(apuestaEditar[0].fechaSeleccionApuesta);
 
     if (apuestaEditar[0].clienteOperacion.nombreCliente) {
       this.enabledCustomer = true;
@@ -771,8 +765,6 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
       this.chanceForm.controls.tipoDocumento.setValue(apuestaEditar[0].clienteOperacion.tipoDocumento);
       this.chanceForm.controls.numeroDocumento.setValue(apuestaEditar[0].clienteOperacion.numeroDocumento);
     }
-
-
 
     if(apuestaEditar[0].selectedCifras){
       this.selectedCifras = apuestaEditar[0].selectedCifras

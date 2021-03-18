@@ -74,8 +74,8 @@ export class RouterConstant {
   /** Constante para navegar a la pagina de CHANCE MILLONARIO*/
   public static readonly NAVIGATE_CHANCE_MILLONARIO: string = `/${RouterConstant.ROUTER_AUTENTICADO}/productos/${RouterConstant.ROUTER_CHANCE_MILLONARIO}`;
 
-  // public static readonly NAVIGATE_CHANCE: string = `/${RouterConstant.ROUTER_CHANCE}/${RouterConstant.ROUTER_BIENVENIDA}`;
-
+  /** Constante para navegar a la pagina de SUPER CHANCE*/
+  public static readonly NAVIGATE_SUPER_CHANCE: string = `/${RouterConstant.ROUTER_AUTENTICADO}/productos/${RouterConstant.ROUTER_SUPER_CHANCE}`;
   /** Router para el componente de recaudos */
   public static readonly ROUTER_RECAUDOS: string = 'recaudos';
 

@@ -1,56 +1,70 @@
-import { Component, OnInit, Output, EventEmitter, OnDestroy, ViewChild } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Component, OnInit, Output, EventEmitter, OnDestroy, ViewChild, AfterContentChecked } from '@angular/core';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { ProductosService } from '../../productos.service';
-import { ClientesDTO } from 'src/app/dtos/productos/chance/clientes.dto';
 import { MessageService } from 'primeng/api';
+
 import { MsjUtil } from 'src/app/utilities/messages.util';
 import { CommonComponent } from 'src/app/utilities/common.component';
-import { ShellState } from 'src/app/states/shell/shell.state';
-import { CrearClienteComponent } from '../../genericos/crear-cliente/crear-cliente.component';
 import { FechaUtil } from 'src/app/utilities/fecha-util';
-import { FiltroOperacionDTO} from 'src/app/dtos/transversal/filtro-operacion.dto';
-import { RolloColillaDTO} from 'src/app/dtos/transversal/rollo-colilla.dto'
-import { AutenticacionResponseDTO } from 'src/app/dtos/seguridad/autenticacion/autenticacion-response.dto';
-import { SessionStoreUtil } from 'src/app/utilities/session-store.util';
-import { TipoEventoConstant } from 'src/app/constants/tipo-evento.constant';
-import { PapeleriaRolloDTO } from 'src/app/dtos/transversal/papeleria-rollo.dto';
-import { SeleccionRolloComponent } from '../../genericos/seleccion-rollo/seleccion-rollo.component';
+import { CommonService } from 'src/app/utilities/common.service';
+import { ClientesDTO } from 'src/app/dtos/productos/chance/clientes.dto';
+import { CrearClienteComponent } from '../../genericos/crear-cliente/crear-cliente.component';
+import * as moment from 'moment';
+import { CurrencyPipe } from '@angular/common';
+import { ShellState } from '../../../../states/shell/shell.state';
 
 @Component({
   selector: 'app-apuesta-super',
   templateUrl: './apuesta-super.component.html',
   styleUrls: ['./apuesta-super.component.css'],
-  providers: [ProductosService]
+  providers: [ProductosService, CommonService]
 })
-export class ApuestaSuperComponent extends CommonComponent implements OnInit, OnDestroy  {
+export class ApuestaSuperComponent extends CommonComponent implements OnInit  {
 
-  @Output() addBet: EventEmitter<any> = new EventEmitter();
-  @Output() addLotteries: EventEmitter<any> = new EventEmitter();
-
+  @Output() agregarLoterias: EventEmitter<any> = new EventEmitter();
+  @Output() reiniciarEdit: EventEmitter<any> = new EventEmitter();
+  @Output() agregarNumeros: EventEmitter<any> = new EventEmitter();
+  @Output() agregarModalidades: EventEmitter<any> = new EventEmitter();
+  @Output() agregarCliente: EventEmitter<any> = new EventEmitter();
   @ViewChild(CrearClienteComponent) crearClienteChild: CrearClienteComponent;
-  @ViewChild(SeleccionRolloComponent) rolloOperacion: SeleccionRolloComponent;
 
 
-  /** Dto que contiene los datos de la autenticacion */
-  private auth: AutenticacionResponseDTO;
+  valoresModalidadesUno = []
+  valoresModalidadesDos = []
+  valoresModalidadesTres = []
+  valoresModalidadesCuatro = []
+  valoresModalidadesCinco = []
 
-  public rolloColilla : RolloColillaDTO;
 
 
+  numeroUno = false;
+  numeroDos = false;
+  numeroTres = false;
+  numeroCuatro = false;
+  numeroCinco = false;
+
+  stateDisabeld = false;
+  subscription: any;
+  lengEspanol = {}
+
+  pCalendarioValor: Date;
+  displayModalBuscarCliente = true;
+  
+
+  /** Es el correo del cliente quien hace la compra */
+  private correoCustomer: string;
+  enabledCustomer = false;
   idCustomer = '';
   displayModalCreate = false;
-  displayModalSerie = false;
-  btnEdit = false;
-  btnAdd  = true;
-  idEdit: any;
-  selectTodas:boolean;
-  selectUnmarkAllBol = false;
-  loterias = [];
-  seriesColillas = [];
-  lotteriesSelected = [];
-  esDuplicado:boolean;
+  edit = false;
+  infoEdit: any;
   dayBet: Date;
-  viewLotteries = false;
+  fechaActual: Date;
+  loterias = [];
+  rutaServidor: string;
+  loteriasSeleccionadas = [];
+  checked = false;
+  maxlengthV = 4
   days = [
     { text: 'L', name: 'lun', date: null },
     { text: 'M', name: 'mar', date: null },
@@ -61,128 +75,171 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
     { text: 'D', name: 'dom', date: null }
   ];
 
-  rutaServidor:string;
-  enabledCustomer = false;
-  enabledCombined = true;
-  enabledThree = true;
-  enabledTwo = true;
-  enabledOne = true;
-
-  fechaActual:Date;
-  numeroSerie:string;
-  seleccionado:number;
   chanceForm = new FormGroup({
-    fecha: new FormControl(''),
-    numero: new FormControl('', [Validators.required, Validators.maxLength(4)]),
+    numeroFilaUno: new FormControl('', [Validators.required, Validators.maxLength(4)]),
+    numeroFilaDos: new FormControl('', [Validators.required, Validators.maxLength(4)]),
+    numeroFilaTres: new FormControl('', [Validators.required, Validators.maxLength(4)]),
+    numeroFilaCuatro: new FormControl('', [Validators.required, Validators.maxLength(4)]),
+    numeroFilaCinco: new FormControl('', [Validators.required, Validators.maxLength(4)]),
+
+
+    valoresModalidadesUno: new FormControl(''),
+    valoresModalidadesDos: new FormControl(''),
+    valoresModalidadesTres: new FormControl(''),
+    valoresModalidadesCuatro: new FormControl(''),
+    valoresModalidadesCinco: new FormControl(''),
+
     tipoDocumento: new FormControl(''),
     numeroDocumento: new FormControl(''),
     nombreCliente: new FormControl(''),
-   // numeroA: new FormControl({value:'',disabled: this.seleccionado==null?true:false}),
-   numeroA: new FormControl(''),
-    numeroB: new FormControl(''),
-    numeroC: new FormControl(''),
-    numeroD: new FormControl(''),
-    numeroE: new FormControl(''),
-    valorApostado:new FormControl(),
-    radioUno:new FormControl(),
-    radioDos:new FormControl()
   });
 
-  valoresModalidades:any;
-  fechaMostrar:Date;
   constructor(
     private productosService: ProductosService,
     protected messageService: MessageService,
-    private shellState: ShellState
+    public shellState: ShellState
   ) {
     super();
-    this.auth = SessionStoreUtil.auth(TipoEventoConstant.GET);
-    this.fechaMostrar=new Date();
-    // obtemos el esquema de fechas para que el usuario puede saleccionar el dia de la apuesta a realizar
-    const dayWeek = this.getDayWeek();
-  //  this.setDays(dayWeek);
-  this.setDaysServicio();
-  this.productosService.consultarRutaImagenes().subscribe(
-    responseDTO => {
-      if(responseDTO){
-      this.rutaServidor = responseDTO.codigo;
-      }
-    },
-    error => {
-      this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
-    }
-  );
-  this.obtenerColillaActual();
-  }
+    // obtenemos el semanario
+    this.setDaysServicio();
 
-  ngOnInit(): void {
-    this.esDuplicado=false;
-    this.selectTodas=false;
-    this.fechaActual=new Date();
-   
-  }
-
-  setDaysServicio():void{
-    this.productosService.consultarSemanaServidor().subscribe(
-      dias => {
-        const rs: any = dias;
-        this.fechaActual=FechaUtil.stringToDate(rs[7].toString());
-        console.log("Semea seridor: "+dias);
-        let contador=0;
-        rs.forEach(element => {
-          if(contador>=7){
-            return;
-          }
-          contador++;
-        const date=FechaUtil.stringToDate(element.toString());
-        console.log("new Date 1: "+date);
-          if(date.getDay() == 1){
-            this.days[0].date=element;
-          }
-          else if(date.getDay() == 2){
-            this.days[1].date=element;
-          }
-          else if(date.getDay() == 3){
-            this.days[2].date=element;
-          }
-          else if(date.getDay() == 4){
-            this.days[3].date=element;
-          }
-          else if(date.getDay() == 5){
-            this.days[4].date=element;
-          }
-          else if(date.getDay() == 6){
-            this.days[5].date=element;
-          }
-          else if(date.getDay() == 0){
-            this.days[6].date=element;
-          }
-        });
+    this.productosService.consultarRutaImagenes().subscribe(
+      responseDTO => {
+        if(responseDTO){
+          this.rutaServidor = responseDTO.codigo;
+        }
       },
       error => {
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
       }
     );
+
+    // subscribe evento busqueda de cliente
+    this.subscription = this.shellState.getEventoClienteBorrar().subscribe(evento => { 
+      if(evento){
+        this.obtenerInfoClienteBorrado()
+      }
+    });
+
+    // subscribe evento busqueda de cliente
+    this.subscription = this.shellState.getEventoClienteAgregar().subscribe(evento => { 
+      if(evento){
+        this.validExistenciaClienteLocalStorage()
+      }
+    });
+
   }
+
+
+  ngOnInit(): void {
+    this.lengEspanol = {
+      firstDayOfWeek: 0,
+      dayNames: ["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"],
+      dayNamesShort: ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
+      dayNamesMin: ["Do","Lu","Ma","Mi","Ju","Vi","Sa"],
+      monthNames: [ "Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre" ],
+      monthNamesShort: [ "Ene", "Feb", "Mar", "Abr", "May", "Jun","Jul", "Ago", "Sep", "Oct", "Nov", "Dic" ],
+      today: 'Hoy',
+      clear: 'Limpiar',
+      dateFormat: 'mm/dd/yy',
+      weekHeader: 'Wk'
+    };
+
+    this.validExistenciaClienteLocalStorage();
+  }
+
+
+  obtenerInfoClienteBorrado() {
+    this.idCustomer = '';
+    this.correoCustomer = '';
+    this.chanceForm.controls.nombreCliente.setValue('');
+    this.chanceForm.controls.tipoDocumento.setValue('');
+    this.chanceForm.controls.numeroDocumento.setValue('');
+    this.displayModalBuscarCliente = false;
+    this.emitirCliente(2)
+  }
+
+
+  validExistenciaClienteLocalStorage(){
+    let clienteOperacion = JSON.parse(localStorage.getItem('clienteOperacion'))
+    if(clienteOperacion){
+      if (clienteOperacion.idCustomer) {
+        this.idCustomer = clienteOperacion.idCustomer;
+        this.correoCustomer = clienteOperacion.correoCustomer;
+        this.chanceForm.controls.nombreCliente.setValue(clienteOperacion.nombreCliente);
+        this.chanceForm.controls.tipoDocumento.setValue(clienteOperacion.tipoDocumento);
+        this.chanceForm.controls.numeroDocumento.setValue(clienteOperacion.numeroDocumento);
+        this.displayModalBuscarCliente = false;
+        this.emitirCliente(1)
+      } else {
+        this.displayModalBuscarCliente = true;
+        this.emitirCliente(2)
+      }
+    } else {
+      this.displayModalBuscarCliente = true;
+      this.emitirCliente(2)
+    }
+  }
+
+  onFocus(event){
+    switch (event) {
+      case 1:
+        this.numeroUno = true;
+        this.numeroDos = false;
+        this.numeroTres = false;
+        this.numeroCuatro = false;
+        this.numeroCinco = false;
+        break;
+      case 2:
+        this.numeroUno = false;
+        this.numeroDos = true;
+        this.numeroTres = false;
+        this.numeroCuatro = false;
+        this.numeroCinco = false;
+        break;
+      case 3:
+        this.numeroUno = false;
+        this.numeroDos = false;
+        this.numeroTres = true;
+        this.numeroCuatro = false;
+        this.numeroCinco = false;
+        break;
+      case 4:
+        this.numeroUno = false;
+        this.numeroDos = false;
+        this.numeroTres = false;
+        this.numeroCuatro = true;
+        this.numeroCinco = false;
+        break;
+      case 5:
+        this.numeroUno = false;
+        this.numeroDos = false;
+        this.numeroTres = false;
+        this.numeroCuatro = false;
+        this.numeroCinco = true;
+        break;
+      default:
+        break;
+    }
+  }
+  
+
   /**
    * @author Luis Hernandez
    * @description Por medio de este metodo marcamos con color verde el dia de la apuesta y setiamos la fecha
    * @param day
    */
   get_date_bet(day) {
+    delete this.pCalendarioValor
     this.dayBet = day.date;
-
-    let fechaA=this.fechaActual;
-    let fechaB=FechaUtil.stringToDate(this.dayBet.toString());
-    if(fechaB <fechaA){
+    const fechaA = this.fechaActual;
+    const fechaB = FechaUtil.stringToDate(this.dayBet.toString());
+    if (fechaB < fechaA) {
       fechaB.setDate(fechaB.getDate() + 7);
-      this.dayBet=fechaB;
+      this.dayBet = fechaB;
+    } else {
+      this.dayBet = FechaUtil.stringToDate(this.dayBet.toString());
     }
-    else{
-   //  const dat= this.dayBet.toString().split('T');
-     this.dayBet=FechaUtil.stringToDate(this.dayBet.toString());
-    }
-      console.log("fecha cuando acaba el if: "+this.dayBet);
     // colocamos color al dia seleccionamos y le quitamos a los demas
     this.days.forEach(element => {
       if (element.name === day.name) {
@@ -195,17 +252,48 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
         chip.style.color = '#BE1E42';
       }
     });
+
+    this.checked = false;
     // llamamos el metodo que se encarga de consultar las loterias
     this.getLotteries();
   }
 
-  todas(){
-    this.selectTodas=true;
-    this.loterias.forEach(l => {
-      l.checked=true;
-    });
-  }
 
+  /**
+   * @description Metodo que se encarga de traer los dias del semanario
+   */
+  setDaysServicio(): void {
+    this.productosService.consultarSemanaServidor().subscribe(
+      dias => {
+        const rs: any = dias;
+        this.fechaActual = FechaUtil.stringToDate(rs[7].toString());
+        let contador = 0;
+        rs.forEach(element => {
+          if (contador >= 7) { return; }
+          contador++;
+          const date = FechaUtil.stringToDate(element.toString());
+          if (date.getDay() === 1) {
+            this.days[0].date = element;
+          } else if (date.getDay() === 2) {
+            this.days[1].date = element;
+          } else if (date.getDay() === 3) {
+            this.days[2].date = element;
+          } else if (date.getDay() === 4) {
+            this.days[3].date = element;
+          } else if (date.getDay() === 5) {
+            this.days[4].date = element;
+          } else if (date.getDay() === 6) {
+            this.days[5].date = element;
+          } else if (date.getDay() === 0) {
+            this.days[6].date = element;
+          }
+        });
+      },
+      error => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
+  }
 
 
   /**
@@ -215,289 +303,306 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
    * según el día
    */
   getLotteries(): void {
-    this.loterias=[];
-    this.selectTodas=false;
-      this.productosService.consultarLoterias(this.dayBet,6).subscribe(
-        loteriasData => {
-          const rs: any = loteriasData;
-          rs.forEach(element => {
-            this.loterias.push({
-              idLoteria: element.idLoteria,
-              codigo: element.codigo,
-              nombre: element.nombre,
-              nombreCorto: element.nombreCorto,
-              telefono: element.telefono,
-              idEstado: element.idEstado,
-              idEmpresa: element.idEmpresa,
-              idSorteo: element.idSorteo,
-              idSorteoDetalle: element.idSorteoDetalle,
-              checked: false,
-              url:this.rutaServidor+element.nombreImagen,
-              horaSorteo:element.horaSorteo
-            });
+    this.loterias = [];
+    this.productosService.consultarLoterias(this.dayBet, 2).subscribe(
+      loteriasData => {
+        const rs: any = loteriasData;
+        rs.forEach(element => {
+          this.loterias.push({
+            idLoteria: element.idLoteria,
+            codigo: element.codigo,
+            nombre: element.nombre,
+            nombreCorto: element.nombreCorto,
+            telefono: element.telefono,
+            idEstado: element.idEstado,
+            idEmpresa: element.idEmpresa,
+            idSorteo: element.idSorteo,
+            idSorteoDetalle: element.idSorteoDetalle,
+            checked: false,
+            url: this.rutaServidor + element.nombreImagen,
+            horaSorteo: element.horaSorteo
           });
-        },
-        error => {
-          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
-        }
-      );
+        });
+      },
+      error => {
+        this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+      }
+    );
+
+    const emitLoterias = {
+      loterias: this.loterias,
+      fechaSeleccionApuesta: this.dayBet
+    }
+    this.agregarLoterias.emit(emitLoterias);
   }
 
 
   /**
    * @author Luis Hernandez
-   * @description Metodo que se encarga de validar si
-   * existe o no el cliente, si este no existe se
-   * levanta un popup para su posterior creación
+   * @description Metodo que se encarga de marcar
+   * y desmarcar un checkbox seleccionado por el usuario
+   * @param event
+   * @param loteria
    */
-  validExistClient(): void {
+  toggleVisibility(loteria): void {
+    const keyResponse = this.getKeyObject(loteria.idLoteria);
+    let lotSelec = this.obtenerLoteriasSeleccionadas()
+    // if(lotSelec < 2){
+      
+      if (this.loterias[keyResponse].checked === true) {
+        this.loterias[keyResponse].checked = false;
+      } else {
+        this.loterias[keyResponse].checked = true;
+      }
+      let valid = true;
+      this.loterias.forEach(element => {
+        if (!element.checked) { valid = false; }
+      });
+      if (valid) {
+        this.checked = true;
+      } else {
+        this.checked = false;
+      }
+      
+      
+    // } else {
+    //   this.loterias[keyResponse].checked = false
+    //   let ele = document.getElementById("loteriaid"+loteria.idLoteria) as HTMLInputElement;
+    //   ele.checked = false;
+    // }
 
-    if (this.chanceForm.get('tipoDocumento').value && this.chanceForm.get('numeroDocumento').value) {
-      const clientesDTO: ClientesDTO = new ClientesDTO();
-      this.enabledCustomer = false;
-      this.chanceForm.controls.nombreCliente.setValue('');
-      clientesDTO.numeroDocumento = this.chanceForm.get('numeroDocumento').value;
-      clientesDTO.tipoDocumento = this.chanceForm.get('tipoDocumento').value;
-      this.productosService.clienteApuesta(clientesDTO).subscribe(
-        clienteData => {
-          const responseCliente: any = clienteData;
-          if (responseCliente.existe) {
-            const name = responseCliente.primerNombre + ' ' + responseCliente.segundoNombre + ' ' + responseCliente.primerApellido;
-            this.idCustomer = responseCliente.idCliente;
-            this.chanceForm.controls.nombreCliente.setValue(name);
-            this.enabledCustomer = true;
-          } else {
-            this.crearClienteChild.clienteForm.get('tipoDocumento').setValue(this.chanceForm.get('tipoDocumento').value);
-            this.crearClienteChild.clienteForm.get('numeroDocumento').setValue(this.chanceForm.get('numeroDocumento').value);
-            this.displayModalCreate = true;
-          }
-        },
-        error => {
-          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
-        }
-      );
+    const emitLoterias = {
+      loterias: this.loterias,
+      fechaSeleccionApuesta: this.dayBet
     }
+    this.agregarLoterias.emit(emitLoterias);
+  }
 
+
+
+  obtenerLoteriasSeleccionadas(){
+    let cant = 0
+    this.loterias.forEach(element => {
+      if(element.checked){
+        cant = cant + 1;
+      }
+    });
+    return cant;
+  }
+
+
+  limpiaLoterias(){
+    for (let index = 0; index < this.loterias.length; index++) {
+      this.loterias[index].checked = false;
+    }
   }
 
 
   /**
    * @author Luis Hernandez
-   * @description Metodo que devuelve un numero aleatorio de 3 cifras
+   * @description Metodo que 
+   * se encarga de validar si
+   * se seleccionan o no todas las loterias
    */
-  getNumberThree(): void {
-    this.chanceForm.controls.numero.setValue( Math.round(Math.random() * (100 - 999) + 999 ) );
-    this.chanceNumber(this.chanceForm.get('numero').value);
+  cambioSeleccion(event) {
+
+    if(event === 1){
+      if(this.checked === false){
+        this.checked = true;
+      } else {
+        this.checked = false;
+      }
+    }
+
+    if (this.checked) {
+      for (let index = 0; index < this.loterias.length; index++) {
+        this.loterias[index].checked = true;
+      }
+      this.checked = true;
+    } else {
+      for (let index = 0; index < this.loterias.length; index++) {
+        this.loterias[index].checked = false;
+      }
+      this.checked = false;
+    }
+
+    const emitLoterias = {
+      loterias: this.loterias,
+      fechaSeleccionApuesta: this.dayBet
+    }
+
+    this.agregarLoterias.emit(emitLoterias);
   }
 
-  limpiarA(){
-    this.chanceForm.controls.numeroA.setValue(null);
-  }
-  generrarA(){
-    if(this.seleccionado==3){
-      this.chanceForm.controls.numeroA.setValue(Math.round(Math.random() * (100 - 999) + 999 ) );
-    }
-    else if(this.seleccionado==4){
-      this.chanceForm.controls.numeroA.setValue(Math.round(Math.random() * (1000 - 9999) + 9999 ));
-    }
-    else{
-      this.messageService.add(MsjUtil.getMsjError('Debe diligenciar una modalidad'));
-    }
-  }
-  limpiarB(){
-    this.chanceForm.controls.numeroB.setValue(null);
-  }
-  generrarB(){
-    if(this.seleccionado==3){
-      this.chanceForm.controls.numeroB.setValue(Math.round(Math.random() * (100 - 999) + 999 ) );
-    }
-    else if(this.seleccionado==4){
-      this.chanceForm.controls.numeroB.setValue(Math.round(Math.random() * (1000 - 9999) + 9999 ));
-    }
-    else{
-      this.messageService.add(MsjUtil.getMsjError('Debe diligenciar una modalidad'));
-    }
-  }
-  limpiarC(){
-    this.chanceForm.controls.numeroC.setValue(null);
-  }
-  generrarC(){
-    if(this.seleccionado==3){
-      this.chanceForm.controls.numeroC.setValue(Math.round(Math.random() * (100 - 999) + 999 ) );
-    }
-    else if(this.seleccionado==4){
-      this.chanceForm.controls.numeroC.setValue(Math.round(Math.random() * (1000 - 9999) + 9999 ));
-    }
-    else{
-      this.messageService.add(MsjUtil.getMsjError('Debe diligenciar una modalidad'));
-    }
-  }
-  limpiarD(){
-    this.chanceForm.controls.numeroD.setValue(null);
-  }
-  generrarD(){
-    if(this.seleccionado==3){
-      this.chanceForm.controls.numeroD.setValue(Math.round(Math.random() * (100 - 999) + 999 ) );
-    }
-    else if(this.seleccionado==4){
-      this.chanceForm.controls.numeroD.setValue(Math.round(Math.random() * (1000 - 9999) + 9999 ));
-    }
-    else{
-      this.messageService.add(MsjUtil.getMsjError('Debe diligenciar una modalidad'));
-    }
-  }
-  limpiarE(){
-    this.chanceForm.controls.numeroE.setValue(null);
-  }
-  generrarE(){
-    if(this.seleccionado==3){
-      this.chanceForm.controls.numeroE.setValue(Math.round(Math.random() * (100 - 999) + 999 ) );
-    }
-    else if(this.seleccionado==4){
-      this.chanceForm.controls.numeroE.setValue(Math.round(Math.random() * (1000 - 9999) + 9999 ));
-    }
-    else{
-      this.messageService.add(MsjUtil.getMsjError('Debe diligenciar una modalidad'));
-    }
-  }
-  generar(numero){
-    this.seleccionado=numero;
-    if(numero==3){
-      this.chanceForm.controls.numeroA.setValue(Math.round(Math.random() * (100 - 999) + 999 ) );
-    }
-    else if(numero==4){
-      this.chanceForm.controls.numeroA.setValue(Math.round(Math.random() * (1000 - 9999) + 9999 ));
-    }
-   
-    this.consultarValoresModalidad(numero);
+
+  generarAletorio(){
+    return Math.round(Math.random() * (this.loterias.length-1 - 0) + 0);
   }
 
-  consultarModalidad(){
-    this.consultarValoresModalidad(this.chanceForm.get('numeroA').value.toString().length);
-  }
 
-  consultarValoresModalidad(numero){
-    this.valoresModalidades=[];
+  consultarValoresModalidad(numero, fila){
     //SUPER CHANCE
       this.productosService.consultarValoresModalidad("SUPER CHANCE",numero).subscribe(
         valoresData => {
-         this.valoresModalidades=valoresData;
+          if (fila === 1) {
+            this.valoresModalidadesUno = [];
+            valoresData.forEach(element => {this.valoresModalidadesUno.push({label: element, value: element})});
+            this.chanceForm.controls.valoresModalidadesUno.setValue(this.valoresModalidadesUno[0].value);
+          } else if(fila === 2){
+            this.valoresModalidadesDos = [];
+            valoresData.forEach(element => {this.valoresModalidadesDos.push({label: element, value: element})});
+            this.chanceForm.controls.valoresModalidadesDos.setValue(this.valoresModalidadesDos[0].value);
+          } else if(fila === 3){
+            this.valoresModalidadesTres = [];
+            valoresData.forEach(element => {this.valoresModalidadesTres.push({label: element, value: element})});
+            this.chanceForm.controls.valoresModalidadesTres.setValue(this.valoresModalidadesTres[0].value);
+          } else if(fila === 4){
+            this.valoresModalidadesCuatro = [];
+            valoresData.forEach(element => {this.valoresModalidadesCuatro.push({label: element, value: element})});
+            this.chanceForm.controls.valoresModalidadesCuatro.setValue(this.valoresModalidadesCuatro[0].value);
+          } else if(fila === 5){
+            this.valoresModalidadesCinco = [];
+            valoresData.forEach(element => {this.valoresModalidadesCinco.push({label: element, value: element})});
+            this.chanceForm.controls.valoresModalidadesCinco.setValue(this.valoresModalidadesCinco[0].value);
+          }
+          this.emitirModalidades();
         },
         error => {
           this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
         }
       );
   }
-  limpiar(){
-    this.chanceForm.controls.numeroA.setValue(null);
-  }
-  /**
-   * @author Luis Hernandez
-   * @description Metodo que devuelve un numero aleatorio de 4 cifras
-   */
-  getNumberFour() {
-    this.chanceForm.controls.numero.setValue(Math.round(Math.random() * (1000 - 9999) + 9999 ));
-    console.log(this.chanceForm.get('numero').value);
-    this.chanceNumber(this.chanceForm.get('numero').value);
-  }
 
 
-  /**
-   * @author Luis Hernandez
-   * @description Metodo que se encarga de
-   * habilitar y deshabilitar los campos de
-   * apuesta de cifras y combinado segun la
-   * cantidad de numeros de numero principal
-   * de la apuesta
-   */
-  chanceNumber(event) {
-    let value = null;
-    if(event && event.value){
-      value=event.value;
+  chance_validar_fila_modalidad(fila, numero){
+    if(String(numero).length === 3){
+      if(fila === 1){
+        this.consultarValoresModalidad(3,1)
+      } else if(fila === 2){
+        this.consultarValoresModalidad(3,2)
+      } else if(fila === 3){
+        this.consultarValoresModalidad(3,3)
+      } else if(fila === 4){
+        this.consultarValoresModalidad(3,4)
+      } else if(fila === 5){
+        this.consultarValoresModalidad(3,5)
+      }
+    } else if(String(numero).length === 4){
+      if(fila === 1){
+        this.consultarValoresModalidad(4,1)
+      } else if(fila === 2){
+        this.consultarValoresModalidad(4,2)
+      } else if(fila === 3){
+        this.consultarValoresModalidad(4,3)
+      } else if(fila === 4){
+        this.consultarValoresModalidad(4,4)
+      } else if(fila === 5){
+        this.consultarValoresModalidad(4,5)
+      }
     }
-    else{
-      value=event;
-    }
-  
-    this.enabledCombined = true;
-    this.enabledThree = true;
-    this.enabledTwo = true;
-    this.enabledOne = true;
-    if (String(value).length === 4) {
-      this.enabledCombined = true;
-      this.enabledThree = true;
-      this.enabledTwo = true;
-      this.enabledOne = true;
-    } else if (String(value).length === 3) {
-      this.enabledCombined = true;
-      this.enabledThree = false;
-      this.chanceForm.get('tresCifras').setValue('');
-      this.enabledTwo = true;
-      this.enabledOne = true;
-    } else if (String(value).length === 2) {
-      this.enabledCombined = false;
-      this.enabledThree = false;
-      this.enabledTwo = false;
-      this.chanceForm.get('combinado').setValue('');
-      this.chanceForm.get('tresCifras').setValue('');
-      this.chanceForm.get('dosCifras').setValue('');
-    }
-    else if (String(value).length === 1) {
-      this.enabledCombined = false;
-      this.enabledThree = false;
-      this.enabledTwo = false;
-      this.enabledOne = false;
-      this.chanceForm.get('combinado').setValue('');
-      this.chanceForm.get('tresCifras').setValue('');
-      this.chanceForm.get('dosCifras').setValue('');
-      this.chanceForm.get('unaCifra').setValue('');
-    }
+
+    this.emitirNumeros();
+    this.emitirModalidades();
   }
 
 
+  aleatorioTresCifras() {
+    if(this.numeroUno){
+      this.chanceForm.controls.numeroFilaUno.setValue(Math.round(Math.random() * (100 - 999) + 999));
+      this.consultarValoresModalidad(3,1)
+    }
+    if(this.numeroDos){
+      this.chanceForm.controls.numeroFilaDos.setValue(Math.round(Math.random() * (100 - 999) + 999));
+      this.consultarValoresModalidad(3,2)
+    }
+    if(this.numeroTres){
+      this.chanceForm.controls.numeroFilaTres.setValue(Math.round(Math.random() * (100 - 999) + 999));
+      this.consultarValoresModalidad(3,3)
+    }
+    if(this.numeroCuatro){
+      this.chanceForm.controls.numeroFilaCuatro.setValue(Math.round(Math.random() * (100 - 999) + 999));
+      this.consultarValoresModalidad(3,4)
+    }
+    if(this.numeroCinco){
+      this.chanceForm.controls.numeroFilaCinco.setValue(Math.round(Math.random() * (100 - 999) + 999));
+      this.consultarValoresModalidad(3,5)
+    }
+    this.emitirNumeros();
+    this.emitirModalidades();
+  }
+
+
+  aleatorioCuatroCifras() {
+    if(this.numeroUno){
+      this.chanceForm.controls.numeroFilaUno.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
+      this.consultarValoresModalidad(4,1)
+    }
+    if(this.numeroDos){
+      this.chanceForm.controls.numeroFilaDos.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
+      this.consultarValoresModalidad(4,2)
+    }
+    if(this.numeroTres){
+      this.chanceForm.controls.numeroFilaTres.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
+      this.consultarValoresModalidad(4,3)
+    }
+    if(this.numeroCuatro){
+      this.chanceForm.controls.numeroFilaCuatro.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
+      this.consultarValoresModalidad(4,4)
+    }
+    if(this.numeroCinco){
+      this.chanceForm.controls.numeroFilaCinco.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
+      this.consultarValoresModalidad(4,5)
+    }
+    this.emitirNumeros();
+    this.emitirModalidades();
+  }
+
+
+
+  aleatorioCuatroCifrasAll() {
+    this.chanceForm.controls.numeroFilaUno.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
+    this.consultarValoresModalidad(4,1)
+    this.chanceForm.controls.numeroFilaDos.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
+    this.consultarValoresModalidad(4,2)
+    this.chanceForm.controls.numeroFilaTres.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
+    this.consultarValoresModalidad(4,3)
+    this.chanceForm.controls.numeroFilaCuatro.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
+    this.consultarValoresModalidad(4,4)
+    this.chanceForm.controls.numeroFilaCinco.setValue(Math.round(Math.random() * (1000 - 9999) + 9999));
+    this.consultarValoresModalidad(4,5)
+    this.emitirNumeros();
+    this.emitirModalidades();
+  }
+
+
   /**
    * @author Luis Hernandez
-   * @description Metodo que se encarga de aplicar reglas de negocio
-   * de apuesta por el momento no se va a utilizar dado que indicaron
-   * que las apuesta debe quedar abierta
+   * @description Funcion que permite valida que el usuario
+   * solo ingrese numeros en los campos donde se espera solo numeros
+   * @param e
    */
-  // validInputBet(): void {
+  permitirSoloNumeros(e) {
+    const key = window.Event ? e.which : e.keyCode;
+    e.key.replace(/\D|\-/, '');
+    return (key >= 48 && key <= 57);
+  }
 
-  //   this.enabledThree = false;
-  //   this.enabledTwo = false;
-  //   this.enabledOne = false;
 
-  //   this.chanceForm.get('tresCifras').setValue('');
-  //   this.chanceForm.get('dosCifras').setValue('');
-  //   this.chanceForm.get('unaCifra').setValue('');
-
-  //   if (String(this.chanceForm.get('numero').value).length === 4) {
-  //     if (this.chanceForm.get('combinado').value && !this.chanceForm.get('valorDirecto').value) {
-  //       this.enabledThree = false;
-  //       this.enabledTwo = false;
-  //       this.enabledOne = false;
-  //     } else {
-  //       this.enabledThree = true;
-  //       this.enabledTwo = true;
-  //       this.enabledOne = true;
-  //     }
-  //   } else if (String(this.chanceForm.get('numero').value).length === 3) {
-  //     if (this.chanceForm.get('valorDirecto').value && this.chanceForm.get('combinado').value) {
-  //       this.enabledThree = false;
-  //       this.enabledTwo = true;
-  //       this.enabledOne = true;
-  //     } else if (this.chanceForm.get('combinado').value && !this.chanceForm.get('valorDirecto').value) {
-  //       this.enabledThree = false;
-  //       this.enabledTwo = false;
-  //       this.enabledOne = false;
-  //     } else if (this.chanceForm.get('valorDirecto').value && !this.chanceForm.get('combinado').value) {
-  //       this.enabledThree = false;
-  //       this.enabledTwo = true;
-  //       this.enabledOne = true;
-  //     }
-  //   }
-
-  // }
+  emitirCliente(event) {
+    if (event === 1) {
+      let clienteInfo = {
+        tipoDocumento: this.chanceForm.get('tipoDocumento').value,
+        numeroDocumento: this.chanceForm.get('numeroDocumento').value,
+        nombreCliente: this.chanceForm.get('nombreCliente').value,
+        idCustomer: this.idCustomer,
+        correoCustomer: this.correoCustomer
+      }
+      this.agregarCliente.emit(clienteInfo);
+    } else if (event === 2) {
+      let clienteInfo = { tipoDocumento: null, numeroDocumento: null, nombreCliente: null, idCustomer: null, correoCustomer: null }
+      this.agregarCliente.emit(clienteInfo);
+    }
+  }
 
 
   /**
@@ -513,317 +618,49 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
   }
 
 
-  validarLoterias(){
-    this.messageService.clear();
-
-    let fechaJuego=new Date(this.dayBet);
-    if(fechaJuego.getDate() < new Date().getDate()){
-      fechaJuego.setDate(fechaJuego.getDate() + 7);
-      this.dayBet=fechaJuego;
-    }
-
-    let valida=false;
-    //seleccion
-    if(this.loterias==null || this.loterias==undefined || this.loterias.length==0){
-      this.messageService.add(MsjUtil.getToastErrorMedium('Por favor diligenciar todos los campos'));
-      return;
-    }
-    let valid = true;
-    this.loterias.forEach(element => {
-      if (element.checked) {
-         valid = false; 
-       }
-    });
-    if(valid){
-      this.messageService.add(MsjUtil.getToastErrorMedium('Por seleccionar una loteria'));
-      return;
-    }
-    //valida nulos
-    if(this.chanceForm.get('numeroA').value == null || this.chanceForm.get('numeroA').value ==''){
-      valida=true;
-    }
-    
-    if(valida){
-      this.messageService.add(MsjUtil.getToastErrorMedium('Por favor diligenciar todos los campos'));
-      return;
-    }
-    valida=false;
-   if( this.chanceForm.get('valorApostado').value==null ||  this.chanceForm.get('valorApostado').value==undefined
-   ||  this.chanceForm.get('valorApostado').value==''){
-    valida=true;
-   }
-    if(valida){
-      this.messageService.add(MsjUtil.getToastErrorMedium('Por favor diligenciar todos los campos'));
-      return;
-    }
-     //validar longitudes
-     valida=false;
-    
-      if(this.chanceForm.get('numeroA').value.toString().length < 3 ||
-      this.chanceForm.get('numeroA').value.toString().length > 4){
-        valida=true;
-      }
-
-    if(valida){
-      this.messageService.add(MsjUtil.getToastErrorMedium('Sólo se permiten juegos de 3 o 4 cifras'));
-      return;
-    }
-
-    if(this.btnAdd){
-      this.addBetSend();
-      this.incrementarNumeroSerie();
-    }
-    else if(this.btnEdit){
-      this.editBetSend();
-    }
-  }
-  /**
-   * @author Luis Hernandez
-   * @description funcion que se encarga de
-   * emitir la apuesta al componente bolsa
-   */
-  addBetSend(): void {
-      this.addBet.emit({
-        action: 1,
-        // lotteries: this.lotteriesSelected,
-        _id: 'bet_' + Math.floor(Math.random() * 999999),
-        idCustomer: this.idCustomer,
-        modalidad: null,
-        numeroSuper:this.chanceForm.get('numeroA').value,
-        numberPlayed:null,
-        valorApostado: this.chanceForm.get('valorApostado').value,
-        apuestaA: null,
-        apuestaB:null,
-        apuestaC: null,
-        apuestaD: null,
-        apuestaE:null,
-        nombresLoteria:this.nombresLoterias(),
-        dataPlayed: this.dayBet,
-        loterias:this.lotteriesSelected,
-        colilla:  this.numeroSerie,
-        serie:  this.rolloColilla.serie,
-        colillaActual: this.rolloColilla.colillaActual,
-        idRollo:  this.auth.usuario.idRollo,
-        idVendedor: this.auth.usuario.idUsuario,
-      });
-      this.cleanInputs();
-      if(this.idCustomer){
-          this.enabledCustomer = true;
-      }
-      else{
-        this.enabledCustomer = false;
-      }
-     
-      this.selectUnmarkAllBol=false;
-    
-  }
-
-  nombresLoterias(){
-    let nombres="";
-    this.loterias.forEach(l => {
-      if(l.checked){
-        nombres=nombres+", "+l.nombreCorto;
-        }
-    });
-    return nombres.substr(1,nombres.length);
-  }
-  /**
-   * @author Luis Hernandez
-   * @description Metodo que se encarga
-   * de enviar a la bolsa el producto modificado
-   */
-  editBetSend() {
-      this.addBet.emit({
-        action:this.esDuplicado ? 1 : 0,
-        _id: this.esDuplicado ? 'bet_' + Math.floor(Math.random() * 999999) : this.idEdit,
-        documentCustomer: this.chanceForm.get('numeroDocumento').value,
-        nameCustomer: this.chanceForm.get('nombreCliente').value,
-        modalidad: null,
-        numeroSuper:this.chanceForm.get('numeroA').value,
-        numberPlayed:null,
-        valorApostado: this.chanceForm.get('valorApostado').value,
-        apuestaA: null,
-        apuestaB:null,
-        apuestaC: null,
-        apuestaD: null,
-        apuestaE:null,
-        nombresLoteria:this.nombresLoterias(),
-        dataPlayed: this.dayBet,
-        loterias:this.lotteriesSelected
-      });
-      this.cleanInputs();
-      if(this.chanceForm.get('nombreCliente').value){
-          this.enabledCustomer = true;
-      }
-      else{
-        this.enabledCustomer = false;
-      }
-      this.selectUnmarkAllBol=false;
-    
-  }
-
-  
-  /**
-   * @author Luis Hernandez
-   * @description Metodo que se valida cuales fueron
-   * las loterias seleccionadas y las manda para el carrito
-   */
-  get_lotteriesSelected() {
-    this.lotteriesSelected = [];
-    this.loterias.forEach(element => {
-      if (element.checked) {
-        this.lotteriesSelected.push({
-          idLoteria: element.idLoteria,
-          codigo: element.codigo,
-          nombre: element.nombre,
-          nombreCorto: element.nombreCorto,
-          telefono: element.telefono,
-          idEstado: element.idEstado,
-          idEmpresa: element.idEmpresa,
-          idSorteo: element.idSorteo,
-          idSorteoDetalle: element.idSorteoDetalle,
-          horaSorteo:element.horaSorteo
-        });
-      }
-    });
-    return this.lotteriesSelected;
-  }
-
-
   /**
    * @author Luis Hernandez
    * @param event
-   * @description metodo que se encarga
-   * de recibir los datos a editar y hace set
+   * @description Metodo que se encarga de
+   * recibir el false que emite el componente
+   * que contiene el html del fomulario de
+   * buscar cliente
    */
-  editBetSendEmit(event): void {
-    this.esDuplicado=event.repetirApuesta;
-    this.idEdit = event._id;
-    this.dayBet = event.dataPlayed;
-  //  this.chanceForm.get('numeroDocumento').setValue(event.documentCustomer);
-    this.chanceForm.get('numeroA').setValue(event.numeroSuper);
-    this.chanceForm.get('valorApostado').setValue(event.valorApostado);
-    if (event.nameCustomer) {
-      this.chanceForm.get('nombreCliente').setValue(event.nameCustomer);
-      this.enabledCustomer = true;
-    }
-    this.consultarValoresModalidad(event.numeroSuper.toString().length);
-    this.lotteriesSelected=event.loterias;
-    this.lotteriesSelected.forEach(element => {
-      element.checked=false;
-      this.toggleVisibility(element);
-    });
-    this.btnAdd = false;
-    this.btnEdit = true;
+  closeModalCliente(event): void {
+    this.displayModalBuscarCliente = event;
   }
 
 
-  /**
-   * @author Luis Hernandez
-   * @param event
-   * @description metodo que se da cuenta cuanto la transaccion fue ok
-   */
-  createBetSendEmit(event): void {
-    if (event) {
-      // limpiamos campos de información del cliente
-      this.chanceForm.get('tipoDocumento').setValue('');
-      this.chanceForm.get('numeroDocumento').setValue('');
-      this.chanceForm.get('nombreCliente').setValue('');
-      this.enabledCustomer = false;
-
-      // quitamos fecha y loterias seleccionadas
-      this.loterias = [];
-      this.days.forEach(element => {
-        const chip = document.getElementById(element.name);
-        chip.style.backgroundColor = '#ffffff';
-        chip.style.color = '#0083fe';
-      });
-      delete this.dayBet;
-      // limpiamos los demas campos
-      this.cleanInputs();
-     
-      this.obtenerColillaActual();
-      this.seriesColillas=[];
-    }
+  closeModalClienteVerCreacion(event): void {
+    this.crearClienteChild.clienteForm.get('tipoDocumento').setValue(event.tipoDocumento);
+    this.crearClienteChild.clienteForm.get('numeroDocumento').setValue(event.numeroDocumento);
+    this.displayModalBuscarCliente = false;
+    this.displayModalCreate = true;
+    this.emitirCliente(event.emitirCliente);
   }
 
 
-  /**
-   * @author Luis Hernandez
-   * @description Metodo que se encarga
-   * de validar que los campos obligatorios
-   * esten diligenciados
-   */
-  valid() {
-    //valido q selecionaron loterias
-     //selimpia panel loterias
-     let valid = true;
-     this.loterias.forEach(element => {
-       if (element.checked) {
-          valid = false; 
-        }
-     });
-     if(valid){
-      return false;
-     }
-     valid=false;
-     if (String(this.chanceForm.get('numero').value).length === 4
-        && (this.chanceForm.get('valorDirecto').value ||
-        this.chanceForm.get('combinado').value)) {
-          valid= true;
-    } else  if (String(this.chanceForm.get('numero').value).length === 3
-    && (this.chanceForm.get('valorDirecto').value ||
-    this.chanceForm.get('combinado').value)) {
-      valid= true;
-     }
-     else  if (String(this.chanceForm.get('numero').value).length === 2
-     && this.chanceForm.get('valorDirecto').value) {
-       valid= true;
-      }
-      else  if (String(this.chanceForm.get('numero').value).length === 1
-    && this.chanceForm.get('valorDirecto').value) {
-      valid= true;
-     }
-     if(!valid){
-      return false;
-     }
-    if (this.chanceForm.get('numero').valid && this.dayBet) {
-      if (this.chanceForm.get('valorDirecto').value ||
-          this.chanceForm.get('combinado').value ||
-          this.chanceForm.get('tresCifras').value ||
-          this.chanceForm.get('dosCifras').value ||
-          this.chanceForm.get('unaCifra').value ) {
-            return true;
-      } else {
-        return false;
-      }
-    } else {
-      return false;
+  searchCustomer(event): void {
+    this.idCustomer = event.idCustomer;
+    this.correoCustomer = event.correoCustomer;
+    this.chanceForm.controls.nombreCliente.setValue(event.nombreCliente);
+    this.chanceForm.controls.tipoDocumento.setValue(event.tipoDocumento);
+    this.chanceForm.controls.numeroDocumento.setValue(event.numeroDocumento);
+
+    let clienteOperacion = {
+      correoCustomer : this.correoCustomer,
+      idCustomer : this.idCustomer,
+      nombreCliente: event.nombreCliente,
+      numeroDocumento: event.numeroDocumento,
+      tipoDocumento: event.tipoDocumento
     }
-  }
+    localStorage.setItem('clienteOperacion', JSON.stringify(clienteOperacion));
+    this.displayModalBuscarCliente = false;
 
+    // llamamos evento observable que se encarga notificar al navbar nuevo cliente
+    this.shellState.enviarEventoCliente(true);
 
-  /**
-   * @author Luis Hernandez
-   * @description Metodo que se encarga de limpiar los campos
-   */
-  cleanInputs(): void {
-    
-    this.chanceForm.get('numeroA').setValue('');
-    this.valoresModalidades=[];
-    this.chanceForm.get('valorApostado').setValue('');
-    this.seleccionado=null;
-    this.enabledCustomer = false;
-    this.enabledCombined = true;
-    this.enabledThree = true;
-    this.enabledTwo = true;
-    this.enabledOne = true;
-    this.btnAdd = true;
-    this.btnEdit = false;
-    //selimpia panel loterias
-    this.loterias.forEach(element => {
-      element.checked= false; 
-  });
+    this.emitirCliente(event.emitirCliente);
   }
 
 
@@ -837,101 +674,21 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
     this.displayModalCreate = false;
     const name = event.primerNombre + ' ' + event.segundoNombre + ' ' + event.primerApellido;
     this.idCustomer = event.idPersona;
+    this.correoCustomer = event.correo;
     this.chanceForm.controls.nombreCliente.setValue(name);
     this.enabledCustomer = true;
+    this.emitirCliente(1)
   }
 
 
   /**
-   * @author Luis Hernandez
-   * @description Metodo que devuelve el
-   * dia sobre el cual se esta operando
+   * @author Luis Fernando Hernandez
+   * @description Metodo que se encarga 
    */
-  getDayWeek() {
-    const hoy = new Date();
-    const days = ['dom', 'lun', 'mar', 'mie', 'jue', 'vie', 'sab'];
-    const dt = new Date(hoy.getMonth() + 1 + ' ' + hoy.getDate() + ', ' + hoy.getFullYear() + ' 12:00:00');
-    return days[dt.getUTCDay()];
-  }
-
-
-  /**
-   * @author Luis Hernandez
-   * @description setiamos la fecha de los
-   * posibles dias de apuesta partiendo del
-   * dia actual
-   * @param dayWeek
-   */
-  setDays(dayWeek): void {
-    const hoy = new Date();
-    const dt = new Date();
-    switch (dayWeek) {
-      case 'lun':
-        this.days[0].date = dt;
-        this.days[1].date = new Date(dt.getTime() + (1 * 24 * 60 * 60 * 1000));
-        this.days[2].date = new Date(dt.getTime() + (2 * 24 * 60 * 60 * 1000));
-        this.days[3].date = new Date(dt.getTime() + (3 * 24 * 60 * 60 * 1000));
-        this.days[4].date = new Date(dt.getTime() + (4 * 24 * 60 * 60 * 1000));
-        this.days[5].date = new Date(dt.getTime() + (5 * 24 * 60 * 60 * 1000));
-        this.days[6].date = new Date(dt.getTime() + (6 * 24 * 60 * 60 * 1000));
-        break;
-      case 'mar':
-        this.days[0].date = new Date(dt.getTime() + (6 * 24 * 60 * 60 * 1000));
-        this.days[1].date = dt;
-        this.days[2].date = new Date(dt.getTime() + (1 * 24 * 60 * 60 * 1000));
-        this.days[3].date = new Date(dt.getTime() + (2 * 24 * 60 * 60 * 1000));
-        this.days[4].date = new Date(dt.getTime() + (3 * 24 * 60 * 60 * 1000));
-        this.days[5].date = new Date(dt.getTime() + (4 * 24 * 60 * 60 * 1000));
-        this.days[6].date = new Date(dt.getTime() + (5 * 24 * 60 * 60 * 1000));
-        break;
-      case 'mie':
-        this.days[0].date = new Date(dt.getTime() + (5 * 24 * 60 * 60 * 1000));
-        this.days[1].date = new Date(dt.getTime() + (6 * 24 * 60 * 60 * 1000));
-        this.days[2].date = dt;
-        this.days[3].date = new Date(dt.getTime() + (1 * 24 * 60 * 60 * 1000));
-        this.days[4].date = new Date(dt.getTime() + (2 * 24 * 60 * 60 * 1000));
-        this.days[5].date = new Date(dt.getTime() + (3 * 24 * 60 * 60 * 1000));
-        this.days[6].date = new Date(dt.getTime() + (4 * 24 * 60 * 60 * 1000));
-        break;
-      case 'jue':
-        this.days[0].date = new Date(dt.getTime() + (4 * 24 * 60 * 60 * 1000));
-        this.days[1].date = new Date(dt.getTime() + (5 * 24 * 60 * 60 * 1000));
-        this.days[2].date = new Date(dt.getTime() + (6 * 24 * 60 * 60 * 1000));
-        this.days[3].date = dt;
-        this.days[4].date = new Date(dt.getTime() + (1 * 24 * 60 * 60 * 1000));
-        this.days[5].date = new Date(dt.getTime() + (2 * 24 * 60 * 60 * 1000));
-        this.days[6].date = new Date(dt.getTime() + (3 * 24 * 60 * 60 * 1000));
-        break;
-      case 'vie':
-        this.days[0].date = new Date(dt.getTime() + (3 * 24 * 60 * 60 * 1000));
-        this.days[1].date = new Date(dt.getTime() + (4 * 24 * 60 * 60 * 1000));
-        this.days[2].date = new Date(dt.getTime() + (5 * 24 * 60 * 60 * 1000));
-        this.days[3].date = new Date(dt.getTime() + (6 * 24 * 60 * 60 * 1000));
-        this.days[4].date = dt;
-        this.days[5].date = new Date(dt.getTime() + (1 * 24 * 60 * 60 * 1000));
-        this.days[6].date = new Date(dt.getTime() + (2 * 24 * 60 * 60 * 1000));
-        break;
-      case 'sab':
-        this.days[0].date = new Date(dt.getTime() + (2 * 24 * 60 * 60 * 1000));
-        this.days[1].date = new Date(dt.getTime() + (3 * 24 * 60 * 60 * 1000));
-        this.days[2].date = new Date(dt.getTime() + (4 * 24 * 60 * 60 * 1000));
-        this.days[3].date = new Date(dt.getTime() + (5 * 24 * 60 * 60 * 1000));
-        this.days[4].date = new Date(dt.getTime() + (6 * 24 * 60 * 60 * 1000));
-        this.days[5].date = dt;
-        this.days[6].date = new Date(dt.getTime() + (1 * 24 * 60 * 60 * 1000));
-        break;
-      case 'dom':
-        this.days[0].date = new Date(dt.getTime() + (1 * 24 * 60 * 60 * 1000));
-        this.days[1].date = new Date(dt.getTime() + (2 * 24 * 60 * 60 * 1000));
-        this.days[2].date = new Date(dt.getTime() + (3 * 24 * 60 * 60 * 1000));
-        this.days[3].date = new Date(dt.getTime() + (4 * 24 * 60 * 60 * 1000));
-        this.days[4].date = new Date(dt.getTime() + (5 * 24 * 60 * 60 * 1000));
-        this.days[5].date = new Date(dt.getTime() + (6 * 24 * 60 * 60 * 1000));
-        this.days[6].date = dt;
-        break;
-      default:
-        break;
-    }
+  obtenerFechaCalendario(event) {
+    let FormatoMomentFecha = moment(new Date(event.toString())).format();
+    this.dayBet = FechaUtil.stringToDate(FormatoMomentFecha.toString());
+    this.getLotteries()
   }
 
 
@@ -949,182 +706,279 @@ export class ApuestaSuperComponent extends CommonComponent implements OnInit, On
   }
 
 
-  /**
-   * @author Luis Hernandez
-   * @description Funcion que permite valida que el usuario
-   * solo ingrese numeros en los campos donde se espera solo numeros
-   * @param e
-   */
-  keyPressNumber(e) {
- 
-      const key = window.Event ? e.which : e.keyCode;
-      e.key.replace(/\D|\-/, '');
-      return (key >= 48 && key <= 57);
-   
+  emitirNumeros() {
+    let numerosValores:any = [
+      {numeroFilaUno: this.chanceForm.get('numeroFilaUno').value},
+      {numeroFilaDos: this.chanceForm.get('numeroFilaDos').value},
+      {numeroFilaTres: this.chanceForm.get('numeroFilaTres').value},
+      {numeroFilaCuatro: this.chanceForm.get('numeroFilaCuatro').value},
+      {numeroFilaCinco: this.chanceForm.get('numeroFilaCinco').value}
+    ]
+    this.agregarNumeros.emit(numerosValores);
+  }
+
+
+
+  emitirModalidades() {
+    let modalidadesValores:any = [
+      {valoresModalidadesUno: this.chanceForm.get('valoresModalidadesUno').value},
+      {valoresModalidadesDos: this.chanceForm.get('valoresModalidadesDos').value},
+      {valoresModalidadesTres: this.chanceForm.get('valoresModalidadesTres').value},
+      {valoresModalidadesCuatro: this.chanceForm.get('valoresModalidadesCuatro').value},
+      {valoresModalidadesCinco: this.chanceForm.get('valoresModalidadesCinco').value}
+    ]
+    this.agregarModalidades.emit(modalidadesValores);
+  }
+
+
+
+  
+
+
+
+
+  borrarTodo(event) {
+
+    this.chanceForm.controls.numeroFilaUno.setValue('');
+    this.chanceForm.controls.numeroFilaDos.setValue('');
+    this.chanceForm.controls.numeroFilaTres.setValue('');
+    this.chanceForm.controls.numeroFilaCuatro.setValue('');
+    this.chanceForm.controls.numeroFilaCinco.setValue('');
+
+    this.chanceForm.controls.valoresModalidadesUno.setValue('');
+    this.chanceForm.controls.valoresModalidadesDos.setValue('');
+    this.chanceForm.controls.valoresModalidadesTres.setValue('');
+    this.chanceForm.controls.valoresModalidadesCuatro.setValue('');
+    this.chanceForm.controls.valoresModalidadesCinco.setValue('');
+
+    this.valoresModalidadesUno = [];
+    this.valoresModalidadesDos = [];
+    this.valoresModalidadesTres = [];
+    this.valoresModalidadesCuatro = [];
+    this.valoresModalidadesCinco = [];
+
+    this.loterias = [];
+    this.agregarLoterias.emit(this.loterias);
+    if(event === 1){
+      this.reiniciarEdit.emit(false);
+    }
     
+    this.emitirNumeros();
+    this.emitirModalidades();
+
+    document.getElementById('numeroFilaUno').focus();
+    
+
+    const chipL = document.getElementById('lun');
+    chipL.style.backgroundColor = '#FFFFFF';
+    chipL.style.color = '#BE1E42';
+
+    const chipM = document.getElementById('mar');
+    chipM.style.backgroundColor = '#FFFFFF';
+    chipM.style.color = '#BE1E42';
+
+    const chipMi = document.getElementById('mie');
+    chipMi.style.backgroundColor = '#FFFFFF';
+    chipMi.style.color = '#BE1E42';
+
+    const chipJ = document.getElementById('jue');
+    chipJ.style.backgroundColor = '#FFFFFF';
+    chipJ.style.color = '#BE1E42';
+
+    const chipV = document.getElementById('vie');
+    chipV.style.backgroundColor = '#FFFFFF';
+    chipV.style.color = '#BE1E42';
+
+    const chipS = document.getElementById('sab');
+    chipS.style.backgroundColor = '#FFFFFF';
+    chipS.style.color = '#BE1E42';
+
+    const chipD = document.getElementById('dom');
+    chipD.style.backgroundColor = '#FFFFFF';
+    chipD.style.color = '#BE1E42';
   }
 
 
-  /**
-   * @author Luis Hernandez
-   * @description Funcion que permite valida que el usuario
-   * solo ingrese numeros en los campos donde se espera solo numeros
-   * @param e
-   */
-  keyPressNumberChance(e) {
-    const key = window.Event ? e.which : e.keyCode;
-    e.key.replace(/\D|\-/, '');
-    return (key >= 48 && key <= 57);
-  }
+  editarProducto(event) {
+    this.borrarTodo(2)
 
+    this.edit = true;
+    const buscarApuestasEditar = JSON.parse(localStorage.getItem('superChanceApuesta'))
+    const apuestaEditar = buscarApuestasEditar.filter(buscarApuestaEditar => buscarApuestaEditar._id == event._id);
 
-  /**
-   * @author Luis Hernandez
-   * @description Metodo que se encarga de marcar
-   * y desmarcar un checkbox seleccionado por el usuario
-   * @param event
-   * @param loteria
-   */
-  toggleVisibility(loteria): void {
-    const keyResponse = this.getKeyObject(loteria.idLoteria);
-    if (this.loterias[keyResponse].checked) {
-      this.loterias[keyResponse].checked = false;
-    } else {
-      this.loterias[keyResponse].checked = true;
+    if (apuestaEditar[0].clienteOperacion.nombreCliente) {
+      this.enabledCustomer = true;
+      this.chanceForm.controls.nombreCliente.setValue(apuestaEditar[0].clienteOperacion.nombreCliente);
+      this.chanceForm.controls.tipoDocumento.setValue(apuestaEditar[0].clienteOperacion.tipoDocumento);
+      this.chanceForm.controls.numeroDocumento.setValue(apuestaEditar[0].clienteOperacion.numeroDocumento);
     }
 
-    let valid = true;
-    this.loterias.forEach(element => {
-      if (!element.checked) { valid = false; }
-    });
-
-    if (valid) {
-      this.selectUnmarkAllBol = true;
-    } else {
-      this.selectUnmarkAllBol = false;
+    this.loterias = apuestaEditar[0].loterias;
+    const emitLoterias = {
+      loterias: this.loterias,
+      fechaSeleccionApuesta: apuestaEditar[0].fechaSeleccionApuesta
     }
 
-    this.addLotteries.emit(this.get_lotteriesSelected());
+    this.agregarLoterias.emit(emitLoterias);
+    this.infoEdit = apuestaEditar;
+    this.setNumerosEvento(apuestaEditar[0].listaNumeros, apuestaEditar[0].listaModalidades);
+
   }
 
 
-  /**
-   * @author Luis Hernandez
-   * @description Metodo que se encarga de
-   * seleccionar todas las loterias y marcar
-   * todos los checkbox
-   */
-  selectUnmarkAll(): void {
-    if (!this.selectUnmarkAllBol) {
-      // tslint:disable-next-line: prefer-for-of
-      for (let index = 0; index < this.loterias.length; index++) {
-        this.loterias[index].checked = true;
-      }
-      this.selectUnmarkAllBol = true;
-    } else {
-      // tslint:disable-next-line: prefer-for-of
-      for (let index = 0; index < this.loterias.length; index++) {
-        this.loterias[index].checked = false;
-      }
-      this.selectUnmarkAllBol = false;
+  borrarFilaUno() {
+    this.chanceForm.get('numeroFilaUno').setValue('');
+    this.chanceForm.get('valoresModalidadesUno').setValue('');
+    this.valoresModalidadesUno = [];
+    this.emitirNumeros();
+    this.emitirModalidades();
+    document.getElementById('numeroFilaUno').focus();
+  }
+
+
+  borrarFilaDos() {
+    this.chanceForm.get('numeroFilaDos').setValue('');
+    this.chanceForm.get('valoresModalidadesDos').setValue('');
+    this.valoresModalidadesDos = [];
+    this.emitirNumeros();
+    this.emitirModalidades();
+    document.getElementById('numeroFilaDos').focus();
+  }
+
+
+  borrarFilaTres() {
+    this.chanceForm.get('numeroFilaTres').setValue('');
+    this.chanceForm.get('valoresModalidadesTres').setValue('');
+    this.valoresModalidadesTres = [];
+    this.emitirNumeros();
+    this.emitirModalidades();
+    document.getElementById('numeroFilaTres').focus();
+  }
+
+
+  borrarFilaCuatro() {
+    this.chanceForm.get('numeroFilaCuatro').setValue('');
+    this.chanceForm.get('valoresModalidadesCuatro').setValue('');
+    this.valoresModalidadesCuatro = [];
+    this.emitirNumeros();
+    this.emitirModalidades();
+    document.getElementById('numeroFilaCuatro').focus();
+  }
+
+
+  borrarFilaCinco() {
+    this.chanceForm.get('numeroFilaCinco').setValue('');
+    this.chanceForm.get('valoresModalidadesCinco').setValue('');
+    this.valoresModalidadesCinco = [];
+    this.emitirNumeros();
+    this.emitirModalidades();
+    document.getElementById('numeroFilaCinco').focus();
+  }
+
+
+  setNumerosEvento(numeros, modalidades){
+    let nuevo_array_numeros_modalidades = []
+    for (let index = 0; index < numeros.length; index++) {
+      if(numeros[index].numeroFilaUno){nuevo_array_numeros_modalidades.push({numero:numeros[index].numeroFilaUno, modalidad:modalidades[0].valoresModalidadesUno})}
+      if(numeros[index].numeroFilaDos){nuevo_array_numeros_modalidades.push({numero:numeros[index].numeroFilaDos, modalidad:modalidades[1].valoresModalidadesDos})}
+      if(numeros[index].numeroFilaTres){nuevo_array_numeros_modalidades.push({numero:numeros[index].numeroFilaTres, modalidad:modalidades[2].valoresModalidadesTres})}
+      if(numeros[index].numeroFilaCuatro){nuevo_array_numeros_modalidades.push({numero:numeros[index].numeroFilaCuatro, modalidad:modalidades[3].valoresModalidadesCuatro})}
+      if(numeros[index].numeroFilaCinco){nuevo_array_numeros_modalidades.push({numero:numeros[index].numeroFilaCinco, modalidad:modalidades[4].valoresModalidadesCinco})}
+    }
+    this.operacion_por_fila(nuevo_array_numeros_modalidades)
+  }
+
+  operacion_por_fila(nuevo_array_numeros_modalidades) {
+
+    if(nuevo_array_numeros_modalidades[0]){
+      this.chanceForm.get('numeroFilaUno').setValue(nuevo_array_numeros_modalidades[0].numero);
+      this.productosService.consultarValoresModalidad("SUPER CHANCE",String(nuevo_array_numeros_modalidades[0].numero).length).subscribe(
+        valoresData => {
+          valoresData.forEach(element => {this.valoresModalidadesUno.push({label: element, value: element})});
+          this.chanceForm.controls.valoresModalidadesUno.setValue(nuevo_array_numeros_modalidades[0].modalidad);
+          this.emitirNumeros();
+          this.emitirModalidades();
+        },
+        error => {
+          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+        }
+      );
+
     }
 
-    this.addLotteries.emit(this.get_lotteriesSelected());
-  }
-
-
-  /**
-   * Se utiliza para limpiar los mensajes visualizados pantalla y titulos
-   */
-  ngOnDestroy(): void {
-    this.messageService.clear();
-  }
-
-
-   /**
-  * Método encargado de consulta la última colilla para venta
-  */
- public obtenerColillaActual():void {
-  const filtro = new FiltroOperacionDTO;
-  filtro.idRollo =  this.auth.usuario.idRollo;
-  filtro.idVendedor = this.auth.usuario.idUsuario;
-  if (filtro.idRollo) {
-  this.productosService.consultarColilla(filtro).subscribe(
-    colilla => {
-      this.rolloColilla = new RolloColillaDTO;
-      this.rolloColilla = colilla;
-      this.numeroSerie =colilla.serie + colilla.rangoColilla;
-      if (this.rolloColilla.colillaActual > this.rolloColilla.nroFinalSerie ) {
-        this.displayModalSerie = true;
-        this.rolloOperacion.ngOnInit();
-
-
-      }
-    },
-    error => {
-      this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
-    }
-  );
-  }
-
-}
-
-
- /**
-   * Método encargado de incrementar el número de serie
-   */
-  public incrementarNumeroSerie() {
-    this.seriesColillas.push(this.rolloColilla);
-    if (this.seriesColillas && this.seriesColillas.length > 1) {
-      let index = this.seriesColillas.length - 1
-      let colillaActual = this.seriesColillas[index].colillaActual;
-      colillaActual++;
-      const serie = this.seriesColillas[index].serie + String(colillaActual).padStart(7, '0');
-      this.numeroSerie = serie;
-      this.rolloColilla.colillaActual = colillaActual;
-
-    }
-  }
-
-
-  /**
-   * Permite cerrar el modal de operaciones
-   * @param event 
-   */
-  public closeModalOperacion(event): void {
-    this.displayModalSerie = event;
-  }
-
-
-
-   /**
-   * Permite obtner la colilla actual 
-   * @param event 
-   */
-  public iniciaOperacion(event): void {
-    if(event){
-      let papeleriaRolloDTO = new PapeleriaRolloDTO;
-      papeleriaRolloDTO = event;
-      this.numeroSerie = papeleriaRolloDTO.serie + papeleriaRolloDTO.rangoInicial;
-      this.rolloColilla.colillaActual  = papeleriaRolloDTO.nroInicialSerie;
-      this.auth.usuario.idRollo = papeleriaRolloDTO.idRollo;
+    if(nuevo_array_numeros_modalidades[1]){
+      this.chanceForm.get('numeroFilaDos').setValue(nuevo_array_numeros_modalidades[1].numero);
+      this.productosService.consultarValoresModalidad("SUPER CHANCE",String(nuevo_array_numeros_modalidades[1].numero).length).subscribe(
+        valoresData => {
+          valoresData.forEach(element => {this.valoresModalidadesDos.push({label: element, value: element})});
+          this.chanceForm.controls.valoresModalidadesDos.setValue(nuevo_array_numeros_modalidades[1].modalidad);
+          this.emitirNumeros();
+          this.emitirModalidades();
+        },
+        error => {
+          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+        }
+      );
     }
 
+    if(nuevo_array_numeros_modalidades[2]){
+      this.chanceForm.get('numeroFilaTres').setValue(nuevo_array_numeros_modalidades[2].numero);
+      this.productosService.consultarValoresModalidad("SUPER CHANCE",String(nuevo_array_numeros_modalidades[2].numero).length).subscribe(
+        valoresData => {
+          valoresData.forEach(element => {this.valoresModalidadesTres.push({label: element, value: element})});
+          this.chanceForm.controls.valoresModalidadesTres.setValue(nuevo_array_numeros_modalidades[2].modalidad);
+          this.emitirNumeros();
+          this.emitirModalidades();
+        },
+        error => {
+          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+        }
+      );
+    }
+
+    if(nuevo_array_numeros_modalidades[3]){
+      this.chanceForm.get('numeroFilaCuatro').setValue(nuevo_array_numeros_modalidades[3].numero);
+      this.productosService.consultarValoresModalidad("SUPER CHANCE",String(nuevo_array_numeros_modalidades[3].numero).length).subscribe(
+        valoresData => {
+          valoresData.forEach(element => {this.valoresModalidadesCuatro.push({label: element, value: element})});
+          this.chanceForm.controls.valoresModalidadesCuatro.setValue(nuevo_array_numeros_modalidades[3].modalidad);
+          this.emitirNumeros();
+          this.emitirModalidades();
+        },
+        error => {
+          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+        }
+      );
+    }
+
+    if(nuevo_array_numeros_modalidades[4]){
+      this.chanceForm.get('numeroFilaCinco').setValue(nuevo_array_numeros_modalidades[4].numero);
+      this.productosService.consultarValoresModalidad("SUPER CHANCE",String(nuevo_array_numeros_modalidades[4].numero).length).subscribe(
+        valoresData => {
+          valoresData.forEach(element => {this.valoresModalidadesCinco.push({label: element, value: element})});
+          this.chanceForm.controls.valoresModalidadesCinco.setValue(nuevo_array_numeros_modalidades[4].modalidad);
+          this.emitirNumeros();
+          this.emitirModalidades();
+        },
+        error => {
+          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
+        }
+      );
+    }
+
+    
+    
+
+
   }
 
 
-   /**
-   * Permite cambiar la serie 
-   * @param event 
-   */
-  public updateSerie(event): void {
-    if(event){
-        this.numeroSerie = event.rangoColilla;
-        this.rolloColilla.colillaActual = event.colillaActual;
-      }
-    }
+
 
   
-  
+
+
+
+
 
 }
