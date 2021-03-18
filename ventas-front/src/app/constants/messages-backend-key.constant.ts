@@ -32,6 +32,9 @@ export class MessagesBackendKeyConstant {
   /** Programación nula. Inténtalo de nuevo. */
   static readonly KEY_PROGRAMACION_NULA: string = 'security-0002';
 
+  /** Papelería asociada a usuario */
+  static readonly KEY_PAPELERIA_USUARIO: string = 'admin-0025';
+
 
 
 }

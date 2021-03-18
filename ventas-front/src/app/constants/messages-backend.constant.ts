@@ -50,4 +50,7 @@ export class MessagesBackendConstant {
     /** Mensaje cuando el USER intenta ingresar y no tiene programación */
     static readonly PROGRAMACION_NULA: string = 'No tiene programación de horario para la hora especifica.';
 
+    /** Mensaje cuando el USER no tiene papelería */
+    static readonly PAPELERIA_USUARIO: string = 'No se encontró papelería asociada al asesor.';
+
 }
