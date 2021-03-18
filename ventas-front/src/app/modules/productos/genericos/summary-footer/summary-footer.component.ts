@@ -343,8 +343,51 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
 
 
   obtenerValoresTotalesSuperAstro(){
+
+    let calcular_boolean = false;
     
     console.log('LISTO PARA HACER CALCULOS DE VALORES PARA SUPER ASTRO !!!');
+
+    this.valueVat = 0;
+    this.valueBetTotal = 0;
+    this.valueBet = 0;
+    let valorSumado = 0;
+
+    
+
+    this.listaValores.forEach(element => {
+      if(element.valorUno){
+        valorSumado = valorSumado + parseInt(element.valorUno.replace(/[^a-zA-Z 0-9.]+/g,''))
+        calcular_boolean = true;
+      }
+      if(element.valorDos){
+        valorSumado = valorSumado + parseInt(element.valorDos.replace(/[^a-zA-Z 0-9.]+/g,''))
+        calcular_boolean = true;
+      }
+      if(element.valorTres){
+        valorSumado = valorSumado + parseInt(element.valorTres.replace(/[^a-zA-Z 0-9.]+/g,''))
+        calcular_boolean = true;
+      }
+      if(element.valorCuatro){
+        valorSumado = valorSumado + parseInt(element.valorCuatro.replace(/[^a-zA-Z 0-9.]+/g,''))
+        calcular_boolean = true;
+      }
+      if(element.valorCinco){
+        valorSumado = valorSumado + parseInt(element.valorCinco.replace(/[^a-zA-Z 0-9.]+/g,''))
+        calcular_boolean = true;
+      }
+    });
+
+    // console.log('valorSumado');
+    // console.log(valorSumado);
+    // console.log('valorSumado');
+
+    if(calcular_boolean){
+      const ivaNv = this.inputVat / 100 + 1
+      this.valueBetTotal =  valorSumado;
+      this.valueBet = this.valueBetTotal / ivaNv;
+      this.valueVat = this.valueBetTotal - this.valueBet;
+    }
   }
 
 

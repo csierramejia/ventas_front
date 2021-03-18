@@ -674,11 +674,11 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
 
   emitirValores() {
     let valores:any = [
-      {numeroFilaUno: this.chanceForm.get('valorUno').value},
-      {numeroFilaDos: this.chanceForm.get('valorDos').value},
-      {numeroFilaTres: this.chanceForm.get('valorTres').value},
-      {numeroFilaCuatro: this.chanceForm.get('valorCuatro').value},
-      {numeroFilaCinco: this.chanceForm.get('valorCinco').value}
+      {valorUno: this.chanceForm.get('valorUno').value},
+      {valorDos: this.chanceForm.get('valorDos').value},
+      {valorTres: this.chanceForm.get('valorTres').value},
+      {valorCuatro: this.chanceForm.get('valorCuatro').value},
+      {valorCinco: this.chanceForm.get('valorCinco').value}
     ]
     this.agregarValores.emit(valores);
   }
