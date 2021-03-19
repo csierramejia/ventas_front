@@ -73,7 +73,8 @@
 
 
     <p-dialog header="CONFIRMACIÓN" [(visible)]="verConfirmacionPopap" [style]="{width: '664px'}">
-        <app-confirmacion-agregar-carrito  
+        <app-confirmacion-agregar-carrito 
+            [productoParent]="productoParent" 
             (closePopup)="closeModal($event)" 
             (eventoCrearEditar)="eventoCrearEditar($event)">
         </app-confirmacion-agregar-carrito>

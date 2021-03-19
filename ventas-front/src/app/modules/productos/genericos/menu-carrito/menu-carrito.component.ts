@@ -50,6 +50,9 @@ export class MenuCarritoComponent implements OnInit {
       case 'super-chance':
         this.borrarApuestaOperacion(id,'superChanceApuesta');
         break;
+      case 'super-astro':
+        this.borrarApuestaOperacion(id,'superAstroApuesta');
+        break;
       default:
         break;
     }
@@ -71,6 +74,9 @@ export class MenuCarritoComponent implements OnInit {
         break;
       case 'super-chance':
         this.duplicarApuestaOperacion(id, 'superChanceApuesta');
+        break;
+      case 'super-astro':
+        this.duplicarApuestaOperacion(id, 'superAstroApuesta');
         break;
       default:
         break;
@@ -108,16 +114,18 @@ export class MenuCarritoComponent implements OnInit {
 
 
   refrescarCarrito(){
-    console.log('-------');
     switch (this.productoParent) {
       case 'chance':
-        this.refrescarCarritoChance();
+        this.refrescarCarritoChance('chanceApuesta');
         break;
       case 'chance-millonario':
-        this.refrescarCarritoChanceMillonario();
+        this.refrescarCarritoChance('chanceApuestaMillonario');
         break;
       case 'super-chance':
-        this.refrescarCarritoSuperChance();
+        this.refrescarCarritoChance('superChanceApuesta');
+        break;
+      case 'super-astro':
+        this.refrescarCarritoChance('superAstroApuesta');
         break;
       default:
         break;
@@ -125,88 +133,12 @@ export class MenuCarritoComponent implements OnInit {
   }
 
 
-  refrescarCarritoChance() {
+  refrescarCarritoChance(eventProducto) {
     this.subtotal = 0;
     this.productos = [];
-    if( JSON.parse(localStorage.getItem('chanceApuesta')) ){
-      if(JSON.parse(localStorage.getItem('chanceApuesta')).length > 0) {
-        const iteracionLocalStorageProductos = JSON.parse(localStorage.getItem('chanceApuesta'));
-        const newProductos = []
-        iteracionLocalStorageProductos.forEach(element => {
-          const loteriasSeleccionadas = this.get_lotteriesSelected(element.loterias)
-          newProductos.push({
-            apostado:element.apostado,
-            colilla:element.colilla,
-            fechaActual:element.fechaActual,
-            fechaSeleccionApuesta:element.fechaSeleccionApuesta,
-            iva:element.iva,
-            listaNumeros:element.listaNumeros,
-            loterias:loteriasSeleccionadas,
-            total:Math.round(element.total),
-            _id:element._id,
-            viewRepetir: false,
-            serie: element.serie,
-            colillaActual:element.colillaActual,
-            idRollo: element.idRollo,
-            idVendedor:element.idUsuario,
-        
-          })
-          this.subtotal = Math.round(this.subtotal + element.total)
-        });
-        this.productos = newProductos;
-      } else {
-        this.productos = []
-      }
-    }
-
-    // emitimos el evento para el observable
-    this.shellState.enviarEventoCarritoELiminar(true);
-  }
-
-
-
-  refrescarCarritoChanceMillonario() {
-    this.subtotal = 0;
-    this.productos = [];
-    if( JSON.parse(localStorage.getItem('chanceApuestaMillonario')) ){
-      if(JSON.parse(localStorage.getItem('chanceApuestaMillonario')).length > 0) {
-        const iteracionLocalStorageProductos = JSON.parse(localStorage.getItem('chanceApuestaMillonario'));
-        const newProductos = []
-        iteracionLocalStorageProductos.forEach(element => {
-          const loteriasSeleccionadas = this.get_lotteriesSelected(element.loterias)
-          newProductos.push({
-            apostado:element.apostado,
-            colilla:element.colilla,
-            fechaActual:element.fechaActual,
-            fechaSeleccionApuesta:element.fechaSeleccionApuesta,
-            iva:element.iva,
-            listaNumeros:element.listaNumeros,
-            loterias:loteriasSeleccionadas,
-            total:Math.round(element.total),
-            _id:element._id,
-            viewRepetir: false,
-            serie: element.serie,
-            colillaActual:element.colillaActual,
-            idRollo: element.idRollo,
-            idVendedor:element.idUsuario,
-          })
-          this.subtotal = Math.round(this.subtotal + element.total)
-        });
-        this.productos = newProductos;
-      } else {
-        this.productos = []
-      }
-    }
-    this.shellState.enviarEventoCarritoELiminar(true);
-  }
-
-
-  refrescarCarritoSuperChance() {
-    this.subtotal = 0;
-    this.productos = [];
-    if( JSON.parse(localStorage.getItem('superChanceApuesta')) ){
-      if(JSON.parse(localStorage.getItem('superChanceApuesta')).length > 0) {
-        const iteracionLocalStorageProductos = JSON.parse(localStorage.getItem('superChanceApuesta'));
+    if( JSON.parse(localStorage.getItem(eventProducto)) ){
+      if(JSON.parse(localStorage.getItem(eventProducto)).length > 0) {
+        const iteracionLocalStorageProductos = JSON.parse(localStorage.getItem(eventProducto));
         const newProductos = []
         iteracionLocalStorageProductos.forEach(element => {
           const loteriasSeleccionadas = this.get_lotteriesSelected(element.loterias)
@@ -281,18 +213,19 @@ export class MenuCarritoComponent implements OnInit {
   }
 
 
-  ////////// ----------------- FALTA REVISAR PARA IDENTIFICAR TIPO GENERICO ------------------- ////////////
   aumentarDuplicidad(){
     if(this.cantidadRepetir < 5){
       this.cantidadRepetir = this.cantidadRepetir + 1;
     }
   }
 
+
   disminuirDuplicidad(){
     if(this.cantidadRepetir > 1){
       this.cantidadRepetir = this.cantidadRepetir - 1;
     }
   }
+
 
   viewRepetirEvent(index){
     this.cantidadRepetir = 1;
@@ -303,8 +236,8 @@ export class MenuCarritoComponent implements OnInit {
     }
   }
 
-  verResumenCompra(): void {
 
+  verResumenCompra(): void {
     switch (this.productoParent) {
       case 'chance':
         this.router.navigate([RouterConstant.NAVIGATE_REVISA_PAGO], { queryParams: { producto: 'chance' } });
@@ -315,12 +248,14 @@ export class MenuCarritoComponent implements OnInit {
       case 'super-chance':
         this.router.navigate([RouterConstant.NAVIGATE_REVISA_PAGO], { queryParams: { producto: 'super-chance' } });
         break;
+      case 'super-astro':
+        this.router.navigate([RouterConstant.NAVIGATE_REVISA_PAGO], { queryParams: { producto: 'super-astro' } });
+        break;
       default:
         break;
     }
-
-    
   }
+
 
   /**
    * Método que permite asignar la serie en el carrito en orden seuencia
@@ -357,7 +292,6 @@ export class MenuCarritoComponent implements OnInit {
    * @param productosDuplicar 
    */
   private asignarSerieDuplicarApuesta(newLocalstorage,productosDuplicar):void{
-
     for (let i = 1; i < newLocalstorage.length; i++) {
       if (newLocalstorage.length > 0) {
         let ind = i - 1;
@@ -372,14 +306,5 @@ export class MenuCarritoComponent implements OnInit {
     rolloDTO.rangoColilla = newLocalstorage.length > 0 ? newLocalstorage[newLocalstorage.length - 1].colilla : productosDuplicar[0].colilla;
     rolloDTO.colillaActual =newLocalstorage.length > 0 ? newLocalstorage[newLocalstorage.length - 1].colillaActual : productosDuplicar[0].colillaActual;
     this.updateSerieChance.emit(rolloDTO);
-   
-
-
-
   }
-  ////////// ----------------- FALTA REVISAR PARA IDENTIFICAR TIPO GENERICO ------------------- ////////////
-
-
-
-
 }

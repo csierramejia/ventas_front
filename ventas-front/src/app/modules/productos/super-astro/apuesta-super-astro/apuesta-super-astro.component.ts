@@ -698,11 +698,6 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
 
 
 
-  
-
-
-
-
   borrarTodo(event) {
 
     this.chanceForm.controls.numeroFilaUno.setValue('');
@@ -710,6 +705,12 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
     this.chanceForm.controls.numeroFilaTres.setValue('');
     this.chanceForm.controls.numeroFilaCuatro.setValue('');
     this.chanceForm.controls.numeroFilaCinco.setValue('');
+
+    this.chanceForm.controls.valorUno.setValue('');
+    this.chanceForm.controls.valorDos.setValue('');
+    this.chanceForm.controls.valorTres.setValue('');
+    this.chanceForm.controls.valorCuatro.setValue('');
+    this.chanceForm.controls.valorCinco.setValue('');
 
     this.chanceForm.controls.valoresModalidadesUno.setValue('');
     this.chanceForm.controls.valoresModalidadesDos.setValue('');
@@ -733,7 +734,6 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
     this.emitirModalidades();
 
     document.getElementById('numeroFilaUno').focus();
-    
 
     const chipL = document.getElementById('lun');
     chipL.style.backgroundColor = '#FFFFFF';

@@ -7,20 +7,47 @@
         <div class="row espacio">
           <div class="col-md-12"><b class="info-apuesta">COLILLA:</b> <span class="estilo-info-span">{{colilla}}</span></div>
         </div>
-        <div class="row espacio">
+        <div class="row espacio" *ngIf="!super_astro">
           <div class="col-md-12"><b class="info-apuesta">NUMEROS:</b> <span class="estilo-info-span">{{numeros}}</span></div>
         </div>
         <div class="row espacio">
           <div class="col-md-12"><b class="info-apuesta">LOTERIAS:</b> <span class="estilo-info-span">{{loterias}}</span></div>
         </div>
-        <div class="row espacio">
+        <div class="row espacio" *ngIf="!super_astro">
           <div class="col-md-12"><b class="info-apuesta">APOSTADO:</b> <span class="estilo-info-span">{{apostado}}</span></div>
         </div>
-        <div class="row espacio">
+        <div class="row espacio" *ngIf="!super_astro">
           <div class="col-md-12"><b class="info-apuesta">IVA:</b> <span class="estilo-info-span">{{iva}}</span></div>
         </div>
-        <div class="row espacio">
+        <div class="row espacio" *ngIf="!super_astro">
           <div class="col-md-12"><b class="info-apuesta">TOTAL:</b> <span class="estilo-info-span">{{total}}</span></div>
+        </div>
+
+        <div class="row descripcion" *ngIf="super_astro">
+          <div class="col-md-4">
+            <b>NÚMERO</b><br/>
+            <div class="row" *ngFor="let numero of numerosSupeAstro">
+              <span class="numero_text">{{numero}}</span>
+            </div>
+          </div>
+          <div class="col-md-4" *ngIf="super_astro">
+            <b>APOSTADO</b><br/>
+            <div class="row" *ngFor="let valor of listaValores">
+              <span class="numero_text">{{valor}}</span>
+            </div>
+          </div>
+          <div class="col-md-4" *ngIf="super_astro">
+            <b>ASTROS</b><br/>
+            <div class="row" *ngFor="let astr of loteriasAstros">
+              <span class="numero_text">{{astr}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="row descripcion" *ngIf="super_astro">
+          <div class="col-md-4"><b>NETO:</b><span class="numero_text">{{apostado}}</span></div>
+          <div class="col-md-4"><b>IVA:</b><span class="numero_text">{{iva}}</span></div>
+          <div class="col-md-4"><b>TOTAL:</b><span class="numero_text">{{total}}</span></div>
         </div>
 
 

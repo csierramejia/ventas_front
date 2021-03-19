@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy, Input } from '@angular/core';
 import { CommonComponent } from 'src/app/utilities/common.component';
 import { ProductosService } from '../../productos.service';
 import { MessageService } from 'primeng/api';
@@ -18,11 +18,17 @@ export class ConfirmacionAgregarCarritoComponent extends CommonComponent impleme
   // tslint:disable-next-line: no-output-native
   @Output() closePopup: EventEmitter<any> = new EventEmitter();
   @Output() eventoCrearEditar: EventEmitter<any> = new EventEmitter();
-
+  @Input() productoParent: string;
   isCreate = false;
 
   colilla = '';
   numeros = '';
+
+  numerosSupeAstro = []
+  loteriasAstros = []
+  listaValores = []
+
+
   loterias = '';
   apostado = 0;
   iva = 0;
@@ -30,6 +36,8 @@ export class ConfirmacionAgregarCarritoComponent extends CommonComponent impleme
   public idRollo: number;
   public rolloColilla : RolloColillaDTO;
   public idUsuario: number;
+
+  super_astro = false;
   
 
 
@@ -42,6 +50,11 @@ export class ConfirmacionAgregarCarritoComponent extends CommonComponent impleme
   }
 
   ngOnInit(): void {
+    if(this.productoParent == 'super-astro') {
+      this.super_astro = true;
+    } else {
+      this.super_astro = false;
+    }
   }
 
 

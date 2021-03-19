@@ -345,15 +345,10 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
   obtenerValoresTotalesSuperAstro(){
 
     let calcular_boolean = false;
-    
-    console.log('LISTO PARA HACER CALCULOS DE VALORES PARA SUPER ASTRO !!!');
-
     this.valueVat = 0;
     this.valueBetTotal = 0;
     this.valueBet = 0;
     let valorSumado = 0;
-
-    
 
     this.listaValores.forEach(element => {
       if(element.valorUno){
@@ -378,10 +373,6 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
       }
     });
 
-    // console.log('valorSumado');
-    // console.log(valorSumado);
-    // console.log('valorSumado');
-
     if(calcular_boolean){
       const ivaNv = this.inputVat / 100 + 1
       this.valueBetTotal =  valorSumado;
@@ -399,7 +390,6 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
 
 
   agregarCarritoF(): void { 
-
     switch (this.productoParent) {
       case 'chance':
         this.agregarCarritoFChance();
@@ -409,6 +399,9 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
         break;
       case 'super-chance':
         this.agregarCarritoFSuperChance();
+        break;
+      case 'super-astro':
+        this.agregarCarritoFSuperAstro();
         break;
       default:
         break;
@@ -579,6 +572,68 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
   }
 
 
+
+  agregarCarritoFSuperAstro(): void {
+    const listaNumeros = this.obtenerFilasConApuesta(this.listaNumeros)
+
+    if(this.validarCeros(listaNumeros)){
+      this.messageService.add(MsjUtil.getToastErrorMedium('Usted no puede colocar valores en 0'));
+    } else {
+      if(this.colilla && this.fechaActual && this.loteriaSeleccionadas.length > 0 && listaNumeros.length > 0 && this.listaValores.length > 0 && this.listaModalidades.length > 0) {
+        if(this.edit){
+          this.confirmacionAgregar.isCreate = false;
+          this.verConfirmacionPopap = true;
+          this.confirmacionAgregar.colilla = this.colilla
+          this.confirmacionAgregar.numeros = this.concatenarNumeros(listaNumeros)
+          /////////////////////////////////////////
+          this.confirmacionAgregar.numerosSupeAstro = this.organizar_numeros_array(listaNumeros);
+          this.confirmacionAgregar.loteriasAstros = this.organizar_astros_array(this.listaModalidades);
+          this.confirmacionAgregar.listaValores = this.organizar_valores_array(this.listaValores);
+          //////////////////////////////////////////
+          this.confirmacionAgregar.loterias = this.concatenarLoterias(this.loterias)
+          this.confirmacionAgregar.apostado = Math.round(this.valueBet)
+          this.confirmacionAgregar.iva = Math.round(this.valueVat)
+          this.confirmacionAgregar.total = Math.round(this.valueBetTotal)
+          this.confirmacionAgregar.idRollo = this.auth.usuario.idRollo;
+          this.confirmacionAgregar.rolloColilla =  this.rolloColilla;
+          this.confirmacionAgregar.idUsuario = this.auth.usuario.idUsuario;
+        } else {
+          this.confirmacionAgregar.isCreate = true;
+          this.verConfirmacionPopap = true;
+          this.confirmacionAgregar.colilla = this.colilla
+          this.confirmacionAgregar.numeros = this.concatenarNumeros(listaNumeros)
+          /////////////////////////////////////////
+          this.confirmacionAgregar.numerosSupeAstro = this.organizar_numeros_array(listaNumeros);
+          this.confirmacionAgregar.loteriasAstros = this.organizar_astros_array(this.listaModalidades);
+          this.confirmacionAgregar.listaValores = this.organizar_valores_array(this.listaValores);
+          //////////////////////////////////////////
+          this.confirmacionAgregar.loterias = this.concatenarLoterias(this.loterias)
+          this.confirmacionAgregar.apostado = Math.round(this.valueBet)
+          this.confirmacionAgregar.iva = Math.round(this.valueVat)
+          this.confirmacionAgregar.total = Math.round(this.valueBetTotal)
+          this.confirmacionAgregar.idRollo = this.auth.usuario.idRollo;
+          this.confirmacionAgregar.rolloColilla =  this.rolloColilla;
+          this.confirmacionAgregar.idUsuario = this.auth.usuario.idUsuario;
+          if (JSON.parse(localStorage.getItem('superAstroApuesta')) && JSON.parse(localStorage.getItem('superAstroApuesta')).length > 0) {
+            const iteracionLocalStorageProductos = JSON.parse(localStorage.getItem('superAstroApuesta'));
+            let index = iteracionLocalStorageProductos.length - 1
+            let colillaActual = iteracionLocalStorageProductos[index].colillaActual;
+            colillaActual++;
+            this.confirmacionAgregar.rolloColilla.colillaActual = colillaActual;
+            const colilla = iteracionLocalStorageProductos[index].serie + String(colillaActual).padStart(7, '0');
+            this.confirmacionAgregar.colilla = colilla;
+            this.colilla = colilla;
+           }
+        }
+
+
+      } else {
+        this.messageService.add(MsjUtil.getToastErrorMedium('Valide que esta gestionando los campos necesarios para realizar la apuesta'));
+      }
+    }
+  }
+
+
   esPrimero(valor, indice, lista) {
     return (lista.indexOf(valor) === indice);
   }
@@ -646,6 +701,46 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
       }
     });
     return numerosConcatenar
+  }
+
+
+  organizar_numeros_array(numeros){
+    let organizar_numeros_array = [];
+    numeros.forEach(num => {
+      if(num.numeroFilaUno){ organizar_numeros_array.push(num.numeroFilaUno) }
+      if(num.numeroFilaDos){ organizar_numeros_array.push(num.numeroFilaDos) }
+      if(num.numeroFilaTres){ organizar_numeros_array.push(num.numeroFilaTres) }
+      if(num.numeroFilaCuatro){ organizar_numeros_array.push(num.numeroFilaCuatro) }
+      if(num.numeroFilaCinco){ organizar_numeros_array.push(num.numeroFilaCinco) }
+    });
+    return organizar_numeros_array
+  }
+
+
+  organizar_astros_array(modalidades){
+    let organizar_astros_array = [];
+    modalidades.forEach(num => {
+      if(num.valoresModalidadesUno){ organizar_astros_array.push(num.valoresModalidadesUno) }
+      if(num.valoresModalidadesDos){ organizar_astros_array.push(num.valoresModalidadesDos) }
+      if(num.valoresModalidadesTres){ organizar_astros_array.push(num.valoresModalidadesTres) }
+      if(num.valoresModalidadesCuatro){ organizar_astros_array.push(num.valoresModalidadesCuatro) }
+      if(num.valoresModalidadesCinco){ organizar_astros_array.push(num.valoresModalidadesCinco) }
+    });
+    return organizar_astros_array
+  }
+
+
+
+  organizar_valores_array(valores){
+    let organizar_valores_array = [];
+    valores.forEach(num => {
+      if(num.valorUno){ organizar_valores_array.push(num.valorUno) }
+      if(num.valorDos){ organizar_valores_array.push(num.valorDos) }
+      if(num.valorTres){ organizar_valores_array.push(num.valorTres) }
+      if(num.valorCuatro){ organizar_valores_array.push(num.valorCuatro) }
+      if(num.valorCinco){ organizar_valores_array.push(num.valorCinco) }
+    });
+    return organizar_valores_array
   }
 
 
@@ -861,6 +956,9 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
         break;
       case 'super-chance':
         this.eventoCrearEditarSuperChance();
+        break;
+      case 'super-astro':
+        this.eventoCrearEditarSuperAstro();
         break;
       default:
         break;
@@ -1089,7 +1187,8 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
 
   /**
    * @author Luis Hernandez
-   * @description Metodo que se encarga de 
+   * @description Metodo que se encarga 
+   * de agregar o editar en el carrito de compras
    */
    eventoCrearEditarSuperChance(): void {
 
@@ -1183,6 +1282,122 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
         const chanceAp = JSON.parse(localStorage.getItem('superChanceApuesta'));
         chanceAp.push(productosAgregar);
         localStorage.setItem('superChanceApuesta', JSON.stringify(chanceAp));
+      }
+      this.agregarProductos.emit(true);
+      this.borrarTodoReset.emit(true);
+      
+    }
+
+
+    // emitimos el evento para el observable
+    this.shellState.enviarEventoCarrito(true);
+
+    this.valueVat = 0;
+    this.valueBetTotal = 0;
+  }
+
+
+
+  /**
+   * @author Luis Hernandez
+   * @description Metodo que se encarga 
+   * de agregar o editar en el carrito de compras (SUPER ASTRO)
+   */
+   eventoCrearEditarSuperAstro(): void {
+
+    this.confirmacionAgregar.isCreate = false;
+    this.verConfirmacionPopap = false;
+
+    const listaNumeros = this.obtenerFilasConApuesta(this.listaNumeros)
+
+    if(this.edit){
+      const productosEditar = {
+        _id: this.infoEdit[0]._id,
+        colilla: this.colilla,
+        fechaActual: this.fechaActual,
+        loterias: this.loterias,
+        apostado: this.valueBet,
+        iva: this.valueVat,
+        total: this.valueBetTotal,
+        listaNumeros:listaNumeros,
+        listaValores:this.listaValores,
+        listaModalidades:this.listaModalidades,
+        clienteOperacion:this.clienteOperacion,
+        fechaSeleccionApuesta:this.fechaSeleccionApuesta,
+        serie:  this.rolloColilla.serie,
+        colillaActual: this.rolloColilla.colillaActual,
+        idRollo:  this.auth.usuario.idRollo,
+        idVendedor: this.auth.usuario.idUsuario,
+      }
+
+      let chanceApuesta:any = JSON.parse(localStorage.getItem('superAstroApuesta'));
+      if (chanceApuesta[0]) {
+        let actualizarCliente = chanceApuesta      
+        for (let index = 0; index < actualizarCliente.length; index++) {
+          actualizarCliente[index].clienteOperacion = this.clienteOperacion;
+        }
+        localStorage.setItem('superAstroApuesta', JSON.stringify(actualizarCliente));
+        chanceApuesta = JSON.parse(localStorage.getItem('superAstroApuesta'));
+      }
+
+      const keyResponse = this.getKeyObject(this.infoEdit[0]._id, chanceApuesta);
+      chanceApuesta[keyResponse]._id = productosEditar._id
+      chanceApuesta[keyResponse].colilla = productosEditar.colilla
+      chanceApuesta[keyResponse].fechaActual = productosEditar.fechaActual
+      chanceApuesta[keyResponse].loterias = productosEditar.loterias
+      chanceApuesta[keyResponse].apostado = productosEditar.apostado
+      chanceApuesta[keyResponse].iva = productosEditar.iva
+      chanceApuesta[keyResponse].total = productosEditar.total
+      chanceApuesta[keyResponse].listaNumeros = productosEditar.listaNumeros
+      chanceApuesta[keyResponse].listaValores = productosEditar.listaValores
+      chanceApuesta[keyResponse].listaModalidades = productosEditar.listaModalidades
+      chanceApuesta[keyResponse].fechaSeleccionApuesta = productosEditar.fechaSeleccionApuesta
+      localStorage.setItem('superAstroApuesta', JSON.stringify(chanceApuesta));
+      this.cleanFooter()
+      this.agregarProductos.emit(true);
+      this.borrarTodoReset.emit(true);
+    } else {
+
+      const productosAgregar = {
+        _id: 'bet_' + Math.floor(Math.random() * 999999),
+        colilla: this.colilla,
+        serie:  this.rolloColilla.serie,
+        colillaActual: this.rolloColilla .colillaActual,
+        idRollo:  this.auth.usuario.idRollo,
+        idVendedor: this.auth.usuario.idUsuario,
+        fechaActual: this.fechaActual,
+        loterias: this.loterias,
+        apostado: this.valueBet,
+        iva: this.valueVat,
+        total: this.valueBetTotal,
+        listaNumeros:listaNumeros,
+        listaValores:this.listaValores,
+        listaModalidades:this.listaModalidades,
+        clienteOperacion:this.clienteOperacion,
+        fechaSeleccionApuesta:this.fechaSeleccionApuesta,
+      }
+
+      let chanceApuesta = localStorage.getItem('superAstroApuesta');
+
+      if(JSON.parse(chanceApuesta) != null){
+        if (JSON.parse(chanceApuesta)[0]) {
+          let actualizarCliente = JSON.parse(chanceApuesta)          
+          for (let index = 0; index < actualizarCliente.length; index++) {
+            actualizarCliente[index].clienteOperacion = this.clienteOperacion;
+          }
+          localStorage.setItem('superAstroApuesta', JSON.stringify(actualizarCliente));
+          chanceApuesta = localStorage.getItem('superAstroApuesta');
+        }
+      }
+
+      if(chanceApuesta === null) {
+        const arrayproductosAgregar = []
+        arrayproductosAgregar.push(productosAgregar)
+        localStorage.setItem('superAstroApuesta', JSON.stringify(arrayproductosAgregar));
+      } else {
+        const chanceAp = JSON.parse(localStorage.getItem('superAstroApuesta'));
+        chanceAp.push(productosAgregar);
+        localStorage.setItem('superAstroApuesta', JSON.stringify(chanceAp));
       }
       this.agregarProductos.emit(true);
       this.borrarTodoReset.emit(true);

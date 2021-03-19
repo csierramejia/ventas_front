@@ -29,6 +29,7 @@ export class BreadcrumbComponent implements OnInit {
   urlChance = '/autenticado/productos/chance';
   urlMillonario = '/autenticado/productos/chance-millonario';
   urlSuperChance = '/autenticado/productos/super-chance';
+  urlSuperAstro = '/autenticado/productos/super-astro';
 
 
   /**
@@ -49,11 +50,13 @@ export class BreadcrumbComponent implements OnInit {
         this.verCarrito = true;
         this.itemsCarrito = 0;
         if(event.url == this.urlChance) {
-          this.eventosChance();
+          this.eventos_operaciones('chanceApuesta');
         } else if(event.url == this.urlMillonario){
-          this.eventosChanceMillonario();
+          this.eventos_operaciones('chanceApuestaMillonario');
         } else if(event.url == this.urlSuperChance){
-          this.eventosSuperChance();
+          this.eventos_operaciones('superChanceApuesta');
+        } else if(event.url == this.urlSuperAstro){
+          this.eventos_operaciones('superAstroApuesta');
         }
       });
 
@@ -75,52 +78,52 @@ export class BreadcrumbComponent implements OnInit {
   }
 
 
-  eventosChance(){
-    this.obtenerInfoCarrito('chanceApuesta');
+  eventos_operaciones(eventoProducto){
+    this.obtenerInfoCarrito(eventoProducto);
     this.shellState.getEventoCarrito().subscribe(evento => { 
       if(evento){
-        this.obtenerInfoCarrito('chanceApuesta')
+        this.obtenerInfoCarrito(eventoProducto)
       }
     });
 
     this.shellState.getEventoCarritoEliminar().subscribe(evento => { 
       if(evento){
-        this.obtenerInfoCarrito('chanceApuesta')
+        this.obtenerInfoCarrito(eventoProducto)
       }
     });
   }
 
 
-  eventosChanceMillonario(){
-    this.obtenerInfoCarrito('chanceApuestaMillonario');
-    this.shellState.getEventoCarrito().subscribe(evento => { 
-      if(evento){
-        this.obtenerInfoCarrito('chanceApuestaMillonario')
-      }
-    });
+  // eventosChanceMillonario(){
+  //   this.obtenerInfoCarrito('chanceApuestaMillonario');
+  //   this.shellState.getEventoCarrito().subscribe(evento => { 
+  //     if(evento){
+  //       this.obtenerInfoCarrito('chanceApuestaMillonario')
+  //     }
+  //   });
 
-    this.shellState.getEventoCarritoEliminar().subscribe(evento => { 
-      if(evento){
-        this.obtenerInfoCarrito('chanceApuestaMillonario')
-      }
-    });
-  }
+  //   this.shellState.getEventoCarritoEliminar().subscribe(evento => { 
+  //     if(evento){
+  //       this.obtenerInfoCarrito('chanceApuestaMillonario')
+  //     }
+  //   });
+  // }
 
 
-  eventosSuperChance() {
-    this.obtenerInfoCarrito('superChanceApuesta');
-    this.shellState.getEventoCarrito().subscribe(evento => { 
-      if(evento){
-        this.obtenerInfoCarrito('superChanceApuesta');
-      }
-    });
+  // eventosSuperChance() {
+  //   this.obtenerInfoCarrito('superChanceApuesta');
+  //   this.shellState.getEventoCarrito().subscribe(evento => { 
+  //     if(evento){
+  //       this.obtenerInfoCarrito('superChanceApuesta');
+  //     }
+  //   });
 
-    this.shellState.getEventoCarritoEliminar().subscribe(evento => { 
-      if(evento){
-        this.obtenerInfoCarrito('superChanceApuesta')
-      }
-    });
-  }
+  //   this.shellState.getEventoCarritoEliminar().subscribe(evento => { 
+  //     if(evento){
+  //       this.obtenerInfoCarrito('superChanceApuesta')
+  //     }
+  //   });
+  // }
 
 
   obtenerFechaHora() {
