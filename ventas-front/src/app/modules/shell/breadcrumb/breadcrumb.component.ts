@@ -42,7 +42,6 @@ export class BreadcrumbComponent implements OnInit {
     private productosService:ProductosService,
     private router: Router,
     ) {
-      
       router.events.pipe(
         filter(event => event instanceof NavigationEnd)  
       ).subscribe((event:any) => {
@@ -60,16 +59,13 @@ export class BreadcrumbComponent implements OnInit {
         }
       });
 
-
       // subscribe evento busqueda de cliente
       this.subscription = this.shellState.getEventoCliente().subscribe(evento => { 
         if(evento){
           this.obtenerInfoCliente()
         }
       });
-
   }
-
 
 
   ngOnInit(): void {
@@ -92,38 +88,6 @@ export class BreadcrumbComponent implements OnInit {
       }
     });
   }
-
-
-  // eventosChanceMillonario(){
-  //   this.obtenerInfoCarrito('chanceApuestaMillonario');
-  //   this.shellState.getEventoCarrito().subscribe(evento => { 
-  //     if(evento){
-  //       this.obtenerInfoCarrito('chanceApuestaMillonario')
-  //     }
-  //   });
-
-  //   this.shellState.getEventoCarritoEliminar().subscribe(evento => { 
-  //     if(evento){
-  //       this.obtenerInfoCarrito('chanceApuestaMillonario')
-  //     }
-  //   });
-  // }
-
-
-  // eventosSuperChance() {
-  //   this.obtenerInfoCarrito('superChanceApuesta');
-  //   this.shellState.getEventoCarrito().subscribe(evento => { 
-  //     if(evento){
-  //       this.obtenerInfoCarrito('superChanceApuesta');
-  //     }
-  //   });
-
-  //   this.shellState.getEventoCarritoEliminar().subscribe(evento => { 
-  //     if(evento){
-  //       this.obtenerInfoCarrito('superChanceApuesta')
-  //     }
-  //   });
-  // }
 
 
   obtenerFechaHora() {

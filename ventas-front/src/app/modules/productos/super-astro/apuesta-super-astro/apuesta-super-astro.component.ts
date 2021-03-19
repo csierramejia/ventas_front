@@ -769,7 +769,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
     this.borrarTodo(2)
 
     this.edit = true;
-    const buscarApuestasEditar = JSON.parse(localStorage.getItem('superChanceApuesta'))
+    const buscarApuestasEditar = JSON.parse(localStorage.getItem('superAstroApuesta'))
     const apuestaEditar = buscarApuestasEditar.filter(buscarApuestaEditar => buscarApuestaEditar._id == event._id);
 
     if (apuestaEditar[0].clienteOperacion.nombreCliente) {
@@ -787,7 +787,9 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
 
     this.agregarLoterias.emit(emitLoterias);
     this.infoEdit = apuestaEditar;
-    this.setNumerosEvento(apuestaEditar[0].listaNumeros, apuestaEditar[0].listaModalidades);
+
+    console.log(apuestaEditar[0].listaValores);
+    // this.setNumerosEvento(apuestaEditar[0].listaNumeros, apuestaEditar[0].listaModalidades, apuestaEditar[0].listaValores);
 
   }
 
@@ -842,7 +844,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
   }
 
 
-  setNumerosEvento(numeros, modalidades){
+  setNumerosEvento(numeros, modalidades, valores){
     let nuevo_array_numeros_modalidades = []
     for (let index = 0; index < numeros.length; index++) {
       if(numeros[index].numeroFilaUno){nuevo_array_numeros_modalidades.push({numero:numeros[index].numeroFilaUno, modalidad:modalidades[0].valoresModalidadesUno})}

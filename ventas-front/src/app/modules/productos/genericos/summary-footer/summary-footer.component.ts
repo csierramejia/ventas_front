@@ -804,13 +804,16 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
   editarProducto(event){
     switch (this.productoParent) {
       case 'chance':
-        this.editarProductoChance(event);
+        this.editar_producto_operacion(event, 'chanceApuesta');
         break;
       case 'chance-millonario':
-        this.editarProductoChanceMillonario(event);
+        this.editar_producto_operacion(event, 'chanceApuestaMillonario');
         break;
       case 'super-chance':
-        this.editarProductoSuperChance(event);
+        this.editar_producto_operacion(event, 'superChanceApuesta');
+        break;
+      case 'super-astro':
+        this.editar_producto_operacion(event, 'superAstroApuesta');
         break;
       default:
         break;
@@ -819,45 +822,20 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
 
 
 
-  editarProductoChance(event){
+  editar_producto_operacion(event, eventoProducto){
     this.edit = true;
-    const buscarApuestasEditar = JSON.parse(localStorage.getItem('chanceApuesta'))
-    const apuestaEditar = buscarApuestasEditar.filter(buscarApuestaEditar => buscarApuestaEditar._id == event._id);
-    this.infoEdit = apuestaEditar;
-    this.colilla = apuestaEditar[0].colilla
-    this.fechaActual = apuestaEditar[0].fechaActual
-  }
-
-
-
-  editarProductoChanceMillonario(event){
-    
-    this.edit = true;
-    const buscarApuestasEditar = JSON.parse(localStorage.getItem('chanceApuestaMillonario'))
+    const buscarApuestasEditar = JSON.parse(localStorage.getItem(eventoProducto))
     const apuestaEditar = buscarApuestasEditar.filter(buscarApuestaEditar => buscarApuestaEditar._id == event._id);
     this.infoEdit = apuestaEditar;
     this.colilla = apuestaEditar[0].colilla
     this.fechaActual = apuestaEditar[0].fechaActual
 
-    this.valueBet = apuestaEditar[0].apostado
-    this.valueVat = apuestaEditar[0].iva
-    this.valueBetTotal = apuestaEditar[0].total
+    if (eventoProducto == 'chanceApuestaMillonario' || eventoProducto == 'superChanceApuesta' || eventoProducto == 'superAstroApuesta') {
+      this.valueBet = apuestaEditar[0].apostado
+      this.valueVat = apuestaEditar[0].iva
+      this.valueBetTotal = apuestaEditar[0].total
+    }
   }
-
-
-  editarProductoSuperChance(event){
-    this.edit = true;
-    const buscarApuestasEditar = JSON.parse(localStorage.getItem('superChanceApuesta'))
-    const apuestaEditar = buscarApuestasEditar.filter(buscarApuestaEditar => buscarApuestaEditar._id == event._id);
-    this.infoEdit = apuestaEditar;
-    this.colilla = apuestaEditar[0].colilla
-    this.fechaActual = apuestaEditar[0].fechaActual
-
-    this.valueBet = apuestaEditar[0].apostado
-    this.valueVat = apuestaEditar[0].iva
-    this.valueBetTotal = apuestaEditar[0].total
-  }
-
 
 
   /**
