@@ -367,10 +367,6 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
         valorSumado = valorSumado + parseInt(element.valorCuatro.replace(/[^a-zA-Z 0-9.]+/g,''))
         calcular_boolean = true;
       }
-      if(element.valorCinco){
-        valorSumado = valorSumado + parseInt(element.valorCinco.replace(/[^a-zA-Z 0-9.]+/g,''))
-        calcular_boolean = true;
-      }
     });
 
     if(calcular_boolean){

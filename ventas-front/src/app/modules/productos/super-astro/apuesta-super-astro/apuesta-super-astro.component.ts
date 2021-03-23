@@ -34,8 +34,108 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
   valoresModalidadesDos = []
   valoresModalidadesTres = []
   valoresModalidadesCuatro = []
-  valoresModalidadesCinco = []
 
+  valorUno = [
+    {label: '$500', value:'$500'},
+    '$500', 
+    '$600', 
+    '$700', 
+    '$800', 
+    '$900', 
+    '$1000', 
+    '$1100', 
+    '$1200', 
+    '$1300', 
+    '$1400', 
+    '$1500', 
+    '$1600', 
+    '$1700', 
+    '$1800', 
+    '$1900', 
+    '$2000', 
+    '$2100', 
+    '$2200', 
+    '$2300', 
+    '$2400', 
+    '$2500', 
+    '$2600', 
+    '$2700', 
+    '$2800', 
+    '$2900', 
+    '$3000', 
+    '$3100', 
+    '$3200', 
+    '$3300', 
+    '$3400', 
+    '$3500', 
+    '$3600', 
+    '$3700', 
+    '$3800', 
+    '$3900', 
+    '$4000', 
+    '$4100', 
+    '$4200', 
+    '$4300', 
+    '$4400', 
+    '$4500', 
+    '$4600', 
+    '$4700', 
+    '$4800', 
+    '$4900', 
+    '$5000', 
+    '$5100', 
+    '$5200', 
+    '$5300', 
+    '$5400', 
+    '$5500', 
+    '$5600', 
+    '$5700', 
+    '$5800', 
+    '$5900', 
+    '$6000', 
+    '$6100', 
+    '$6200', 
+    '$6300', 
+    '$6400', 
+    '$6500', 
+    '$6600', 
+    '$6700', 
+    '$6800', 
+    '$6900', 
+    '$7000', 
+    '$7100', 
+    '$7200', 
+    '$7300', 
+    '$7400', 
+    '$7500', 
+    '$7600', 
+    '$7700', 
+    '$7800', 
+    '$7900', 
+    '$8000', 
+    '$8100', 
+    '$8200', 
+    '$8300', 
+    '$8400', 
+    '$8500', 
+    '$8600', 
+    '$8700', 
+    '$8800', 
+    '$8900', 
+    '$9000', 
+    '$9100', 
+    '$9200', 
+    '$9300', 
+    '$9400', 
+    '$9500', 
+    '$9600', 
+    '$9700', 
+    '$9800', 
+    '$9900', 
+    '$10000']
+  valorDos = ['$500', '$600', '$700', '$800', '$900', '$1000', '$1100', '$1200', '$1300', '$1400', '$1500', '$1600', '$1700', '$1800', '$1900', '$2000', '$2100', '$2200', '$2300', '$2400', '$2500', '$2600', '$2700', '$2800', '$2900', '$3000', '$3100', '$3200', '$3300', '$3400', '$3500', '$3600', '$3700', '$3800', '$3900', '$4000', '$4100', '$4200', '$4300', '$4400', '$4500', '$4600', '$4700', '$4800', '$4900', '$5000', '$5100', '$5200', '$5300', '$5400', '$5500', '$5600', '$5700', '$5800', '$5900', '$6000', '$6100', '$6200', '$6300', '$6400', '$6500', '$6600', '$6700', '$6800', '$6900', '$7000', '$7100', '$7200', '$7300', '$7400', '$7500', '$7600', '$7700', '$7800', '$7900', '$8000', '$8100', '$8200', '$8300', '$8400', '$8500', '$8600', '$8700', '$8800', '$8900', '$9000', '$9100', '$9200', '$9300', '$9400', '$9500', '$9600', '$9700', '$9800', '$9900', '$10000']
+  valorTres = ['$500', '$600', '$700', '$800', '$900', '$1000', '$1100', '$1200', '$1300', '$1400', '$1500', '$1600', '$1700', '$1800', '$1900', '$2000', '$2100', '$2200', '$2300', '$2400', '$2500', '$2600', '$2700', '$2800', '$2900', '$3000', '$3100', '$3200', '$3300', '$3400', '$3500', '$3600', '$3700', '$3800', '$3900', '$4000', '$4100', '$4200', '$4300', '$4400', '$4500', '$4600', '$4700', '$4800', '$4900', '$5000', '$5100', '$5200', '$5300', '$5400', '$5500', '$5600', '$5700', '$5800', '$5900', '$6000', '$6100', '$6200', '$6300', '$6400', '$6500', '$6600', '$6700', '$6800', '$6900', '$7000', '$7100', '$7200', '$7300', '$7400', '$7500', '$7600', '$7700', '$7800', '$7900', '$8000', '$8100', '$8200', '$8300', '$8400', '$8500', '$8600', '$8700', '$8800', '$8900', '$9000', '$9100', '$9200', '$9300', '$9400', '$9500', '$9600', '$9700', '$9800', '$9900', '$10000']
+  valorCuatro = ['$500', '$600', '$700', '$800', '$900', '$1000', '$1100', '$1200', '$1300', '$1400', '$1500', '$1600', '$1700', '$1800', '$1900', '$2000', '$2100', '$2200', '$2300', '$2400', '$2500', '$2600', '$2700', '$2800', '$2900', '$3000', '$3100', '$3200', '$3300', '$3400', '$3500', '$3600', '$3700', '$3800', '$3900', '$4000', '$4100', '$4200', '$4300', '$4400', '$4500', '$4600', '$4700', '$4800', '$4900', '$5000', '$5100', '$5200', '$5300', '$5400', '$5500', '$5600', '$5700', '$5800', '$5900', '$6000', '$6100', '$6200', '$6300', '$6400', '$6500', '$6600', '$6700', '$6800', '$6900', '$7000', '$7100', '$7200', '$7300', '$7400', '$7500', '$7600', '$7700', '$7800', '$7900', '$8000', '$8100', '$8200', '$8300', '$8400', '$8500', '$8600', '$8700', '$8800', '$8900', '$9000', '$9100', '$9200', '$9300', '$9400', '$9500', '$9600', '$9700', '$9800', '$9900', '$10000']
 
   stateDisabeld = false;
   subscription: any;
@@ -80,13 +180,11 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
     valorDos: new FormControl(''),
     valorTres: new FormControl(''),
     valorCuatro: new FormControl(''),
-    valorCinco: new FormControl(''),
 
     valoresModalidadesUno: new FormControl(''),
     valoresModalidadesDos: new FormControl(''),
     valoresModalidadesTres: new FormControl(''),
     valoresModalidadesCuatro: new FormControl(''),
-    valoresModalidadesCinco: new FormControl(''),
 
     tipoDocumento: new FormControl(''),
     numeroDocumento: new FormControl(''),
@@ -151,6 +249,17 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
 
 
   obtener_signos(){
+
+    this.valoresModalidadesUno = [];
+    this.valoresModalidadesDos = [];
+    this.valoresModalidadesTres = [];
+    this.valoresModalidadesCuatro = [];
+    this.valoresModalidadesUno.push({label: 'Todos', value:'all'})
+    this.valoresModalidadesDos.push({label: 'Todos', value:'all'})
+    this.valoresModalidadesTres.push({label: 'Todos', value:'all'})
+    this.valoresModalidadesCuatro.push({label: 'Todos', value:'all'})
+
+
     this.productosService.consultarSignos().subscribe(
       signosData => {
         const rs: any = signosData;
@@ -160,7 +269,6 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
             this.valoresModalidadesDos.push({label: element.nombre, value:element.idSigno});
             this.valoresModalidadesTres.push({label: element.nombre, value:element.idSigno});
             this.valoresModalidadesCuatro.push({label: element.nombre, value:element.idSigno});
-            this.valoresModalidadesCinco.push({label: element.nombre, value:element.idSigno});
           }
         });
       },
@@ -168,6 +276,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
         this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
       }
     );
+    
   }
 
 
@@ -440,10 +549,6 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
             this.valoresModalidadesCuatro = [];
             valoresData.forEach(element => {this.valoresModalidadesCuatro.push({label: element, value: element})});
             this.chanceForm.controls.valoresModalidadesCuatro.setValue(this.valoresModalidadesCuatro[0].value);
-          } else if(fila === 5){
-            this.valoresModalidadesCinco = [];
-            valoresData.forEach(element => {this.valoresModalidadesCinco.push({label: element, value: element})});
-            this.chanceForm.controls.valoresModalidadesCinco.setValue(this.valoresModalidadesCinco[0].value);
           }
           this.emitirModalidades();
         },
@@ -474,9 +579,6 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
       case 4:
         this.chanceForm.controls.numeroFilaCuatro.setValue(numero);
         break;
-      case 5:
-        this.chanceForm.controls.numeroFilaCinco.setValue(numero);
-        break;
       default:
         break;
     }
@@ -497,9 +599,6 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
         break;
       case 4:
         this.transformAmountLo('valorCuatro');
-        break;
-      case 5:
-        this.transformAmountLo('valorCinco');
         break;
       default:
         break;
@@ -665,8 +764,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
       {numeroFilaUno: this.chanceForm.get('numeroFilaUno').value},
       {numeroFilaDos: this.chanceForm.get('numeroFilaDos').value},
       {numeroFilaTres: this.chanceForm.get('numeroFilaTres').value},
-      {numeroFilaCuatro: this.chanceForm.get('numeroFilaCuatro').value},
-      {numeroFilaCinco: this.chanceForm.get('numeroFilaCinco').value}
+      {numeroFilaCuatro: this.chanceForm.get('numeroFilaCuatro').value}
     ]
     this.agregarNumeros.emit(numerosValores);
   }
@@ -677,8 +775,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
       {valorUno: this.chanceForm.get('valorUno').value},
       {valorDos: this.chanceForm.get('valorDos').value},
       {valorTres: this.chanceForm.get('valorTres').value},
-      {valorCuatro: this.chanceForm.get('valorCuatro').value},
-      {valorCinco: this.chanceForm.get('valorCinco').value}
+      {valorCuatro: this.chanceForm.get('valorCuatro').value}
     ]
     this.agregarValores.emit(valores);
   }
@@ -690,8 +787,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
       {valoresModalidadesUno: this.chanceForm.get('valoresModalidadesUno').value},
       {valoresModalidadesDos: this.chanceForm.get('valoresModalidadesDos').value},
       {valoresModalidadesTres: this.chanceForm.get('valoresModalidadesTres').value},
-      {valoresModalidadesCuatro: this.chanceForm.get('valoresModalidadesCuatro').value},
-      {valoresModalidadesCinco: this.chanceForm.get('valoresModalidadesCinco').value}
+      {valoresModalidadesCuatro: this.chanceForm.get('valoresModalidadesCuatro').value}
     ]
     this.agregarModalidades.emit(modalidadesValores);
   }
@@ -704,25 +800,21 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
     this.chanceForm.controls.numeroFilaDos.setValue('');
     this.chanceForm.controls.numeroFilaTres.setValue('');
     this.chanceForm.controls.numeroFilaCuatro.setValue('');
-    this.chanceForm.controls.numeroFilaCinco.setValue('');
 
     this.chanceForm.controls.valorUno.setValue('');
     this.chanceForm.controls.valorDos.setValue('');
     this.chanceForm.controls.valorTres.setValue('');
     this.chanceForm.controls.valorCuatro.setValue('');
-    this.chanceForm.controls.valorCinco.setValue('');
 
     this.chanceForm.controls.valoresModalidadesUno.setValue('');
     this.chanceForm.controls.valoresModalidadesDos.setValue('');
     this.chanceForm.controls.valoresModalidadesTres.setValue('');
     this.chanceForm.controls.valoresModalidadesCuatro.setValue('');
-    this.chanceForm.controls.valoresModalidadesCinco.setValue('');
 
     this.valoresModalidadesUno = [];
     this.valoresModalidadesDos = [];
     this.valoresModalidadesTres = [];
     this.valoresModalidadesCuatro = [];
-    this.valoresModalidadesCinco = [];
 
     this.loterias = [];
     this.agregarLoterias.emit(this.loterias);
@@ -787,10 +879,6 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
 
     this.agregarLoterias.emit(emitLoterias);
     this.infoEdit = apuestaEditar;
-
-    console.log(apuestaEditar[0].listaValores);
-    // this.setNumerosEvento(apuestaEditar[0].listaNumeros, apuestaEditar[0].listaModalidades, apuestaEditar[0].listaValores);
-
   }
 
 
@@ -834,14 +922,6 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
   }
 
 
-  borrarFilaCinco() {
-    this.chanceForm.get('numeroFilaCinco').setValue('');
-    this.chanceForm.get('valoresModalidadesCinco').setValue('');
-    this.valoresModalidadesCinco = [];
-    this.emitirNumeros();
-    this.emitirModalidades();
-    document.getElementById('numeroFilaCinco').focus();
-  }
 
 
   setNumerosEvento(numeros, modalidades, valores){
@@ -851,7 +931,6 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
       if(numeros[index].numeroFilaDos){nuevo_array_numeros_modalidades.push({numero:numeros[index].numeroFilaDos, modalidad:modalidades[1].valoresModalidadesDos})}
       if(numeros[index].numeroFilaTres){nuevo_array_numeros_modalidades.push({numero:numeros[index].numeroFilaTres, modalidad:modalidades[2].valoresModalidadesTres})}
       if(numeros[index].numeroFilaCuatro){nuevo_array_numeros_modalidades.push({numero:numeros[index].numeroFilaCuatro, modalidad:modalidades[3].valoresModalidadesCuatro})}
-      if(numeros[index].numeroFilaCinco){nuevo_array_numeros_modalidades.push({numero:numeros[index].numeroFilaCinco, modalidad:modalidades[4].valoresModalidadesCinco})}
     }
     this.operacion_por_fila(nuevo_array_numeros_modalidades)
   }
@@ -918,26 +997,7 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
         }
       );
     }
-
-    if(nuevo_array_numeros_modalidades[4]){
-      this.chanceForm.get('numeroFilaCinco').setValue(nuevo_array_numeros_modalidades[4].numero);
-      this.productosService.consultarValoresModalidad("SUPER CHANCE",String(nuevo_array_numeros_modalidades[4].numero).length).subscribe(
-        valoresData => {
-          valoresData.forEach(element => {this.valoresModalidadesCinco.push({label: element, value: element})});
-          this.chanceForm.controls.valoresModalidadesCinco.setValue(nuevo_array_numeros_modalidades[4].modalidad);
-          this.emitirNumeros();
-          this.emitirModalidades();
-        },
-        error => {
-          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
-        }
-      );
-    }
-
     
-    
-
-
   }
 
 

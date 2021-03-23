@@ -96,20 +96,23 @@
                         <input id="numeroFilaCuatro" (change)="emitirNumeros()" formControlName="numeroFilaCuatro" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
                         <img class="img-aletorio" (click)="generarAletorios(4)"  src="../../../../../assets/img/svg/Grupo_118.svg" />
                     </div>
-                    <div class="row">
-                        <input id="numeroFilaCinco" (change)="emitirNumeros()" formControlName="numeroFilaCinco" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
-                        <img class="img-aletorio" (click)="generarAletorios(5)"  src="../../../../../assets/img/svg/Grupo_118.svg" />
-                    </div>
                 </div>
                 <div class="col-md-8">
                     <div class="row">
                         <div class="col-md-5">
                             <b>Valor</b><br/>
-                            <input id="valorUno" maxlength="6"  (blur)="transformAmount(1)" (change)="emitirValores()" formControlName="valorUno" autocomplete="off" type="text" (keypress)="permitirSoloNumeros($event)" class="input-bet">
-                            <input id="valorDos" maxlength="6" (blur)="transformAmount(2)" (change)="emitirValores()" formControlName="valorDos" autocomplete="off" type="text" (keypress)="permitirSoloNumeros($event)" class="input-bet">
-                            <input id="valorTres" maxlength="6" (blur)="transformAmount(3)" (change)="emitirValores()" formControlName="valorTres" autocomplete="off" type="text" (keypress)="permitirSoloNumeros($event)" class="input-bet">
-                            <input id="valorCuatro" maxlength="6" (blur)="transformAmount(4)" (change)="emitirValores()" formControlName="valorCuatro" autocomplete="off" type="text" (keypress)="permitirSoloNumeros($event)" class="input-bet">
-                            <input id="valorCinco" maxlength="6" (blur)="transformAmount(5)" (change)="emitirValores()" formControlName="valorCinco" autocomplete="off" type="text" (keypress)="permitirSoloNumeros($event)" class="input-bet">
+                            <div class="row">
+                                <p-dropdown [options]="valorUno" (onChange)="emitirValores()" formControlName="valorUno" [style]="{'height':'39px','width':'150px', 'border':'1px solid #707070', 'margin-top':'9px', 'border-radius':'5px'}"></p-dropdown>
+                            </div>
+                            <div class="row">
+                                <p-dropdown [options]="valorDos" (onChange)="emitirValores()" formControlName="valorDos" [style]="{'height':'39px','width':'150px', 'border':'1px solid #707070', 'margin-top':'9px', 'border-radius':'5px'}"></p-dropdown>
+                            </div>
+                            <div class="row">
+                                <p-dropdown [options]="valorTres" (onChange)="emitirValores()" formControlName="valorTres" [style]="{'height':'39px','width':'150px', 'border':'1px solid #707070', 'margin-top':'9px', 'border-radius':'5px'}"></p-dropdown>
+                            </div>
+                            <div class="row">
+                                <p-dropdown [options]="valorCuatro" (onChange)="emitirValores()" formControlName="valorCuatro" [style]="{'height':'39px','width':'150px', 'border':'1px solid #707070', 'margin-top':'9px', 'border-radius':'5px'}"></p-dropdown>
+                            </div>
                         </div>
                         <div class="col-md-7">
                             <b>Astro</b><br/>
@@ -124,9 +127,6 @@
                             </div>
                             <div class="row dropModalidades">
                                 <p-dropdown [options]="valoresModalidadesCuatro" (onChange)="emitirModalidades()" formControlName="valoresModalidadesCuatro" [style]="{'height':'39px','width':'250px', 'border':'1px solid #707070', 'border-radius':'5px'}"></p-dropdown>
-                            </div>
-                            <div class="row dropModalidades">
-                                <p-dropdown [options]="valoresModalidadesCinco" (onChange)="emitirModalidades()" formControlName="valoresModalidadesCinco" [style]="{'height':'39px','width':'250px', 'border':'1px solid #707070', 'border-radius':'5px'}"></p-dropdown>
                             </div>
                         </div>
                     </div>
@@ -143,9 +143,6 @@
                     </div>
                     <div class="row">
                         <i (click)="borrarFilaCuatro()" class="fa fa-trash tras-del" aria-hidden="true"></i>
-                    </div>
-                    <div class="row">
-                        <i (click)="borrarFilaCinco()" class="fa fa-trash tras-del" aria-hidden="true"></i>
                     </div>
                 </div>
                 <!-- <div class="col-md-3">
