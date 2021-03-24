@@ -371,10 +371,11 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
 
     if(calcular_boolean){
       const ivaNv = this.inputVat / 100 + 1
-      this.valueBetTotal =  valorSumado;
+      this.valueBetTotal = (this.loteriaSeleccionadas.length * valorSumado);
       this.valueBet = this.valueBetTotal / ivaNv;
       this.valueVat = this.valueBetTotal - this.valueBet;
     }
+    
   }
 
 
@@ -571,9 +572,8 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
 
   agregarCarritoFSuperAstro(): void {
     const listaNumeros = this.obtenerFilasConApuesta(this.listaNumeros)
-
-    if(this.validarCeros(listaNumeros)){
-      this.messageService.add(MsjUtil.getToastErrorMedium('Usted no puede colocar valores en 0'));
+    if(this.validarCuatroCifras(listaNumeros)){
+      this.messageService.add(MsjUtil.getToastErrorMedium('Los numeros deben tener 4 cifras'));
     } else {
       if(this.colilla && this.fechaActual && this.loteriaSeleccionadas.length > 0 && listaNumeros.length > 0 && this.listaValores.length > 0 && this.listaModalidades.length > 0) {
         if(this.edit){
@@ -621,6 +621,9 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
             this.colilla = colilla;
            }
         }
+
+
+        this.confirmacionAgregar.obtener_nombres_astros_signos();
 
 
       } else {
@@ -683,6 +686,66 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
     });
     return valorCero;
   }
+
+
+
+  /**
+   * @author Luis Fernando Hernandez
+   * @description Metodo que se encarga
+   * de validar si viene al algun valor en 0
+   */
+   validarCuatroCifras(listaNumeros){
+
+    let validacion_uno = false;
+    let validacion_dos = false;
+    let validacion_tres = false;
+    let validacion_cuatro = false;
+
+    listaNumeros.forEach(element => {
+      if (String(element.numeroFilaUno).length == 4) { validacion_uno = true;}
+      if (String(element.numeroFilaDos).length  == 4) { validacion_dos = true; }
+      if (String(element.numeroFilaTres).length  == 4) { validacion_tres = true; }
+      if (String(element.numeroFilaCuatro).length  == 4) { validacion_cuatro = true; }
+    });
+
+
+    if(listaNumeros.length == 1) {
+      if(validacion_uno){
+        return false;
+      } else {
+        return true;
+      }
+    }
+
+    if(listaNumeros.length == 2) {
+      if(validacion_uno && validacion_dos){
+        return false;
+      } else {
+        return true;
+      }
+    }
+
+    if(listaNumeros.length == 3){
+      if(validacion_uno && validacion_dos && validacion_tres){
+        return false;
+      } else {
+        return true;
+      }
+    }
+
+    if(listaNumeros.length == 4){
+      if(validacion_uno && validacion_dos && validacion_tres && validacion_cuatro){
+        return false;
+      } else {
+        return true;
+      }
+    }
+
+    
+    
+  }
+
+
 
   concatenarNumeros(numeros){
     let numerosConcatenar = '';
@@ -875,6 +938,9 @@ export class SummaryFooterComponent extends CommonComponent implements OnInit, O
         break;
       case 'super-chance':
         this.irResumenOperacion('superChanceApuesta','super-chance');
+        break;
+      case 'super-astro':
+        this.irResumenOperacion('superAstroApuesta','super-astro');
         break;
       default:
         break;

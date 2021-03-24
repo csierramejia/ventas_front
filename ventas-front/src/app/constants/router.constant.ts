@@ -76,6 +76,10 @@ export class RouterConstant {
 
   /** Constante para navegar a la pagina de SUPER CHANCE*/
   public static readonly NAVIGATE_SUPER_CHANCE: string = `/${RouterConstant.ROUTER_AUTENTICADO}/productos/${RouterConstant.ROUTER_SUPER_CHANCE}`;
+
+  /** Constante para navegar a la pagina de SUPER ASTRO*/
+  public static readonly NAVIGATE_SUPER_ASTRO: string = `/${RouterConstant.ROUTER_AUTENTICADO}/productos/${RouterConstant.ROUTER_SUPER_ASTRO}`;
+
   /** Router para el componente de recaudos */
   public static readonly ROUTER_RECAUDOS: string = 'recaudos';
 

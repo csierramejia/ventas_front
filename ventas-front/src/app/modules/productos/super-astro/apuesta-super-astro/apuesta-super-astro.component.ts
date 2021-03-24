@@ -12,6 +12,7 @@ import { CrearClienteComponent } from '../../genericos/crear-cliente/crear-clien
 import * as moment from 'moment';
 import { CurrencyPipe } from '@angular/common';
 import { ShellState } from '../../../../states/shell/shell.state';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-apuesta-super-astro',
@@ -36,106 +37,17 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
   valoresModalidadesCuatro = []
 
   valorUno = [
-    {label: '$500', value:'$500'},
-    '$500', 
-    '$600', 
-    '$700', 
-    '$800', 
-    '$900', 
-    '$1000', 
-    '$1100', 
-    '$1200', 
-    '$1300', 
-    '$1400', 
-    '$1500', 
-    '$1600', 
-    '$1700', 
-    '$1800', 
-    '$1900', 
-    '$2000', 
-    '$2100', 
-    '$2200', 
-    '$2300', 
-    '$2400', 
-    '$2500', 
-    '$2600', 
-    '$2700', 
-    '$2800', 
-    '$2900', 
-    '$3000', 
-    '$3100', 
-    '$3200', 
-    '$3300', 
-    '$3400', 
-    '$3500', 
-    '$3600', 
-    '$3700', 
-    '$3800', 
-    '$3900', 
-    '$4000', 
-    '$4100', 
-    '$4200', 
-    '$4300', 
-    '$4400', 
-    '$4500', 
-    '$4600', 
-    '$4700', 
-    '$4800', 
-    '$4900', 
-    '$5000', 
-    '$5100', 
-    '$5200', 
-    '$5300', 
-    '$5400', 
-    '$5500', 
-    '$5600', 
-    '$5700', 
-    '$5800', 
-    '$5900', 
-    '$6000', 
-    '$6100', 
-    '$6200', 
-    '$6300', 
-    '$6400', 
-    '$6500', 
-    '$6600', 
-    '$6700', 
-    '$6800', 
-    '$6900', 
-    '$7000', 
-    '$7100', 
-    '$7200', 
-    '$7300', 
-    '$7400', 
-    '$7500', 
-    '$7600', 
-    '$7700', 
-    '$7800', 
-    '$7900', 
-    '$8000', 
-    '$8100', 
-    '$8200', 
-    '$8300', 
-    '$8400', 
-    '$8500', 
-    '$8600', 
-    '$8700', 
-    '$8800', 
-    '$8900', 
-    '$9000', 
-    '$9100', 
-    '$9200', 
-    '$9300', 
-    '$9400', 
-    '$9500', 
-    '$9600', 
-    '$9700', 
-    '$9800', 
-    '$9900', 
-    '$10000']
-  valorDos = ['$500', '$600', '$700', '$800', '$900', '$1000', '$1100', '$1200', '$1300', '$1400', '$1500', '$1600', '$1700', '$1800', '$1900', '$2000', '$2100', '$2200', '$2300', '$2400', '$2500', '$2600', '$2700', '$2800', '$2900', '$3000', '$3100', '$3200', '$3300', '$3400', '$3500', '$3600', '$3700', '$3800', '$3900', '$4000', '$4100', '$4200', '$4300', '$4400', '$4500', '$4600', '$4700', '$4800', '$4900', '$5000', '$5100', '$5200', '$5300', '$5400', '$5500', '$5600', '$5700', '$5800', '$5900', '$6000', '$6100', '$6200', '$6300', '$6400', '$6500', '$6600', '$6700', '$6800', '$6900', '$7000', '$7100', '$7200', '$7300', '$7400', '$7500', '$7600', '$7700', '$7800', '$7900', '$8000', '$8100', '$8200', '$8300', '$8400', '$8500', '$8600', '$8700', '$8800', '$8900', '$9000', '$9100', '$9200', '$9300', '$9400', '$9500', '$9600', '$9700', '$9800', '$9900', '$10000']
-  valorTres = ['$500', '$600', '$700', '$800', '$900', '$1000', '$1100', '$1200', '$1300', '$1400', '$1500', '$1600', '$1700', '$1800', '$1900', '$2000', '$2100', '$2200', '$2300', '$2400', '$2500', '$2600', '$2700', '$2800', '$2900', '$3000', '$3100', '$3200', '$3300', '$3400', '$3500', '$3600', '$3700', '$3800', '$3900', '$4000', '$4100', '$4200', '$4300', '$4400', '$4500', '$4600', '$4700', '$4800', '$4900', '$5000', '$5100', '$5200', '$5300', '$5400', '$5500', '$5600', '$5700', '$5800', '$5900', '$6000', '$6100', '$6200', '$6300', '$6400', '$6500', '$6600', '$6700', '$6800', '$6900', '$7000', '$7100', '$7200', '$7300', '$7400', '$7500', '$7600', '$7700', '$7800', '$7900', '$8000', '$8100', '$8200', '$8300', '$8400', '$8500', '$8600', '$8700', '$8800', '$8900', '$9000', '$9100', '$9200', '$9300', '$9400', '$9500', '$9600', '$9700', '$9800', '$9900', '$10000']
-  valorCuatro = ['$500', '$600', '$700', '$800', '$900', '$1000', '$1100', '$1200', '$1300', '$1400', '$1500', '$1600', '$1700', '$1800', '$1900', '$2000', '$2100', '$2200', '$2300', '$2400', '$2500', '$2600', '$2700', '$2800', '$2900', '$3000', '$3100', '$3200', '$3300', '$3400', '$3500', '$3600', '$3700', '$3800', '$3900', '$4000', '$4100', '$4200', '$4300', '$4400', '$4500', '$4600', '$4700', '$4800', '$4900', '$5000', '$5100', '$5200', '$5300', '$5400', '$5500', '$5600', '$5700', '$5800', '$5900', '$6000', '$6100', '$6200', '$6300', '$6400', '$6500', '$6600', '$6700', '$6800', '$6900', '$7000', '$7100', '$7200', '$7300', '$7400', '$7500', '$7600', '$7700', '$7800', '$7900', '$8000', '$8100', '$8200', '$8300', '$8400', '$8500', '$8600', '$8700', '$8800', '$8900', '$9000', '$9100', '$9200', '$9300', '$9400', '$9500', '$9600', '$9700', '$9800', '$9900', '$10000']
+    {label: '', value:''}, {label: '$500', value:'$500'},{label: '$600', value:'$600'},{label: '$700', value:'$700'},{label: '$800', value:'$800'},{label: '$900', value:'$900'},{label: '$1000', value:'$1000'},{label: '$1100', value:'$1100'},{label: '$1200', value:'$1200'},{label: '$1300', value:'$1300'},{label: '$1400', value:'$1400'},{label: '$1500', value:'$1500'},{label: '$1600', value:'$1600'},{label: '$1700', value:'$1700'},{label: '$1800', value:'$1800'},{label: '$1900', value:'$1900'},{label: '$2000', value:'$2000'},{label: '$2100', value:'$2100'},{label: '$2200', value:'$2200'},{label: '$2300', value:'$2300'},{label: '$2400', value:'$2400'},{label: '$2500', value:'$2500'},{label: '$2600', value:'$2600'},{label: '$2700', value:'$2700'},{label: '$2800', value:'$2800'},{label: '$2900', value:'$2900'},{label: '$3000', value:'$3000'},{label: '$3100', value:'$3100'},{label: '$3200', value:'$3200'},{label: '$3300', value:'$3300'},{label: '$3400', value:'$3400'},{label: '$3500', value:'$3500'},{label: '$3600', value:'$3600'},{label: '$3700', value:'$3700'},{label: '$3800', value:'$3800'},{label: '$3900', value:'$3900'},{label: '$4000', value:'$4000'},{label: '$4100', value:'$4100'},{label: '$4200', value:'$4200'},{label: '$4300', value:'$4300'},{label: '$4400', value:'$4400'},{label: '$4500', value:'$4500'},{label: '$4600', value:'$4600'},{label: '$4700', value:'$4700'},{label: '$4800', value:'$4800'},{label: '$4900', value:'$4900'},{label: '$5000', value:'$5000'},{label: '$5100', value:'$5100'},{label: '$5200', value:'$5200'},{label: '$5300', value:'$5300'},{label: '$5400', value:'$5400'},{label: '$5500', value:'$5500'},{label: '$5600', value:'$5600'},{label: '$5700', value:'$5700'},{label: '$5800', value:'$5800'},{label: '$5900', value:'$5900'},{label: '$6000', value:'$6000'},{label: '$6100', value:'$6100'},{label: '$6200', value:'$6200'},{label: '$6300', value:'$6300'},{label: '$6400', value:'$6400'},{label: '$6500', value:'$6500'},{label: '$6600', value:'$6600'},{label: '$6700', value:'$6700'},{label: '$6800', value:'$6800'},{label: '$6900', value:'$6900'},{label: '$7000', value:'$7000'},{label: '$7100', value:'$7100'},{label: '$7200', value:'$7200'},{label: '$7300', value:'$7300'},{label: '$7400', value:'$7400'},{label: '$7500', value:'$7500'},{label: '$7600', value:'$7600'},{label: '$7700', value:'$7700'},{label: '$7800', value:'$7800'},{label: '$7900', value:'$7900'},{label: '$8000', value:'$8000'},{label: '$8100', value:'$8100'},{label: '$8200', value:'$8200'},{label: '$8300', value:'$8300'},{label: '$8400', value:'$8400'},{label: '$8500', value:'$8500'},{label: '$8600', value:'$8600'},{label: '$8700', value:'$8700'},{label: '$8800', value:'$8800'},{label: '$8900', value:'$8900'},{label: '$9000', value:'$9000'},{label: '$9100', value:'$9100'},{label: '$9200', value:'$9200'},{label: '$9300', value:'$9300'},{label: '$9400', value:'$9400'},{label: '$9500', value:'$9500'},{label: '$9600', value:'$9600'},{label: '$9700', value:'$9700'},{label: '$9800', value:'$9800'},{label: '$9900', value:'$9900'},{label: '$10000', value:'$10000'}
+  ]
+  valorDos = [
+    {label: '', value:''}, {label: '$500', value:'$500'},{label: '$600', value:'$600'},{label: '$700', value:'$700'},{label: '$800', value:'$800'},{label: '$900', value:'$900'},{label: '$1000', value:'$1000'},{label: '$1100', value:'$1100'},{label: '$1200', value:'$1200'},{label: '$1300', value:'$1300'},{label: '$1400', value:'$1400'},{label: '$1500', value:'$1500'},{label: '$1600', value:'$1600'},{label: '$1700', value:'$1700'},{label: '$1800', value:'$1800'},{label: '$1900', value:'$1900'},{label: '$2000', value:'$2000'},{label: '$2100', value:'$2100'},{label: '$2200', value:'$2200'},{label: '$2300', value:'$2300'},{label: '$2400', value:'$2400'},{label: '$2500', value:'$2500'},{label: '$2600', value:'$2600'},{label: '$2700', value:'$2700'},{label: '$2800', value:'$2800'},{label: '$2900', value:'$2900'},{label: '$3000', value:'$3000'},{label: '$3100', value:'$3100'},{label: '$3200', value:'$3200'},{label: '$3300', value:'$3300'},{label: '$3400', value:'$3400'},{label: '$3500', value:'$3500'},{label: '$3600', value:'$3600'},{label: '$3700', value:'$3700'},{label: '$3800', value:'$3800'},{label: '$3900', value:'$3900'},{label: '$4000', value:'$4000'},{label: '$4100', value:'$4100'},{label: '$4200', value:'$4200'},{label: '$4300', value:'$4300'},{label: '$4400', value:'$4400'},{label: '$4500', value:'$4500'},{label: '$4600', value:'$4600'},{label: '$4700', value:'$4700'},{label: '$4800', value:'$4800'},{label: '$4900', value:'$4900'},{label: '$5000', value:'$5000'},{label: '$5100', value:'$5100'},{label: '$5200', value:'$5200'},{label: '$5300', value:'$5300'},{label: '$5400', value:'$5400'},{label: '$5500', value:'$5500'},{label: '$5600', value:'$5600'},{label: '$5700', value:'$5700'},{label: '$5800', value:'$5800'},{label: '$5900', value:'$5900'},{label: '$6000', value:'$6000'},{label: '$6100', value:'$6100'},{label: '$6200', value:'$6200'},{label: '$6300', value:'$6300'},{label: '$6400', value:'$6400'},{label: '$6500', value:'$6500'},{label: '$6600', value:'$6600'},{label: '$6700', value:'$6700'},{label: '$6800', value:'$6800'},{label: '$6900', value:'$6900'},{label: '$7000', value:'$7000'},{label: '$7100', value:'$7100'},{label: '$7200', value:'$7200'},{label: '$7300', value:'$7300'},{label: '$7400', value:'$7400'},{label: '$7500', value:'$7500'},{label: '$7600', value:'$7600'},{label: '$7700', value:'$7700'},{label: '$7800', value:'$7800'},{label: '$7900', value:'$7900'},{label: '$8000', value:'$8000'},{label: '$8100', value:'$8100'},{label: '$8200', value:'$8200'},{label: '$8300', value:'$8300'},{label: '$8400', value:'$8400'},{label: '$8500', value:'$8500'},{label: '$8600', value:'$8600'},{label: '$8700', value:'$8700'},{label: '$8800', value:'$8800'},{label: '$8900', value:'$8900'},{label: '$9000', value:'$9000'},{label: '$9100', value:'$9100'},{label: '$9200', value:'$9200'},{label: '$9300', value:'$9300'},{label: '$9400', value:'$9400'},{label: '$9500', value:'$9500'},{label: '$9600', value:'$9600'},{label: '$9700', value:'$9700'},{label: '$9800', value:'$9800'},{label: '$9900', value:'$9900'},{label: '$10000', value:'$10000'}
+  ]
+  valorTres = [
+    {label: '', value:''}, {label: '$500', value:'$500'},{label: '$600', value:'$600'},{label: '$700', value:'$700'},{label: '$800', value:'$800'},{label: '$900', value:'$900'},{label: '$1000', value:'$1000'},{label: '$1100', value:'$1100'},{label: '$1200', value:'$1200'},{label: '$1300', value:'$1300'},{label: '$1400', value:'$1400'},{label: '$1500', value:'$1500'},{label: '$1600', value:'$1600'},{label: '$1700', value:'$1700'},{label: '$1800', value:'$1800'},{label: '$1900', value:'$1900'},{label: '$2000', value:'$2000'},{label: '$2100', value:'$2100'},{label: '$2200', value:'$2200'},{label: '$2300', value:'$2300'},{label: '$2400', value:'$2400'},{label: '$2500', value:'$2500'},{label: '$2600', value:'$2600'},{label: '$2700', value:'$2700'},{label: '$2800', value:'$2800'},{label: '$2900', value:'$2900'},{label: '$3000', value:'$3000'},{label: '$3100', value:'$3100'},{label: '$3200', value:'$3200'},{label: '$3300', value:'$3300'},{label: '$3400', value:'$3400'},{label: '$3500', value:'$3500'},{label: '$3600', value:'$3600'},{label: '$3700', value:'$3700'},{label: '$3800', value:'$3800'},{label: '$3900', value:'$3900'},{label: '$4000', value:'$4000'},{label: '$4100', value:'$4100'},{label: '$4200', value:'$4200'},{label: '$4300', value:'$4300'},{label: '$4400', value:'$4400'},{label: '$4500', value:'$4500'},{label: '$4600', value:'$4600'},{label: '$4700', value:'$4700'},{label: '$4800', value:'$4800'},{label: '$4900', value:'$4900'},{label: '$5000', value:'$5000'},{label: '$5100', value:'$5100'},{label: '$5200', value:'$5200'},{label: '$5300', value:'$5300'},{label: '$5400', value:'$5400'},{label: '$5500', value:'$5500'},{label: '$5600', value:'$5600'},{label: '$5700', value:'$5700'},{label: '$5800', value:'$5800'},{label: '$5900', value:'$5900'},{label: '$6000', value:'$6000'},{label: '$6100', value:'$6100'},{label: '$6200', value:'$6200'},{label: '$6300', value:'$6300'},{label: '$6400', value:'$6400'},{label: '$6500', value:'$6500'},{label: '$6600', value:'$6600'},{label: '$6700', value:'$6700'},{label: '$6800', value:'$6800'},{label: '$6900', value:'$6900'},{label: '$7000', value:'$7000'},{label: '$7100', value:'$7100'},{label: '$7200', value:'$7200'},{label: '$7300', value:'$7300'},{label: '$7400', value:'$7400'},{label: '$7500', value:'$7500'},{label: '$7600', value:'$7600'},{label: '$7700', value:'$7700'},{label: '$7800', value:'$7800'},{label: '$7900', value:'$7900'},{label: '$8000', value:'$8000'},{label: '$8100', value:'$8100'},{label: '$8200', value:'$8200'},{label: '$8300', value:'$8300'},{label: '$8400', value:'$8400'},{label: '$8500', value:'$8500'},{label: '$8600', value:'$8600'},{label: '$8700', value:'$8700'},{label: '$8800', value:'$8800'},{label: '$8900', value:'$8900'},{label: '$9000', value:'$9000'},{label: '$9100', value:'$9100'},{label: '$9200', value:'$9200'},{label: '$9300', value:'$9300'},{label: '$9400', value:'$9400'},{label: '$9500', value:'$9500'},{label: '$9600', value:'$9600'},{label: '$9700', value:'$9700'},{label: '$9800', value:'$9800'},{label: '$9900', value:'$9900'},{label: '$10000', value:'$10000'}
+  ]
+  valorCuatro = [
+    {label: '', value:''}, {label: '$500', value:'$500'},{label: '$600', value:'$600'},{label: '$700', value:'$700'},{label: '$800', value:'$800'},{label: '$900', value:'$900'},{label: '$1000', value:'$1000'},{label: '$1100', value:'$1100'},{label: '$1200', value:'$1200'},{label: '$1300', value:'$1300'},{label: '$1400', value:'$1400'},{label: '$1500', value:'$1500'},{label: '$1600', value:'$1600'},{label: '$1700', value:'$1700'},{label: '$1800', value:'$1800'},{label: '$1900', value:'$1900'},{label: '$2000', value:'$2000'},{label: '$2100', value:'$2100'},{label: '$2200', value:'$2200'},{label: '$2300', value:'$2300'},{label: '$2400', value:'$2400'},{label: '$2500', value:'$2500'},{label: '$2600', value:'$2600'},{label: '$2700', value:'$2700'},{label: '$2800', value:'$2800'},{label: '$2900', value:'$2900'},{label: '$3000', value:'$3000'},{label: '$3100', value:'$3100'},{label: '$3200', value:'$3200'},{label: '$3300', value:'$3300'},{label: '$3400', value:'$3400'},{label: '$3500', value:'$3500'},{label: '$3600', value:'$3600'},{label: '$3700', value:'$3700'},{label: '$3800', value:'$3800'},{label: '$3900', value:'$3900'},{label: '$4000', value:'$4000'},{label: '$4100', value:'$4100'},{label: '$4200', value:'$4200'},{label: '$4300', value:'$4300'},{label: '$4400', value:'$4400'},{label: '$4500', value:'$4500'},{label: '$4600', value:'$4600'},{label: '$4700', value:'$4700'},{label: '$4800', value:'$4800'},{label: '$4900', value:'$4900'},{label: '$5000', value:'$5000'},{label: '$5100', value:'$5100'},{label: '$5200', value:'$5200'},{label: '$5300', value:'$5300'},{label: '$5400', value:'$5400'},{label: '$5500', value:'$5500'},{label: '$5600', value:'$5600'},{label: '$5700', value:'$5700'},{label: '$5800', value:'$5800'},{label: '$5900', value:'$5900'},{label: '$6000', value:'$6000'},{label: '$6100', value:'$6100'},{label: '$6200', value:'$6200'},{label: '$6300', value:'$6300'},{label: '$6400', value:'$6400'},{label: '$6500', value:'$6500'},{label: '$6600', value:'$6600'},{label: '$6700', value:'$6700'},{label: '$6800', value:'$6800'},{label: '$6900', value:'$6900'},{label: '$7000', value:'$7000'},{label: '$7100', value:'$7100'},{label: '$7200', value:'$7200'},{label: '$7300', value:'$7300'},{label: '$7400', value:'$7400'},{label: '$7500', value:'$7500'},{label: '$7600', value:'$7600'},{label: '$7700', value:'$7700'},{label: '$7800', value:'$7800'},{label: '$7900', value:'$7900'},{label: '$8000', value:'$8000'},{label: '$8100', value:'$8100'},{label: '$8200', value:'$8200'},{label: '$8300', value:'$8300'},{label: '$8400', value:'$8400'},{label: '$8500', value:'$8500'},{label: '$8600', value:'$8600'},{label: '$8700', value:'$8700'},{label: '$8800', value:'$8800'},{label: '$8900', value:'$8900'},{label: '$9000', value:'$9000'},{label: '$9100', value:'$9100'},{label: '$9200', value:'$9200'},{label: '$9300', value:'$9300'},{label: '$9400', value:'$9400'},{label: '$9500', value:'$9500'},{label: '$9600', value:'$9600'},{label: '$9700', value:'$9700'},{label: '$9800', value:'$9800'},{label: '$9900', value:'$9900'},{label: '$10000', value:'$10000'}
+  ]
 
   stateDisabeld = false;
   subscription: any;
@@ -254,10 +166,10 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
     this.valoresModalidadesDos = [];
     this.valoresModalidadesTres = [];
     this.valoresModalidadesCuatro = [];
-    this.valoresModalidadesUno.push({label: 'Todos', value:'all'})
-    this.valoresModalidadesDos.push({label: 'Todos', value:'all'})
-    this.valoresModalidadesTres.push({label: 'Todos', value:'all'})
-    this.valoresModalidadesCuatro.push({label: 'Todos', value:'all'})
+    this.valoresModalidadesUno.push({label: '', value:''},{label: 'Todos', value:'all'})
+    this.valoresModalidadesDos.push({label: '', value:''},{label: 'Todos', value:'all'})
+    this.valoresModalidadesTres.push({label: '', value:''},{label: 'Todos', value:'all'})
+    this.valoresModalidadesCuatro.push({label: '', value:''},{label: 'Todos', value:'all'})
 
 
     this.productosService.consultarSignos().subscribe(
@@ -811,10 +723,10 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
     this.chanceForm.controls.valoresModalidadesTres.setValue('');
     this.chanceForm.controls.valoresModalidadesCuatro.setValue('');
 
-    this.valoresModalidadesUno = [];
-    this.valoresModalidadesDos = [];
-    this.valoresModalidadesTres = [];
-    this.valoresModalidadesCuatro = [];
+    // this.valoresModalidadesUno = [];
+    // this.valoresModalidadesDos = [];
+    // this.valoresModalidadesTres = [];
+    // this.valoresModalidadesCuatro = [];
 
     this.loterias = [];
     this.agregarLoterias.emit(this.loterias);
@@ -879,6 +791,9 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
 
     this.agregarLoterias.emit(emitLoterias);
     this.infoEdit = apuestaEditar;
+
+    this.setNumerosEvento(apuestaEditar[0].listaNumeros, apuestaEditar[0].listaModalidades, apuestaEditar[0].listaValores);
+
   }
 
 
@@ -925,77 +840,53 @@ export class ApuestaSuperAstroComponent extends CommonComponent implements OnIni
 
 
   setNumerosEvento(numeros, modalidades, valores){
+    // this.obtener_signos()
     let nuevo_array_numeros_modalidades = []
     for (let index = 0; index < numeros.length; index++) {
-      if(numeros[index].numeroFilaUno){nuevo_array_numeros_modalidades.push({numero:numeros[index].numeroFilaUno, modalidad:modalidades[0].valoresModalidadesUno})}
-      if(numeros[index].numeroFilaDos){nuevo_array_numeros_modalidades.push({numero:numeros[index].numeroFilaDos, modalidad:modalidades[1].valoresModalidadesDos})}
-      if(numeros[index].numeroFilaTres){nuevo_array_numeros_modalidades.push({numero:numeros[index].numeroFilaTres, modalidad:modalidades[2].valoresModalidadesTres})}
-      if(numeros[index].numeroFilaCuatro){nuevo_array_numeros_modalidades.push({numero:numeros[index].numeroFilaCuatro, modalidad:modalidades[3].valoresModalidadesCuatro})}
+      if(numeros[index].numeroFilaUno){nuevo_array_numeros_modalidades.push({numero:numeros[index].numeroFilaUno, valor:valores[index].valorUno, modalidad:modalidades[0].valoresModalidadesUno})}
+      if(numeros[index].numeroFilaDos){nuevo_array_numeros_modalidades.push({numero:numeros[index].numeroFilaDos, valor:valores[index].valorDos, modalidad:modalidades[1].valoresModalidadesDos})}
+      if(numeros[index].numeroFilaTres){nuevo_array_numeros_modalidades.push({numero:numeros[index].numeroFilaTres, valor:valores[index].valorTres, modalidad:modalidades[2].valoresModalidadesTres})}
+      if(numeros[index].numeroFilaCuatro){nuevo_array_numeros_modalidades.push({numero:numeros[index].numeroFilaCuatro, valor:valores[index].valorCuatro, modalidad:modalidades[3].valoresModalidadesCuatro})}
     }
     this.operacion_por_fila(nuevo_array_numeros_modalidades)
   }
 
   operacion_por_fila(nuevo_array_numeros_modalidades) {
-
     if(nuevo_array_numeros_modalidades[0]){
       this.chanceForm.get('numeroFilaUno').setValue(nuevo_array_numeros_modalidades[0].numero);
-      this.productosService.consultarValoresModalidad("SUPER CHANCE",String(nuevo_array_numeros_modalidades[0].numero).length).subscribe(
-        valoresData => {
-          valoresData.forEach(element => {this.valoresModalidadesUno.push({label: element, value: element})});
-          this.chanceForm.controls.valoresModalidadesUno.setValue(nuevo_array_numeros_modalidades[0].modalidad);
-          this.emitirNumeros();
-          this.emitirModalidades();
-        },
-        error => {
-          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
-        }
-      );
-
+      this.chanceForm.get('valorUno').setValue(nuevo_array_numeros_modalidades[0].valor);
+      this.chanceForm.get('valoresModalidadesUno').setValue(nuevo_array_numeros_modalidades[0].modalidad);
+      this.emitirNumeros();
+      this.emitirValores();
+      this.emitirModalidades();
     }
 
     if(nuevo_array_numeros_modalidades[1]){
       this.chanceForm.get('numeroFilaDos').setValue(nuevo_array_numeros_modalidades[1].numero);
-      this.productosService.consultarValoresModalidad("SUPER CHANCE",String(nuevo_array_numeros_modalidades[1].numero).length).subscribe(
-        valoresData => {
-          valoresData.forEach(element => {this.valoresModalidadesDos.push({label: element, value: element})});
-          this.chanceForm.controls.valoresModalidadesDos.setValue(nuevo_array_numeros_modalidades[1].modalidad);
-          this.emitirNumeros();
-          this.emitirModalidades();
-        },
-        error => {
-          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
-        }
-      );
+      this.chanceForm.get('valorDos').setValue(nuevo_array_numeros_modalidades[1].valor);
+      console.log(nuevo_array_numeros_modalidades[1].modalidad)
+      this.chanceForm.get('valoresModalidadesDos').setValue(nuevo_array_numeros_modalidades[1].modalidad);
+      this.emitirNumeros();
+      this.emitirValores();
+      this.emitirModalidades();
     }
 
     if(nuevo_array_numeros_modalidades[2]){
       this.chanceForm.get('numeroFilaTres').setValue(nuevo_array_numeros_modalidades[2].numero);
-      this.productosService.consultarValoresModalidad("SUPER CHANCE",String(nuevo_array_numeros_modalidades[2].numero).length).subscribe(
-        valoresData => {
-          valoresData.forEach(element => {this.valoresModalidadesTres.push({label: element, value: element})});
-          this.chanceForm.controls.valoresModalidadesTres.setValue(nuevo_array_numeros_modalidades[2].modalidad);
-          this.emitirNumeros();
-          this.emitirModalidades();
-        },
-        error => {
-          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
-        }
-      );
+      this.chanceForm.get('valorTres').setValue(nuevo_array_numeros_modalidades[2].valor);
+      this.chanceForm.get('valoresModalidadesTres').setValue(nuevo_array_numeros_modalidades[2].modalidad);
+      this.emitirNumeros();
+      this.emitirValores();
+      this.emitirModalidades();
     }
 
     if(nuevo_array_numeros_modalidades[3]){
       this.chanceForm.get('numeroFilaCuatro').setValue(nuevo_array_numeros_modalidades[3].numero);
-      this.productosService.consultarValoresModalidad("SUPER CHANCE",String(nuevo_array_numeros_modalidades[3].numero).length).subscribe(
-        valoresData => {
-          valoresData.forEach(element => {this.valoresModalidadesCuatro.push({label: element, value: element})});
-          this.chanceForm.controls.valoresModalidadesCuatro.setValue(nuevo_array_numeros_modalidades[3].modalidad);
-          this.emitirNumeros();
-          this.emitirModalidades();
-        },
-        error => {
-          this.messageService.add(MsjUtil.getMsjError(this.showMensajeError(error)));
-        }
-      );
+      this.chanceForm.get('valorCuatro').setValue(nuevo_array_numeros_modalidades[3].valor);
+      this.chanceForm.get('valoresModalidadesCuatro').setValue(nuevo_array_numeros_modalidades[3].modalidad);
+      this.emitirNumeros();
+      this.emitirValores();
+      this.emitirModalidades();
     }
     
   }
