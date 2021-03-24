@@ -152,6 +152,11 @@ export class CommonComponent {
         businessMsj = MessagesBackendConstant.PROGRAMACION_NULA;
         break;
       }
+
+      case MessagesBackendKeyConstant.KEY_PAPELERIA_USUARIO: {
+        businessMsj = MessagesBackendConstant.PAPELERIA_USUARIO;
+        break;
+      }
      
     }
     return businessMsj;

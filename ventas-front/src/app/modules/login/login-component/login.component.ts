@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { RouterConstant } from './../../../constants/router.constant';
 import { AutenticacionRequestDTO } from 'src/app/dtos/seguridad/autenticacion/autenticacion-request.dto';
 import { CommonComponent } from 'src/app/utilities/common.component';
 import { ShellState } from 'src/app/states/shell/shell.state';
@@ -10,7 +8,6 @@ import { TransversalConstant } from 'src/app/constants/transversal.constant';
 import { VentanaModalModel } from 'src/app/model-component/ventana-modal.model';
 import { PapeleriaRolloDTO } from 'src/app/dtos/transversal/papeleria-rollo.dto';
 import { AutenticacionResponseDTO } from 'src/app/dtos/seguridad/autenticacion/autenticacion-response.dto';
-
 
 /**
  * Componente para la autenticacion del sistema ADMIN
@@ -79,17 +76,7 @@ export class LoginComponent extends CommonComponent implements OnInit {
           this.request.idUsuario = dataAutenticacion.usuario.idUsuario;
           this.request.idAplicacion = TransversalConstant.ID_APLICACION_VENTAS;
           this.dataAutenticacion = dataAutenticacion;
-            if(!dataAutenticacion.usuario.administrador){
-        //  if (dataAutenticacion.usuario.administrador) {
-
-            this.iniciarSesionUsuario(formLogin,);
-
-          }
-          else {
-            this.obtnerSeriesVendedor(this.request.idUsuario);
-
-          }
-
+          this.obtnerSeriesVendedor(this.request.idUsuario);
         },
         error => {
           this.showError(error, formLogin);
@@ -153,12 +140,11 @@ export class LoginComponent extends CommonComponent implements OnInit {
           this.serieOperacion = new PapeleriaRolloDTO();
           this.modalOperatividad = new VentanaModalModel();
           this.modalOperatividad.showModal(this.modalOperatividad);
-        }
-        else { return; }
-
+        } 
+       
       },
       error => {
-        this.showError(error, null);
+        this.showError(error, idVendedor);
       }
     );
 
@@ -193,6 +179,7 @@ export class LoginComponent extends CommonComponent implements OnInit {
     );
   }
 
+ 
 
 
 }
