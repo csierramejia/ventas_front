@@ -406,6 +406,405 @@ export class ApuestaChanceComponent extends CommonComponent implements OnInit  {
   }
 
 
+  event_siguiente_campo(event: any){
+    if(event.keyCode == '38'){
+      this.evento_flecha_arriba(event.target.id)
+    }
+    if(event.keyCode == '40'){
+      this.evento_flecha_abajo(event.target.id)
+    }
+    if(event.keyCode == '37'){
+      this.evento_flecha_izquierda(event.target.id)
+    }
+    if(event.keyCode == '39'){
+      this.evento_flecha_derecha(event.target.id)
+    }
+  }
+
+
+
+  evento_flecha_arriba(id){
+
+    if(id == 'numeroFilaDos'){document.getElementById('numeroFilaUno').focus()}
+    if (id == 'valorDirectoFilaDos') {
+      if(String(this.chanceForm.get('numeroFilaUno').value).length > 2 ){
+        document.getElementById('valorDirectoFilaUno').focus()
+      }
+    }
+    if(id == 'combinadoFilaDos'){
+      if(String(this.chanceForm.get('numeroFilaUno').value).length > 2 ){
+        document.getElementById('combinadoFilaUno').focus()
+      } 
+    }
+    if(id == 'dosCifrasFilaDos'){
+      if(String(this.chanceForm.get('numeroFilaUno').value).length >= 2 ){
+        document.getElementById('dosCifrasFilaUno').focus()
+      }
+    }
+    if(id == 'unaCifraFilaDos'){
+      if(String(this.chanceForm.get('numeroFilaUno').value).length >= 1 ){
+        document.getElementById('unaCifraFilaUno').focus()
+      }
+    }
+
+
+    if(id == 'numeroFilaTres'){document.getElementById('numeroFilaDos').focus()}
+    if (id == 'valorDirectoFilaTres') {
+      if(String(this.chanceForm.get('numeroFilaDos').value).length > 2 ){
+        document.getElementById('valorDirectoFilaDos').focus()
+      }
+    }
+    if(id == 'combinadoFilaTres'){
+      if(String(this.chanceForm.get('numeroFilaDos').value).length > 2 ){
+        document.getElementById('combinadoFilaDos').focus()
+      } 
+    }
+    if(id == 'dosCifrasFilaTres'){
+      if(String(this.chanceForm.get('numeroFilaDos').value).length >= 2 ){
+        document.getElementById('dosCifrasFilaDos').focus()
+      }
+    }
+    if(id == 'unaCifraFilaTres'){
+      if(String(this.chanceForm.get('numeroFilaDos').value).length >= 1 ){
+        document.getElementById('unaCifraFilaDos').focus()
+      }
+    }
+
+
+    if(id == 'numeroFilaCuatro'){document.getElementById('numeroFilaTres').focus()}
+    if (id == 'valorDirectoFilaCuatro') {
+      if(String(this.chanceForm.get('numeroFilaTres').value).length > 2 ){
+        document.getElementById('valorDirectoFilaTres').focus()
+      }
+    }
+    if(id == 'combinadoFilaCuatro'){
+      if(String(this.chanceForm.get('numeroFilaTres').value).length > 2 ){
+        document.getElementById('combinadoFilaTres').focus()
+      } 
+    }
+    if(id == 'dosCifrasFilaCuatro'){
+      if(String(this.chanceForm.get('numeroFilaTres').value).length >= 2 ){
+        document.getElementById('dosCifrasFilaTres').focus()
+      }
+    }
+    if(id == 'unaCifraFilaCuatro'){
+      if(String(this.chanceForm.get('numeroFilaTres').value).length >= 1 ){
+        document.getElementById('unaCifraFilaTres').focus()
+      }
+    }
+
+
+    if(id == 'numeroFilaCinco'){document.getElementById('numeroFilaCuatro').focus()}
+    if (id == 'valorDirectoFilaCinco') {
+      if(String(this.chanceForm.get('numeroFilaCuatro').value).length > 2 ){
+        document.getElementById('valorDirectoFilaCuatro').focus()
+      }
+    }
+    if(id == 'combinadoFilaCinco'){
+      if(String(this.chanceForm.get('numeroFilaCuatro').value).length > 2 ){
+        document.getElementById('combinadoFilaCuatro').focus()
+      } 
+    }
+    if(id == 'dosCifrasFilaCinco'){
+      if(String(this.chanceForm.get('numeroFilaCuatro').value).length >= 2 ){
+        document.getElementById('dosCifrasFilaCuatro').focus()
+      }
+    }
+    if(id == 'unaCifraFilaCinco'){
+      if(String(this.chanceForm.get('numeroFilaCuatro').value).length >= 1 ){
+        document.getElementById('unaCifraFilaCuatro').focus()
+      }
+    }
+  }
+
+
+  evento_flecha_abajo(id){
+    if(id == 'numeroFilaUno'){document.getElementById('numeroFilaDos').focus()}
+    if(id == 'valorDirectoFilaUno'){
+      if(String(this.chanceForm.get('numeroFilaDos').value).length > 2 ){
+        document.getElementById('valorDirectoFilaDos').focus()
+      }
+    }
+    if(id == 'combinadoFilaUno'){
+      if(String(this.chanceForm.get('numeroFilaDos').value).length > 2 ){
+        document.getElementById('combinadoFilaDos').focus()
+      }
+    }
+    if(id == 'dosCifrasFilaUno'){
+      if(String(this.chanceForm.get('numeroFilaDos').value).length >= 2 ){
+        document.getElementById('dosCifrasFilaDos').focus()
+      }
+    }
+    if(id == 'unaCifraFilaUno'){
+      if(String(this.chanceForm.get('numeroFilaDos').value).length >= 1 ){
+        document.getElementById('unaCifraFilaDos').focus()
+      }
+    }
+
+  
+    if(id == 'numeroFilaDos'){document.getElementById('numeroFilaTres').focus()}
+    if(id == 'valorDirectoFilaDos'){
+      if(String(this.chanceForm.get('numeroFilaTres').value).length > 2 ){
+        document.getElementById('valorDirectoFilaTres').focus()
+      }
+    }
+    if(id == 'combinadoFilaDos'){
+      if(String(this.chanceForm.get('numeroFilaTres').value).length > 2 ){
+        document.getElementById('combinadoFilaTres').focus()
+      }
+    }
+    if(id == 'dosCifrasFilaDos'){
+      if(String(this.chanceForm.get('numeroFilaTres').value).length >= 2 ){
+        document.getElementById('dosCifrasFilaTres').focus()
+      }
+    }
+    if(id == 'unaCifraFilaDos'){
+      if(String(this.chanceForm.get('numeroFilaTres').value).length >= 1 ){
+        document.getElementById('unaCifraFilaTres').focus()
+      }
+    }
+
+
+    if(id == 'numeroFilaTres'){document.getElementById('numeroFilaCuatro').focus()}
+    if(id == 'valorDirectoFilaTres'){
+      if(String(this.chanceForm.get('numeroFilaCuatro').value).length > 2 ){
+        document.getElementById('valorDirectoFilaCuatro').focus()
+      }
+    }
+    if(id == 'combinadoFilaTres'){
+      if(String(this.chanceForm.get('numeroFilaCuatro').value).length > 2 ){
+        document.getElementById('combinadoFilaCuatro').focus()
+      }
+    }
+    if(id == 'dosCifrasFilaTres'){
+      if(String(this.chanceForm.get('numeroFilaCuatro').value).length >= 2 ){
+        document.getElementById('dosCifrasFilaCuatro').focus()
+      }
+    }
+    if(id == 'unaCifraFilaTres'){
+      if(String(this.chanceForm.get('numeroFilaCuatro').value).length >= 1 ){
+        document.getElementById('unaCifraFilaCuatro').focus()
+      }
+    }
+
+
+    if(id == 'numeroFilaCuatro'){document.getElementById('numeroFilaCinco').focus()}
+    if(id == 'valorDirectoFilaCuatro'){
+      if(String(this.chanceForm.get('numeroFilaCinco').value).length > 2 ){
+        document.getElementById('valorDirectoFilaCinco').focus()
+      }
+    }
+    if(id == 'combinadoFilaCuatro'){
+      if(String(this.chanceForm.get('numeroFilaCinco').value).length > 2 ){
+        document.getElementById('combinadoFilaCinco').focus()
+      }
+    }
+    if(id == 'dosCifrasFilaCuatro'){
+      if(String(this.chanceForm.get('numeroFilaCinco').value).length >= 2 ){
+        document.getElementById('dosCifrasFilaCinco').focus()
+      }
+    }
+    if(id == 'unaCifraFilaCuatro'){
+      if(String(this.chanceForm.get('numeroFilaCinco').value).length >= 1 ){
+        document.getElementById('unaCifraFilaCinco').focus()
+      }
+    }
+  }
+
+
+  evento_flecha_izquierda(id){
+    
+    if(id == 'valorDirectoFilaUno'){document.getElementById('numeroFilaUno').focus()}
+    if(id == 'combinadoFilaUno'){document.getElementById('valorDirectoFilaUno').focus()}
+    if(id == 'dosCifrasFilaUno'){
+      if(String(this.chanceForm.get('numeroFilaUno').value).length > 2 ){
+        document.getElementById('combinadoFilaUno').focus()
+      } else {
+        document.getElementById('numeroFilaUno').focus()
+      }
+    }
+    if(id == 'unaCifraFilaUno'){
+      if(String(this.chanceForm.get('numeroFilaUno').value).length == 1 ){
+        document.getElementById('numeroFilaUno').focus()
+      } else if(String(this.chanceForm.get('numeroFilaUno').value).length >= 2 ){
+        document.getElementById('dosCifrasFilaUno').focus()
+      }
+    }
+
+
+    if(id == 'numeroFilaDos'){
+      if(String(this.chanceForm.get('numeroFilaUno').value).length > 0 ){
+        document.getElementById('unaCifraFilaUno').focus()
+      }
+    }
+    if(id == 'valorDirectoFilaDos'){document.getElementById('numeroFilaDos').focus()}
+    if(id == 'combinadoFilaDos'){document.getElementById('valorDirectoFilaDos').focus()}
+    if(id == 'dosCifrasFilaDos'){
+      if(String(this.chanceForm.get('numeroFilaDos').value).length > 2 ){
+        document.getElementById('combinadoFilaDos').focus()
+      } else {
+        document.getElementById('numeroFilaDos').focus()
+      }
+    }
+    if(id == 'unaCifraFilaDos'){
+      if(String(this.chanceForm.get('numeroFilaDos').value).length == 1 ){
+        document.getElementById('numeroFilaDos').focus()
+      } else if(String(this.chanceForm.get('numeroFilaDos').value).length >= 2 ){
+        document.getElementById('dosCifrasFilaDos').focus()
+      }
+      
+    }
+
+
+    if(id == 'numeroFilaTres'){
+      if(String(this.chanceForm.get('numeroFilaDos').value).length > 0 ){
+        document.getElementById('unaCifraFilaDos').focus()
+      }
+    }
+    if(id == 'valorDirectoFilaTres'){document.getElementById('numeroFilaTres').focus()}
+    if(id == 'combinadoFilaTres'){document.getElementById('valorDirectoFilaTres').focus()}
+    if(id == 'dosCifrasFilaTres'){
+      if(String(this.chanceForm.get('numeroFilaTres').value).length > 2 ){
+        document.getElementById('combinadoFilaTres').focus()
+      } else {
+        document.getElementById('numeroFilaTres').focus()
+      }
+    }
+    if(id == 'unaCifraFilaTres'){
+      if(String(this.chanceForm.get('numeroFilaTres').value).length == 1 ){
+        document.getElementById('numeroFilaTres').focus()
+      } else if(String(this.chanceForm.get('numeroFilaTres').value).length >= 2 ){
+        document.getElementById('dosCifrasFilaTres').focus()
+      }
+    }
+
+
+    if(id == 'numeroFilaCuatro'){
+      if(String(this.chanceForm.get('numeroFilaTres').value).length > 0 ){
+        document.getElementById('unaCifraFilaTres').focus()
+      }
+    }
+    if(id == 'valorDirectoFilaCuatro'){document.getElementById('numeroFilaCuatro').focus()}
+    if(id == 'combinadoFilaCuatro'){document.getElementById('valorDirectoFilaCuatro').focus()}
+    if(id == 'dosCifrasFilaCuatro'){
+      if(String(this.chanceForm.get('numeroFilaCuatro').value).length > 2 ){
+        document.getElementById('combinadoFilaCuatro').focus()
+      } else {
+        document.getElementById('numeroFilaCuatro').focus()
+      }
+    }
+    if(id == 'unaCifraFilaCuatro'){
+      if(String(this.chanceForm.get('numeroFilaCuatro').value).length == 1 ){
+        document.getElementById('numeroFilaCuatro').focus()
+      } else if(String(this.chanceForm.get('numeroFilaCuatro').value).length >= 2 ){
+        document.getElementById('dosCifrasFilaCuatro').focus()
+      }
+    }
+
+
+    if(id == 'numeroFilaCinco'){
+      if(String(this.chanceForm.get('numeroFilaCuatro').value).length > 0 ){
+        document.getElementById('unaCifraFilaCuatro').focus()
+      }
+    }
+    if(id == 'valorDirectoFilaCinco'){document.getElementById('numeroFilaCinco').focus()}
+    if(id == 'combinadoFilaCinco'){document.getElementById('valorDirectoFilaCinco').focus()}
+    if(id == 'dosCifrasFilaCinco'){
+      if(String(this.chanceForm.get('numeroFilaCinco').value).length > 2 ){
+        document.getElementById('combinadoFilaCinco').focus()
+      } else {
+        document.getElementById('numeroFilaCinco').focus()
+      }
+    }
+    if(id == 'unaCifraFilaCinco'){
+      if(String(this.chanceForm.get('numeroFilaCinco').value).length == 1 ){
+        document.getElementById('numeroFilaCinco').focus()
+      } else if(String(this.chanceForm.get('numeroFilaCinco').value).length >= 2 ){
+        document.getElementById('dosCifrasFilaCinco').focus()
+      }
+    }
+
+  }
+
+  evento_flecha_derecha(id){
+
+    if(id == 'numeroFilaUno'){
+      if(String(this.chanceForm.get('numeroFilaUno').value).length > 2 ){
+        document.getElementById('valorDirectoFilaUno').focus()
+      } else if(String(this.chanceForm.get('numeroFilaUno').value).length == 2 ){
+        document.getElementById('dosCifrasFilaUno').focus()
+      } else if(String(this.chanceForm.get('numeroFilaUno').value).length == 1 ){
+        document.getElementById('unaCifraFilaUno').focus()
+      }
+    }
+    if(id == 'valorDirectoFilaUno'){document.getElementById('combinadoFilaUno').focus()}
+    if(id == 'combinadoFilaUno'){document.getElementById('dosCifrasFilaUno').focus()}
+    if(id == 'dosCifrasFilaUno'){document.getElementById('unaCifraFilaUno').focus()}
+    if(id == 'unaCifraFilaUno'){document.getElementById('numeroFilaDos').focus()}
+
+
+    if(id == 'numeroFilaDos'){
+      if(String(this.chanceForm.get('numeroFilaDos').value).length > 2 ){
+        document.getElementById('valorDirectoFilaDos').focus()
+      } else if(String(this.chanceForm.get('numeroFilaDos').value).length == 2 ){
+        document.getElementById('dosCifrasFilaDos').focus()
+      } else if(String(this.chanceForm.get('numeroFilaDos').value).length == 1 ){
+        document.getElementById('unaCifraFilaDos').focus()
+      }
+    }
+    if(id == 'valorDirectoFilaDos'){document.getElementById('combinadoFilaDos').focus()}
+    if(id == 'combinadoFilaDos'){document.getElementById('dosCifrasFilaDos').focus()}
+    if(id == 'dosCifrasFilaDos'){document.getElementById('unaCifraFilaDos').focus()}
+    if(id == 'unaCifraFilaDos'){document.getElementById('numeroFilaTres').focus()}
+
+
+
+    if(id == 'numeroFilaTres'){
+      if(String(this.chanceForm.get('numeroFilaTres').value).length > 2 ){
+        document.getElementById('valorDirectoFilaTres').focus()
+      } else if(String(this.chanceForm.get('numeroFilaTres').value).length == 2 ){
+        document.getElementById('dosCifrasFilaTres').focus()
+      } else if(String(this.chanceForm.get('numeroFilaTres').value).length == 1 ){
+        document.getElementById('unaCifraFilaTres').focus()
+      }
+    }
+    if(id == 'valorDirectoFilaTres'){document.getElementById('combinadoFilaTres').focus()}
+    if(id == 'combinadoFilaTres'){document.getElementById('dosCifrasFilaTres').focus()}
+    if(id == 'dosCifrasFilaTres'){document.getElementById('unaCifraFilaTres').focus()}
+    if(id == 'unaCifraFilaTres'){document.getElementById('numeroFilaCuatro').focus()}
+
+
+    if(id == 'numeroFilaCuatro'){
+      if(String(this.chanceForm.get('numeroFilaCuatro').value).length > 2 ){
+        document.getElementById('valorDirectoFilaCuatro').focus()
+      } else if(String(this.chanceForm.get('numeroFilaCuatro').value).length == 2 ){
+        document.getElementById('dosCifrasFilaCuatro').focus()
+      } else if(String(this.chanceForm.get('numeroFilaCuatro').value).length == 1 ){
+        document.getElementById('unaCifraFilaCuatro').focus()
+      }
+    }
+    if(id == 'valorDirectoFilaCuatro'){document.getElementById('combinadoFilaCuatro').focus()}
+    if(id == 'combinadoFilaCuatro'){document.getElementById('dosCifrasFilaCuatro').focus()}
+    if(id == 'dosCifrasFilaCuatro'){document.getElementById('unaCifraFilaCuatro').focus()}
+    if(id == 'unaCifraFilaCuatro'){document.getElementById('numeroFilaCinco').focus()}
+
+
+    if(id == 'numeroFilaCinco'){
+      if(String(this.chanceForm.get('numeroFilaCinco').value).length > 2 ){
+        document.getElementById('valorDirectoFilaCinco').focus()
+      } else if(String(this.chanceForm.get('numeroFilaCinco').value).length == 2 ){
+        document.getElementById('dosCifrasFilaCinco').focus()
+      } else if(String(this.chanceForm.get('numeroFilaCinco').value).length == 1 ){
+        document.getElementById('unaCifraFilaCinco').focus()
+      }
+    }
+    if(id == 'valorDirectoFilaCinco'){document.getElementById('combinadoFilaCinco').focus()}
+    if(id == 'combinadoFilaCinco'){document.getElementById('dosCifrasFilaCinco').focus()}
+    if(id == 'dosCifrasFilaCinco'){document.getElementById('unaCifraFilaCinco').focus()}
+
+  }
+
+
 
   /**
    * @author Luis Hernandez

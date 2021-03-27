@@ -495,6 +495,53 @@ export class ApuestaMillonariaComponent extends CommonComponent implements OnIni
   }
 
 
+
+  event_siguiente_campo(event: any){
+    if(event.keyCode == '38'){
+      this.evento_flecha_arriba(event.target.id)
+    }
+    if(event.keyCode == '40'){
+      this.evento_flecha_abajo(event.target.id)
+    }
+    if(event.keyCode == '37'){
+      this.evento_flecha_izquierda(event.target.id)
+    }
+    if(event.keyCode == '39'){
+      this.evento_flecha_derecha(event.target.id)
+    }
+  }
+
+
+  evento_flecha_arriba(id){
+    if(id == 'numeroFilaDos'){document.getElementById('numeroFilaUno').focus()}
+    if(id == 'numeroFilaTres'){document.getElementById('numeroFilaDos').focus()}
+    if(id == 'numeroFilaCuatro'){document.getElementById('numeroFilaTres').focus()}
+    if(id == 'numeroFilaCinco'){document.getElementById('numeroFilaCuatro').focus()}
+  }
+
+  evento_flecha_abajo(id){
+    if(id == 'numeroFilaUno'){document.getElementById('numeroFilaDos').focus()}
+    if(id == 'numeroFilaDos'){document.getElementById('numeroFilaTres').focus()}
+    if(id == 'numeroFilaTres'){document.getElementById('numeroFilaCuatro').focus()}
+    if(id == 'numeroFilaCuatro'){document.getElementById('numeroFilaCinco').focus()}
+  }
+
+  evento_flecha_izquierda(id){
+    if(id == 'numeroFilaDos'){document.getElementById('numeroFilaUno').focus()}
+    if(id == 'numeroFilaTres'){document.getElementById('numeroFilaDos').focus()}
+    if(id == 'numeroFilaCuatro'){document.getElementById('numeroFilaTres').focus()}
+    if(id == 'numeroFilaCinco'){document.getElementById('numeroFilaCuatro').focus()}
+
+  }
+
+  evento_flecha_derecha(id){
+    if(id == 'numeroFilaUno'){document.getElementById('numeroFilaDos').focus()}
+    if(id == 'numeroFilaDos'){document.getElementById('numeroFilaTres').focus()}
+    if(id == 'numeroFilaTres'){document.getElementById('numeroFilaCuatro').focus()}
+    if(id == 'numeroFilaCuatro'){document.getElementById('numeroFilaCinco').focus()}
+  }
+
+
   emitirCliente(event) {
     if (event === 1) {
       let clienteInfo = {

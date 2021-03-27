@@ -617,7 +617,7 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
         let signosArray = []
         if(listaModalidades[0].valoresModalidadesUno){
           if(listaModalidades[0].valoresModalidadesUno == 'all'){
-            signosArray = [1,2,3,4,5,6,7,8,9,10,11,12,13]
+            signosArray = [1,2,3,4,5,6,7,8,9,10,11,12]
           } else {
             signosArray.push(listaModalidades[0].valoresModalidadesUno)
           }
@@ -650,7 +650,7 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
         let signosArray = []
         if(listaModalidades[1].valoresModalidadesDos){
           if(listaModalidades[1].valoresModalidadesDos == 'all'){
-            signosArray = [1,2,3,4,5,6,7,8,9,10,11,12,13]
+            signosArray = [1,2,3,4,5,6,7,8,9,10,11,12]
           } else {
             signosArray.push(listaModalidades[1].valoresModalidadesDos)
           }
@@ -683,7 +683,7 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
           let signosArray = []
           if(listaModalidades[2].valoresModalidadesTres){
             if(listaModalidades[2].valoresModalidadesTres == 'all'){
-              signosArray = [1,2,3,4,5,6,7,8,9,10,11,12,13]
+              signosArray = [1,2,3,4,5,6,7,8,9,10,11,12]
             } else {
               signosArray.push(listaModalidades[2].valoresModalidadesTres)
             }
@@ -716,7 +716,7 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
         let signosArray = []
         if(listaModalidades[3].valoresModalidadesCuatro){
           if(listaModalidades[3].valoresModalidadesCuatro == 'all'){
-            signosArray = [1,2,3,4,5,6,7,8,9,10,11,12,13]
+            signosArray = [1,2,3,4,5,6,7,8,9,10,11,12]
           } else {
             signosArray.push(listaModalidades[3].valoresModalidadesCuatro)
           }
@@ -966,7 +966,6 @@ export class RevisaPagoComponent extends CommonComponent implements OnInit, OnDe
 
 
   limpiarCarrito(){
-    console.log(this.productoParent)
     switch (this.productoParent) {
       case 'chance':
         this.limpiarCarritoOperacion('chanceApuesta')

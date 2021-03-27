@@ -83,19 +83,19 @@
                 <div class="col-md-4">
                     <b>Número</b><br/>
                     <div class="row">
-                        <input id="numeroFilaUno" (focus)="onFocus(1)" (change)="chance_validar_fila_modalidad(1, $event.target.value)" formControlName="numeroFilaUno" autocomplete="off" type="text" [maxlength]="maxlengthV" (keypress)="permitirSoloNumeros($event)" class="input-bet">
+                        <input id="numeroFilaUno" (keyup)="event_siguiente_campo($event)" (focus)="onFocus(1)" (change)="chance_validar_fila_modalidad(1, $event.target.value)" formControlName="numeroFilaUno" autocomplete="off" type="text" [maxlength]="maxlengthV" (keypress)="permitirSoloNumeros($event)" class="input-bet">
                     </div>
                     <div class="row">
-                        <input id="numeroFilaDos" (focus)="onFocus(2)" (change)="chance_validar_fila_modalidad(2, $event.target.value)" formControlName="numeroFilaDos" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
+                        <input id="numeroFilaDos" (keyup)="event_siguiente_campo($event)" (focus)="onFocus(2)" (change)="chance_validar_fila_modalidad(2, $event.target.value)" formControlName="numeroFilaDos" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
                     </div>
                     <div class="row">
-                        <input id="numeroFilaTres" (focus)="onFocus(3)" (change)="chance_validar_fila_modalidad(3, $event.target.value)" formControlName="numeroFilaTres" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
+                        <input id="numeroFilaTres" (keyup)="event_siguiente_campo($event)" (focus)="onFocus(3)" (change)="chance_validar_fila_modalidad(3, $event.target.value)" formControlName="numeroFilaTres" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
                     </div>
                     <div class="row">
-                        <input id="numeroFilaCuatro" (focus)="onFocus(4)" (change)="chance_validar_fila_modalidad(4, $event.target.value)" formControlName="numeroFilaCuatro" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
+                        <input id="numeroFilaCuatro" (keyup)="event_siguiente_campo($event)" (focus)="onFocus(4)" (change)="chance_validar_fila_modalidad(4, $event.target.value)" formControlName="numeroFilaCuatro" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
                     </div>
                     <div class="row">
-                        <input id="numeroFilaCinco" (focus)="onFocus(5)" (change)="chance_validar_fila_modalidad(5, $event.target.value)" formControlName="numeroFilaCinco" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
+                        <input id="numeroFilaCinco" (keyup)="event_siguiente_campo($event)" (focus)="onFocus(5)" (change)="chance_validar_fila_modalidad(5, $event.target.value)" formControlName="numeroFilaCinco" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
                     </div>
                 </div>
                 <div class="col-md-6">

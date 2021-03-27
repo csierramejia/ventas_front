@@ -91,27 +91,27 @@
                             </div>
                             <div class="col-md-7">
                                 <b>Número</b><br/>
-                                <input id="numeroFilaUno" (change)="emitirNumeros()" formControlName="numeroFilaUno" autocomplete="off" type="text" [maxlength]="maxlengthV" (keypress)="permitirSoloNumeros($event)" class="input-bet">
+                                <input id="numeroFilaUno" (keyup)="event_siguiente_campo($event)" (change)="emitirNumeros()" formControlName="numeroFilaUno" autocomplete="off" type="text" [maxlength]="maxlengthV" (keypress)="permitirSoloNumeros($event)" class="input-bet">
                                 <img class="img-aletorio" (click)="generarAletorios('one', '3C', 1)" *ngIf="selectedCifras && selectedCifras.code == '3C'" src="../../../../../assets/img/svg/Grupo_306.svg" />
                                 <img class="img-aletorio" (click)="generarAletorios('one', '4C', 1)" *ngIf="selectedCifras && selectedCifras.code == '4C'" src="../../../../../assets/img/svg/Grupo_303.svg" />
                                 <i (click)="borrarFilaUno()" class="fa fa-trash tras-del" aria-hidden="true"></i>
                                 <br/>
-                                <input id="numeroFilaDos" (change)="emitirNumeros()" formControlName="numeroFilaDos" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
+                                <input id="numeroFilaDos" (keyup)="event_siguiente_campo($event)" (change)="emitirNumeros()" formControlName="numeroFilaDos" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
                                 <img class="img-aletorio" (click)="generarAletorios('one', '3C', 2)" *ngIf="selectedCifras && selectedCifras.code == '3C'" src="../../../../../assets/img/svg/Grupo_306.svg" />
                                 <img class="img-aletorio" (click)="generarAletorios('one', '4C', 2)" *ngIf="selectedCifras && selectedCifras.code == '4C'" src="../../../../../assets/img/svg/Grupo_303.svg" />
                                 <i (click)="borrarFilaDos()" class="fa fa-trash tras-del" aria-hidden="true"></i>
                                 <br/>
-                                <input id="numeroFilaTres" (change)="emitirNumeros()" formControlName="numeroFilaTres" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
+                                <input id="numeroFilaTres" (keyup)="event_siguiente_campo($event)" (change)="emitirNumeros()" formControlName="numeroFilaTres" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
                                 <img class="img-aletorio" (click)="generarAletorios('one', '3C', 3)" *ngIf="selectedCifras && selectedCifras.code == '3C'" src="../../../../../assets/img/svg/Grupo_306.svg" />
                                 <img class="img-aletorio" (click)="generarAletorios('one', '4C', 3)" *ngIf="selectedCifras && selectedCifras.code == '4C'" src="../../../../../assets/img/svg/Grupo_303.svg" />
                                 <i (click)="borrarFilaTres()" class="fa fa-trash tras-del" aria-hidden="true"></i>
                                 <br/>
-                                <input id="numeroFilaCuatro" (change)="emitirNumeros()" formControlName="numeroFilaCuatro" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
+                                <input id="numeroFilaCuatro" (keyup)="event_siguiente_campo($event)" (change)="emitirNumeros()" formControlName="numeroFilaCuatro" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
                                 <img class="img-aletorio" (click)="generarAletorios('one', '3C', 4)" *ngIf="selectedCifras && selectedCifras.code == '3C'" src="../../../../../assets/img/svg/Grupo_306.svg" />
                                 <img class="img-aletorio" (click)="generarAletorios('one', '4C', 4)" *ngIf="selectedCifras && selectedCifras.code == '4C'" src="../../../../../assets/img/svg/Grupo_303.svg" />
                                 <i (click)="borrarFilaCuatro()" class="fa fa-trash tras-del" aria-hidden="true"></i>
                                 <br/>
-                                <input id="numeroFilaCinco" (change)="emitirNumeros()" formControlName="numeroFilaCinco" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
+                                <input id="numeroFilaCinco" (keyup)="event_siguiente_campo($event)" (change)="emitirNumeros()" formControlName="numeroFilaCinco" autocomplete="off" type="text" [maxlength]="maxlengthV"  (keypress)="permitirSoloNumeros($event)" class="input-bet">
                                 <img class="img-aletorio" (click)="generarAletorios('one', '3C', 5)" *ngIf="selectedCifras && selectedCifras.code == '3C'" src="../../../../../assets/img/svg/Grupo_306.svg" />
                                 <img class="img-aletorio" (click)="generarAletorios('one', '4C', 5)" *ngIf="selectedCifras && selectedCifras.code == '4C'" src="../../../../../assets/img/svg/Grupo_303.svg" />
                                 <i (click)="borrarFilaCinco()" class="fa fa-trash tras-del" aria-hidden="true"></i>
